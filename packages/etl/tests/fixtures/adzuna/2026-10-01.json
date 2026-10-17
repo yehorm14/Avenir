@@ -1,0 +1,11 @@
+{
+  "retrieved": "2026-10-01",
+  "where": "UK",
+  "attribution": "Jobs by Adzuna",
+  "occupations": {
+    "2134": {"title": "Software developer", "soc2020": "2134", "query": "software developer",
+             "search": {"count": 4321, "mean": 3.0}, "histogram": null, "history": null},
+    "2150": {"title": "Test-only no search", "soc2020": "2150", "query": "test only",
+             "search": null, "histogram": null, "history": null, "errors": ["search: Timeout"]}
+  }
+}
