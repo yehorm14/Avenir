@@ -88,7 +88,11 @@ def hedge(soc: str, request: Request):
     if career is None:
         return fail(ErrorCode.NOT_FOUND, "Career not found")
     comps = score_components(ProfileIn(), list(d.careers.values()), d.affinity)
-    return ok(choose_hedge(career, d.hedges.get(soc, []), comps, d.careers), d.statuses)
+    found = choose_hedge(career, d.hedges.get(soc, []), comps, d.careers)
+    if found is None:
+        return ok(None, d.statuses)
+    shown, status = with_ads_now(request.app.state.ads, found.career)
+    return ok(found.model_copy(update={"career": shown}), [*d.statuses, status])
 
 
 @router.post("/demo/live")

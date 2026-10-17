@@ -140,3 +140,24 @@ def test_suggested_tags_appended(client):
     assert out["interests"][0] == "maths"
     assert len(out["interests"]) == len(set(out["interests"]))
     assert [m["tag"] for m in out["suggested"]]
+
+
+@pytest.mark.parametrize("tag", ["science_health", "helping_people"])
+def test_narrow_profile_gives_fewer_picks(client, tag):
+    r = client.post(R, json={"profile": {"interests": [tag]}, "first_idea": "architect"})
+    rec = _ok(r)
+    assert 0 < len(rec["picks"]) < 3
+    assert rec["explanation"]["text"]
+    assert rec["hedge"] is None or rec["hedge"]["career"]["soc2020"]
+
+
+def test_hedge_endpoint_overlays_ads(data):
+    c = TestClient(create_app(data=data, ads=StubAds()))
+    r = c.get("/api/v1/careers/2141/hedge")
+    h = _ok(r)
+    assert h["career"]["metrics"]["ads_now"]["value"] == 1000.0 + int(h["career"]["soc2020"])
+    assert [s["name"] for s in r.json()["meta"]["sources"]].count("adzuna") == 1
+    # a live switch shows through
+    c.post("/api/v1/demo/live", json={"enabled": True})
+    r = c.get("/api/v1/careers/2141/hedge")
+    assert [s["status"] for s in r.json()["meta"]["sources"] if s["name"] == "adzuna"] == ["live"]
