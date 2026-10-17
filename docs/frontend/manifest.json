@@ -15,6 +15,7 @@
     "examples/tags.json",
     "schemas/BacktestOut.json",
     "schemas/Career.json",
+    "schemas/CareerRef.json",
     "schemas/Components.json",
     "schemas/Crisis.json",
     "schemas/ErrorBody.json",

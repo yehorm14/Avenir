@@ -1,0 +1,21 @@
+{
+  "additionalProperties": false,
+  "description": "Light pointer to a career, for 'Did you mean...?' lists.",
+  "properties": {
+    "soc2020": {
+      "pattern": "^\\d{4}$",
+      "title": "Soc2020",
+      "type": "string"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    }
+  },
+  "required": [
+    "soc2020",
+    "title"
+  ],
+  "title": "CareerRef",
+  "type": "object"
+}

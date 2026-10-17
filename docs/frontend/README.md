@@ -42,6 +42,11 @@ See [`examples/envelope_career_2451.json`](examples/envelope_career_2451.json) (
 
 Serving a snapshot or sample data is **not** an error: you get 200 and that source's status in `meta.sources`.
 
+Two notes from `docs/contracts.md`:
+
+- Error envelopes may have an empty `meta.sources` (`[]`). Do not rely on it being filled when `ok` is `false`.
+- A malformed SOC (not four digits) is `VALIDATION_ERROR` (422). A well-formed SOC that is unknown is `NOT_FOUND` (404).
+
 ## 3. Endpoints
 
 `soc` is a four-digit SOC 2020 code, e.g. `2451`. Schemas are in `schemas/<Model>.json`.
@@ -60,7 +65,7 @@ Serving a snapshot or sample data is **not** an error: you get 200 and that sour
 | `GET /api/v1/backtest?year=2013` | `BacktestOut {window, caveats, status}` | `examples/backtest_2013.json` (the first year in `backtest_years.json`) |
 | `GET /api/v1/sources` | `{statuses, registry}` | `examples/sources.json` |
 | `POST /api/v1/profile` | `ProfileIn` in, `ProfileOut` out | comes with the API |
-| `POST /api/v1/recommendations` | `{profile, first_idea}` in, `RecommendationOut` out | comes with `recommend()` (Nazar's engine); schema now: `schemas/RecommendationOut.json` |
+| `POST /api/v1/recommendations` | `{profile, first_idea}` in, `RecommendationOut` out | comes with `recommend()` (Nazar's engine); schema now: `schemas/RecommendationOut.json`. `first_idea_candidates` (`{soc2020, title}[]`) lists careers an ambiguous typed first idea matches equally; `first_idea` is `null` then (see section 7) |
 | `POST /api/v1/demo/live` | `{enabled}` in, `{live}` out | comes with the API |
 
 `first_idea` is a SOC code or free text such as `"architect"` (see `schemas/RecommendationRequest.json`).
@@ -152,18 +157,13 @@ v1.0 flags until then; the three new flags are in the table in section 4.
 | Item | What to do |
 | --- | --- |
 | **History** (`HistoryPoint[]`) | One point per year, 2007 to 2025. Any value can be `null`. 2007 to 2010 have pay but `jobs_k` is `null` (flags `bridged_soc2000`, `bridged_soc2010`); job counts start in 2011. Draw only the lines that have data |
-| **Hedge `evidence`** | `title` (linked to ESCO through at least 3 job titles) or `estimate` (ISCO fallback). Show an "estimate" badge when it is `estimate`. The field is **not in `schemas/` yet** (see the note below) |
+| **Hedge `evidence`** | `title` (linked to ESCO through at least 3 job titles) or `estimate` (ISCO fallback). Show an "estimate" badge when it is `estimate`. In `schemas/HedgeCandidate.json` and `schemas/Hedge.json` |
 | **`resilience_tech_slump`** | Now real data, measured for a broad job-advert category. The `category_level` flag is must-mention: name the category from `extra.adverts_category` |
 | **`exposure`** | When the `sources_disagree` flag is present (two independent research estimates disagree), show its sentence and the wider range. There is no separate field |
 | **`exposure_uk`** | The DfE score as a percentile rank among UK occupations, 0 to 1, where 1 is the most exposed. A cross-check only: never show it as a second headline number. It is `pending` in today's `career_2451.json` |
 | **`resilience_2008`** | Now real: the worse of the jobs change and the real pay change, April 2008 to April 2009. `extra` has both parts and says which one is the headline |
-| **`young_worker_share`** | New optional metric (a fraction): the share of workers aged 16 to 24 in 2016, including the self-employed (ONS APS 2016). A card line if you want it; ignore it otherwise. Not in `schemas/` yet |
-| **`crises[].baseline_real_pay_median`** | Optional on a crisis (the 2008 one has it). Not in `schemas/` yet |
-
-**Schemas catch up with contract v2.1 (PR #4).** `evidence` (hedge), `baseline_real_pay_median` (crisis) and
-`young_worker_share` (metric key) are added to the API contract in v2.1, PR #4. Until PR #4 is on main they are
-not in `schemas/*.json` or `examples/`. Once it is, the pack is regenerated with `python -m avenir_contracts.examples`;
-build for the fields now and expect them to appear then.
+| **`young_worker_share`** | New optional metric (a fraction): the share of workers aged 16 to 24 in 2016, including the self-employed (ONS APS 2016). A card line if you want it; ignore it otherwise. A new key in `Career.metrics`: an absent key means missing (it is listed in `vocab.ML_METRICS`) |
+| **`crises[].baseline_real_pay_median`** | Optional on a crisis (the 2008 one has it). In `schemas/Crisis.json` |
 
 **Accessibility (ours, not Arsenii's).** Every chart needs a text version a screen reader can read, including the timeline.
 
@@ -173,6 +173,9 @@ Screens, from the project rules (`AGENTS.md`). The ones marked **never cut** sta
 
 1. **Three picks vs her first idea** (never cut): Ambitious (highest return among good fits), Safe (lowest risk among
    good fits), Balanced (best return per unit of risk). Each pick has `components` and `vs_first_idea`.
+   **"Did you mean...?"**: when `first_idea` is `null` and `first_idea_candidates` is not empty, her typed first idea matched
+   several careers equally. Show the candidates (`soc2020`, `title`) as a list to choose from, then send the chosen SOC code
+   as `first_idea` in a new request. Do not draw the comparison until she has chosen.
 2. **The hedge** (never cut): a related career next to the top pick, with `risk_delta` (negative means safer) (`Hedge`).
 3. **Backtest button** (never cut): pick a past year, see how earlier ratings held up. Show bad results as they are.
 4. **Roadmap** (never cut): three steps and a "this month" action (`Roadmap`).

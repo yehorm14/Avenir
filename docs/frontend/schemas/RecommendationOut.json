@@ -84,6 +84,27 @@
       "title": "Career",
       "type": "object"
     },
+    "CareerRef": {
+      "additionalProperties": false,
+      "description": "Light pointer to a career, for 'Did you mean...?' lists.",
+      "properties": {
+        "soc2020": {
+          "pattern": "^\\d{4}$",
+          "title": "Soc2020",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "soc2020",
+        "title"
+      ],
+      "title": "CareerRef",
+      "type": "object"
+    },
     "ComponentScore": {
       "additionalProperties": false,
       "properties": {
@@ -178,6 +199,19 @@
       "properties": {
         "career": {
           "$ref": "#/$defs/Career"
+        },
+        "evidence": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "title | estimate; show 'estimate' as a badge",
+          "title": "Evidence"
         },
         "for_soc": {
           "title": "For Soc",
@@ -586,6 +620,14 @@
           "type": "null"
         }
       ]
+    },
+    "first_idea_candidates": {
+      "description": "careers the typed first idea matches equally; first_idea is null then",
+      "items": {
+        "$ref": "#/$defs/CareerRef"
+      },
+      "title": "First Idea Candidates",
+      "type": "array"
     },
     "first_idea_components": {
       "anyOf": [

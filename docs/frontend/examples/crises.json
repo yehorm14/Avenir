@@ -1,6 +1,7 @@
 [
   {
     "baseline_median": 0.0,
+    "baseline_real_pay_median": null,
     "flags": [
       "covid_year",
       "bridged_soc2010"
@@ -13,6 +14,7 @@
   },
   {
     "baseline_median": -0.0439,
+    "baseline_real_pay_median": null,
     "flags": [],
     "key": "cost_of_living",
     "label": "Cost-of-living shock",
@@ -22,6 +24,7 @@
   },
   {
     "baseline_median": null,
+    "baseline_real_pay_median": null,
     "flags": [
       "pending_source"
     ],
@@ -33,6 +36,7 @@
   },
   {
     "baseline_median": null,
+    "baseline_real_pay_median": null,
     "flags": [
       "pending_source"
     ],

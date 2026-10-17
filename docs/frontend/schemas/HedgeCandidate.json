@@ -1,6 +1,19 @@
 {
   "description": "One related role from ML hedges.json (CONTRACTS.md 4.3).",
   "properties": {
+    "evidence": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "title | estimate (ML v1.1)",
+      "title": "Evidence"
+    },
     "shared_skills": {
       "items": {
         "type": "string"

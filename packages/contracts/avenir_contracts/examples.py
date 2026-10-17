@@ -21,7 +21,7 @@ from .envelope import Envelope, ErrorBody, ErrorCode, Meta
 from .metric import Metric
 
 SCHEMA_MODELS: tuple[str, ...] = (
-    "Metric", "Career", "Tag", "TagMatch", "ProfileIn", "ProfileOut", "RecommendationRequest",
+    "Metric", "Career", "CareerRef", "Tag", "TagMatch", "ProfileIn", "ProfileOut", "RecommendationRequest",
     "RecommendationOut", "Pick", "Components", "Hedge", "HedgeCandidate", "Route", "Roadmap",
     "HistoryPoint", "Crisis", "BacktestOut", "SourceStatus", "Meta", "ErrorBody", "Explanation",
 )
