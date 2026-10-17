@@ -133,7 +133,15 @@ class ML:
         socs = [o["soc2020"] for o in self._load("occupations")["occupations"]]
         return {soc: round(sum(affinity[t].get(soc, 0.0) for t in tag_ids) / len(tag_ids), 4) for soc in socs}
 
+    def affinity(self) -> dict[str, dict[str, float]]:
+        """The whole tag -> {soc2020: affinity} table from fit.json (a missing entry means 0)."""
+        return copy.deepcopy(self._load("fit")["affinity"])
+
     # Track record, crises, provenance -------------------------------------
+    def backtest_years(self) -> list[int]:
+        """Base years that have a backtest window, oldest first."""
+        return sorted(w["base_year"] for w in self._load("backtest")["windows"])
+
     def backtest(self, base_year: int | None = None) -> dict:
         windows = self._load("backtest")["windows"]
         if base_year is None:

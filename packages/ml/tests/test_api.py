@@ -140,6 +140,17 @@ def test_backtest_windows(ml):
     assert ml.backtest_caveats()
 
 
+def test_public_accessors(ml):
+    years = ml.backtest_years()
+    assert years == sorted(years) and years
+    assert all(ml.backtest(y)["base_year"] == y for y in years)
+    aff = ml.affinity()
+    assert set(aff) == {t["id"] for t in ml.tags()}
+    assert all(0.0 <= v <= 1.0 for row in aff.values() for v in row.values())
+    aff["maths"].clear()  # a copy: the loader's table is unchanged
+    assert ml.affinity()["maths"]
+
+
 def test_history_flags_follow_the_rules(ml):
     for occ in ml.occupations():
         for p in ml.history(occ["soc2020"]):
