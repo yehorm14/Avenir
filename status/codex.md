@@ -1,13 +1,13 @@
 # Status: Codex
 
-Updated: 17 October 2026
+Updated: 18 October 2026
 
-Doing now: Navigation/account cleanup complete locally on codex/quant-soc-branch.
+Doing now: UK-demand Jobs section complete locally on codex/quant-soc-branch. Preview: http://127.0.0.1:4175/#/jobs.
 
-Done and merged: Added permanent Home / Quiz / Jobs / Chatbot navigation. Removed You/profile settings, privacy slogan, lock, home-city/nation forms and account copy. Jobs browses20 supplied careers with evidence/details and opens a prefilled known-career conversation. Chatbot works with the full catalogue before choosing careers. Quiz has8 questions and a results action without location/account fields; completing it clears stale conversational matching context. Existing ranked-choice workspace tools remain available. No remote push or merge.
+Done and merged: Searchable, sortable text directory with electrician and plumber first. Removed decorative icons, generic tagline, repeated pay labels and Details buttons. Career names open pay quartiles, employee totals, official demand categories, real/nominal/jobs history, an editable two-year salary estimate and sourced sector outlooks. Published forecast horizons are preserved. Added canonical plumber SOC 5315. Nothing pushed or merged remotely; no formal review.
 
-Interfaces changed: Frontend Page union adds jobs. API/contracts/data unchanged.
+Interfaces changed: App-local bootstrap and career lookup expose 21 careers. Matching/discovery retain the calibrated 20. Missing plumber pathways return 404; guides disclose missing route coverage. Shared contracts and snapshots unchanged.
 
-Verified: TypeScript/Vite build and whitespace checks pass. Desktop browser opened every primary section, browsed20 jobs, opened career details and prefilled discovery, completed8 quiz questions to3 matches, received a chatbot response, confirmed no account controls/fields and no1440px overflow or console warnings/errors. User preview refreshed. No test suite or formal review run. Evidence: apps/web/artifacts/navigation-no-account-desktop.jpg.
+Verified: TypeScript/Vite build, Prettier and whitespace checks pass. All 33 app API tests pass, with one existing dependency deprecation warning. Browser checked priority order, search/sorting, plumber/software/finance profiles, historical chart modes and code break, keyboard inspection, salary calculations, empty-input validation and no desktop overflow or console errors. User preview refreshed. Screenshots: apps/web/artifacts/uk-priority-jobs-desktop.jpg and software-pay-outlook-desktop.jpg.
 
-Blocked on: Nothing.
+Blocked on: Nothing for this request. Exact two-year earnings and occupation-specific 2031 vacancy counts are not supplied by these sources; the UI labels estimates and qualitative outlooks explicitly. No plumber fit/pathway is invented.

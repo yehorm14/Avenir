@@ -10,3 +10,5 @@
 - [x] [codex] Simplify entry to one screen, remove logo and marketing slogans, and move both clearly labelled career choices into the hero.
 
 - [x] [codex] Add Home / Quiz / Jobs / Chatbot navigation and remove the profile/privacy menu.
+
+- [x] [codex] Prioritize evidenced UK shortage careers and add sourced pay/employment/outlook information to a simpler Jobs section.

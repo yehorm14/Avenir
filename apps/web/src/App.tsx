@@ -6,6 +6,7 @@ import { Icon, careerIcon } from "./icons";
 import { SalaryChart, money, percent } from "./Charts";
 import { getCareerContent } from "./content";
 import Landing from "./Landing";
+import Jobs from "./Jobs";
 import Discovery, { type DiscoveryResult } from "./Discovery";
 
 const pageNames: Record<Page, string> = {
@@ -389,41 +390,19 @@ export default function App() {
               <Quiz prefs={prefs} update={update} finish={finish} go={go} />
             )}
             {page === "jobs" && (
-              <>
-                <PageHeading
-                  label="Jobs"
-                  title="Explore careers."
-                  description="Browse the work, skills and pay for each career."
-                />
-                <p className="jobs-count">{careers.length} careers</p>
-                <div className="jobs-grid">
-                  {careers.map((career) => (
-                    <article
-                      className="opportunity-card job-card"
-                      key={career.soc}
-                    >
-                      <CareerMark career={career} />
-                      <span className="job-sector">{career.sector}</span>
-                      <h3>{career.title}</h3>
-                      <p>{career.summary}</p>
-                      <div className="job-pay">
-                        <b>{money(value(career, "pay_median"))}</b>
-                        <span>UK median annual pay</span>
-                      </div>
-                      <button
-                        className="button secondary"
-                        onClick={() => setInspect(career)}
-                      >
-                        Details
-                      </button>
-                    </article>
-                  ))}
-                </div>
-                <p className="fine-print">
-                  ONS ASHE 2025, provisional. Full-time employees; excludes
-                  self-employment. These figures are not starting salaries.
-                </p>
-              </>
+              <Jobs
+                careers={careers}
+                onExplore={(career) => {
+                  update({
+                    discovery: {
+                      mode: "known",
+                      answers: { direction: career.title },
+                      step: 1,
+                    },
+                  });
+                  go("conversation");
+                }}
+              />
             )}
             {page === "matches" &&
               (prefs.completed ? (

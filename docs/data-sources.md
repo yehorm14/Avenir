@@ -55,3 +55,12 @@ Then `make data-check` on both machines and compare `data/manifest.lock.json`.
 - [ONS EMP04, employment by occupation](https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/employmentbyoccupationemp04)
 - [ILO Working Paper 140](https://www.ilo.org/publications/generative-ai-and-jobs-refined-global-index-occupational-exposure) and [WP140 web page](https://webapps.ilo.org/static/english/intserv/working-papers/wp140/index.html)
 - [Occupations in Demand 2025 data guidance](https://explore-education-statistics.service.gov.uk/find-statistics/occupations-in-demand/2025/data-guidance)
+
+
+## Jobs evidence added 18 October 2026
+
+- Skills England, Occupations in Demand 2025: latest release, updated 8 January 2026; next release December 2026. Exact categories are in apps/web/src/careerEvidence.ts. The index measures demand pressure, not proof of a worker shortage. https://explore-education-statistics.service.gov.uk/find-statistics/occupations-in-demand/2025
+- Migration Advisory Committee, Temporary Shortage List Stage 2, 23 July 2026: relatively strong historical shortage evidence for electricians; mixed historical evidence and future shortage risk for plumbers. https://www.gov.uk/government/publications/temporary-shortage-list-stage-2-report/temporary-shortage-list-stage-2-report-accessible
+- National Careers Service: starter-to-experienced salary guides, linked per role. No official two-year salary statistic is claimed. The editable scenario compounds starting pay with assumed annual increases and inflation; the default 5%/2% values are illustrative assumptions.
+- Outlooks: Skills England's 2030 assessment and 2026 sector assessments; CITB's 2026–2030 construction outlook; explicitly labelled NHS and DfE sources. Published dates, horizons and geography remain visible. No forecast is extended to 2031. https://www.gov.uk/government/publications/assessment-of-priority-skills-to-2030/assessment-of-priority-skills-to-2030
+- Pay and employment history: unchanged Arsenii ASHE/CPIH data. Plumber SOC 5315 uses its own metrics and history. Max's mis-coded SOC 5314 plumbing content is not used. The affinity model lacks 5315, so plumbing remains catalogue-only and links to the official training guide.

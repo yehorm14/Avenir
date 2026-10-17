@@ -10,3 +10,5 @@ Reference: https://www.quant-soc.com, inspected 17 October 2026 across its homep
 - Respect reduced motion and keyboard focus. This pass prioritizes desktop, as requested.
 
 - Primary navigation: Home, Quiz, Jobs, Chatbot. No account/profile menu, lock or privacy slogan. Jobs browses careers; Chatbot can be used without completing discovery.
+
+- Jobs uses a searchable, sortable text directory with thin rules and directly selectable career names. No decorative career icons, generic tagline or Details buttons. Apple’s model comparison (https://www.apple.com/mac/compare/), IBM’s product directory (https://www.ibm.com/products) and Porsche’s model overview (https://www.porsche.com/uk/models/) inform the information hierarchy. Keep the established charcoal palette.

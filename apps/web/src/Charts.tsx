@@ -77,17 +77,13 @@ export function SalaryChart({
     <section className={`chart-module ${compact ? "compact" : ""}`}>
       <div className="chart-top">
         <div>
-          <h3>
-            {mode === "jobs"
-              ? "Employment over time"
-              : "A clearer picture of pay"}
-          </h3>
+          <h3>{mode === "jobs" ? "Employment over time" : "Pay history"}</h3>
           <p>
             {mode === "real"
-              ? "What earnings could actually buy. Inflation included."
+              ? "Inflation-adjusted. April 2025 prices."
               : mode === "nominal"
-                ? "The published pounds, before adjusting for inflation."
-                : "Historical employment, rather than open vacancies."}
+                ? "Published annual pay. No inflation adjustment."
+                : "Full-time employee jobs. Not vacancies."}
           </p>
         </div>
         <div className="segmented" aria-label="Chart measure">

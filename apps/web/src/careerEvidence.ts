@@ -267,19 +267,14 @@ export const careerEvidence: Record<string, CareerEvidence> = {
   "2134": entry(
     "2134",
     software,
-    salary(
-      "software-developer",
-      "Software developer; starter to experienced, not a two-year pay scale",
-      30000,
-      75000,
-    ),
+    salary("software-developer", "Software developer", 30000, 75000),
   ),
   "3544": entry(
     "3544",
     digital,
     salary(
       "data-analyst-statistician",
-      "Data analyst-statistician; one NCS role example",
+      "Data analyst-statistician (example role)",
       28000,
       65000,
     ),
@@ -294,19 +289,14 @@ export const careerEvidence: Record<string, CareerEvidence> = {
   "2121": entry(
     "2121",
     construction,
-    salary(
-      "civil-engineer",
-      "Civil engineer; starter to experienced annual guide",
-      29000,
-      63000,
-    ),
+    salary("civil-engineer", "Civil engineer", 29000, 63000),
   ),
   "2123": entry(
     "2123",
     engineering,
     salary(
       "electrical-engineer",
-      "Electrical engineer; distinct from an installation electrician",
+      "Electrical engineer (not installation electrician)",
       27000,
       58000,
     ),
@@ -319,7 +309,7 @@ export const careerEvidence: Record<string, CareerEvidence> = {
     quantitative,
     salary(
       "actuary",
-      "Actuary example only: this SOC also includes economists and statisticians with different pay guides",
+      "Actuary example; economists and statisticians have different pay guides",
       32000,
       70000,
     ),
@@ -329,7 +319,7 @@ export const careerEvidence: Record<string, CareerEvidence> = {
     finance,
     salary(
       "investment-analyst",
-      "Investment analyst example within the broader finance and investment group",
+      "Investment analyst (example role)",
       28000,
       75000,
     ),
@@ -340,7 +330,7 @@ export const careerEvidence: Record<string, CareerEvidence> = {
     health,
     salary(
       "radiographer",
-      "Radiographer; pay varies by UK nation, employer and specialism",
+      "Radiographer; UK nation and specialism affect pay",
       32000,
       48000,
     ),
@@ -348,12 +338,7 @@ export const careerEvidence: Record<string, CareerEvidence> = {
   "5241": entry(
     "5241",
     construction,
-    salary(
-      "electrician",
-      "Electrician; this guide is not an apprentice wage scale",
-      26000,
-      45000,
-    ),
+    salary("electrician", "Qualified electrician", 26000, 45000),
     {
       label: "Shortage evidence",
       reason:
@@ -366,7 +351,7 @@ export const careerEvidence: Record<string, CareerEvidence> = {
     construction,
     salary(
       "plumber",
-      "Plumber example: this SOC also includes heating and ventilation roles; not apprentice pay",
+      "Plumber; heating and ventilation roles may differ",
       24000,
       46000,
     ),
@@ -382,7 +367,7 @@ export const careerEvidence: Record<string, CareerEvidence> = {
     teaching,
     salary(
       "secondary-school-teacher",
-      "Secondary school teacher: NCS England guide; other UK pay scales differ",
+      "Secondary school teacher (England)",
       34000,
       53000,
     ),

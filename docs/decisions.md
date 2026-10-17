@@ -19,3 +19,5 @@ One line per decision, newest at the bottom. Agents: read this before undoing an
 - 17 Oct Codex for Illia: Simplify the public entry to one screen. Remove the top-left logo, header/hero/footer slogans and reassurance screen; place the known-career and discovery choices directly under the mission with two-word action labels.
 
 - 17 Oct Codex for Illia: Keep Home, Quiz, Jobs and Chatbot in the primary menu on every screen. Remove the profile/privacy menu and location questions. Jobs browses the supplied career catalogue and Chatbot works before quiz completion; selected-career workspace tools remain available.
+
+- 18 Oct Codex for Illia: Jobs prioritizes electricians and plumbers using MAC 2026 evidence, with exact Skills England 2025 demand categories kept separate. Add canonical plumber5315 to the catalogue only; matching remains calibrated to20 roles. Show sourced employment/pay history and published sector outlook horizons; two-year salary is an editable scenario with explicit assumptions, not an asserted forecast.
