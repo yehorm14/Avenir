@@ -1,30 +1,15 @@
 // Adapted from Max's local-only persistent store in prototypes/pathfinder-game.
 import { useEffect, useState } from "react";
 import type { Preferences } from "./types";
-export const initial: Preferences = {
-  answers: {},
-  step: 0,
-  completed: false,
-  selected: [],
-  weights: { pay: 30, interest: 45, need: 25 },
-  location: "Glasgow",
-  nation: "Scotland",
-  checked: [],
-  saved: [],
-};
+import { initial, normalisePreferences } from "./preferences";
+export { initial } from "./preferences";
 export function usePreferences() {
   const [value, setValue] = useState<Preferences>(() => {
     try {
       const raw = JSON.parse(localStorage.getItem("avenir.v1") || "null");
-      return raw && typeof raw === "object"
-        ? {
-            ...initial,
-            ...raw,
-            weights: { ...initial.weights, ...raw.weights },
-          }
-        : initial;
+      return normalisePreferences(raw);
     } catch {
-      return initial;
+      return structuredClone(initial);
     }
   });
   useEffect(() => {

@@ -1,0 +1,424 @@
+.plan-navigation {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  margin: 0 0 34px;
+  padding: 8px 0 16px;
+  border-bottom: 1px solid var(--line);
+}
+.plan-navigation button {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.plan-navigation button[aria-current] {
+  color: var(--foreground);
+  background: var(--surface-soft);
+}
+.resume-plan {
+  width: min(100%, 920px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  gap: 24px;
+  padding: 22px 4px 0;
+}
+.resume-plan span,
+.resume-plan strong {
+  display: block;
+}
+.resume-plan span {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 3px;
+}
+.resume-plan strong {
+  font-size: 16px;
+  font-weight: 500;
+}
+.resume-plan .mission-cta {
+  margin: 0;
+}
+.decision-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.85fr);
+  gap: 30px;
+}
+.decision-main {
+  padding: 32px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--white);
+}
+.decision-main > h2 {
+  font-size: clamp(26px, 3vw, 38px);
+  margin: 20px 0 12px;
+}
+.decision-main > p {
+  max-width: 65ch;
+}
+.decision-status {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.decision-evidence {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 25px 0;
+  margin-top: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.decision-evidence span,
+.decision-evidence strong,
+.decision-evidence small {
+  display: block;
+}
+.decision-evidence span {
+  color: var(--muted);
+  font-size: 12px;
+}
+.decision-evidence strong {
+  font-weight: 500;
+  font-size: 27px;
+  margin: 5px 0;
+}
+.decision-evidence strong small {
+  display: inline;
+  font-size: 13px;
+}
+.decision-evidence small {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+.decision-note {
+  display: block;
+  margin-top: 25px;
+}
+.decision-note > span {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+.decision-note textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 110px;
+  padding: 14px;
+  background: var(--canvas);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--foreground);
+  line-height: 1.65;
+}
+.decision-note textarea::placeholder {
+  color: var(--muted);
+  opacity: 0.9;
+}
+.decision-route {
+  margin-top: 24px;
+}
+.decision-route h3 {
+  margin-bottom: 14px;
+  font-size: 15px;
+}
+.decision-route p {
+  margin-top: 12px;
+  font-size: 13px;
+}
+.decision-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 22px;
+  margin-top: 28px;
+}
+.decision-actions {
+  padding: 25px 0 0;
+}
+.decision-actions .section-header h2 {
+  font-size: 25px;
+}
+.decision-actions .section-header > span {
+  font-size: 12px;
+  color: var(--muted);
+}
+.decision-actions > p {
+  font-size: 14px;
+  margin-top: 12px;
+}
+.decision-progress {
+  height: 4px;
+  border-radius: 99px;
+  background: var(--line);
+  margin: 25px 0 15px;
+  overflow: hidden;
+}
+.decision-progress span {
+  display: block;
+  height: 100%;
+  background: var(--green);
+}
+.decision-actions .task-check {
+  margin: 0;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+  line-height: 1.7;
+  align-items: flex-start;
+}
+.decision-actions .task-check input {
+  margin-top: 6px;
+  min-width: 18px;
+  height: 18px;
+  accent-color: var(--green);
+}
+.decision-actions .is-done > span {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+.decision-actions > .text-button {
+  margin-top: 24px;
+}
+.decision-nation {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  padding-top: 30px;
+  margin-top: 20px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+}
+.decision-nation select {
+  background: var(--white);
+  border: 1px solid var(--line);
+  padding: 9px 12px;
+  border-radius: 8px;
+  color: var(--foreground);
+}
+.decision-alternatives,
+.decision-saved {
+  margin-top: 44px;
+}
+.decision-alternatives h2,
+.decision-saved h2 {
+  font-size: 23px;
+}
+.decision-comparison {
+  margin: 20px 0 16px;
+}
+.decision-comparison table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+.decision-comparison th,
+.decision-comparison td {
+  border-bottom: 1px solid var(--line);
+  padding: 20px 16px;
+  vertical-align: top;
+}
+.decision-comparison thead th {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--muted);
+}
+.decision-comparison tbody th {
+  width: 35%;
+  font-weight: 500;
+}
+.decision-comparison td {
+  font-size: 17px;
+  white-space: nowrap;
+}
+.decision-comparison strong {
+  display: block;
+  margin-top: 6px;
+  font-weight: 500;
+}
+.decision-comparison .tiny {
+  font-size: 11px;
+}
+.decision-comparison small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 6px;
+}
+.decision-alternatives > .text-button {
+  margin-top: 13px;
+}
+.decision-saved ul {
+  list-style: none;
+  padding: 0;
+  margin: 18px 0;
+}
+.decision-saved li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+  gap: 20px;
+}
+.decision-saved small {
+  display: block;
+  color: var(--muted);
+  margin-top: 5px;
+}
+.decision-saved > p {
+  margin-top: 18px;
+}
+.decision-storage {
+  margin-top: 40px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  max-width: 75ch;
+  color: var(--muted);
+  font-size: 13px;
+}
+.decision-storage summary {
+  color: var(--foreground);
+  cursor: pointer;
+  padding: 8px 0;
+}
+.decision-storage p {
+  margin: 12px 0;
+}
+.reset-confirm {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  margin-top: 18px;
+}
+.reset-confirm .button {
+  margin: 8px 12px 0 0;
+}
+.match-provenance {
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--muted);
+  padding-top: 10px;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+[tabindex="0"]:focus-visible {
+  outline: 3px solid #9fc1ff;
+  outline-offset: 4px;
+}
+.top-links {
+  flex-wrap: nowrap;
+}
+.top-links > button {
+  flex-shrink: 0;
+}
+@media (max-width: 760px) {
+  .topbar,
+  .with-top-nav .topbar {
+    margin: 10px 12px 0;
+    padding: 7px 10px;
+    height: auto;
+    min-height: 56px;
+    top: 10px;
+    max-width: calc(100vw - 24px);
+  }
+  .top-links {
+    display: flex;
+    overflow-x: auto;
+    gap: 2px;
+    padding: 5px 2px;
+    width: 100%;
+    scrollbar-width: thin;
+  }
+  .top-links > button {
+    display: block;
+    padding: 8px 12px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .mission-section {
+    padding: 110px 22px 40px;
+    min-height: calc(100svh - 64px);
+  }
+  .mission-wordmark {
+    font-size: clamp(38px, 11vw, 76px);
+    letter-spacing: 0.04em;
+    text-indent: 0.04em;
+  }
+  .mission-section h1 {
+    font-size: 18px;
+    max-width: 30ch;
+  }
+  .direction-choices {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .direction-choice {
+    padding: 23px;
+  }
+  .direction-choice h2 {
+    font-size: 20px;
+  }
+  .direction-choice .mission-cta {
+    margin-top: 19px;
+  }
+  .resume-plan {
+    gap: 15px;
+  }
+  .resume-plan .mission-cta {
+    flex-shrink: 0;
+    padding: 10px 16px;
+  }
+  .plan-navigation {
+    margin-bottom: 25px;
+    gap: 0;
+  }
+  .plan-navigation button {
+    padding: 9px 11px;
+    font-size: 12px;
+  }
+  .decision-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .decision-main {
+    padding: 24px;
+  }
+  .decision-evidence {
+    grid-template-columns: 1fr 1fr;
+    gap: 13px;
+  }
+  .decision-evidence strong {
+    font-size: 24px;
+  }
+  .decision-actions {
+    padding: 18px 2px;
+  }
+  .decision-plan .page-heading {
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .decision-comparison table {
+    min-width: 680px;
+  }
+  .decision-alternatives .section-header {
+    align-items: flex-start;
+    gap: 18px;
+  }
+}

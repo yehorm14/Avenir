@@ -1140,3 +1140,6 @@ export const sourceLinks = [
   })),
   ...Object.values(opportunities).map(({ title, url }) => ({ title, url })),
 ];
+
+export const allOpportunities: CareerOpportunity[] =
+  Object.values(opportunities);

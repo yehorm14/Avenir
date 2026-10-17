@@ -30,8 +30,6 @@ type Question = {
   chips: string[];
 };
 const unsure = "I'm not sure yet";
-const short = (answer: string) =>
-  answer.length > 90 ? `${answer.slice(0, 87).trimEnd()}…` : answer;
 const acknowledgement = (answer: string, id: string) => {
   if (answer === unsure) return "We can leave that open for now.";
   const subject: Record<string, string> = {
@@ -41,7 +39,7 @@ const acknowledgement = (answer: string, id: string) => {
     values: "what matters to you",
     skills: "the strengths you mentioned",
   };
-  return `I’ll include ${subject[id] ?? "that context"}: “${short(answer).replace(/[.!?]+$/, "")}”.`;
+  return `I’ll include ${subject[id] ?? "that context"} in the comparison.`;
 };
 
 export default function Discovery({

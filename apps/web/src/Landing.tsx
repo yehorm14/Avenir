@@ -2,8 +2,10 @@ import "./landing.css";
 
 export default function Landing({
   onChoose,
+  resume,
 }: {
   onChoose: (mode: "known" | "explore") => void;
+  resume?: { title: string; onResume: () => void };
 }) {
   return (
     <div className="aventier-landing">
@@ -66,6 +68,20 @@ export default function Landing({
             </button>
           </article>
         </div>
+        {resume && (
+          <div className="resume-plan">
+            <div>
+              <span>Your saved plan</span>
+              <strong>{resume.title}</strong>
+            </div>
+            <button
+              className="mission-cta mission-cta-secondary"
+              onClick={resume.onResume}
+            >
+              Resume plan
+            </button>
+          </div>
+        )}
       </section>
     </div>
   );

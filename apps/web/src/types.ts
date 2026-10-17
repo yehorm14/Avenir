@@ -56,6 +56,8 @@ export type Bootstrap = {
   };
 };
 export type Preferences = {
+  routes: Record<string, "university" | "apprenticeship">;
+  notes: Record<string, string>;
   discovery?: {
     mode: "known" | "explore";
     answers: Record<string, string>;

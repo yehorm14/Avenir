@@ -4,7 +4,10 @@ import { api, initial, usePreferences } from "./store";
 import { questions, tagsFromAnswers } from "./quiz";
 import { Icon, careerIcon } from "./icons";
 import { SalaryChart, money, percent } from "./Charts";
-import { getCareerContent } from "./content";
+import { allOpportunities, getCareerContent } from "./content";
+import { buildPlanDocument } from "./planDocument";
+import MyPlan from "./MyPlan";
+import Guides from "./Guides";
 import Landing from "./Landing";
 import Jobs from "./Jobs";
 import Discovery, { type DiscoveryResult } from "./Discovery";
@@ -15,7 +18,7 @@ const pageNames: Record<Page, string> = {
   quiz: "Quiz",
   jobs: "Jobs",
   matches: "Your matches",
-  overview: "Overview",
+  overview: "My plan",
   path: "Your pathway",
   opportunities: "Opportunities",
   guides: "Chatbot",
@@ -39,49 +42,6 @@ const value = (c: Career, key: string) => {
     ? null
     : m.value;
 };
-const guideNames: Record<string, { name: string; role: string }> = {
-  building: { name: "Alex", role: "Engineering & the built world" },
-  engineering: { name: "Alex", role: "Engineering & the built world" },
-  technology: { name: "Sam", role: "Technology & digital careers" },
-  finance: { name: "Jamie", role: "Finance & business" },
-  health: { name: "Maya", role: "Healthcare & people" },
-};
-const specialistNames: Record<string, string> = {
-  "2134": "Sam",
-  "3544": "Nora",
-  "2133": "Taylor",
-  "2135": "Kai",
-  "2141": "Ada",
-  "2142": "Riley",
-  "2451": "Alex",
-  "2452": "Morgan",
-  "3120": "Theo",
-  "2121": "Alex",
-  "2123": "Ellis",
-  "3113": "Max",
-  "2453": "Jordan",
-  "2454": "Casey",
-  "2433": "Robin",
-  "2422": "Jamie",
-  "2421": "Charlie",
-  "2254": "Maya",
-  "5241": "Eli",
-  "2313": "Sophie",
-};
-function guideFor(c: Career) {
-  const icon = careerIcon(c.soc);
-  const group =
-    guideNames[
-      ["building", "bolt", "compass"].includes(icon)
-        ? "building"
-        : ["money", "chart"].includes(icon)
-          ? "finance"
-          : icon === "heart" || icon === "book"
-            ? "health"
-            : "technology"
-    ];
-  return { ...group, name: specialistNames[c.soc] ?? group.name };
-}
 function CareerMark({
   career,
   large = false,
@@ -240,7 +200,6 @@ export default function App() {
       completed: true,
       step: questions.length,
       discovery: undefined,
-      selected: [],
     });
     go("matches");
   };
@@ -248,7 +207,6 @@ export default function App() {
     setPrefs((p) => ({
       ...p,
       completed: true,
-      selected: [],
       answers: {},
       weights: result.weights,
       discovery: {
@@ -267,18 +225,25 @@ export default function App() {
   };
   const showShell = !["discover", "quiz", "conversation"].includes(page);
   const exportPlan = () => {
-    if (!primary) return;
-    const content = getCareerContent(primary.soc, primary.family);
-    const body = `# My Aventier career plan\n\n${selected.map((c, i) => `${i + 1}. ${c.title}`).join("\n")}\n\n## First choice: ${primary.title}\n\n${content.intro}\n\n## Route to explore\n${content.broadDegree}\n${content.whyBroad}\n\n## First steps\n${content.firstSteps.map((s) => `- ${s}`).join("\n")}\n\n## Universities to explore\n${content.universities.map((u) => `- ${u.name}: ${u.course} — ${u.url}`).join("\n")}\n\n## Opportunity organisers\n${content.opportunities.map((o) => `- ${o.title}: ${o.url}`).join("\n")}\n\n## Evidence\n2025 median full-time employee pay: ${money(value(primary, "pay_median"))}. ONS ASHE; preliminary. Pay is not a starting salary. Preliminary interest matching; guidance is exploratory, not a validated psychological test. Course and event availability must be checked at source.\n`;
+    if (!primary || !data) return;
+    const body = buildPlanDocument({
+      careers: selected,
+      preferences: prefs,
+      content: Object.fromEntries(
+        selected.map((c) => [c.soc, getCareerContent(c.soc, c.family)]),
+      ),
+      opportunities: allOpportunities,
+      sources: data.sources as Record<string, { name?: string; url?: string }>,
+    });
     const url = URL.createObjectURL(
-      new Blob([body], { type: "text/markdown" }),
+      new Blob([body], { type: "text/html;charset=utf-8" }),
     );
     const a = document.createElement("a");
     a.href = url;
-    a.download = "my-aventier-plan.md";
+    a.download = "my-aventier-plan.html";
     a.click();
-    URL.revokeObjectURL(url);
-    setToast("Your career plan has been downloaded.");
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    setToast("Plan downloaded. Open it in a browser to share or print.");
   };
   const empty = (
     <div className="empty-state">
@@ -313,7 +278,8 @@ export default function App() {
               ["discover", "Home"],
               ["quiz", "Quiz"],
               ["jobs", "Jobs"],
-              ["guides", "Chatbot"],
+              ["guides", "Career guide"],
+              ["overview", "My plan"],
             ] as const
           ).map(([id, label]) => (
             <button
@@ -325,18 +291,6 @@ export default function App() {
               {label}
             </button>
           ))}
-          {showShell &&
-            prefs.completed &&
-            [...nav, { id: "evidence" as const, icon: "chart" }].map((n) => (
-              <button
-                key={n.id}
-                onClick={() => go(n.id)}
-                className={page === n.id ? "active" : ""}
-                aria-current={page === n.id ? "page" : undefined}
-              >
-                {pageNames[n.id]}
-              </button>
-            ))}
         </nav>
       </header>
       <main
@@ -345,6 +299,23 @@ export default function App() {
         tabIndex={-1}
         className={`main-content ${showShell ? "workspace" : ""}`}
       >
+        {showShell &&
+          prefs.completed &&
+          ["overview", "matches", "path", "opportunities", "evidence"].includes(
+            page,
+          ) && (
+            <nav className="plan-navigation" aria-label="Plan navigation">
+              {[...nav, { id: "evidence" as const, icon: "chart" }].map((n) => (
+                <button
+                  key={n.id}
+                  onClick={() => go(n.id)}
+                  aria-current={page === n.id ? "page" : undefined}
+                >
+                  {pageNames[n.id]}
+                </button>
+              ))}
+            </nav>
+          )}
         {loadError ? (
           <div className="empty-state" role="alert">
             <Icon name="info" size={36} />
@@ -364,7 +335,16 @@ export default function App() {
           </div>
         ) : (
           <>
-            {page === "discover" && <Landing onChoose={start} />}
+            {page === "discover" && (
+              <Landing
+                onChoose={start}
+                resume={
+                  primary
+                    ? { title: primary.title, onResume: () => go("overview") }
+                    : undefined
+                }
+              />
+            )}
             {page === "conversation" && (
               <Discovery
                 mode={prefs.discovery?.mode ?? "explore"}
@@ -518,6 +498,20 @@ export default function App() {
                                 </b>
                               </div>
                             </div>
+                            <div className="match-provenance">
+                              <External href="https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/occupation4digitsoc2010ashetable14">
+                                ONS ASHE
+                              </External>{" "}
+                              Pay {c.metrics.pay_median?.as_of}; employee-job
+                              trend {c.metrics.demand_trend?.as_of}.
+                              {c.metrics.demand_trend?.flags.includes(
+                                "imputed_parent",
+                              )
+                                ? " Trend estimated from a wider occupation group."
+                                : ""}{" "}
+                              Interest and balance are comparison indices, not
+                              probabilities.
+                            </div>
                             <div className="match-row-footer">
                               <button
                                 className="text-button"
@@ -548,19 +542,22 @@ export default function App() {
                                 )}
                               </button>
                             </div>
-                            {i === 0 && (
-                              <span className="sr-only">
-                                Highest overall score for your current
-                                priorities.
-                              </span>
-                            )}
+                            {i === 0 &&
+                              !prefs.discovery?.referenceSoc &&
+                              !prefs.discovery?.targetSoc && (
+                                <span className="sr-only">
+                                  Highest overall score for your current
+                                  priorities.
+                                </span>
+                              )}
                           </article>
                         ))
                       )}
                       <p className="fine-print">
                         Pay and employment: ONS ASHE, UK, 2025 / 2021–2025.
-                        Preliminary, full-time employees only. The pay range and
-                        all evidence are available under “Why this could fit”.
+                        Preliminary. Pay covers full-time employees; employment
+                        coverage varies by occupation. The pay range and all
+                        evidence are available under “Why this could fit”.
                         Scores are comparison indices, not probabilities.
                       </p>
                     </section>
@@ -651,7 +648,10 @@ export default function App() {
                       </section>
                       <section className="shortlist">
                         <h3>Your three directions</h3>
-                        <p>The first choice becomes your main plan.</p>
+                        <p>
+                          The first choice becomes your main plan. Your choices
+                          stay here until you remove or replace them.
+                        </p>
                         {[0, 1, 2].map((i) => (
                           <div
                             className={`shortlist-slot ${selected[i] ? "filled" : ""}`}
@@ -719,115 +719,21 @@ export default function App() {
               ))}
             {page === "overview" &&
               (primary ? (
-                <>
-                  <PageHeading
-                    label="Your workspace"
-                    title="Your career plan."
-                    description="Your interests are a starting point. A little action will tell you much more."
-                  />
-                  <div className="overview-grid">
-                    <section className="main-pick">
-                      <div className="eyebrow-line">
-                        <span>
-                          <span className="status-dot" /> Your first choice
-                        </span>
-                        <span className="subtle-badge">Personal plan</span>
-                      </div>
-                      <CareerMark career={primary} large />
-                      <h2>{primary.title}</h2>
-                      <p>
-                        {getCareerContent(primary.soc, primary.family).intro}
-                      </p>
-                      <button
-                        className="button primary"
-                        onClick={() => go("path")}
-                      >
-                        Explore your pathway <Icon name="arrow" size={17} />
-                      </button>
-                      <div className="pick-stat">
-                        <span>UK median annual pay</span>
-                        <b>{money(value(primary, "pay_median"))}</b>
-                        <small>
-                          ONS ASHE 2025 · Preliminary · Full-time employees
-                        </small>
-                      </div>
-                    </section>
-                    <section className="next-step-card">
-                      <span className="round-icon">
-                        <Icon name="leaf" size={22} />
-                      </span>
-                      <h3>
-                        Big futures.
-                        <br />
-                        Small next steps.
-                      </h3>
-                      <p>Start with something you can actually do this week.</p>
-                      {getCareerContent(primary.soc, primary.family)
-                        .firstSteps.slice(0, 3)
-                        .map((s, i) => (
-                          <label className="task-check" key={s}>
-                            <input
-                              type="checkbox"
-                              checked={prefs.checked.includes(
-                                `${primary.soc}-${i}`,
-                              )}
-                              onChange={() =>
-                                update({
-                                  checked: prefs.checked.includes(
-                                    `${primary.soc}-${i}`,
-                                  )
-                                    ? prefs.checked.filter(
-                                        (k) => k !== `${primary.soc}-${i}`,
-                                      )
-                                    : [...prefs.checked, `${primary.soc}-${i}`],
-                                })
-                              }
-                            />
-                            <span>{s}</span>
-                          </label>
-                        ))}
-                      <span className="tiny green">
-                        {
-                          prefs.checked.filter((k) =>
-                            k.startsWith(`${primary.soc}-`),
-                          ).length
-                        }{" "}
-                        of 3 steps explored
-                      </span>
-                    </section>
-                  </div>
-                  <section className="alternatives">
-                    <div className="section-header">
-                      <h3>Keep your other doors open.</h3>
-                      <button
-                        className="text-button"
-                        onClick={() => go("matches")}
-                      >
-                        Revisit your choices <Icon name="chevron" size={15} />
-                      </button>
-                    </div>
-                    <div className="alternative-list">
-                      {selected.slice(1).map((c, i) => (
-                        <button key={c.soc} onClick={() => setInspect(c)}>
-                          <span className="tiny">Choice {i + 2}</span>
-                          <CareerMark career={c} />
-                          <div>
-                            <b>{c.title}</b>
-                            <span>
-                              {money(value(c, "pay_median"))} median annual pay
-                            </span>
-                          </div>
-                          <Icon name="chevron" size={17} />
-                        </button>
-                      ))}
-                    </div>
-                  </section>
-                  <SalaryChart careers={selected} />
-                </>
+                <MyPlan
+                  careers={selected}
+                  prefs={prefs}
+                  update={update}
+                  go={go}
+                  onExport={exportPlan}
+                  onReset={() => {
+                    setPrefs(structuredClone(initial));
+                    setMatches([]);
+                    go("discover");
+                    setToast("Saved plan cleared from this browser.");
+                  }}
+                />
               ) : prefs.completed ? (
-                <>
-                  <NeedChoices go={go} />
-                </>
+                <NeedChoices go={go} />
               ) : (
                 empty
               ))}
@@ -836,6 +742,12 @@ export default function App() {
                 <Pathway
                   career={primary}
                   nation={prefs.nation}
+                  routeType={prefs.routes[primary.soc] ?? "university"}
+                  onRouteChange={(routeType) =>
+                    update({
+                      routes: { ...prefs.routes, [primary.soc]: routeType },
+                    })
+                  }
                   onExport={exportPlan}
                   onOpportunities={() => go("opportunities")}
                   onGuide={() => go("guides")}
@@ -1204,7 +1116,7 @@ function MetricDetail({
       {metricKey === "pay_median" && (
         <p>
           Middle half of full-time employees; excludes self-employed workers.
-          This is not a starting salary. 2025 figures are provisional.
+          This is not a starting salary.
         </p>
       )}
       {metricKey === "exposure" && (
@@ -1227,7 +1139,26 @@ function MetricDetail({
           {m?.low != null && m.high != null
             ? `Range: ${percent(m.low)} to ${percent(m.high)}. `
             : ""}
-          Full-time employees only. Not a forecast of vacancies.
+          Not a forecast of vacancies.
+        </p>
+      )}
+      {m?.note && <p>{m.note}</p>}
+      {m?.flags.includes("imputed_parent") && (
+        <p>
+          No direct figure exists; this is estimated from the wider occupation
+          group.
+        </p>
+      )}
+      {m?.flags.includes("provisional") && (
+        <p>This figure is provisional and may be revised.</p>
+      )}
+      {m?.flags.includes("category_level") && (
+        <p>
+          Broad job-advert category, not this exact occupation
+          {typeof m.extra?.adverts_category === "string"
+            ? `: ${m.extra.adverts_category}`
+            : ""}
+          .
         </p>
       )}
     </div>
@@ -1256,12 +1187,16 @@ type Plan = {
 function Pathway({
   career,
   nation,
+  routeType,
+  onRouteChange,
   onExport,
   onOpportunities,
   onGuide,
 }: {
   career: Career;
   nation: string;
+  routeType: "university" | "apprenticeship";
+  onRouteChange: (route: "university" | "apprenticeship") => void;
   onExport: () => void;
   onOpportunities: () => void;
   onGuide: () => void;
@@ -1269,7 +1204,6 @@ function Pathway({
   const content = getCareerContent(career.soc, career.family);
   const [tab, setTab] = useState("plan");
   const [plan, setPlan] = useState<Plan | null>(null);
-  const [routeType, setRouteType] = useState("university");
   const [planError, setPlanError] = useState("");
   useEffect(() => {
     const c = new AbortController();
@@ -1351,13 +1285,13 @@ function Pathway({
                 <div className="segmented">
                   <button
                     aria-pressed={routeType === "university"}
-                    onClick={() => setRouteType("university")}
+                    onClick={() => onRouteChange("university")}
                   >
                     University
                   </button>
                   <button
                     aria-pressed={routeType === "apprenticeship"}
-                    onClick={() => setRouteType("apprenticeship")}
+                    onClick={() => onRouteChange("apprenticeship")}
                   >
                     Earn & learn
                   </button>
@@ -1469,10 +1403,8 @@ function Pathway({
                 ))}
               </section>
               <section className="guide-invite">
-                <span className="guide-avatar">
-                  {guideFor(career).name.slice(0, 1)}
-                </span>
-                <h3>Talk it through with {guideFor(career).name}.</h3>
+                <Icon name="chat" size={28} />
+                <h3>Ask about the evidence.</h3>
                 <p>
                   Ask about the work, the route, or the things you're still
                   unsure about.
@@ -1481,7 +1413,7 @@ function Pathway({
                   className="button secondary full-width"
                   onClick={onGuide}
                 >
-                  Meet your career guide <Icon name="chat" size={16} />
+                  Open career guide <Icon name="chat" size={16} />
                 </button>
                 <small>Prepared demo guidance</small>
               </section>
@@ -1645,14 +1577,16 @@ function Opportunities({
   const [scope, setScope] = useState("nearby");
   const [onlySaved, setOnlySaved] = useState(false);
   const [refreshed, setRefreshed] = useState("");
-  const all = careers
+  const relevant = careers
     .flatMap((c) => getCareerContent(c.soc, c.family).opportunities)
     .filter((o, i, a) => a.findIndex((x) => x.url === o.url) === i);
+  const all = onlySaved ? allOpportunities : relevant;
   const visible = all.filter(
     (o) =>
       (kind === "All" || o.kind === kind) &&
       (!onlySaved || prefs.saved.includes(o.id)) &&
-      (scope === "all" ||
+      (onlySaved ||
+        scope === "all" ||
         o.nation === prefs.nation ||
         o.nation === "UK" ||
         o.location.toLowerCase().includes("online") ||
@@ -1799,199 +1733,6 @@ function Opportunities({
           organiser before making plans. Refresh checks this saved directory; it
           doesn't fetch new listings.
         </p>
-      </div>
-    </>
-  );
-}
-
-function Guides({ careers }: { careers: Career[] }) {
-  const [soc, setSoc] = useState(careers[0].soc);
-  const career = careers.find((c) => c.soc === soc) ?? careers[0];
-  const guide = guideFor(career);
-  const [messages, setMessages] = useState<
-    { role: "user" | "guide"; text: string }[]
-  >([]);
-  const [input, setInput] = useState("");
-  const [sending, setSending] = useState(false);
-  const [error, setError] = useState("");
-  const [speaking, setSpeaking] = useState(false);
-  const end = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    setMessages([]);
-    setError("");
-    setInput("");
-    window.speechSynthesis?.cancel();
-    setSpeaking(false);
-  }, [soc]);
-  useEffect(() => {
-    end.current?.scrollIntoView({ block: "nearest", behavior: "smooth" });
-  }, [messages]);
-  useEffect(() => () => window.speechSynthesis?.cancel(), []);
-  const send = async (text: string) => {
-    if (!text.trim() || sending) return;
-    setMessages((m) => [...m, { role: "user", text: text.trim() }]);
-    setInput("");
-    setSending(true);
-    setError("");
-    try {
-      const answer = await api<{ text: string; mode: string }>("guide", {
-        soc: career.soc,
-        message: text.trim(),
-        history: messages.slice(-8).map((m) => ({
-          role: m.role === "guide" ? "assistant" : "user",
-          content: m.text,
-        })),
-      });
-      setMessages((m) => [...m, { role: "guide", text: answer.text }]);
-    } catch (e) {
-      setError((e as Error).message);
-    } finally {
-      setSending(false);
-    }
-  };
-  const introduction = `Hi, I'm ${guide.name}. Let's explore ${career.title.toLowerCase()} together. I can help you think through the day-to-day work, the skills to build, and routes into it. What would you like to understand?`;
-  const lastText =
-    messages.filter((m) => m.role === "guide").slice(-1)[0]?.text ??
-    introduction;
-  return (
-    <>
-      <PageHeading
-        label="Chatbot"
-        title="Career questions."
-        description="Choose a career and ask about the work, skills or study routes."
-      />
-      <div className="guide-layout">
-        <aside className="guide-choices">
-          <h3>Your career guides</h3>
-          {careers.map((c) => {
-            const g = guideFor(c);
-            return (
-              <button
-                key={c.soc}
-                className={c.soc === career.soc ? "active" : ""}
-                onClick={() => setSoc(c.soc)}
-              >
-                <span className="guide-avatar small">{g.name.charAt(0)}</span>
-                <span>
-                  <b>{g.name}</b>
-                  <small>{c.title}</small>
-                </span>
-                <Icon name="chevron" size={14} />
-              </button>
-            );
-          })}
-          <p>
-            Prepared demo guides explain the supplied evidence. They aren't live
-            LLM conversations.
-          </p>
-        </aside>
-        <section className="guide-chat">
-          <header>
-            <span className="guide-avatar">{guide.name.charAt(0)}</span>
-            <div>
-              <h3>{guide.name}</h3>
-              <span>{guide.role}</span>
-            </div>
-            <span className="subtle-badge">Demo guide</span>
-          </header>
-          <div
-            className="chat-scroll"
-            role="log"
-            aria-label={`Conversation with ${guide.name}`}
-          >
-            <div className="chat-message guide-message">
-              <b>{guide.name}</b>
-              <p>{introduction}</p>
-            </div>
-            {messages.map((m, i) => (
-              <div
-                className={`chat-message ${m.role === "user" ? "user-message" : "guide-message"}`}
-                key={i}
-              >
-                <b>{m.role === "user" ? "You" : guide.name}</b>
-                <p>{m.text}</p>
-                {m.role === "guide" && (
-                  <span className="tiny">
-                    Prepared from supplied career evidence. Check the source.
-                  </span>
-                )}
-              </div>
-            ))}
-            {sending && (
-              <div className="chat-message guide-message" role="status">
-                <span className="spinner" /> Looking through your career
-                evidence…
-              </div>
-            )}
-            <div ref={end} />
-          </div>
-          {messages.length === 0 && (
-            <div className="chat-suggestions">
-              {[
-                "What does a normal day look like?",
-                "What skills could I start building?",
-                "Which degree keeps my options open?",
-                "How might AI change this career?",
-              ].map((p) => (
-                <button disabled={sending} onClick={() => send(p)} key={p}>
-                  {p}
-                  <Icon name="plus" size={13} />
-                </button>
-              ))}
-            </div>
-          )}
-          {error && (
-            <div role="alert" className="inline-error">
-              {error} Your question is still in this conversation; try sending
-              it again.
-            </div>
-          )}
-          <form
-            className="chat-input"
-            onSubmit={(e) => {
-              e.preventDefault();
-              void send(input);
-            }}
-          >
-            <input
-              maxLength={1500}
-              aria-label="Ask your career guide"
-              value={input}
-              disabled={sending}
-              placeholder={`Ask ${guide.name} about ${career.title.toLowerCase()}…`}
-              onChange={(e) => setInput(e.target.value)}
-            />
-            <button
-              type="submit"
-              className="button primary"
-              disabled={!input.trim() || sending}
-              aria-label="Send question"
-            >
-              <Icon name="arrow" size={19} />
-            </button>
-          </form>
-          <div className="chat-disclosure">
-            <span>Exploratory guidance. Your conversation isn't saved.</span>
-            {typeof window.speechSynthesis !== "undefined" && (
-              <button
-                onClick={() => {
-                  if (speaking) {
-                    window.speechSynthesis.cancel();
-                    setSpeaking(false);
-                  } else {
-                    const utterance = new SpeechSynthesisUtterance(lastText);
-                    utterance.lang = "en-GB";
-                    utterance.onend = () => setSpeaking(false);
-                    window.speechSynthesis.speak(utterance);
-                    setSpeaking(true);
-                  }
-                }}
-              >
-                {speaking ? "Stop reading" : "Read response aloud"}
-              </button>
-            )}
-          </div>
-        </section>
       </div>
     </>
   );
