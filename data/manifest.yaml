@@ -135,6 +135,115 @@ sources:
     licence_checked_by: ""
     used_by: [ads_now, nowcast, pull-the-plug demo]
 
+  - id: ashe_2007_2010
+    name: ONS ASHE Table 14, 2007 to 2010 (SOC 2000 coding), earlier editions of ashe_t14
+    how: browser
+    url: https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/occupation4digitsoc2010ashetable14   # same ONS page as ashe_t14
+    instructions: >
+      The same ONS page as ashe_t14 holds the 2007 to 2010 editions (SOC 2000 codes). Keep only
+      Table 14.7a (annual gross pay) and 14.7b (sampling error, CV). Employees only. Bridged to
+      SOC 2020 in two steps via soc2000_soc2010 and soc2010_soc2020.
+    path: data/raw/ashe_2007_2010/
+    coverage: UK, employees only
+    licence: Open Government Licence v3.0
+    licence_checked_by: ""
+    used_by: [R expected return (real pay path), M4 demand trend, M5 track record, M7 crisis resilience]
+
+  - id: soc2000_soc2010
+    name: ONS relationship tables SOC 2000 and SOC 2010
+    how: browser
+    url: ""   # (verify) Arsenii's SOURCE.md has no URL
+    instructions: >
+      Built from people coded to both systems (LFS Jan to Mar 2007, Census 2001 where the LFS
+      base is empty). ONS lists only destinations above a threshold, so weights are renormalised.
+      Second step of the 2007 to 2010 bridge (SOC 2000 -> SOC 2010 -> SOC 2020).
+    path: data/raw/crosswalks_soc2000/
+    coverage: UK
+    licence: Open Government Licence v3.0
+    licence_checked_by: ""
+    used_by: [R expected return (real pay path), M5 track record, M7 crisis resilience]
+
+  - id: cpih
+    name: ONS CPIH index (series L522, 2015 = 100, dataset MM23)
+    how: browser
+    url: ""   # (verify) Arsenii's SOURCE.md has no URL
+    instructions: >
+      Series L522, 2015 = 100, 1988 to 2026. Used to turn nominal pay into real pay in 2025
+      prices. ASHE annual pay is for the tax year ending 5 April, so use the tax-year average of
+      the index, not the April value (Arsenii's review finding, v1.2).
+    path: data/raw/cpih/
+    coverage: UK, 1988 to 2026
+    licence: Open Government Licence v3.0
+    licence_checked_by: ""
+    used_by: [R expected return (real pay path)]
+
+  - id: soc2020_coding_index
+    name: ONS SOC 2020 Volume 2 coding index (version of 27 Aug 2026)
+    how: browser
+    url: ""   # (verify) Arsenii's SOURCE.md has no URL
+    instructions: >
+      About 32,000 UK job titles, each with a SOC 2020 code and an ISCO-08 code. This is how a
+      SOC 2020 -> ISCO-08 map with shares is built (crosswalk_build.py), so ISCO-08 sources such
+      as ILO exposure can be joined. Job titles also feed the links to ESCO occupations.
+    path: data/raw/soc2020_index/
+    coverage: UK
+    licence: Open Government Licence v3.0
+    licence_checked_by: ""
+    used_by: [M2 automation exposure (ISCO join), M3 hedge careers (ESCO links)]
+
+  - id: dfe_ai_annex
+    name: DfE "The impact of AI on UK jobs and training", Annex 1 (2023)
+    how: browser
+    url: ""   # (verify) Arsenii's SOURCE.md has no URL
+    instructions: >
+      Annex 1 gives exposure for 365 SOC 2010 occupations. Used as a percentile rank to
+      cross-check the ILO exposure score, never as the headline number.
+    path: data/raw/dfe_ai_annex/
+    coverage: UK, 2023, SOC 2010 (365 occupations)
+    licence: Open Government Licence v3.0
+    licence_checked_by: ""
+    used_by: [M2 automation exposure (cross-check)]
+
+  - id: ons_job_adverts
+    name: "ONS online job advert estimates (source: Adzuna), 28 categories, weekly"
+    how: browser
+    url: ""   # (verify) Arsenii's SOURCE.md has no URL
+    instructions: >
+      Weekly estimates for 28 job-advert categories, 2018 to 2024, republished by ONS from
+      Adzuna. The series was discontinued in Oct 2024. Category level only, never occupation
+      level. Used for the tech-slump crisis window.
+    path: data/raw/ons_job_adverts/
+    coverage: UK, 28 categories, weekly, 2018 to 2024
+    licence: Open Government Licence v3.0
+    licence_checked_by: ""
+    used_by: [M7 crisis resilience (tech slump)]
+
+  - id: aps_2016_age_bands
+    name: ONS APS 2016 age bands by 4-digit occupation (ad hoc request 006998)
+    how: browser
+    url: ""   # (verify) Arsenii's SOURCE.md has no URL
+    instructions: >
+      ONS ad hoc request 006998. UK, 2016, includes self-employed, SOC 2010 codes, small cells
+      suppressed. Gives young_worker_share (people aged 16 to 24 in the job).
+    path: data/raw/aps_2016_age_bands/
+    coverage: UK, 2016, includes self-employed, SOC 2010
+    licence: Open Government Licence v3.0
+    licence_checked_by: ""
+    used_by: [R expected return (young_worker_share)]
+
+  - id: onet
+    name: O*NET 31.0 related occupations and the ESCO to O*NET-SOC crosswalk
+    how: browser
+    url: ""   # (verify) Arsenii's SOURCE.md has no URL
+    instructions: >
+      US Department of Labor. Reference check of hedge careers only; never a training signal
+      and never shown to users as a UK number.
+    path: data/raw/onet/
+    coverage: US occupations
+    licence: CC BY 4.0
+    licence_checked_by: ""
+    used_by: [M3 hedge careers (reference check)]
+
   - id: routes_curated
     name: Routes into each demo career by nation (degree, graduate apprenticeship, apprenticeship, college)
     how: manual
