@@ -1,5 +1,5 @@
 """ML contract v1.1 additions (packages/ml/CONTRACTS.md "Changes in v1.1"): test-only values, v1.1 shapes."""
-from avenir_contracts import ML_METRICS, Crisis, Hedge, HedgeCandidate, Metric
+from avenir_contracts import ML_METRICS, Career, Crisis, Hedge, HedgeCandidate, Metric
 from avenir_contracts.data import join_career
 
 
@@ -9,7 +9,13 @@ def _metric(**kw):
 
 def test_young_worker_share_is_an_ml_metric():
     assert "young_worker_share" in ML_METRICS
-    assert ML_METRICS[:2] == ("pay_median", "pay_p10")  # order otherwise unchanged
+    assert ML_METRICS[-1] == "young_worker_share"
+    assert len(ML_METRICS) == 14
+    assert ML_METRICS[:-1] == (  # the v1.0 keys, order unchanged
+        "pay_median", "pay_p10", "pay_p90", "real_pay_change_10y", "jobs", "demand_trend",
+        "demand_trend_2011_19", "exposure", "exposure_uk", "resilience_covid",
+        "resilience_cost_of_living", "resilience_tech_slump", "resilience_2008",
+    )
 
 
 def test_hedge_candidate_keeps_evidence():
@@ -21,7 +27,6 @@ def test_hedge_candidate_keeps_evidence():
 
 
 def test_hedge_accepts_evidence_and_defaults_to_none():
-    from avenir_contracts import Career
     career = Career(soc2020="2134", title="t", official_title="t", metrics={})
     kw = dict(for_soc="2451", career=career, similarity=0.5, shared_skills=[], why=None, risk_delta=-1.0,
               status="preliminary")

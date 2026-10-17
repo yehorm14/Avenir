@@ -46,7 +46,7 @@ Serving a snapshot or mock is not an error: 200 with that source's status.
 - **Catalogue / routes files** (`catalogue.py`): `snapshots/catalogue.json`, `snapshots/routes.json`, with mocks in `snapshots/mock/`.
 
 ## ML v1.1 additions (what the API and UI do)
-All additions are backward compatible. The API accepts and passes them through; unknown future fields are ignored.
+All additions are backward compatible. The API accepts and passes them through; unknown future fields on ML pass-through shapes are ignored.
 
 | ML v1.1 change | API | UI |
 | --- | --- | --- |
