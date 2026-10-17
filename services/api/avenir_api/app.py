@@ -20,6 +20,7 @@ from avenir_contracts import (
 
 from .deps import default_ports
 from .envelope import fail, ok
+from .routes_read import router as read_router
 
 log = logging.getLogger("avenir_api")
 
@@ -60,6 +61,8 @@ def create_app(
     async def _unhandled(request: Request, exc: Exception):
         log.error("Unhandled error on %s", request.url.path, exc_info=exc)
         return fail(ErrorCode.INTERNAL, "Something went wrong")
+
+    app.include_router(read_router)
 
     @app.get("/health")
     def health():
