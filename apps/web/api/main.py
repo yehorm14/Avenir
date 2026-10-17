@@ -23,7 +23,7 @@ for module_dir in (REPO_ROOT / "packages/ml", REPO_ROOT / "prototypes/pathfinder
 
 from app.data import get_store  # noqa: E402
 from app.path import build_plan  # noqa: E402
-from pathfinder_ml import ML  # noqa: E402
+from pathfinder_ml import FLAG_TEXT, ML, MUST_MENTION  # noqa: E402
 
 from .ranking import rank_careers  # noqa: E402
 
@@ -48,6 +48,31 @@ TEXT_BRIDGES = {
     "3113": "2122",
     "2454": "2453",
     "2433": "2425",
+}
+
+# Display categories describe the requested ML occupation. They are independent
+# of the related occupation occasionally used for a curated pathway example.
+DISPLAY_SECTORS = {
+    "2134": "Software and technology",
+    "3544": "Data and analytics",
+    "2133": "Business and technology",
+    "2135": "Cyber security",
+    "2141": "Digital design",
+    "2142": "Design and creative",
+    "2451": "Architecture and built environment",
+    "2452": "Planning and built environment",
+    "3120": "Technical design and built environment",
+    "2121": "Civil engineering",
+    "2123": "Electrical engineering",
+    "3113": "Engineering and manufacturing",
+    "2453": "Surveying and construction",
+    "2454": "Property and surveying",
+    "2433": "Finance and quantitative sciences",
+    "2422": "Finance and investment",
+    "2421": "Accounting and finance",
+    "2254": "Healthcare and diagnostics",
+    "5241": "Skilled trades and energy",
+    "2313": "Education",
 }
 
 
@@ -111,7 +136,7 @@ def _careers() -> list[dict]:
                 "soc": soc,
                 "title": title,
                 "summary": summary,
-                "sector": (text.sector if text else None) or fam.get("field", "Career exploration"),
+                "sector": DISPLAY_SECTORS.get(soc, "Career exploration"),
                 "family": family,
                 "skills": skills or (text.skills_build if text else []),
                 "metrics": occupation["metrics"],
@@ -204,6 +229,24 @@ def _source_refs(keys: list[str]) -> list[dict]:
     return [{"id": key, **registry[key]} for key in keys if key in registry]
 
 
+def _evidence_note(metric: dict) -> str:
+    """Keep the supplied status and applicable data caveats visible in replies."""
+    notes = []
+    if metric.get("status") == "preliminary":
+        notes.append("The supplied estimate is preliminary.")
+    for flag in metric.get("flags", []):
+        if flag == "provisional":
+            years = re.findall(r"\b20\d{2}\b", metric.get("as_of", ""))
+            label = f"The {years[-1]} figure" if years else "This figure"
+            notes.append(f"{label} is an ONS provisional estimate and may be revised.")
+        elif flag in MUST_MENTION or flag in ("multi_isco", "sources_disagree", "category_level"):
+            if flag in FLAG_TEXT:
+                notes.append(FLAG_TEXT[flag])
+            if flag == "category_level" and metric.get("extra", {}).get("adverts_category"):
+                notes.append("The broad job-advert category is " + metric["extra"]["adverts_category"] + ".")
+    return " " + " ".join(notes) if notes else ""
+
+
 def _guide_reply(career: dict, message: str, history: list[GuideTurn]) -> tuple[str, list[str]]:
     lower = message.lower()
     # A prepared guide does not interpret instructions or generate arbitrary content.
@@ -234,12 +277,8 @@ def _guide_reply(career: dict, message: str, history: list[GuideTurn]) -> tuple[
                 f" The middle half of full-time employees earn £{pay['low']:,.0f}–£{pay['high']:,.0f}; "
                 "this is not a starting-salary promise."
             )
-        text += (
-            " These figures cover employees, excluding freelancers and the self-employed. "
-            "Use the inflation-adjusted chart to compare purchasing power in April 2025 prices."
-        )
-        if pay.get("status") == "preliminary":
-            text += " The supplied estimate is preliminary."
+        text += " Use the inflation-adjusted chart to compare purchasing power in April 2025 prices."
+        text += _evidence_note(pay)
         return text, ["ons_ashe_t14", "ons_cpih"]
     if any(word in lower for word in (" ai", "ai ", "automation", "robot", "replace", "exposure")) or lower == "ai":
         exposure = metrics.get("exposure", {})
@@ -256,6 +295,7 @@ def _guide_reply(career: dict, message: str, history: list[GuideTurn]) -> tuple[
         )
         if exposure.get("low") is not None and exposure.get("high") is not None:
             text += f" The supplied range is {exposure['low']:.4f}–{exposure['high']:.4f}."
+        text += _evidence_note(exposure)
         text += " Strengthen judgement, communication and the ability to check AI output alongside your practical skills."
         return text, ["ilo_wp140"]
     if any(word in lower for word in ("need", "demand", "future", "growth", "opportunit", "jobs", "forecast")):
@@ -270,7 +310,7 @@ def _guide_reply(career: dict, message: str, history: list[GuideTurn]) -> tuple[
             f"The observed full-time employee job trend was {100 * demand['value']:+.2f}% per year "
             f"over {demand.get('as_of', '2021–2025')}. This is a historical signal, "
             "not a prediction or a promise of a vacancy. Compare it with your interest "
-            "in the day-to-day work and build skills that transfer between roles.",
+            "in the day-to-day work and build skills that transfer between roles." + _evidence_note(demand),
             ["ons_ashe_t14"],
         )
     plan = path(career["soc"])

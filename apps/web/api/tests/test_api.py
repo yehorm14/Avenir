@@ -78,3 +78,34 @@ def test_api_health_and_dev_cors(client):
         "/api/bootstrap", headers={"Origin": "http://localhost:4175", "Access-Control-Request-Method": "GET"}
     )
     assert response.headers["access-control-allow-origin"] == "http://localhost:4175"
+
+
+def test_display_sectors_follow_requested_career_not_borrowed_pathway(client):
+    careers = {career["soc"]: career for career in client.get("/api/bootstrap").json()["careers"]}
+    assert careers["2433"]["sector"] == "Finance and quantitative sciences"
+    assert careers["3544"]["sector"] == "Data and analytics"
+    assert careers["2142"]["sector"] == "Design and creative"
+    from api.main import DISPLAY_SECTORS
+    from pathfinder_ml import ML
+
+    assert set(DISPLAY_SECTORS) == set(careers)
+    for soc, career in careers.items():
+        assert career["sector"] == DISPLAY_SECTORS[soc]
+        assert career["metrics"] == ML().occupation(soc)["metrics"]
+        assert career["history"] == ML().history(soc)
+
+
+def test_ai_guide_discloses_preliminary_estimate_and_multi_code_range(client):
+    answer = client.post("/api/guide", json={"soc": "2134", "message": "Explain automation exposure"}).json()["text"]
+    assert "preliminary" in answer.lower()
+    assert "several international job codes" in answer
+    assert "weighted average" in answer
+    assert "0.5126–0.5762" in answer
+
+
+def test_pay_and_demand_guide_disclose_employee_coverage_and_provisional_year(client):
+    for question in ("What is the pay?", "How much demand is there?"):
+        text = client.post("/api/guide", json={"soc": "2134", "message": question}).json()["text"]
+        assert "preliminary" in text.lower()
+        assert "2025 figure is an ONS provisional estimate" in text
+        assert "self-employed and freelance workers are not included" in text
