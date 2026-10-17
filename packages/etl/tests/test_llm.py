@@ -1,11 +1,16 @@
 """LLM explanation adapter: number/notice/wording checks, fallback, env factory. No network."""
 from __future__ import annotations
 
+import logging
+import threading
+import time
+
 import pytest
 import requests
 from pathfinder_ml import FLAG_TEXT
 
 from avenir_adapters.llm import LlmExplanation, writer_from_env
+from avenir_adapters.llm import writer as llm_writer
 from avenir_adapters.llm.writer import allowed_numbers, numbers_in
 from avenir_contracts.metric import Metric
 from avenir_contracts.models import (
@@ -170,20 +175,28 @@ def test_timeout_falls_back_within_budget(monkeypatch):
     rec = _rec()
     assert _is_template(_writer(timeout=3.0).explain(rec), rec)
     assert 1 <= len(timeouts) <= 2
-    assert all(0 < t <= 3.0 for t in timeouts)
+    assert all(0 < t <= 3.0 for pair in timeouts for t in pair)  # (connect, read) within the budget
+
+
+class _Clock:
+    def __init__(self) -> None:
+        self.now = 1000.0
+
+    def __call__(self) -> float:
+        return self.now
 
 
 def test_no_retry_when_budget_spent(monkeypatch):
-    clock = iter([0.0, 2.9, 2.9, 2.9])
-    monkeypatch.setattr("avenir_adapters.llm.writer.time.monotonic", lambda: next(clock))
+    clock = _Clock()
     calls: list = []
 
     def fake(url, headers=None, json=None, timeout=None):
         calls.append(timeout)
+        clock.now += 2.9
         raise requests.ConnectionError("down")
     monkeypatch.setattr(requests, "post", fake)
     rec = _rec()
-    assert _is_template(_writer(timeout=3.0).explain(rec), rec)
+    assert _is_template(_writer(timeout=3.0, clock=clock).explain(rec), rec)
     assert len(calls) == 1
 
 
@@ -234,3 +247,160 @@ def test_env_reads_os_environ(monkeypatch):
     monkeypatch.setenv("LLM_API_KEY", "k")
     monkeypatch.setenv("LLM_MODEL", "m")
     assert isinstance(writer_from_env(), LlmExplanation)
+
+
+# ---------- hard deadline, breaker, logging ----------
+
+def test_slow_server_is_cut_off_at_the_deadline_in_real_time(monkeypatch):
+    release = threading.Event()
+
+    def blocking(*a, **k):  # a server that drips forever and ignores the requests timeout
+        release.wait(5)
+        return _Resp(GOOD)
+    monkeypatch.setattr(requests, "post", blocking)
+    rec = _rec()
+    try:
+        start = time.monotonic()
+        exp = _writer(timeout=0.3).explain(rec)
+        elapsed = time.monotonic() - start
+    finally:
+        release.set()
+    assert elapsed < 0.3 + 0.5
+    assert _is_template(exp, rec)
+
+
+@pytest.mark.parametrize(("failure", "attempts"), [
+    (requests.Timeout("slow"), 2),
+    (requests.ConnectionError("down"), 2),
+    (_Resp(GOOD, 401), 1),
+    (_Resp(GOOD, 403), 1),
+    (_Resp(GOOD, 429), 1),
+])
+def test_breaker_skips_network_for_60s_then_retries(monkeypatch, failure, attempts):
+    clock = _Clock()
+    seq = [failure] * attempts + [_Resp(GOOD)]
+    calls: list = []
+
+    def fake(url, headers=None, json=None, timeout=None):
+        calls.append(timeout)
+        r = seq[min(len(calls) - 1, len(seq) - 1)]
+        if isinstance(r, Exception):
+            raise r
+        return r
+    monkeypatch.setattr(requests, "post", fake)
+    w = _writer(clock=clock)
+    rec = _rec()
+    assert _is_template(w.explain(rec), rec)
+    assert len(calls) == attempts
+    clock.now += 59
+    assert _is_template(w.explain(rec), rec)
+    assert len(calls) == attempts  # breaker open: template with no network call
+    clock.now += 2
+    assert w.explain(rec).ai_written is True
+    assert len(calls) == attempts + 1
+
+
+def test_timeout_then_5xx_still_opens_breaker(monkeypatch):
+    clock = _Clock()
+    seq = [requests.Timeout("slow"), _Resp(GOOD, 503)]
+    calls: list = []
+
+    def fake(url, headers=None, json=None, timeout=None):
+        calls.append(timeout)
+        r = seq[len(calls) - 1] if len(calls) <= len(seq) else _Resp(GOOD)
+        if isinstance(r, Exception):
+            raise r
+        return r
+    monkeypatch.setattr(requests, "post", fake)
+    w = _writer(clock=clock)
+    w.explain(_rec())
+    assert len(calls) == 2
+    w.explain(_rec())
+    assert len(calls) == 2
+
+
+def test_5xx_alone_retries_but_does_not_open_breaker(monkeypatch):
+    clock = _Clock()
+    calls: list = []
+
+    def fake(url, headers=None, json=None, timeout=None):
+        calls.append(timeout)
+        return _Resp(GOOD, 503)
+    monkeypatch.setattr(requests, "post", fake)
+    w = _writer(clock=clock)
+    w.explain(_rec())
+    assert len(calls) == 2
+    w.explain(_rec())
+    assert len(calls) == 4
+
+
+def test_no_retry_on_401(monkeypatch):
+    calls: list = []
+
+    def fake(url, headers=None, json=None, timeout=None):
+        calls.append(timeout)
+        return _Resp(GOOD, 401)
+    monkeypatch.setattr(requests, "post", fake)
+    rec = _rec()
+    assert _is_template(_writer().explain(rec), rec)
+    assert len(calls) == 1
+
+
+def test_logs_never_contain_secrets_or_text(monkeypatch, caplog):
+    secret = "sk-SECRET-123"
+    err = requests.ConnectionError(f"HTTPSConnectionPool(host='llm.test'): Authorization: Bearer {secret}")
+    monkeypatch.setattr(requests, "post", lambda *a, **k: (_ for _ in ()).throw(err))
+    w = LlmExplanation("http://llm.test/v1", secret, "m")
+    with caplog.at_level(logging.INFO, logger=llm_writer.log.name):
+        w.explain(_rec())
+    assert "ConnectionError" in caplog.text
+    assert "paused" in caplog.text
+    for forbidden in (secret, "llm.test", "Architect", "56,914", "56914"):
+        assert forbidden not in caplog.text
+
+
+@pytest.mark.parametrize(("content", "reason"), [
+    (GOOD.replace("£56,914", "£57,000"), "number check"),
+    ("Architects are worth exploring. Median pay is £56,914 a year.", "notice check"),
+    (GOOD + " You should wait.", "wording check"),
+])
+def test_check_failures_are_logged_by_reason_only(monkeypatch, caplog, content, reason):
+    _patch_post(monkeypatch, content)
+    with caplog.at_level(logging.INFO, logger=llm_writer.log.name):
+        _writer().explain(_rec())
+    assert reason in caplog.text
+    assert "57,000" not in caplog.text and "Architects are worth" not in caplog.text
+
+
+# ---------- numbers written as words ----------
+
+@pytest.mark.parametrize("phrase", [
+    "about fifty-seven thousand pounds a year",
+    "pay could double by twenty thirty",
+    "Pay could Double soon",
+    "roughly half of roles",
+    "a hundred openings",
+    "twice the average",
+    "three openings",
+    "about a dozen employers",
+    "Nineteen employers",
+])
+def test_numbers_in_words_fall_back(monkeypatch, phrase):
+    _patch_post(monkeypatch, GOOD + f" {phrase}.")
+    rec = _rec()
+    assert _is_template(_writer().explain(rec), rec)
+
+
+def test_plain_one_is_not_a_number_word(monkeypatch):
+    _patch_post(monkeypatch, GOOD + " It is one path worth exploring.")
+    assert _writer().explain(_rec()).ai_written is True
+
+
+@pytest.mark.parametrize("key", sorted(FLAG_TEXT))
+def test_every_flag_text_notice_passes_the_checks(monkeypatch, key):
+    notice = FLAG_TEXT[key]
+    text = f"Architects are worth exploring. {notice}"
+    _patch_post(monkeypatch, text)
+    rec = _rec(notices=[notice])
+    exp = _writer().explain(rec)
+    assert exp.ai_written is True and notice in exp.text

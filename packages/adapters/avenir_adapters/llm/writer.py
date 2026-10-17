@@ -1,24 +1,33 @@
 """LLM-written explanation with hard checks; any problem falls back to the template.
 
 The text is accepted only if every number in it appears in the response (`allowed_numbers`),
-every notice sentence is copied verbatim, and it avoids the banned phrases. `explain()` never raises.
+every notice sentence is copied verbatim, and it avoids the banned phrases and spelled-out numbers.
+`explain()` never raises and returns within `timeout` seconds in total (a hard wall-clock limit, see
+`_deadline`). After a timeout, connection error or HTTP 401/403/429 the model is skipped for `BREAKER_S`.
+Logs carry only the fallback reason (exception type, HTTP status or the failed check), never the key,
+URL, prompt or response text.
 """
 from __future__ import annotations
 
 import json
+import logging
 import os
 import re
 import time
-from collections.abc import Mapping
+from collections.abc import Callable, Mapping
 from decimal import Decimal, InvalidOperation
 from typing import Any
 
 import requests
 
+from avenir_adapters._deadline import DeadlineExceeded, call_with_deadline
 from avenir_contracts.models import Explanation, RecommendationOut
 from avenir_contracts.ports import ExplanationWriter, TemplateExplanation
 
+log = logging.getLogger(__name__)
+
 MIN_RETRY_SECONDS = 0.5
+BREAKER_S = 60.0
 BANNED_PHRASES = ("you should", "don't", "don’t")
 TRUTHY = {"1", "true", "yes"}
 
@@ -29,6 +38,15 @@ SYSTEM_PROMPT = (
     "Use only numbers that appear in the data you are given; never add or round numbers yourself. "
     "Copy each notice sentence word for word."
 )
+
+# Numbers written as words ("fifty-seven thousand", "double by twenty thirty") can't be checked against the
+# response, so they send the text to the template. Bare "one" is left out: it is ordinary prose.
+_NUMBER_WORDS = (
+    "zero|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|"
+    "seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|"
+    "hundred|thousand|million|billion|dozen|twice|double[sd]?|triple[sd]?|half|quarter"
+)
+_WORD_NUMBER = re.compile(r"\b(?:" + _NUMBER_WORDS + r")\b", re.IGNORECASE)
 
 # optional sign (not glued to a word), optional £, digits with optional thousands commas, optional decimals
 _NUMBER = re.compile(r"(?<![\w.,])(?P<sign>[-+])?£?(?P<int>\d{1,3}(?:,\d{3})+|\d+)(?P<frac>\.\d+)?%?")
@@ -94,23 +112,38 @@ def _summary(rec: RecommendationOut) -> dict[str, Any]:
     return out
 
 
+def _post(url: str, headers: dict[str, str], payload: dict[str, Any],
+          timeout: tuple[float, float]) -> tuple[int, Any]:
+    """Runs in a worker thread: (status code, message content, or None for a non-2xx)."""
+    resp = requests.post(url, headers=headers, json=payload, timeout=timeout)
+    status = resp.status_code
+    return status, (resp.json()["choices"][0]["message"]["content"] if 200 <= status < 300 else None)
+
+
 class LlmExplanation:
     """ExplanationWriter over an OpenAI-compatible /chat/completions endpoint."""
 
-    def __init__(self, base_url: str, api_key: str, model: str, timeout: float = 3.0) -> None:
+    def __init__(self, base_url: str, api_key: str, model: str, timeout: float = 3.0,
+                 clock: Callable[[], float] = time.monotonic) -> None:
         self.base_url = base_url.rstrip("/")
         self.api_key = api_key
         self.model = model
         self.timeout = timeout
+        self._clock = clock
+        self._breaker_until = 0.0
         self._fallback = TemplateExplanation()
 
     def explain(self, rec: RecommendationOut) -> Explanation:
         try:
-            text = self._complete(rec)
-            if text and self._passes(text, rec):
-                return Explanation(text=text, ai_written=True, cited_numbers=sorted(numbers_in(text)))
-        except Exception:  # never raise: any failure means the template
-            pass
+            if self._clock() >= self._breaker_until:
+                text = self._complete(rec)
+                if text:
+                    failed = self._failed_check(text, rec)
+                    if failed is None:
+                        return Explanation(text=text, ai_written=True, cited_numbers=sorted(numbers_in(text)))
+                    log.warning("LLM text rejected: %s", failed)
+        except Exception as e:  # never raise: any failure means the template
+            log.warning("LLM explanation failed: %s", type(e).__name__)
         return self._fallback.explain(rec)
 
     def _complete(self, rec: RecommendationOut) -> str | None:
@@ -124,29 +157,53 @@ class LlmExplanation:
             "max_tokens": 300,
         }
         headers = {"Authorization": f"Bearer {self.api_key}"}
-        start = time.monotonic()
+        url = f"{self.base_url}/chat/completions"
+        deadline = self._clock() + self.timeout
+        trip = False  # sticky: a timeout followed by a 5xx still opens the breaker
         for attempt in range(2):
-            remaining = self.timeout - (time.monotonic() - start)
+            remaining = deadline - self._clock()
             if remaining <= 0 or (attempt == 1 and remaining < MIN_RETRY_SECONDS):
-                return None
+                break
+            retry = False
             try:
-                resp = requests.post(f"{self.base_url}/chat/completions", headers=headers,
-                                     json=payload, timeout=remaining)
-                if 200 <= resp.status_code < 300:
-                    content = resp.json()["choices"][0]["message"]["content"]
-                    return content.strip() if isinstance(content, str) else None
-            except (requests.RequestException, ValueError, KeyError, IndexError, TypeError):
-                pass
+                status, content = call_with_deadline(_post, remaining, url, headers, payload,
+                                                     (remaining, remaining))
+            except (DeadlineExceeded, requests.Timeout, requests.ConnectionError) as e:
+                log.warning("LLM call failed: %s", type(e).__name__)
+                retry = trip = True
+            except Exception as e:  # bad JSON, unexpected shape: template, no retry
+                log.warning("LLM call failed: %s", type(e).__name__)
+            else:
+                if 200 <= status < 300:
+                    if isinstance(content, str) and content.strip():
+                        return content.strip()
+                    log.warning("LLM call failed: empty response")
+                else:
+                    log.warning("LLM call failed: HTTP %s", status)
+                    retry = status >= 500
+                    trip = trip or status in (401, 403, 429)
+            if not retry:
+                break
+        if trip:
+            self._breaker_until = self._clock() + BREAKER_S
+            log.warning("LLM calls paused for %.0f s", BREAKER_S)
         return None
 
     @staticmethod
-    def _passes(text: str, rec: RecommendationOut) -> bool:
-        if numbers_in(text) - allowed_numbers(rec):
-            return False
+    def _failed_check(text: str, rec: RecommendationOut) -> str | None:
+        """Name of the first check the text fails, or None. Notices are verbatim, so they are exempt
+        from the number and number-word checks (some contain digits)."""
         if any(n not in text for n in rec.notices):
-            return False
+            return "notice check"
+        body = text
+        for n in sorted(rec.notices, key=len, reverse=True):
+            body = body.replace(n, " ")
+        if numbers_in(body) - allowed_numbers(rec) or _WORD_NUMBER.search(body):
+            return "number check"
         lowered = text.lower()
-        return not any(p in lowered for p in BANNED_PHRASES)
+        if any(p in lowered for p in BANNED_PHRASES):
+            return "wording check"
+        return None
 
 
 def writer_from_env(env: Mapping[str, str] | None = None) -> ExplanationWriter:
