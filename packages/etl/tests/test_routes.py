@@ -181,3 +181,63 @@ def test_cli_explicit_missing_oid_warns_on_stderr(tmp_path, capsys):
 def test_cli_without_oid_does_not_warn(tmp_path, capsys):
     main(["--curated", str(OCC_OK), "--routes", str(OK), "--out", str(tmp_path / "snap")])
     assert "oid" not in capsys.readouterr().err.lower()
+
+
+def test_cp1252_file_raises_a_clear_error_in_both_loaders(tmp_path):
+    hint = "not UTF-8; in Excel use 'Save As > CSV UTF-8 (Comma delimited)'"
+    routes = tmp_path / "routes.csv"
+    routes.write_bytes(
+        (HEADER + "2451,scotland,degree,TEST a,,it\u2019s,https://example.org/t,s,test\n").encode("cp1252")
+    )
+    with pytest.raises(CuratedError, match="not UTF-8") as exc:
+        load_routes(routes, SOCS)
+    assert hint in str(exc.value) and str(routes) in str(exc.value)
+    occ = tmp_path / "occupations.csv"
+    occ.write_bytes(OCC_OK.read_bytes() + "2433,x,x,Actuary\u2019s,,maths,x,test,\n".encode("cp1252"))
+    with pytest.raises(CuratedError, match="not UTF-8"):
+        load_curated(occ, SOCS)
+
+
+def test_trailing_blank_rows_are_ignored(tmp_path):
+    routes = tmp_path / "routes.csv"
+    routes.write_bytes(OK.read_bytes() + b",,,,,,,,\n,,,,,,,,\n")
+    assert len(load_routes(routes, SOCS).routes) == 3
+    occ = tmp_path / "occupations.csv"
+    occ.write_bytes(OCC_OK.read_bytes() + b",,,,,,,,\n ,,,,,,,,\n")
+    assert [e.soc2020 for e in load_curated(occ, SOCS)] == ["2451", "2134", "2433"]
+    header_only = tmp_path / "blank_only.csv"
+    header_only.write_text("soc2020,title,aliases,description,entry_subjects,verified_by\n,,,,,\n", encoding="utf-8")
+    with pytest.raises(CuratedError, match="no data rows"):
+        load_curated(header_only, SOCS)
+    only_blank_routes = tmp_path / "blank_routes.csv"
+    only_blank_routes.write_text(HEADER + ",,,,,,,,\n", encoding="utf-8")
+    assert load_routes(only_blank_routes, SOCS).routes == []
+
+
+def test_blank_row_does_not_shift_line_numbers_of_later_errors(tmp_path):
+    f = tmp_path / "routes.csv"
+    f.write_text(HEADER + ",,,,,,,,\n2451,mars,degree,TEST a,,r,https://example.org/t,s,test\n", encoding="utf-8")
+    with pytest.raises(CuratedError, match=r"line 3 \(soc2020 2451\)"):
+        load_routes(f, SOCS)
+
+
+@pytest.mark.parametrize("which", ["curated", "routes"])
+def test_cli_missing_input_file_is_a_clean_error(tmp_path, capsys, which):
+    args = {"curated": str(OCC_OK), "routes": str(OK)}
+    missing = tmp_path / "nope.csv"
+    args[which] = str(missing)
+    out = tmp_path / "snap"
+    code = main(["--curated", args["curated"], "--routes", args["routes"], "--out", str(out)])
+    assert code != 0
+    assert str(missing) in capsys.readouterr().out
+    assert not out.exists() or not any(out.iterdir())
+
+
+def test_cli_warns_about_uncovered_demo_socs_but_succeeds(tmp_path, capsys):
+    out = tmp_path / "snap"
+    assert main(["--curated", str(OCC_OK), "--routes", str(OK), "--out", str(out)]) == 0
+    err = capsys.readouterr().err
+    assert "covers 3 of 20 demo SOCs" in err
+    assert "2313" in err  # a demo SOC the fixture does not cover
+    assert "2451" not in err.split("missing:")[1]  # covered SOCs are not listed
+    assert (out / "catalogue.json").is_file()

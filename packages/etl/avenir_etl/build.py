@@ -71,13 +71,23 @@ def main(argv: list[str] | None = None) -> int:
     except CuratedError as err:
         print(err)
         failed = True
+    except FileNotFoundError:
+        print(f"error: curated occupations file not found: {args.curated}")
+        failed = True
     try:
         routes = load_routes(args.routes, socs)
     except CuratedError as err:
         print(err)
         failed = True
+    except FileNotFoundError:
+        print(f"error: routes file not found: {args.routes}")
+        failed = True
     if failed or routes is None:
         return 1
+    uncovered = sorted(socs - {e.soc2020 for e in curated})
+    if uncovered:
+        print(f"warning: curated CSV covers {len(curated)} of {len(socs)} demo SOCs; "
+              f"missing: {', '.join(uncovered)}", file=sys.stderr)
     if args.oid is not None and not Path(args.oid).exists():
         print(f"warning: --oid file not found ({args.oid}); shortage will be missing", file=sys.stderr)
     if not routes.routes:
