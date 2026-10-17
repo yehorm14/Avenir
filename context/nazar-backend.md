@@ -1,8 +1,8 @@
 # Nazar: backend (decision engine + API)
 
 - **Owner:** Nazar (human) / Claude (orchestrator) with Haiku and Sonnet subagents
-- **Branches:** `nazar/decision` (Track A), `nazar/api` (Track B), both on `main` 227b5e9 (contract v2)
-- **PR:** #8 (decision, Tasks 1-10) and #9 (api, Tasks 11-15, built on top of #8), drafts
+- **Branches:** `nazar/decision` (Track A, merged as #8), `nazar/api` (Track B), rebased on `main` 3557df1 (contract v2.1)
+- **PR:** #8 (decision, Tasks 1-10) merged; #9 (api, Tasks 11-15 + bug fixes) open
 - **Status:** ready for review — all 15 plan tasks done; each task reviewed; final whole-branch reviews of the decision engine and the API done, fixes applied
 
 ## Task
@@ -70,6 +70,13 @@ reviewer, checked by the orchestrator. One commit per task.
   non-excluded careers) with return and risk present; ambitious = max return; safe = min risk of the
   rest; balanced = max (return − 50) / max(risk, 10) of the rest; ties: higher fit, then lower SOC.
 
+## Bug hunt (17 Oct, after the final review)
+- A crash (500) had no CORS header, so the browser saw a network error, not the envelope: fixed.
+- Adzuna adapter raising → whole page 500: now falls back to the catalogue ads count.
+- NaN in data: JSON encoding crashed (500) → sent as null; ranks treat NaN/inf as missing.
+- Checklist tag with no fit-table row → 500: now 503 naming the tag (data gap, not the user's fault).
+- Malformed JSON body: error field is `body` (was `body.1`).
+
 ## Deferred minor findings (for the final review)
 - API: unhandled 500s lack CORS headers; error envelopes have empty `meta.sources`; ad counts are
   fetched one career at a time (up to 5 calls; coordinate caching with Yehor).
@@ -78,7 +85,7 @@ reviewer, checked by the orchestrator. One commit per task.
 - Repo: `ruff format --check` fails on several files (mostly contract files); not in `make check`.
 
 ## Blocked on
-- Nothing in code. Merge order: #4 (contract v2.1) → #8 → rebase #9 → #9.
+- Nothing in code. #4 and #8 are merged; #9 is rebased on main and ready (it also carries the decision NaN fix).
 - `docker compose up` not run: Docker isn't installed on Nazar's Mac (pip-install simulation passed).
 - Freeze test fails until real `snapshots/catalogue.json` and `routes.json` land (Yehor, Sun 08:00).
 
