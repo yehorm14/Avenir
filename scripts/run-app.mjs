@@ -28,4 +28,4 @@ for (const [command, args] of [
   child.on('error', error => { console.error(error.message); stop(1); });
   child.on('exit', code => { if (!closing) stop(code || 0); });
 }
-console.log('Avenir: http://127.0.0.1:4175 (API: http://127.0.0.1:8015). Ctrl+C stops both.');
+console.log('Aventier: http://127.0.0.1:4175 (API: http://127.0.0.1:8015). Ctrl+C stops both.');

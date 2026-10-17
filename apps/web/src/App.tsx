@@ -5,9 +5,12 @@ import { questions, tagsFromAnswers } from "./quiz";
 import { Icon, careerIcon } from "./icons";
 import { SalaryChart, money, percent } from "./Charts";
 import { getCareerContent } from "./content";
+import Landing from "./Landing";
+import Discovery, { type DiscoveryResult } from "./Discovery";
 
 const pageNames: Record<Page, string> = {
   discover: "Discover",
+  conversation: "Your conversation",
   quiz: "Your discovery",
   matches: "Your matches",
   overview: "Overview",
@@ -25,7 +28,9 @@ const nav: { id: Page; icon: string }[] = [
 ];
 const route = (): Page => {
   const p = window.location.hash.replace("#/", "").split("/")[0];
-  return p in pageNames ? (p as Page) : "discover";
+  return Object.prototype.hasOwnProperty.call(pageNames, p)
+    ? (p as Page)
+    : "discover";
 };
 const value = (c: Career, key: string) => {
   const m = c.metrics[key];
@@ -154,11 +159,22 @@ export default function App() {
       () =>
         api<{ results: Career[] }>(
           "matches",
-          { tags: tagsFromAnswers(prefs.answers), weights: prefs.weights },
+          {
+            tags: prefs.discovery?.tags ?? tagsFromAnswers(prefs.answers),
+            weights: prefs.weights,
+          },
           controller.signal,
         )
           .then((r) => {
-            setMatches(r.results);
+            const reference =
+              prefs.discovery?.referenceSoc ?? prefs.discovery?.targetSoc;
+            const ordered = reference
+              ? [
+                  ...r.results.filter((c) => c.soc === reference),
+                  ...r.results.filter((c) => c.soc !== reference),
+                ]
+              : r.results;
+            setMatches(ordered);
             setRanking(false);
           })
           .catch((e) => {
@@ -173,7 +189,16 @@ export default function App() {
       clearTimeout(id);
       controller.abort();
     };
-  }, [prefs.completed, prefs.answers, prefs.weights, data, reload]);
+  }, [
+    prefs.completed,
+    prefs.answers,
+    prefs.discovery?.tags,
+    prefs.discovery?.targetSoc,
+    prefs.discovery?.referenceSoc,
+    prefs.weights,
+    data,
+    reload,
+  ]);
   useEffect(() => {
     if (!toast) return;
     const id = setTimeout(() => setToast(""), 3500);
@@ -189,7 +214,7 @@ export default function App() {
     )
     .filter((c): c is Career => !!c);
   const primary = selected[0];
-  const top5 = matches.slice(0, 5);
+  const topCareers = matches.slice(0, 3);
   const choose = (c: Career) => {
     if (prefs.selected.includes(c.soc)) {
       update({ selected: prefs.selected.filter((id) => id !== c.soc) });
@@ -202,30 +227,56 @@ export default function App() {
     update({ selected: [...prefs.selected, c.soc] });
     setToast(`${c.title} added as choice ${prefs.selected.length + 1}.`);
   };
-  const start = () => {
-    go("quiz");
+  const start = (mode: "known" | "explore" = "explore") => {
+    const existing = prefs.discovery;
+    update({
+      discovery:
+        existing?.mode === mode ? existing : { mode, answers: {}, step: 0 },
+    });
+    go("conversation");
   };
   const finish = () => {
     update({ completed: true, step: questions.length });
     go("matches");
   };
   const retake = () => {
-    update({ answers: {}, step: 0, completed: false, selected: [] });
-    setMatches([]);
-    go("quiz");
+    update({ discovery: { mode: "explore", answers: {}, step: 0 } });
+    go("conversation");
     setSettings(false);
   };
-  const showShell = prefs.completed && !["discover", "quiz"].includes(page);
+  const completeDiscovery = (result: DiscoveryResult) => {
+    setPrefs((p) => ({
+      ...p,
+      completed: true,
+      selected: [],
+      answers: {},
+      weights: result.weights,
+      discovery: {
+        mode: p.discovery?.mode ?? "explore",
+        answers: p.discovery?.answers ?? {},
+        step: p.discovery?.step ?? 0,
+        tags: result.tags,
+        targetSoc: result.target_soc,
+        referenceSoc: result.reference_soc,
+        summary: result.profile_summary,
+        notices: result.notices,
+      },
+    }));
+    setMatches(result.results);
+    go("matches");
+  };
+  const showShell =
+    prefs.completed && !["discover", "quiz", "conversation"].includes(page);
   const exportPlan = () => {
     if (!primary) return;
     const content = getCareerContent(primary.soc, primary.family);
-    const body = `# My Avenir career plan\n\n${selected.map((c, i) => `${i + 1}. ${c.title}`).join("\n")}\n\n## First choice: ${primary.title}\n\n${content.intro}\n\n## Route to explore\n${content.broadDegree}\n${content.whyBroad}\n\n## First steps\n${content.firstSteps.map((s) => `- ${s}`).join("\n")}\n\n## Universities to explore\n${content.universities.map((u) => `- ${u.name}: ${u.course} — ${u.url}`).join("\n")}\n\n## Opportunity organisers\n${content.opportunities.map((o) => `- ${o.title}: ${o.url}`).join("\n")}\n\n## Evidence\n2025 median full-time employee pay: ${money(value(primary, "pay_median"))}. ONS ASHE; preliminary. Pay is not a starting salary. Preliminary interest matching; guidance is exploratory, not a validated psychological test. Course and event availability must be checked at source.\n`;
+    const body = `# My Aventier career plan\n\n${selected.map((c, i) => `${i + 1}. ${c.title}`).join("\n")}\n\n## First choice: ${primary.title}\n\n${content.intro}\n\n## Route to explore\n${content.broadDegree}\n${content.whyBroad}\n\n## First steps\n${content.firstSteps.map((s) => `- ${s}`).join("\n")}\n\n## Universities to explore\n${content.universities.map((u) => `- ${u.name}: ${u.course} — ${u.url}`).join("\n")}\n\n## Opportunity organisers\n${content.opportunities.map((o) => `- ${o.title}: ${o.url}`).join("\n")}\n\n## Evidence\n2025 median full-time employee pay: ${money(value(primary, "pay_median"))}. ONS ASHE; preliminary. Pay is not a starting salary. Preliminary interest matching; guidance is exploratory, not a validated psychological test. Course and event availability must be checked at source.\n`;
     const url = URL.createObjectURL(
       new Blob([body], { type: "text/markdown" }),
     );
     const a = document.createElement("a");
     a.href = url;
-    a.download = "my-avenir-plan.md";
+    a.download = "my-aventier-plan.md";
     a.click();
     URL.revokeObjectURL(url);
     setToast("Your career plan has been downloaded.");
@@ -239,7 +290,7 @@ export default function App() {
       <p>
         Tell us what draws you in. We'll help you find careers worth exploring.
       </p>
-      <button className="button primary" onClick={start}>
+      <button className="button primary" onClick={() => start()}>
         Start your discovery <Icon name="arrow" />
       </button>
     </div>
@@ -259,12 +310,12 @@ export default function App() {
       <header className="topbar">
         <button
           className="brand"
-          onClick={() => go(prefs.completed ? "overview" : "discover")}
-          aria-label="Avenir home"
+          onClick={() => go("discover")}
+          aria-label="Aventier home"
         >
           <span className="brand-symbol">a</span>
           <span>
-            avenir<span className="brand-dot">.</span>
+            aventier<span className="brand-dot">.</span>
           </span>
         </button>
         {showShell ? (
@@ -278,7 +329,7 @@ export default function App() {
               >
                 <Icon name={n.icon} size={17} />
                 {pageNames[n.id]}
-                {n.id === "matches" && <span className="nav-count">5</span>}
+                {n.id === "matches" && <span className="nav-count">3</span>}
               </button>
             ))}
           </nav>
@@ -334,7 +385,7 @@ export default function App() {
               </select>
             </label>
             <p>Progress is saved in this browser. No account needed.</p>
-            <button onClick={retake}>Retake discovery quiz</button>
+            <button onClick={retake}>Start a new conversation</button>
             <button
               onClick={() => {
                 setPrefs(initial);
@@ -377,108 +428,27 @@ export default function App() {
           </div>
         ) : (
           <>
-            {page === "discover" && (
-              <section className="welcome">
-                <div className="welcome-copy">
-                  <div className="welcome-note">
-                    <span /> A little self-discovery. A clearer next step.
-                  </div>
-                  <h1>
-                    Your future.
-                    <br />A little more
-                    <br />
-                    in focus.
-                  </h1>
-                  <p>
-                    You don't need to have it all figured out. Start with what
-                    makes you, you. Find careers that fit, compare your options,
-                    and build a way forward.
-                  </p>
-                  <button
-                    className="button primary large-button"
-                    onClick={start}
-                  >
-                    {prefs.step > 0 && !prefs.completed
-                      ? "Continue your discovery"
-                      : "Find my direction"}
-                    <Icon name="arrow" />
-                  </button>
-                  <div className="welcome-meta">
-                    <span>
-                      <Icon name="clock" size={15} /> About 3 minutes
-                    </span>
-                    <span>No sign-up. No right answers.</span>
-                  </div>
-                </div>
-                <div className="welcome-art">
-                  <div className="orbit orbit-one" />
-                  <div className="orbit orbit-two" />
-                  <div className="art-dot dot-one" />
-                  <div className="art-dot dot-two" />
-                  <span className="possibility-label">
-                    More possibilities than you think.
-                  </span>
-                  <div className="career-stack">
-                    {[
-                      careers.find((c) => c.soc === "2121"),
-                      careers.find((c) => c.soc === "2134"),
-                      careers.find((c) => c.soc === "2451"),
-                    ]
-                      .filter((c): c is Career => !!c)
-                      .map((c, i) => (
-                        <div
-                          className={`possibility-card card-${i}`}
-                          key={c.soc}
-                        >
-                          <CareerMark career={c} />
-                          <div>
-                            <span>
-                              {i === 0
-                                ? "Build a better world"
-                                : i === 1
-                                  ? "Make ideas work"
-                                  : "Design what's next"}
-                            </span>
-                            <h3>{c.title}</h3>
-                            <p>
-                              {getCareerContent(c.soc, c.family).broadDegree}
-                            </p>
-                          </div>
-                          <Icon name="chevron" size={17} />
-                        </div>
-                      ))}
-                  </div>
-                  <div className="art-caption">
-                    <Icon name="compass" size={17} />
-                    <span>A path that starts with you.</span>
-                  </div>
-                </div>
-                <div className="welcome-bottom">
-                  <div>
-                    <span className="step-dot">1</span>
-                    <p>
-                      <b>Understand yourself</b>
-                      <span>Your interests, instincts, and working style.</span>
-                    </p>
-                  </div>
-                  <div>
-                    <span className="step-dot">2</span>
-                    <p>
-                      <b>Explore five directions</b>
-                      <span>Find your balance of interest, pay, and need.</span>
-                    </p>
-                  </div>
-                  <div>
-                    <span className="step-dot">3</span>
-                    <p>
-                      <b>Make a real plan</b>
-                      <span>
-                        Skills, study routes, and your next small step.
-                      </span>
-                    </p>
-                  </div>
-                </div>
-              </section>
+            {page === "discover" && <Landing onChoose={start} />}
+            {page === "conversation" && (
+              <Discovery
+                mode={prefs.discovery?.mode ?? "explore"}
+                careers={careers}
+                draft={{
+                  answers: prefs.discovery?.answers ?? {},
+                  step: prefs.discovery?.step ?? 0,
+                }}
+                onDraft={(draft) =>
+                  update({
+                    discovery: {
+                      ...prefs.discovery,
+                      mode: prefs.discovery?.mode ?? "explore",
+                      ...draft,
+                    },
+                  })
+                }
+                onComplete={completeDiscovery}
+                onBack={() => go("discover")}
+              />
             )}
             {page === "quiz" && (
               <Quiz prefs={prefs} update={update} finish={finish} go={go} />
@@ -489,15 +459,37 @@ export default function App() {
                   <PageHeading
                     label="A few directions worth exploring"
                     title="Potential looks good on you."
-                    description="Five careers to start a conversation with your future. Adjust what matters, then choose your first, second, and third."
+                    description="Three careers connected to what you shared. Explore the work, compare your priorities, and choose your first, second, and third."
                   />
+                  {prefs.discovery?.summary && (
+                    <section className="discovery-result-summary">
+                      <Icon name="chat" size={22} />
+                      <div>
+                        <h2>A starting point from our conversation.</h2>
+                        <p>{prefs.discovery.summary}</p>
+                        {prefs.discovery.notices?.map((n) => (
+                          <p className="fine-print" key={n}>
+                            {n.startsWith("Development split")
+                              ? "Interest matching is preliminary. Treat these as starting points to explore, not a verdict about you."
+                              : n}
+                          </p>
+                        ))}
+                      </div>
+                      <button
+                        className="text-button"
+                        onClick={() => go("conversation")}
+                      >
+                        Edit your answers
+                      </button>
+                    </section>
+                  )}
                   <div className="results-layout">
                     <section className="match-list" aria-busy={ranking}>
                       <div className="list-toolbar">
                         <span>
                           {ranking
                             ? "Balancing your priorities…"
-                            : "Your five matches"}
+                            : "Your three careers"}
                         </span>
                         <span className="subtle-badge">
                           {data.data_status.fit === "mock"
@@ -519,7 +511,7 @@ export default function App() {
                           Finding your directions…
                         </div>
                       ) : (
-                        top5.map((c, i) => (
+                        topCareers.map((c, i) => (
                           <article
                             key={c.soc}
                             className={`match-row ${prefs.selected.includes(c.soc) ? "chosen" : ""}`}
@@ -883,13 +875,7 @@ export default function App() {
                 </>
               ) : prefs.completed ? (
                 <>
-                  {empty}
-                  <button
-                    className="button secondary"
-                    onClick={() => go("matches")}
-                  >
-                    Return to your matches
-                  </button>
+                  <NeedChoices go={go} />
                 </>
               ) : (
                 empty
@@ -944,7 +930,7 @@ export default function App() {
           <button onClick={() => go("evidence")}>
             About the research <Icon name="external" size={12} />
           </button>
-          <span>© 2026 Avenir</span>
+          <span>© 2026 Aventier</span>
         </footer>
       )}
       {toast && (
@@ -1139,7 +1125,7 @@ function Quiz({
             <Icon name="back" size={17} /> Back
           </button>
           <button className="button primary" onClick={finish}>
-            Find my five directions <Icon name="arrow" size={17} />
+            Find my three directions <Icon name="arrow" size={17} />
           </button>
         </div>
         <p className="fine-print">

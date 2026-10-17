@@ -56,6 +56,16 @@ export type Bootstrap = {
   };
 };
 export type Preferences = {
+  discovery?: {
+    mode: "known" | "explore";
+    answers: Record<string, string>;
+    step: number;
+    tags?: string[];
+    targetSoc?: string | null;
+    referenceSoc?: string | null;
+    summary?: string;
+    notices?: string[];
+  };
   answers: Record<string, number>;
   step: number;
   completed: boolean;
@@ -68,6 +78,7 @@ export type Preferences = {
 };
 export type Page =
   | "discover"
+  | "conversation"
   | "quiz"
   | "matches"
   | "overview"

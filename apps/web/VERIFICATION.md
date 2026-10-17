@@ -42,3 +42,13 @@ Career metrics and fit are preliminary. The quiz is not psychometrically validat
 Moved workspace navigation into the sticky top header; removed the sidebar and its layout offsets. All six destinations, active-page states and match count are retained. Overview/pathway retain the primary career context previously repeated in the sidebar. No mobile work was requested.
 
 Fresh verification: production TypeScript/Vite build passes, format check and git whitespace check pass. Chrome DevTools verifies all six header links activate and render their pages, no sidebar remains, main starts at x=0, and the top menu fits at 1894px and 1280px without overflow or overlap with profile controls. Screenshot: artifacts/top-navigation-desktop.jpg.
+
+## Aventier conversation-first entry
+
+New scrolling entry: Aventier logo/student mission, reassurance, then two choices. Exploring asks four questions (interests, school subjects, values, skills); known direction adds the intended career first. Free text and multi-select suggestions, saved submitted answers, editing, confirmation and retry are supported. Both routes produce exactly three descriptions and feed the existing ranking/pathway experience.
+
+Fresh checks: production build/format pass, API Ruff and whitespace pass. Root suite305 passed/1 optional real-model smoke skipped; app API30 passed (335 passing total). Discovery tests cover both routes, three unique results, original metrics/history, typed/bounded inputs, unsupported roles, priority wording, explicit dislikes, known references and no-signal errors. Dependency deprecation warnings remain as previously documented.
+
+Chrome exercised a fresh browser context at1440px: first arrival shows logo/mission; reassurance and two choices follow in scroll order. Multiple suggestion chips append into free text. All4 exploring answers persist, summary confirmation returns3 descriptions and appropriate demand weights. Known Civil engineer flow asks5 questions, retains2121 first after re-ranking, saves context, allows ranking3 choices and opens the civil-engineering pathway. No horizontal overflow or console errors/warnings. The first screenshot-node click timed out before results; retry after scrolling the confirmation into view succeeded. Both actual endpoints and visible results were verified.
+
+Screenshots: artifacts/aventier-landing-desktop.jpg and artifacts/aventier-starting-points-desktop.jpg. Desktop only; no mobile work or formal review. Guided prepared chat, deterministic extraction, preliminary affinities; no live LLM claim.

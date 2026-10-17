@@ -8,6 +8,7 @@ export type DiscoveryResult = {
   results: Career[];
   tags: string[];
   target_soc: string | null;
+  reference_soc?: string | null;
   profile_summary: string;
   notices: string[];
   method: string;
@@ -40,7 +41,7 @@ const acknowledgement = (answer: string, id: string) => {
     values: "what matters to you",
     skills: "the strengths you mentioned",
   };
-  return `I’ll include ${subject[id] ?? "that context"}: “${short(answer)}”.`;
+  return `I’ll include ${subject[id] ?? "that context"}: “${short(answer).replace(/[.!?]+$/, "")}”.`;
 };
 
 export default function Discovery({
@@ -297,7 +298,11 @@ export default function Discovery({
                     ref={composer}
                     value={answer}
                     onChange={(event) => setAnswer(event.target.value)}
-                    maxLength={2000}
+                    maxLength={
+                      ["direction", "subjects", "values"].includes(question.id)
+                        ? 1000
+                        : 2000
+                    }
                     rows={3}
                     placeholder="Write in your own words, or add a few ideas above…"
                     aria-describedby="discovery-composer-hint"

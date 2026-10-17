@@ -2,7 +2,7 @@
 
 ## Integrated app
 
-The complete career discovery experience is in **apps/web**: quiz → five weighted matches → three ranked choices → pathway, universities, opportunities and career guides. Uses Max’s prototype and Arsenii’s latest supplied embedding/evidence artefacts.
+The complete career discovery experience is in **apps/web**: guided conversation → three career options → three ranked choices → pathway, universities, opportunities and career guides. Uses Max’s prototype and Arsenii’s latest supplied embedding/evidence artefacts.
 
 Run `node scripts/run-app.mjs` after the one-time setup in [apps/web/README.md](apps/web/README.md). Open http://127.0.0.1:4175. For the built preview, run `npm --prefix apps/web run build` then `node scripts/run-app.mjs --preview`. No API key is required.
 

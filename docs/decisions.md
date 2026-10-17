@@ -11,3 +11,5 @@ One line per decision, newest at the bottom. Agents: read this before undoing an
 - 17 Oct Arsenii (ML): Chose to add Census 2011 vs 2021 occupation counts for self-employed coverage over an "employees only" label alone, because ASHE misses freelance-heavy careers.
 
 - 17 Oct Codex for Illia: Combine fetched Avenir branch tips locally on codex/complete-career-experience. Max’s complete prototype is the experience baseline; import Arsenii’s exact latest cb9e169 ML slice with provenance, keep historical need distinct from forecasts, and build the user’s five-match/rank-three flow in apps/web. Apple HIG guides a neutral/green interface. No review workflow or publication requested.
+
+- 17 Oct Codex for Illia: Replace the public entry with Aventier mission → reassurance → two starting points. Known-direction and exploring conversations now return three options using the supplied ML tags/affinities; known careers remain labelled references, and guided chat is not presented as a live LLM. Preserve desktop top navigation and pathway tools.
