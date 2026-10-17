@@ -49,6 +49,17 @@ def test_writer_raises_keeps_template(data, amira):
     assert out.explanation.text
 
 
+class _Junk:
+    def explain(self, rec):
+        return "oops"
+
+
+def test_writer_junk_keeps_template(data, amira):
+    out = recommend(_req(amira), data, _Junk())
+    assert out.explanation.ai_written is False
+    assert out.explanation.text != "oops"
+
+
 def test_writer_used(data, amira):
     assert recommend(_req(amira), data, _Fancy()).explanation.text == "hello"
 

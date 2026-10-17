@@ -85,7 +85,7 @@ def recommend(
     out = out.model_copy(update={"explanation": template.explain(out)})
     if writer is not None:
         try:
-            out = out.model_copy(update={"explanation": writer.explain(out)})
+            out = out.model_copy(update={"explanation": Explanation.model_validate(writer.explain(out))})
         except Exception:
             pass  # the template explanation stays
     return out
