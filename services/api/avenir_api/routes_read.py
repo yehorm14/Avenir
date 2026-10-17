@@ -2,13 +2,37 @@
 from __future__ import annotations
 
 from fastapi import APIRouter, Request
+from pydantic import BaseModel
 
-from avenir_contracts import AdsSource, BacktestOut, Career, ErrorCode, SourceStatus
+from avenir_contracts import (
+    AdsSource,
+    BacktestOut,
+    Career,
+    Crisis,
+    Envelope,
+    ErrorCode,
+    HistoryPoint,
+    Route,
+    SourceInfo,
+    SourceStatus,
+    Tag,
+)
 from avenir_contracts.vocab import Nation
 
 from .envelope import fail, ok
 
-router = APIRouter(prefix="/api/v1")
+ERROR_RESPONSES: dict[int | str, dict] = {
+    422: {"model": Envelope[None]},
+    404: {"model": Envelope[None]},
+    503: {"model": Envelope[None]},
+    500: {"model": Envelope[None]},
+}
+router = APIRouter(prefix="/api/v1", responses=ERROR_RESPONSES)
+
+
+class SourcesOut(BaseModel):
+    statuses: list[SourceStatus]
+    registry: dict[str, SourceInfo]
 
 
 def _not_found(what: str):
@@ -21,25 +45,25 @@ def with_ads_now(ads: AdsSource, career: Career) -> tuple[Career, SourceStatus]:
     return career.model_copy(update={"metrics": {**career.metrics, "ads_now": metric}}), status
 
 
-@router.get("/tags")
+@router.get("/tags", response_model=Envelope[list[Tag]])
 def tags(request: Request):
     d = request.app.state.data
     return ok(d.tags, d.statuses)
 
 
-@router.get("/sources")
+@router.get("/sources", response_model=Envelope[SourcesOut])
 def sources(request: Request):
     d = request.app.state.data
     return ok({"statuses": d.statuses, "registry": d.sources}, d.statuses)
 
 
-@router.get("/careers")
+@router.get("/careers", response_model=Envelope[list[Career]])
 def careers(request: Request):
     d = request.app.state.data
     return ok(list(d.careers.values()), d.statuses)
 
 
-@router.get("/careers/{soc}")
+@router.get("/careers/{soc}", response_model=Envelope[Career])
 def career(soc: str, request: Request):
     d = request.app.state.data
     c = d.careers.get(soc)
@@ -49,7 +73,7 @@ def career(soc: str, request: Request):
     return ok(c, [*d.statuses, status])
 
 
-@router.get("/careers/{soc}/history")
+@router.get("/careers/{soc}/history", response_model=Envelope[list[HistoryPoint]])
 def career_history(soc: str, request: Request):
     d = request.app.state.data
     if soc not in d.careers:
@@ -57,19 +81,19 @@ def career_history(soc: str, request: Request):
     return ok(d.history.get(soc, []), d.statuses)
 
 
-@router.get("/crises")
+@router.get("/crises", response_model=Envelope[list[Crisis]])
 def crises(request: Request):
     d = request.app.state.data
     return ok(d.crises, d.statuses)
 
 
-@router.get("/backtest/years")
+@router.get("/backtest/years", response_model=Envelope[list[int]])
 def backtest_years(request: Request):
     d = request.app.state.data
     return ok(sorted(d.backtest), d.statuses)
 
 
-@router.get("/backtest")
+@router.get("/backtest", response_model=Envelope[BacktestOut])
 def backtest(request: Request, year: int | None = None):
     d = request.app.state.data
     if not d.backtest:
@@ -81,7 +105,7 @@ def backtest(request: Request, year: int | None = None):
     return ok(out, d.statuses)
 
 
-@router.get("/routes/{soc}")
+@router.get("/routes/{soc}", response_model=Envelope[list[Route]])
 def routes(soc: str, request: Request, nation: Nation = "scotland"):
     d = request.app.state.data
     if soc not in d.careers:

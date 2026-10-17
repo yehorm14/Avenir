@@ -6,24 +6,34 @@ import logging
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from avenir_contracts import (
     AdsSource,
     AvenirData,
+    Envelope,
     ErrorCode,
     ErrorDetail,
     ExplanationWriter,
+    SourceStatus,
     TagSuggester,
     load_data,
 )
 
 from .deps import default_ports
 from .envelope import fail, ok
+from .routes_read import ERROR_RESPONSES
 from .routes_read import router as read_router
 from .routes_write import router as write_router
 
 log = logging.getLogger("avenir_api")
+
+
+class HealthOut(BaseModel):
+    status: str
+    ml_mode: str
+    sources: list[SourceStatus]
 
 
 def create_app(
@@ -66,7 +76,7 @@ def create_app(
     app.include_router(read_router)
     app.include_router(write_router)
 
-    @app.get("/health")
+    @app.get("/health", response_model=Envelope[HealthOut], responses=ERROR_RESPONSES)
     def health():
         d = app.state.data
         sources = [s.model_dump(mode="json") for s in d.statuses]

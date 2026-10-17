@@ -31,3 +31,27 @@ def test_schema_has_every_path():
 
 def test_committed_file_is_current():
     assert COMMITTED.read_text() == render(create_app(data=AvenirData()))
+
+
+def _schema():
+    return json.loads(render(create_app(data=AvenirData())))
+
+
+def test_every_200_response_is_typed():
+    for path, ops in _schema()["paths"].items():
+        for method, op in ops.items():
+            content = op["responses"]["200"]["content"]["application/json"]
+            assert content["schema"] != {}, f"{method} {path} has an untyped 200 response"
+
+
+def test_contract_models_in_components():
+    names = set(_schema()["components"]["schemas"])
+    assert {"RecommendationOut", "Career", "Hedge"} <= names
+
+
+def test_documented_errors_are_envelopes():
+    for path, ops in _schema()["paths"].items():
+        for method, op in ops.items():
+            for code in ("404", "422", "503", "500"):
+                assert code in op["responses"], f"{method} {path} missing {code}"
+            assert "HTTPValidationError" not in json.dumps(op["responses"]["422"])
