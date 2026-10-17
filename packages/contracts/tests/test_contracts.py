@@ -5,6 +5,7 @@ import pytest
 from pydantic import ValidationError
 
 from avenir_contracts import (
+    CATALOGUE_METRICS,
     ML_METRICS,
     KeywordSuggester,
     Metric,
@@ -57,7 +58,9 @@ def test_join_gives_20_careers_with_ml_and_catalogue_metrics(data):
     assert len(data.careers) == 20
     arch = data.careers["2451"]
     assert arch.official_title == "Architects" and arch.title
-    assert set(ML_METRICS) <= set(arch.metrics)
+    assert set(arch.metrics) <= set(ML_METRICS) | set(CATALOGUE_METRICS)  # no unknown keys
+    v1_0 = set(ML_METRICS) - {"young_worker_share"}  # v1.0 mocks lack the v1.1 metric
+    assert v1_0 <= set(arch.metrics)
     assert {"shortage", "wellbeing", "stress", "ads_now"} <= set(arch.metrics)
     assert arch.entry_subjects == ["maths", "art", "physics"]
 

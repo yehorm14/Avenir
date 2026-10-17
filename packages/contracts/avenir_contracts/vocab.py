@@ -25,7 +25,7 @@ CONFIDENCE_ORDER: dict[str, int] = {"low": 0, "medium": 1, "high": 2}
 ML_METRICS: tuple[str, ...] = (
     "pay_median", "pay_p10", "pay_p90", "real_pay_change_10y", "jobs", "demand_trend",
     "demand_trend_2011_19", "exposure", "exposure_uk", "resilience_covid",
-    "resilience_cost_of_living", "resilience_tech_slump", "resilience_2008",
+    "resilience_cost_of_living", "resilience_tech_slump", "resilience_2008", "young_worker_share",
 )
 # Catalogue ones come from Yehor's ETL; ads_now is overlaid live by the API.
 CATALOGUE_METRICS: dict[str, str] = {
