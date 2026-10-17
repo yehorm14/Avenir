@@ -12,6 +12,7 @@ from .models import (
     BacktestOut,
     BacktestWindow,
     Career,
+    CareerRef,
     Components,
     ComponentScore,
     Crisis,

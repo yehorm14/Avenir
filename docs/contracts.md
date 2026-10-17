@@ -16,7 +16,8 @@ This page summarises them. Change either only by PR with "needs a contract chang
 | `UPSTREAM_UNAVAILABLE` | 503 | No careers loaded |
 | `INTERNAL` | 500 | Anything else (no traceback returned) |
 
-Serving a snapshot or mock is not an error: 200 with that source's status.
+Serving a snapshot or mock is not an error: 200 with that source's status. Error envelopes may have an empty `meta.sources`.
+A malformed SOC (not 4 digits) is `VALIDATION_ERROR` 422; a well-formed unknown SOC is `NOT_FOUND` 404.
 
 ## Endpoints
 
@@ -42,7 +43,7 @@ Serving a snapshot or mock is not an error: 200 with that source's status.
 - **Hedge** (and ML `HedgeCandidate`): `for_soc, career, similarity, shared_skills[], why, evidence (title | estimate, optional), risk_delta, status`.
 - **Crisis**: `key, label, window, measure, baseline_median, baseline_real_pay_median (optional), status, flags[]`.
 - **Career**: `soc2020, title, official_title, aliases[], description, isco08[{code, share}], entry_subjects[], metrics{key: Metric}`; keys = `vocab.ML_METRICS` + `vocab.CATALOGUE_METRICS`.
-- **RecommendationOut**: `first_idea, first_idea_components, picks[0..3]{tier, career, components{fit, expected_return, market_risk, disruption_risk, risk}, vs_first_idea, reasons[]}, hedge, roadmap{steps[3], this_month}, notices[], explanation{text, ai_written, cited_numbers}`.
+- **RecommendationOut**: `first_idea, first_idea_candidates[{soc2020, title}] (equal matches of an ambiguous first idea; first_idea is null then), first_idea_components, picks[0..3]{tier, career, components{fit, expected_return, market_risk, disruption_risk, risk}, vs_first_idea, reasons[]}, hedge, roadmap{steps[3], this_month}, notices[], explanation{text, ai_written, cited_numbers}`.
 - **Catalogue / routes files** (`catalogue.py`): `snapshots/catalogue.json`, `snapshots/routes.json`, with mocks in `snapshots/mock/`.
 
 ## ML v1.1 additions (what the API and UI do)
