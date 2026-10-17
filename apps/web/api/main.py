@@ -13,7 +13,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Path as ApiPath
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -25,6 +25,7 @@ from app.data import get_store  # noqa: E402
 from app.path import build_plan  # noqa: E402
 from pathfinder_ml import FLAG_TEXT, ML, MUST_MENTION  # noqa: E402
 
+from .catalogue import detail as catalogue_detail, summaries as catalogue_summaries  # noqa: E402
 from .discovery import DiscoveryRequest, discover  # noqa: E402
 from .ranking import rank_careers  # noqa: E402
 
@@ -164,10 +165,20 @@ def _match_careers() -> list[dict]:
 
 
 def _career(soc: str) -> dict:
-    found = next((career for career in _careers() if career["soc"] == soc), None)
+    found = catalogue_detail(ml(), soc, _careers())
     if found is None:
         raise HTTPException(404, "Career not found")
     return found
+
+
+@app.get("/api/catalogue")
+def catalogue() -> list[dict]:
+    return catalogue_summaries(ml(), _careers())
+
+
+@app.get("/api/careers/{soc}")
+def career_detail(soc: str = ApiPath(pattern=r"^\d{4}$")) -> dict:
+    return _career(soc)
 
 
 @app.get("/api/health")
@@ -233,8 +244,10 @@ def discovery(request: DiscoveryRequest) -> dict:
 
 
 @app.get("/api/path/{soc}")
-def path(soc: str, nation: str = "Scotland") -> dict:
+def path(soc: str = ApiPath(pattern=r"^\d{4}$"), nation: str = "Scotland") -> dict:
     career = _career(soc)
+    if not career["pathway_available"]:
+        raise HTTPException(404, "A pathway example is not available for this career yet")
     nation_names = {n.lower().replace("_", " "): n for n in ("Scotland", "England", "Wales", "Northern Ireland")}
     nation = nation_names.get(nation.lower().replace("_", " "), "Scotland")
     text_soc = _text_soc(soc)
@@ -301,7 +314,7 @@ def _guide_reply(career: dict, message: str, history: list[GuideTurn]) -> tuple[
         previous = next((turn.content for turn in reversed(history) if turn.role == "user"), "")
         lower += " " + previous.lower()
     metrics = career["metrics"]
-    if any(word in lower for word in ("pay", "salary", "earn", "inflation", "money", "income")):
+    if re.search(r"\b(pay|salary|salaries|earn\w*|inflation|money|income)\b", lower):
         pay = metrics.get("pay_median", {})
         value = pay.get("value")
         if value is None:
@@ -346,10 +359,11 @@ def _guide_reply(career: dict, message: str, history: list[GuideTurn]) -> tuple[
                 ["ons_ashe_t14"],
             )
         return (
-            f"The observed full-time employee job trend was {100 * demand['value']:+.2f}% per year "
+            f"The observed employee-job trend was {100 * demand['value']:+.2f}% per year "
             f"over {demand.get('as_of', '2021–2025')}. This is a historical signal, "
             "not a prediction or a promise of a vacancy. Compare it with your interest "
-            "in the day-to-day work and build skills that transfer between roles." + _evidence_note(demand),
+            "in the day-to-day work and build skills that transfer between roles. "
+            + demand.get("note", "") + _evidence_note(demand),
             ["ons_ashe_t14"],
         )
     if career["soc"] == "5315":
@@ -358,6 +372,13 @@ def _guide_reply(career: dict, message: str, history: list[GuideTurn]) -> tuple[
             "The National Careers Service describes college, apprenticeship and on-the-job routes. "
             "Check its plumber profile for the route and entry requirements that fit your situation.",
             ["ncs_plumber"],
+        )
+    if not career["pathway_available"]:
+        return (
+            career["summary"] + " Personalised matching currently covers 20 careers. "
+            "This occupation is available for evidence browsing; check an official careers service "
+            "for occupation-specific training and entry requirements.",
+            [],
         )
     plan = path(career["soc"])
     if any(word in lower for word in ("skill", "learn", "good at", "practice", "project")):

@@ -39,6 +39,18 @@ export type Career = {
   pay_score?: number;
   need_score?: number;
   reasons?: string[];
+  sources?: { name: string; url: string }[];
+  jobs_observation?: Metric;
+  match_supported?: boolean;
+  pathway_available?: boolean;
+};
+export type CareerSummary = {
+  soc: string;
+  title: string;
+  sector: string;
+  pay: Metric;
+  jobs: Metric;
+  match_supported: boolean;
 };
 export type Weights = { pay: number; interest: number; need: number };
 export type Bootstrap = {

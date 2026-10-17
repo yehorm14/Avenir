@@ -1,5 +1,6 @@
-import { useState } from "react";
-import type { Career } from "./types";
+import { useEffect, useRef, useState } from "react";
+import type { Career, CareerSummary, Metric } from "./types";
+import { api } from "./store";
 import { money, SalaryChart } from "./Charts";
 import { careerEvidence } from "./careerEvidence";
 import "./jobs.css";
@@ -51,18 +52,21 @@ function Source({ source }: { source: { label: string; url: string } }) {
     </a>
   );
 }
-function metric(career: Career, key: string) {
-  const m = career.metrics[key];
+function metricValue(m?: Metric) {
   return m?.status === "pending" || m?.flags.includes("suppressed")
     ? null
     : (m?.value ?? null);
 }
-function employment(career: Career) {
-  return [...career.history].reverse().find((point) => point.jobs_k != null);
+function metric(career: Career, key: string) {
+  return metricValue(career.metrics[key]);
+}
+function observation(m?: Metric) {
+  if (!m) return "No observation";
+  return `${m.as_of || "Year unavailable"}${m.flags.includes("historical_observation") ? " · last available" : ""}${m.flags.includes("provisional") ? " · provisional" : ""}`;
 }
 const number = (n: number | null | undefined) =>
   n == null ? "Not available" : Math.round(n).toLocaleString("en-GB");
-const priority = (career: Career) => {
+const priority = (career: { soc: string }) => {
   // Infrastructure trades are the user's editorial priority; the demand label
   // remains the source's actual classification, including negative findings.
   if (career.soc === "5241") return 0;
@@ -78,7 +82,6 @@ const priority = (career: Career) => {
 };
 
 export default function Jobs({
-  careers,
   onExplore,
 }: {
   careers: Career[];
@@ -86,45 +89,113 @@ export default function Jobs({
 }) {
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("demand");
+  const [catalogue, setCatalogue] = useState<CareerSummary[] | null>(null);
+  const [catalogueError, setCatalogueError] = useState("");
+  const [catalogueAttempt, setCatalogueAttempt] = useState(0);
+  const [selectedSoc, setSelectedSoc] = useState<string | null>(null);
   const [selected, setSelected] = useState<Career | null>(null);
-  if (selected)
+  const [profileError, setProfileError] = useState("");
+  const [profileAttempt, setProfileAttempt] = useState(0);
+  useEffect(() => {
+    const controller = new AbortController();
+    setCatalogueError("");
+    api<CareerSummary[]>("catalogue", undefined, controller.signal)
+      .then(setCatalogue)
+      .catch((error: Error) => {
+        if (!controller.signal.aborted) setCatalogueError(error.message);
+      });
+    return () => controller.abort();
+  }, [catalogueAttempt]);
+  useEffect(() => {
+    if (!selectedSoc) return;
+    const controller = new AbortController();
+    setSelected(null);
+    setProfileError("");
+    api<Career>(`careers/${selectedSoc}`, undefined, controller.signal)
+      .then((career) => {
+        if (!controller.signal.aborted) setSelected(career);
+      })
+      .catch((error: Error) => {
+        if (!controller.signal.aborted) setProfileError(error.message);
+      });
+    return () => controller.abort();
+  }, [selectedSoc, profileAttempt]);
+  const goBack = () => {
+    const previousSoc = selectedSoc;
+    setSelectedSoc(null);
+    setSelected(null);
+    window.requestAnimationFrame(() => {
+      document.getElementById(`job-${previousSoc}`)?.focus();
+    });
+  };
+  if (selectedSoc) {
+    if (selected)
+      return (
+        <JobProfile
+          key={selected.soc}
+          career={selected}
+          onBack={goBack}
+          onExplore={() => onExplore(selected)}
+        />
+      );
     return (
-      <JobProfile
-        key={selected.soc}
-        career={selected}
-        onBack={() => {
-          setSelected(null);
-          window.scrollTo(0, 0);
-        }}
-        onExplore={() => onExplore(selected)}
-      />
+      <section className="job-profile" aria-busy={!profileError}>
+        <button className="job-back text-button" onClick={goBack}>
+          All jobs
+        </button>
+        <h1>
+          {catalogue?.find((career) => career.soc === selectedSoc)?.title ??
+            "Career evidence"}
+        </h1>
+        {profileError ? (
+          <div className="jobs-message" role="alert">
+            <p>{profileError}</p>
+            <button
+              className="button secondary"
+              onClick={() => setProfileAttempt((attempt) => attempt + 1)}
+            >
+              Try again
+            </button>
+          </div>
+        ) : (
+          <p className="jobs-message" role="status">
+            Loading career evidence…
+          </p>
+        )}
+      </section>
     );
-  const rows = careers
+  }
+  const query = search.trim().toLowerCase();
+  const rows = (catalogue ?? [])
     .filter((career) =>
-      `${career.title} ${career.sector}`
+      `${career.title} ${career.sector} ${career.soc}`
         .toLowerCase()
-        .includes(search.toLowerCase()),
+        .includes(query),
     )
     .sort((a, b) => {
       if (sort === "pay")
         return (
-          (metric(b, "pay_median") ?? -1) - (metric(a, "pay_median") ?? -1)
+          (metricValue(b.pay) ?? -1) - (metricValue(a.pay) ?? -1) ||
+          a.title.localeCompare(b.title)
         );
       if (sort === "name") return a.title.localeCompare(b.title);
       return priority(a) - priority(b) || a.title.localeCompare(b.title);
     });
   return (
-    <section className="jobs-directory">
+    <section
+      className="jobs-directory"
+      aria-busy={!catalogue && !catalogueError}
+    >
       <header className="jobs-heading">
         <h1>Jobs</h1>
-        <small>Evidence checked 18 October 2026</small>
+        <small>Browse the supplied UK occupation catalogue</small>
       </header>
       <div className="jobs-controls">
         <label className="search">
           <span className="sr-only">Search careers</span>
           <input
             type="search"
-            placeholder="Search jobs"
+            placeholder="Search jobs, sectors or SOC codes"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
           />
@@ -139,69 +210,130 @@ export default function Jobs({
           <option value="name">A–Z</option>
         </select>
       </div>
-      <div className="jobs-table table-scroll">
-        <table>
-          <thead>
-            <tr>
-              <th>Career</th>
-              <th>UK demand</th>
-              <th>Pay</th>
-              <th>Employees</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((career) => {
-              const evidence = careerEvidence[career.soc];
-              const jobs = employment(career);
-              return (
-                <tr
-                  key={career.soc}
-                  className={priority(career) < 2 ? "priority-job" : ""}
-                >
-                  <th scope="row" className="job-name">
-                    <button
-                      onClick={() => {
-                        setSelected(career);
-                        window.scrollTo(0, 0);
-                      }}
-                    >
-                      {career.title}
-                    </button>
-                    <small>{career.sector}</small>
-                  </th>
-                  <td>
-                    <span className="demand-label">
-                      {evidence?.shortage?.label ??
-                        (evidence?.demand === "Not in high demand"
-                          ? "Not high"
-                          : (evidence?.demand ?? "Not assessed"))}
-                    </span>
-                    <small className="demand-subtitle">
-                      {evidence?.shortage ? "MAC 2026" : "Skills England 2025"}
-                    </small>
-                  </td>
-                  <td>{money(metric(career, "pay_median"))}</td>
-                  <td>
-                    {number(jobs?.jobs_k == null ? null : jobs.jobs_k * 1000)}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-      {!rows.length && <p className="jobs-source-note">No matching careers.</p>}
+      {catalogueError ? (
+        <div className="jobs-message" role="alert">
+          <p>{catalogueError}</p>
+          <button
+            className="button secondary"
+            onClick={() => setCatalogueAttempt((attempt) => attempt + 1)}
+          >
+            Try again
+          </button>
+        </div>
+      ) : !catalogue ? (
+        <p className="jobs-message" role="status">
+          Loading the occupation catalogue…
+        </p>
+      ) : (
+        <>
+          <p className="jobs-count" role="status">
+            {query
+              ? `${rows.length} of ${catalogue.length} occupations`
+              : `${catalogue.length} occupations`}
+          </p>
+          {rows.length ? (
+            <>
+              <p className="jobs-scroll-hint">
+                Scroll across for demand, pay and employee jobs.
+              </p>
+              <div
+                className="jobs-table table-scroll"
+                tabIndex={0}
+                role="region"
+                aria-label="Occupation evidence table"
+              >
+                <table>
+                  <caption className="sr-only">
+                    UK occupations with published annual median pay and employee
+                    jobs. Select a career to view its evidence.
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Career</th>
+                      <th scope="col">UK demand</th>
+                      <th scope="col">Pay</th>
+                      <th scope="col">Employee jobs</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rows.map((career) => {
+                      const evidence = careerEvidence[career.soc];
+                      const jobs = metricValue(career.jobs);
+                      return (
+                        <tr
+                          key={career.soc}
+                          className={priority(career) < 2 ? "priority-job" : ""}
+                        >
+                          <th scope="row" className="job-name">
+                            <button
+                              id={`job-${career.soc}`}
+                              onClick={() => {
+                                setSelectedSoc(career.soc);
+                                window.scrollTo(0, 0);
+                              }}
+                            >
+                              {career.title}
+                            </button>
+                            <small>{career.sector}</small>
+                          </th>
+                          <td>
+                            <span className="demand-label">
+                              {evidence?.shortage?.label ??
+                                (evidence?.demand === "Not in high demand"
+                                  ? "Not high"
+                                  : (evidence?.demand ?? "Not assessed"))}
+                            </span>
+                            <small className="demand-subtitle">
+                              {evidence
+                                ? evidence.shortage
+                                  ? "MAC 2026"
+                                  : "Skills England 2025"
+                                : "No classification supplied"}
+                            </small>
+                          </td>
+                          <td>
+                            {money(metricValue(career.pay))}
+                            <small>{observation(career.pay)}</small>
+                          </td>
+                          <td>
+                            {number(jobs == null ? null : jobs * 1000)}
+                            <small>{observation(career.jobs)}</small>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          ) : (
+            <div className="jobs-message">
+              <h2>No matching occupations</h2>
+              <p>Try a different job title, sector or four-digit SOC code.</p>
+              <button
+                className="button secondary"
+                onClick={() => setSearch("")}
+              >
+                Clear search
+              </button>
+            </div>
+          )}
+        </>
+      )}
       <p className="jobs-source-note">
-        Pay and employment: full-time employees, 2025; provisional.
-        Self-employed workers are excluded. Pay is the annual median, not a
-        starting salary. <Source source={ashe} />.
+        Pay is the annual median for full-time employees, not a starting salary.
+        Employee-job estimates exclude self-employment. Each figure shows its
+        own observation year. Older employee-job counts are marked last
+        available; missing and suppressed figures stay unavailable.{" "}
+        <Source source={ashe} />.
       </p>
       <p className="jobs-source-note">
         Electricians and plumbers appear first because of infrastructure needs
-        identified by the Migration Advisory Committee. Demand categories
-        measure recruitment pressure, not confirmed vacancies or guaranteed
-        employment. <Source source={demandSource} />. Select a career for the
-        evidence and outlook.
+        identified by the Migration Advisory Committee. Demand classifications
+        measure recruitment pressure, not vacancies or guaranteed employment.{" "}
+        <Source source={demandSource} />. Personalised matching covers 20
+        careers; all supplied occupations are available here for evidence
+        browsing.
       </p>
     </section>
   );
@@ -240,9 +372,18 @@ function JobProfile({
     prices <= 20;
   const nominal = valid ? start * (1 + growth / 100) ** 2 : null;
   const real = nominal == null ? null : nominal / (1 + prices / 100) ** 2;
-  const latest = employment(career);
+  const jobs = career.jobs_observation ?? career.metrics.jobs;
+  const employeeJobs = metricValue(jobs);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    headingRef.current?.focus();
+  }, []);
   const pay = career.metrics.pay_median;
   const sources = [
+    ...(career.sources ?? []).map((source) => ({
+      label: source.name,
+      url: source.url,
+    })),
     ashe,
     cpih,
     evidence?.demandSource,
@@ -261,14 +402,16 @@ function JobProfile({
         All jobs
       </button>
       <header className="job-profile-header">
-        <h1>{career.title}</h1>
+        <h1 ref={headingRef} tabIndex={-1}>
+          {career.title}
+        </h1>
         <p className="job-profile-summary">
           {work[career.soc] ?? career.summary}
         </p>
       </header>
       <dl className="job-facts">
         <div>
-          <dt>Pay, {pay?.as_of ?? "2025"}</dt>
+          <dt>Pay, {pay?.as_of || "year unavailable"}</dt>
           <dd>{money(metric(career, "pay_median"))}</dd>
           <small>
             {pay?.low != null && pay.high != null
@@ -277,16 +420,16 @@ function JobProfile({
           </small>
         </div>
         <div>
-          <dt>Employees, {latest?.year ?? "2025"}</dt>
-          <dd>
-            {number(latest?.jobs_k == null ? null : latest.jobs_k * 1000)}
-          </dd>
-          <small>Full-time. Not vacancies.</small>
+          <dt>Employee jobs, {jobs?.as_of || "year unavailable"}</dt>
+          <dd>{number(employeeJobs == null ? null : employeeJobs * 1000)}</dd>
+          <small>{jobs?.note || "Employees only. Not vacancies."}</small>
         </div>
         <div>
-          <dt>Demand, {evidence?.demandYear ?? "2025"}</dt>
+          <dt>Demand{evidence ? `, ${evidence.demandYear}` : ""}</dt>
           <dd>{evidence?.demand ?? "Not assessed"}</dd>
-          <small>Skills England index</small>
+          <small>
+            {evidence ? "Skills England index" : "No classification supplied"}
+          </small>
         </div>
         <div>
           <dt>Two-year pay</dt>
@@ -311,6 +454,7 @@ function JobProfile({
           {evidence && <Source source={evidence.demandSource} />}
         </p>
       </section>
+      <PublishedEvidence career={career} />
       <SalaryChart careers={[career]} />
       <section className="job-scenario">
         <div className="scenario-header">
@@ -443,11 +587,19 @@ function JobProfile({
           ))}
         </ol>
         <p className="jobs-source-note">
-          ASHE figures cover full-time employees, excluding self-employment. The
-          2025 observations are provisional. Historical occupation mappings and
-          the 2021 code break are marked in the chart.
+          ASHE pay figures cover full-time employees, excluding self-employment.
+          Employee-job coverage is described alongside each supplied metric.
+          Observations marked provisional may be revised. Historical occupation
+          mappings and the 2021 code break are marked in the chart.
         </p>
       </section>
+      {!career.match_supported && (
+        <p className="jobs-coverage">
+          Personalised matching currently covers 20 careers. This profile is
+          available for evidence browsing; detailed skills and study routes have
+          not been added yet.
+        </p>
+      )}
       {career.soc === "5315" ? (
         <a
           className="button secondary"
@@ -457,11 +609,129 @@ function JobProfile({
         >
           Training routes
         </a>
-      ) : (
+      ) : career.match_supported ? (
         <button className="button primary" onClick={onExplore}>
           Explore career
         </button>
-      )}
+      ) : null}
     </article>
+  );
+}
+
+const metricLabels: Record<string, string> = {
+  pay_median: "Annual median pay",
+  pay_p10: "Pay, 10th percentile",
+  pay_p90: "Pay, 90th percentile",
+  real_pay_change_10y: "Real pay change",
+  jobs: "Employee jobs",
+  demand_trend: "Employee-job trend",
+  demand_trend_2011_19: "Earlier employee-job trend",
+  exposure: "AI task exposure",
+  exposure_uk: "UK exposure cross-check",
+  resilience_covid: "COVID employment resilience",
+  resilience_cost_of_living: "Cost-of-living pay resilience",
+  resilience_tech_slump: "Tech-slump adverts resilience",
+  resilience_2008: "2008 crisis resilience",
+  young_worker_share: "Workers aged 16–24",
+};
+const flagNotes: Record<string, string> = {
+  historical_observation:
+    "This is an older observation; the latest estimate is unavailable.",
+  bridged_soc2010:
+    "Figures before 2021 are estimated from the older SOC 2010 occupation codes using the ONS crosswalk.",
+  bridged_soc2000:
+    "Figures before 2011 are estimated from the older SOC 2000 occupation codes using two ONS crosswalks.",
+  recoded_2021:
+    "Occupation codes changed in 2021, so job counts before and after 2021 are not directly comparable.",
+  provisional: "This observation is provisional and may be revised.",
+  covid_year:
+    "2020 figures are affected by the pandemic: low survey response and furlough.",
+  employees_only:
+    "Covers employees only; self-employed and freelance workers are not included.",
+  suppressed: "ONS withheld this estimate because it was too unreliable.",
+  cv_high:
+    "This estimate has a sampling error of 10 to 20 percent; treat it with caution.",
+  multi_isco:
+    "This occupation spans several international job codes; the score is their weighted average and the range shows how much they differ.",
+  imputed_parent:
+    "No direct figure exists; this is estimated from the wider occupation group.",
+  pending_source: "The data source for this figure has not been loaded yet.",
+  mock: "This is sample data, not a real figure.",
+  category_level:
+    "Measured for a broad job-advert category, not for this exact occupation.",
+  sources_disagree:
+    "Two independent research estimates disagree for this job, so the range is wider.",
+};
+function metricDisplay(m: Metric, value = metricValue(m)): string {
+  if (value == null) return "Not available";
+  if (m.unit === "GBP/year") return money(value);
+  if (m.unit === "thousand jobs") return `${number(value * 1000)} jobs`;
+  if (m.unit.startsWith("fraction"))
+    return `${(value * 100).toFixed(1)}%${m.unit.endsWith("/year") ? " / year" : ""}`;
+  return `${value.toFixed(3)}${m.unit === "score 0-1" ? " / 1" : ` ${m.unit}`}`;
+}
+function EvidenceMeasure({ name, measure }: { name: string; measure: Metric }) {
+  const flags = measure.flags.map((flag) => flagNotes[flag]).filter(Boolean);
+  return (
+    <div className="job-evidence-measure">
+      <dt>
+        {metricLabels[name] ?? name.replaceAll("_", " ")}{" "}
+        <span>{observation(measure)}</span>
+      </dt>
+      <dd>{metricDisplay(measure)}</dd>
+      {measure.low != null &&
+        measure.high != null &&
+        metricValue(measure) != null && (
+          <p>
+            Supplied range: {metricDisplay(measure, measure.low)} to{" "}
+            {metricDisplay(measure, measure.high)}
+          </p>
+        )}
+      <p>{measure.note}</p>
+      {measure.status === "preliminary" && <p>Preliminary estimate.</p>}
+      {flags.map((note) => (
+        <p className="job-evidence-caveat" key={note}>
+          {note}
+        </p>
+      ))}
+      {typeof measure.extra.adverts_category === "string" && (
+        <p>Job-advert category: {measure.extra.adverts_category}.</p>
+      )}
+    </div>
+  );
+}
+function PublishedEvidence({ career }: { career: Career }) {
+  const headline = ["demand_trend", "exposure"];
+  return (
+    <section className="job-evidence">
+      <h2>What the evidence shows</h2>
+      <p className="jobs-source-note">
+        Observed employment trends describe the past. AI exposure describes
+        tasks that technology could affect; it is not a forecast of job losses.
+      </p>
+      <dl className="job-evidence-grid">
+        {headline.map((key) =>
+          career.metrics[key] ? (
+            <EvidenceMeasure
+              key={key}
+              name={key}
+              measure={career.metrics[key]}
+            />
+          ) : null,
+        )}
+      </dl>
+      <details className="job-evidence-details">
+        <summary>
+          All supplied measures ({Object.keys(career.metrics).length})
+        </summary>
+        <dl className="job-evidence-grid">
+          {Object.entries(career.metrics)
+            .filter(([key]) => !headline.includes(key))
+            .map(([key, measure]) => (
+              <EvidenceMeasure key={key} name={key} measure={measure} />
+            ))}
+        </dl>
+      </details>
+    </section>
   );
 }
