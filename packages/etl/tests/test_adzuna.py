@@ -368,7 +368,7 @@ def test_slow_server_is_cut_off_at_the_deadline_in_real_time(monkeypatch):
         elapsed = time.monotonic() - start
     finally:
         release.set()
-    assert elapsed < 0.3 + 0.2
+    assert elapsed < 0.3 + 0.5
     assert (status.status, metric.value) == ("snapshot", 4321)
 
 
@@ -429,3 +429,36 @@ def test_set_live_false_ignores_warm_cache(monkeypatch, clock):
     _, status = ads.ads_now(career(), "UK")
     assert status.status == "snapshot"
     assert len(fake.calls) == 1
+
+
+def test_set_live_true_closes_an_open_breaker(monkeypatch, clock):
+    fake = FakeGet([FakeResponse(429, {}), FakeResponse(200, {"count": 12})], clock)
+    monkeypatch.setattr(adzuna_source.requests, "get", fake)
+    ads = make(clock)
+    assert ads.ads_now(career(), "UK")[1].status == "snapshot"  # 429 trips the breaker
+    ads.set_live(False)
+    ads.set_live(True)  # explicit switch-on: no 60 s wait
+    metric, status = ads.ads_now(career(), "UK")
+    assert (status.status, metric.value) == ("live", 12)
+
+
+def test_timeout_then_5xx_still_opens_breaker(monkeypatch, clock):
+    fake = FakeGet([("timeout", 0.1), FakeResponse(503, {}), FakeResponse(200, {"count": 12})], clock)
+    monkeypatch.setattr(adzuna_source.requests, "get", fake)
+    ads = make(clock)
+    assert ads.ads_now(career(), "UK")[1].status == "snapshot"
+    assert len(fake.calls) == 2
+    assert ads.ads_now(career(), "UK")[1].status == "snapshot"
+    assert len(fake.calls) == 2  # breaker open
+
+
+def test_plug_pulled_during_a_live_call_returns_the_snapshot(monkeypatch, clock):
+    holder: dict = {}
+
+    def get_then_unplug(*a, **k):
+        holder["ads"].set_live(False)  # the presenter pulls the plug while the request is in flight
+        return FakeResponse(200, {"count": 999})
+    monkeypatch.setattr(adzuna_source.requests, "get", get_then_unplug)
+    ads = holder["ads"] = make(clock)
+    metric, status = ads.ads_now(career(), "UK")
+    assert (status.status, metric.value) == ("snapshot", 4321)

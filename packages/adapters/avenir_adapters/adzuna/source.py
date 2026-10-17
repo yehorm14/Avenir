@@ -18,13 +18,12 @@ import logging
 import re
 import time
 from collections.abc import Callable
-from concurrent.futures import Future, ThreadPoolExecutor
-from concurrent.futures import TimeoutError as FutureTimeout
 from pathlib import Path
 from typing import Any
 
 import requests
 
+from avenir_adapters._deadline import DeadlineExceeded, call_with_deadline
 from avenir_contracts import Career, Metric, SourceStatus
 from avenir_contracts.ports import SnapshotAds
 
@@ -37,7 +36,6 @@ CACHE_TTL_S = 600.0
 BREAKER_S = 60.0
 NOTE = "Jobs by Adzuna: live ads matching the job title."
 _FILE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}\.json$")
-_POOL = ThreadPoolExecutor(max_workers=4, thread_name_prefix="adzuna")  # threads are reused
 
 
 def _metric(count: float, as_of: str) -> Metric:
@@ -74,6 +72,8 @@ class AdzunaAds:
 
     def set_live(self, enabled: bool) -> None:
         self.live = enabled
+        if enabled:
+            self._breaker_until = 0.0  # an explicit switch-on is a fresh start
 
     def ads_now(self, career: Career, region: str) -> tuple[Metric, SourceStatus]:
         try:
@@ -95,7 +95,7 @@ class AdzunaAds:
         if self._clock() < self._breaker_until:
             return None
         count = self._fetch_count(career.title)
-        if count is None:
+        if count is None or not self.live:  # plug pulled while the call was in flight: snapshot now
             return None
         as_of = dt.date.today().isoformat()
         metric = _metric(count, as_of)
@@ -111,14 +111,10 @@ class AdzunaAds:
             remaining = deadline - self._clock()
             if remaining <= 0 or (attempt == 1 and remaining < MIN_RETRY_S):
                 break
-            retry = trip = False
-            future: Future | None = None
+            retry = False  # `trip` is sticky: a timeout followed by a 5xx still opens the breaker
             try:
-                future = _POOL.submit(_get, params, (remaining, remaining))
-                status, body = future.result(timeout=remaining)
-            except (FutureTimeout, requests.Timeout, requests.ConnectionError) as e:
-                if future is not None:
-                    future.cancel()  # no-op once running; the requests timeout ends that thread
+                status, body = call_with_deadline(_get, remaining, params, (remaining, remaining))
+            except (DeadlineExceeded, requests.Timeout, requests.ConnectionError) as e:
                 log.warning("Adzuna live call failed: %s", type(e).__name__)
                 retry = trip = True
             except Exception as e:  # bad JSON, unexpected error: fall back, no retry
@@ -132,7 +128,7 @@ class AdzunaAds:
                 else:
                     log.warning("Adzuna live call failed: HTTP %s", status)
                     retry = status >= 500
-                    trip = status in (401, 403, 429)
+                    trip = trip or status in (401, 403, 429)
             if not retry:
                 break
         if trip:
