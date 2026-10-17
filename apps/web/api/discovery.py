@@ -80,12 +80,29 @@ def _normalise(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", " ", text.lower()).strip()
 
 
+def _positive_clauses(text: str) -> str:
+    """Ignore plainly negated clauses rather than counting disliked activities.
+
+    This intentionally handles explicit wording only, not general sentiment.
+    A contrast such as "dislike coding, but enjoy helping" keeps the latter.
+    """
+    clauses = re.split(
+        r"[,;.!?\n]|\b(?:but|however|although|yet)\b|\band\s+(?=(?:i\s+)?(?:enjoy|like|love|prefer)\b)",
+        text.lower().replace("’", "'"),
+    )
+    negative = (
+        r"\b(?:dislike|hate|avoid|not interested in|not keen on|no interest in|"
+        r"(?:do not|don't|never)\s+(?:like|enjoy|want|prefer))\b"
+    )
+    return " ".join(clause for clause in clauses if not re.search(negative, clause))
+
+
 def _contains(text: str, phrase: str) -> bool:
     return bool(re.search(r"\b" + re.escape(_normalise(phrase)) + r"\b", text))
 
 
 def _resolve(direction: str, careers: list[dict]) -> str | None:
-    text = _normalise(direction)
+    text = _normalise(_positive_clauses(direction))
     matches = []
     for career in careers:
         soc = career["soc"]
@@ -123,7 +140,7 @@ def discover(request: DiscoveryRequest, careers: list[dict], tag_matches: list[d
     if len(careers) < 3:
         raise ValueError("At least three career profiles are needed to compare options.")
     affinity = fit["affinity"]
-    activity = request.answers.activity_text().lower()
+    activity = _positive_clauses(request.answers.activity_text())
     # Match_tags receives the entire conversation. Value-only salary preferences
     # affect weights, rather than being mistaken for an interest in finance.
     selected = {
@@ -161,7 +178,7 @@ def discover(request: DiscoveryRequest, careers: list[dict], tag_matches: list[d
         raise ValueError(
             "Tell us about one subject or activity you enjoy, or name a career in the collection, to compare options."
         )
-    weights, weight_note = _weights(request.answers.values)
+    weights, weight_note = _weights(_positive_clauses(request.answers.values))
     if weight_note:
         notices.append(weight_note)
     if fit.get("evaluation", {}).get("note"):

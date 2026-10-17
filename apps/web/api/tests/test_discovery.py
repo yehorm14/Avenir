@@ -111,3 +111,43 @@ def test_empty_unsupported_and_invalid_input_is_actionable(client, payload):
     assert response.status_code == 422
     if payload["mode"] in ("known", "explore") and not isinstance(payload["answers"].get("subjects"), int):
         assert "subject or activity" in response.json()["detail"].lower()
+
+
+def test_explicit_dislike_is_not_treated_as_an_interest(client):
+    response = client.post(
+        "/api/discovery",
+        json={
+            "mode": "explore",
+            "answers": {
+                "interests": "I dislike coding, but enjoy helping people",
+            },
+        },
+    )
+    assert response.status_code == 200
+    assert "helping_people" in response.json()["tags"]
+    assert "computers_coding" not in response.json()["tags"]
+    negative_only = client.post(
+        "/api/discovery",
+        json={
+            "mode": "explore",
+            "answers": {
+                "interests": "I don't like programming",
+            },
+        },
+    )
+    assert negative_only.status_code == 422
+
+
+def test_known_civil_engineer_resolves_exact_reference(client):
+    response = client.post(
+        "/api/discovery",
+        json={
+            "mode": "known",
+            "answers": {
+                "direction": "I want to be a civil engineer",
+            },
+        },
+    )
+    assert response.status_code == 200
+    assert response.json()["target_soc"] == "2121"
+    assert response.json()["results"][0]["soc"] == "2121"
