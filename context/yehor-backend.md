@@ -1,53 +1,43 @@
 # yehor: backend (contract, catalogue, routes, live adapters)
 
-- **Owner:** Yehor (human) / Claude (agents)
-- **Branches:** `yehor/live-adapters` (Tasks 1-3), `yehor/catalogue` (Tasks 4-6); per-task branches `yehor/adzuna`, `yehor/llm`
-- **PR:** #1 merged (contract v2). Next PRs: "yehor: live adapters", "yehor: catalogue, routes"
-- **Status:** in progress (Sat 17 Oct, ~21:40)
+- **Owner:** Yehor (human) / Claude (agents); Codex runs the integration harness on `codex/*`
+- **Status:** in progress (Sat 17 Oct, ~22:40). Four draft PRs open, all reviewed.
 
-## Task
-Plan v2: `docs/superpowers/plans/2026-10-17-avenir-data-and-adapters.md`. Each task: implementer agent (tests first) →
-reviewer agent → fixes; whole-branch review before each PR.
+## Open PRs (all drafts, need a human review + merge)
+| PR | Branch | What | Notes |
+| --- | --- | --- | --- |
+| #3 | `yehor/catalogue` | Catalogue + routes ETL (`python -m avenir_etl.build`) | Real build needs `verified_by` filled + real routes (Sun 08:00) |
+| #4 | `yehor/contract-v1.1` | Contract v2.1: ML v1.1 additions; AGENTS.md rule 11 (snapshots/ml up to 5 MB) | **Needs Nazar's ack.** Merge before #6 |
+| #5 | `yehor/live-adapters` | Registry, Adzuna (hard 3 s, breaker, snapshot fallback), LLM explanation (checked, template fallback) | Nazar's API picks it up with no change |
+| #6 | `yehor/frontend-handoff` | `docs/frontend/`: README, JSON schemas, generated examples | Regenerate after #4 merges |
 
-## Done so far
-- Contract v2 merged to `main` (PR #1): Metric, Career join, catalogue/routes files, `load_data()`, ports with
-  no-network defaults, mock catalogue and routes for the 20 ML demo SOCs.
-- **Task 3, LLM explanation: done, reviewed.** `avenir_adapters.llm`: `LlmExplanation` (OpenAI-compatible
-  `/chat/completions`), `writer_from_env()`. Falls back to the template if a number is not in the response, a notice is
-  not copied verbatim, the text says "you should"/"don't", or the call fails. `.env.example` gains `LLM_BASE_URL`, `LLM_MODEL`.
-- **Task 4, catalogue build: done, reviewed.** `avenir_etl.curated.load_curated` (fails naming every unverified /
-  unknown-SOC / bad-subject row) and `avenir_etl.build` (`python -m avenir_etl.build` → `snapshots/catalogue.json`).
-  `shortage` missing until the OiD file is loaded; `wellbeing`/`stress` missing (no data, cut order); `ads_now` filled live by the API.
-- **Task 2, Adzuna live ads: built, in review fixes.** `avenir_adapters.adzuna.AdzunaAds`: live count, 10-min cache,
-  snapshot fallback; fixing a hard 3 s deadline, a circuit breaker for outages, and logging.
-  `scripts/fetch/adzuna_snapshot.py` now keys the snapshot by SOC.
-- Tests on the branches: 62-66 passing, ruff clean.
+Suggested merge order: #4 → #5 → #3 → #6 (then regenerate #6's pack).
 
-## In progress / next
-- Task 6, routes: `data/curated/routes.csv` (header only; humans add real routes), `load_routes`, CLI writes `routes.json`.
-- Task 1, registry (`ads_source()`, `explanation_writer()`, `tag_suggester()`) once Task 2 passes review. Then the PR,
-  and Nazar's API picks it up with no change (`deps.default_ports()`).
-- Task 5, OiD shortage: blocked on the data download.
+## Done
+- Plan v2 Tasks 1, 2, 3, 4, 6: implemented test-first, reviewed per task, whole-branch reviewed.
+- Contract v2.1 adopting Arsenii's ML v1.1 (from KATYATA `arsenii/ml-data` 03fb482; he pushes the data to Avenir himself).
+- Codex integration run (21:58) with v1.1 overlaid: everything merges cleanly; 412 occupations / 20 demo careers
+  load with no lost flags; one contract test assumed history starts in 2011 (v1.1: 2007) — being fixed on #4.
+
+## Next
+- Task 5 (Occupations in Demand → `shortage`): as soon as the OiD file is in `data/raw/oid/`.
+- Regenerate the frontend pack after #4; add a recommendation example when Nazar's `recommend()` lands.
+- Sun 08:00-10:00: real `snapshots/catalogue.json` + `routes.json`; `AVENIR_FREEZE=1 pytest`.
 
 ## Blocked on (humans)
-- **Adzuna keys** in `.env` (`ADZUNA_APP_ID`, `ADZUNA_APP_KEY`), then `make adzuna` for the snapshot behind pull-the-plug.
-- **LLM endpoint** (ELM?): base URL, key, model. Who has access? Without it the app uses the template text (fine).
-- **Occupations in Demand** "Download all data (ZIP)" → `data/raw/oid/` (unblocks Task 5).
-- **`data/curated/occupations.csv`**: fill `verified_by` (your name) and a one-line description for each of the 20 rows.
-  The build refuses to run until every row is verified.
-- **`data/curated/routes.csv`**: real Scottish routes (apprenticeships.scot, Graduate Apprenticeships, university course
-  pages) with the page URL, at least for the likely picks. Needed by Sun 08:00.
+- **Adzuna keys** in `.env`, then `python scripts/fetch/adzuna_snapshot.py` and commit `snapshots/adzuna/<date>.json`.
+  Without it, pull-the-plug shows ads as "missing". **Demo blocker.**
+- **Occupations in Demand** ZIP → `data/raw/oid/`.
+- **LLM endpoint** (base URL, key, model); without it the template text is used (fine).
+- **`data/curated/occupations.csv`**: `verified_by` + descriptions for the 20 rows; **`routes.csv`**: real Scottish routes with URLs. Save as "CSV UTF-8".
+- Arsenii: push ML v1.1 to Avenir (5 MB exception in #4). Team: matcher labels for Arsenii; confirm the 20 demo careers.
+- Close stale PR #2. Name the frontend owner in AGENTS.md.
 
-## Open questions (for humans)
-- Arsenii: public `ML.affinity()` and `ML.backtest_years()` (we use `ml._load` in `data.py` for now); pick rules for
-  the backtest groups (balanced is null today); confirm the 20 demo careers.
-- Team: who owns the frontend (AGENTS.md says TBD)? It can start now on `docs/contracts.md` + mock JSON.
-- PR #2 duplicates the ML slice already on `main` (identical `packages/ml`, `snapshots/ml`) and conflicts: suggest closing.
-
-## Decisions taken (change if wrong)
-- Adzuna and LLM: 3 s total per call including the retry; Adzuna stops live calls for 60 s after an outage.
-- Real catalogue/routes files are labelled "preliminary", never "mock".
-- Wellbeing and stress stay missing tonight.
+## For Nazar (also in PR #4/#5)
+- Copy `evidence` from HedgeCandidate into Hedge; regenerate `docs/openapi.json` after #4.
+- Pin test fixtures to mocks: `load_data(ml_dir=<repo>/snapshots/ml/mock, ...)`.
+- Overlay `ads_now` in parallel or warm the cache before the pitch; `/demo/live` doesn't switch off the LLM.
+- Roadmap step 1 "Take Higher ..." needs a non-Scottish variant (routes carry `nation`).
 
 ## Marked (verify)
-- Occupations in Demand level labels; ELM API shape.
+- Occupations in Demand level labels; ELM API shape; licence per route source page.
