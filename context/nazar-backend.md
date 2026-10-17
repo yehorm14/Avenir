@@ -77,9 +77,16 @@ reviewer, checked by the orchestrator. One commit per task.
 - Checklist tag with no fit-table row → 500: now 503 naming the tag (data gap, not the user's fault).
 - Malformed JSON body: error field is `body` (was `body.1`).
 
+## Yehor's review rulings (PR #8), done 17 Oct
+- Malformed SOC (not 4 digits) → 422; well-formed unknown → 404 (`docs/contracts.md`).
+- Roadmap step 1 by nation: Higher (Scotland), A-level (England), "A-level or equivalent" (Wales, NI).
+  Ruling (orchestrator): the "Keep …" line follows the same wording.
+- First idea: a whole name inside the typed text → the longest name wins (before "text starts a word in a
+  name", where the shortest still wins); ties still give null + candidates.
+- Ads overlays run in parallel (one Adzuna deadline per recommendation, not five).
+
 ## Deferred minor findings (for the final review)
-- API: unhandled 500s lack CORS headers; error envelopes have empty `meta.sources`; ad counts are
-  fetched one career at a time (up to 5 calls; coordinate caching with Yehor).
+- API: error envelopes have empty `meta.sources` (accepted in the contract).
 - Decision: no NaN guard in ranks; double rounding in risk; a short alias inside longer typed text
   can match (plan rule, e.g. "technician"); several coverage gaps noted per task.
 - Repo: `ruff format --check` fails on several files (mostly contract files); not in `make check`.
@@ -96,7 +103,7 @@ reviewer, checked by the orchestrator. One commit per task.
   An env var (e.g. `PATHFINDER_ML_MOCK_DIR`) would be cleaner.
 
 ## Open questions (for humans)
-- Roadmap step 1 says "Take Higher ..." for every nation (plan rule); English students see it too.
+- None open.
 
 ## Marked (verify)
 - None.
