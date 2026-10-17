@@ -77,8 +77,8 @@ The `examples/` files hold the `data` part only unless the name starts with `env
 **Empty lists and null.** Handle these as "nothing to show". The UI shows a plain message, never an error.
 
 - `GET /routes/{soc}` returns `[]` when there are no routes for that nation. Today only `scotland` has routes.
-- `GET /careers/{soc}/hedge` returns `data: null` for some careers (4 of 20 today). The message is "no safer related career
-  found".
+- `GET /careers/{soc}/hedge` returns `data: null` for some careers (4 of 20 today). The API sends no text for this; the UI
+  shows its own plain message, e.g. "No safer related career found".
 - Today hedges are sample data (`status: "mock"`, source `ml_hedges`) and `evidence` is `null`. Both become real with Arsenii's
   Sunday PR.
 
