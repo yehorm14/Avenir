@@ -1,7 +1,8 @@
 # Frontend handoff: Avenir
 
 For the frontend developers (React + Vite + TypeScript, `apps/web/`). You do not need to know the backend.
-Everything below is backed by a file in this folder or by `docs/contracts.md`.
+Everything below is backed by a file in this folder, `docs/contracts.md`, `AGENTS.md` (team rules) or the ML contract
+(`packages/ml/CONTRACTS.md`, Arsenii).
 
 ## 1. TL;DR
 
@@ -88,18 +89,47 @@ Metric; an absent key also means missing. Example: `examples/career_2451.json`.
 
 | When | Show |
 | --- | --- |
-| `status: "mock"` | "sample data" label |
+| `status: "mock"`, or `source: "MOCK"` | "sample data" label |
 | `status: "preliminary"` | "preliminary" tag |
+| `status: "pending"` | "not available yet" (`value` is `null`) |
 | `value: null` | the word "missing". Never 0, never blank |
+| The key is absent from `Career.metrics` | "missing" |
+| `suppressed` in `flags` | "missing" |
 | `low` and `high` set | the range, not only `value` |
 | `granularity: "major_group"` | "job group" badge. Never present it as occupation-level (`wellbeing` and `stress` are always group-level) |
-| Source covers England only (Skills England sector assessments, Find an Apprenticeship) | "England" label |
-| Occupations in Demand (the `shortage` metric) | "UK (some indicators GB)" label |
-| Each entry in `flags` | the sentence from `examples/flags.json`. Flags with `"must_mention": true` are always visible on the card, not hidden behind a tooltip |
 | `confidence` | a high / medium / low badge |
-| `source` | "Source: <source name>" plus `as_of` |
+| `source` | "Source: <source name>" (look the key up in `examples/sources.json`) plus `as_of` |
 | Adzuna numbers (`ads_now`) | "Jobs by Adzuna" |
 | `explanation.ai_written` is `true` | "AI-written, check the source" next to the text |
+| Each entry in `flags` | the sentence from `examples/flags.json`. Flags with `"must_mention": true` are always visible on the card, not hidden behind a tooltip |
+
+**Flag rules** (from the ML contract, section 2.3). The sentence is always shown; the extra rule is how to draw it:
+
+| Flag | Also |
+| --- | --- |
+| `recoded_2021` | **Break the job-count line at 2021**: two separate segments, never one line across 2021 |
+| `bridged_soc2010`, `bridged_soc2000` | Dashed line or marker for the years it covers |
+| `covid_year` | Marker on 2020 |
+| `provisional` | Small "provisional" tag |
+| `employees_only` | Footnote on the card |
+| `imputed_parent` | "estimated" tag |
+| `cv_high` | Lower confidence badge (already reflected in `confidence`) |
+| `multi_isco` | Show the range |
+| `category_level` | Name the category, from `extra.adverts_category` (on `resilience_tech_slump`) |
+| `sources_disagree` | "Sources disagree" note, and show the (wider) range (on `exposure`) |
+| `pending_source` | "not available yet" |
+| `mock` | "sample data" |
+
+**Coverage labels.** Two fields carry coverage: `Metric.region` (default `"UK"`) and `Route.nation`
+(`scotland`, `england`, `wales`, `northern_ireland`).
+
+- Show `Route.nation` on every route. England-only sources (Skills England sector assessments, Find an
+  Apprenticeship) get an "England" label.
+- Show `Metric.region` when it is not `"UK"`.
+- The `shortage` metric (Occupations in Demand) always gets the label "UK (some indicators GB)", keyed on the metric key,
+  because its `region` will say `UK`.
+- **Not yet demonstrated:** no example in `examples/` has a `Metric.region` other than `UK`, so the set of values is not
+  yet shown. Ask Yehor before hard-coding a list.
 
 **Wording** (the user is 17): say "worth exploring". Never "you should", "don't" or "AI will take this job". Label
 the `exposure` metric "Automation exposure (research estimate)". Exposure is not job loss.
@@ -113,20 +143,24 @@ next to the source name. Examples: `examples/sources.json` (`statuses`) and the 
 For the demo, `POST /api/v1/demo/live` with `{"enabled": false}` forces snapshot data. Live job adverts (`ads_now`) are
 overlaid onto careers, so this switch changes that number and its badge. Build the "pull the plug" button on it.
 
-## 6. Arsenii's ML v1.1 asks (landing tonight or Sunday)
+## 6. ML contract v1.1 (Arsenii): what changes for the UI
 
-Not in today's examples; build for them now.
+Source: ML CONTRACTS v1.1 (Arsenii; `git -C C:/dev/KATYATA show 03fb482:packages/ml/CONTRACTS.md`; it lands on main when he
+pushes). All changes are additions, so build for them now. Today's examples are still v1.0 data, and `flags.json` has only the
+v1.0 flags until then; the three new flags are in the table in section 4.
 
-- **Job-count lines break at 2021.** Do not join the line across 2021 (flag `recoded_2021`). `examples/history_2451.json` is
-  today's `HistoryPoint[]`.
-- **History from 2007.** The series gets longer, and pay and job counts will not cover the same years. Treat `null` as
-  missing and draw only the lines that have data. Exactly which years have pay: ask Arsenii.
-- **Hedge `evidence: "estimate"`** shows an "estimate" badge.
-- **"Category level"** (tech slump): show a "category level" badge and read `extra.adverts_category` for the category name.
-- **"Sources disagree"**: show a "sources disagree" badge. The exact field arrives with v1.1; ask Arsenii.
-- **`young_worker_share`**: optional extra line; show it only when present.
-- **`exposure_uk`** is a cross-check on `exposure`, not a second headline number.
-- **Text alternative for the timeline**: every chart needs a text version a screen reader can read.
+| Item | What to do |
+| --- | --- |
+| **History** (`HistoryPoint[]`) | One point per year, 2007 to 2025. Any value can be `null`. 2007 to 2010 have pay but `jobs_k` is `null` (flags `bridged_soc2000`, `bridged_soc2010`); job counts start in 2011. Draw only the lines that have data |
+| **Hedge `evidence`** | `title` (linked to ESCO through at least 3 job titles) or `estimate` (ISCO fallback). Show an "estimate" badge when it is `estimate`. The field is in `schemas/HedgeCandidate.json` and `schemas/Hedge.json` |
+| **`resilience_tech_slump`** | Now real data, measured for a broad job-advert category. The `category_level` flag is must-mention: name the category from `extra.adverts_category` |
+| **`exposure`** | When the `sources_disagree` flag is present (two independent research estimates disagree), show its sentence and the wider range. There is no separate field |
+| **`exposure_uk`** | The DfE score as a percentile rank among UK occupations, 0 to 1, where 1 is the most exposed. A cross-check only: never show it as a second headline number. It is `pending` in today's `career_2451.json` |
+| **`resilience_2008`** | Now real: the worse of the jobs change and the real pay change, April 2008 to April 2009. `extra` has both parts and says which one is the headline |
+| **`young_worker_share`** | New optional metric (a fraction): the share of workers aged 16 to 24 in 2016, including the self-employed (ONS APS 2016). A card line if you want it; ignore it otherwise |
+| **`crises[].baseline_real_pay_median`** | Optional on a crisis (the 2008 one has it) |
+
+**Accessibility (ours, not Arsenii's).** Every chart needs a text version a screen reader can read, including the timeline.
 
 ## 7. The cards
 
@@ -147,7 +181,7 @@ Also: the automation-worry slider (`automation_worry`, 0 to 1, in `ProfileIn`).
 | When | What |
 | --- | --- |
 | Now | Sample data and these examples. Schemas for every model |
-| About 01:00 (Sat night) | Nazar's API running on sample data, and `docs/openapi.json`. Point the frontend at it |
+| Sunday 01:00 | Nazar's API running on sample data, and `docs/openapi.json`. Point the frontend at it |
 | Sunday 08:00 to 10:00 | Real ML data (Arsenii v1.1) and the real career catalogue and routes. Values change, shapes should not |
 | Sunday 11:30 | Code freeze |
 
