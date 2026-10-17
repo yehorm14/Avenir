@@ -1,3 +1,5 @@
+import pytest
+
 from avenir_decision.normalise import rank_0_100
 
 
@@ -19,3 +21,9 @@ def test_none_stays_none_and_single_value_is_50():
 
 def test_all_missing():
     assert rank_0_100({"a": None, "b": None}) == {"a": None, "b": None}
+
+
+@pytest.mark.parametrize("bad", [float("nan"), float("inf"), float("-inf")])
+def test_non_finite_is_missing(bad):
+    # a NaN from a broken data file must not be ranked, nor shift the others
+    assert rank_0_100({"a": 1.0, "b": bad, "c": 3.0}) == {"a": 0.0, "b": None, "c": 100.0}
