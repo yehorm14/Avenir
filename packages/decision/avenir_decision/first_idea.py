@@ -1,8 +1,9 @@
 """Resolve the student's free-text first career idea to a career. Pure, deterministic.
 
 Steps on text.strip().casefold(), over title, official_title and aliases: exact SOC code, exact
-name, name starts-a-word with text (3+ chars) or whole name inside text (shortest name wins), then fuzzy matching
-(SequenceMatcher ratio >= 0.75, best wins). A step that finds two or more distinct careers
+name, whole name inside the text as words (longest name wins, so a short generic alias never beats
+the specific name), text starting a word in a name (3+ chars, shortest name wins), then fuzzy
+matching (SequenceMatcher ratio >= 0.75, best wins). A step that finds two or more distinct careers
 equally good is ambiguous: nothing is guessed, resolve_first_idea returns None and
 first_idea_candidates returns the tied careers sorted by SOC.
 """
@@ -34,12 +35,14 @@ def _best(careers: Sequence[Career], score) -> list[Career]:
     return sorted((c for s, c in per_career.values() if s == top), key=lambda c: c.soc2020)
 
 
-def _contains(q: str, n: str) -> bool:
-    """Whole-word containment only: typed text starts a word in the name (3+ chars), or the whole
-    name appears as words in the typed text. Never a fragment inside a word."""
-    if len(q) >= 3 and re.search(r"\b" + re.escape(q), n):
-        return True
+def _name_in_text(q: str, n: str) -> bool:
+    """The whole name appears as words in the typed text. Never a fragment inside a word."""
     return bool(re.search(r"\b" + re.escape(n) + r"\b", q))
+
+
+def _text_starts_name_word(q: str, n: str) -> bool:
+    """The typed text (3+ chars) starts a word in the name."""
+    return len(q) >= 3 and bool(re.search(r"\b" + re.escape(q), n))
 
 
 def _match(text: str, careers: Sequence[Career]) -> list[Career]:
@@ -52,7 +55,9 @@ def _match(text: str, careers: Sequence[Career]) -> list[Career]:
         return by_soc[:1]
     steps = (
         lambda n: 0.0 if n == q else None,
-        lambda n: float(len(n)) if _contains(q, n) else None,
+        # negated so that the longest name is the lowest score
+        lambda n: -float(len(n)) if _name_in_text(q, n) else None,
+        lambda n: float(len(n)) if _text_starts_name_word(q, n) else None,
         # negated so that the best ratio is the lowest score
         lambda n: -r if (r := SequenceMatcher(None, q, n).ratio()) >= _CUTOFF else None,
     )

@@ -124,3 +124,17 @@ def test_routes_unknown_soc_404(client):
 
 def test_routes_bad_nation_422(client):
     _err(client.get("/api/v1/routes/2451?nation=mars"), 422, "VALIDATION_ERROR")
+
+
+SOC_PATHS = ["/api/v1/careers/{}", "/api/v1/careers/{}/history", "/api/v1/routes/{}", "/api/v1/careers/{}/hedge"]
+
+
+@pytest.mark.parametrize("path", SOC_PATHS)
+def test_malformed_soc_is_422_unknown_is_404(data, path):
+    # docs/contracts.md: a malformed SOC (not 4 digits) is 422; a well-formed unknown SOC is 404
+    c = TestClient(create_app(data=data))
+    for bad in ("abc", "245", "24510", "24a1"):
+        r = c.get(path.format(bad))
+        assert r.status_code == 422, (path, bad)
+        assert r.json()["error"]["code"] == "VALIDATION_ERROR"
+    assert c.get(path.format("9999")).status_code == 404

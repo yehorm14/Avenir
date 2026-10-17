@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import logging
+from concurrent.futures import ThreadPoolExecutor
 
 from fastapi import APIRouter, Request
 from pydantic import BaseModel, ConfigDict
@@ -20,7 +21,7 @@ from avenir_contracts import (
 from avenir_decision import choose_hedge, recommend, score_components
 
 from .envelope import fail, ok
-from .routes_read import ERROR_RESPONSES, with_ads_now
+from .routes_read import ERROR_RESPONSES, Soc, with_ads_now
 
 log = logging.getLogger("avenir_api")
 router = APIRouter(prefix="/api/v1", responses=ERROR_RESPONSES)
@@ -83,28 +84,30 @@ def recommendations(body: RecommendationRequest, request: Request):
         return fail(ErrorCode.UPSTREAM_UNAVAILABLE, "Fit data is not available for some interests", gaps)
     out = recommend(body, d, request.app.state.writer)
     ads = request.app.state.ads
-    statuses: list[SourceStatus] = []
-
-    picks = []
-    for p in out.picks:
-        career, st = with_ads_now(ads, p.career)
-        statuses.append(st)
-        picks.append(p.model_copy(update={"career": career}))
-    update: dict[str, object] = {"picks": picks}
+    # Up to 5 overlays (picks, first idea, hedge) in parallel: a slow Adzuna then costs one
+    # deadline, not five. The adapter never raises, and with_ads_now falls back if one does.
+    shown = [p.career for p in out.picks]
     if out.first_idea is not None:
-        update["first_idea"], st = with_ads_now(ads, out.first_idea)
-        statuses.append(st)
+        shown.append(out.first_idea)
     if out.hedge is not None:
-        career, st = with_ads_now(ads, out.hedge.career)
-        statuses.append(st)
-        update["hedge"] = out.hedge.model_copy(update={"career": career})
+        shown.append(out.hedge.career)
+    with ThreadPoolExecutor(max_workers=max(len(shown), 1)) as pool:
+        overlaid = list(pool.map(lambda c: with_ads_now(ads, c), shown))
+    statuses: list[SourceStatus] = [st for _, st in overlaid]
+    careers = iter(c for c, _ in overlaid)
+
+    update: dict[str, object] = {"picks": [p.model_copy(update={"career": next(careers)}) for p in out.picks]}
+    if out.first_idea is not None:
+        update["first_idea"] = next(careers)
+    if out.hedge is not None:
+        update["hedge"] = out.hedge.model_copy(update={"career": next(careers)})
     out = out.model_copy(update=update)
     worst = max(statuses, key=lambda s: _STATE_RANK[s.status], default=None)
     return ok(out, [*d.statuses, *([worst] if worst else [])])
 
 
 @router.get("/careers/{soc}/hedge", response_model=Envelope[Hedge | None])
-def hedge(soc: str, request: Request):
+def hedge(soc: Soc, request: Request):
     d = request.app.state.data
     if not d.careers:
         return fail(ErrorCode.UPSTREAM_UNAVAILABLE, "Career data is not available")

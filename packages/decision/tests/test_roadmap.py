@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import pytest
+
 from avenir_contracts import Career, ProfileIn, Qualification
 from avenir_decision.roadmap import build_roadmap
 
@@ -73,3 +75,19 @@ def test_underscore_subjects_title_cased():
 def test_no_entry_subjects():
     rm = build_roadmap(_profile(), _career(()), [])
     assert rm.steps[0].detail == "Check the subjects on the route's page."
+
+
+@pytest.mark.parametrize(
+    ("nation", "take", "keep"),
+    [
+        ("scotland", "Take Higher Computing", "Keep Art, Computing to Higher or Advanced Higher"),
+        ("england", "Take A-level Computing", "Keep Art, Computing to A-level"),
+        ("wales", "Take Computing at A-level or equivalent", "Keep Art, Computing to A-level or equivalent"),
+        ("northern_ireland", "Take Computing at A-level or equivalent", "Keep Art, Computing to A-level or equivalent"),
+    ],
+)
+def test_subject_step_wording_follows_nation(nation, take, keep):
+    # Yehor's ruling on PR #8: step 1 names the qualification students take in that nation
+    assert build_roadmap(_profile(nation), _career(), []).steps[0].detail == take
+    held = (("art", "higher"), ("computing", "a_level"))
+    assert build_roadmap(_profile(nation, held), _career(), []).steps[0].detail == keep

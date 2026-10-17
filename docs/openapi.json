@@ -2362,10 +2362,13 @@
         "operationId": "career_api_v1_careers__soc__get",
         "parameters": [
           {
+            "description": "SOC 2020 unit group, 4 digits",
             "in": "path",
             "name": "soc",
             "required": true,
             "schema": {
+              "description": "SOC 2020 unit group, 4 digits",
+              "pattern": "^\\d{4}$",
               "title": "Soc",
               "type": "string"
             }
@@ -2431,10 +2434,13 @@
         "operationId": "hedge_api_v1_careers__soc__hedge_get",
         "parameters": [
           {
+            "description": "SOC 2020 unit group, 4 digits",
             "in": "path",
             "name": "soc",
             "required": true,
             "schema": {
+              "description": "SOC 2020 unit group, 4 digits",
+              "pattern": "^\\d{4}$",
               "title": "Soc",
               "type": "string"
             }
@@ -2500,10 +2506,13 @@
         "operationId": "career_history_api_v1_careers__soc__history_get",
         "parameters": [
           {
+            "description": "SOC 2020 unit group, 4 digits",
             "in": "path",
             "name": "soc",
             "required": true,
             "schema": {
+              "description": "SOC 2020 unit group, 4 digits",
+              "pattern": "^\\d{4}$",
               "title": "Soc",
               "type": "string"
             }
@@ -2831,10 +2840,13 @@
         "operationId": "routes_api_v1_routes__soc__get",
         "parameters": [
           {
+            "description": "SOC 2020 unit group, 4 digits",
             "in": "path",
             "name": "soc",
             "required": true,
             "schema": {
+              "description": "SOC 2020 unit group, 4 digits",
+              "pattern": "^\\d{4}$",
               "title": "Soc",
               "type": "string"
             }

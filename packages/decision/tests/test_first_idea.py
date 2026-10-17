@@ -62,3 +62,15 @@ def test_fuzzy_tie_is_ambiguous():
     cs = [_career("2222", "Plumbers"), _career("1111", "Plumbert")]
     assert resolve_first_idea("plumber", cs) is None
     assert [c.soc2020 for c in first_idea_candidates("plumber", cs)] == ["1111", "2222"]
+
+
+def test_longest_name_inside_typed_text_wins():
+    # Yehor's ruling on PR #8: a short alias inside longer text must not beat the specific name
+    cs = [_career("1111", "Web designer", ["developer"]), _career("2222", "Software developer")]
+    assert _soc("senior software developer", cs) == "2222"
+    assert first_idea_candidates("senior software developer", cs) == []
+
+
+def test_name_inside_text_beats_text_starting_a_name():
+    cs = [_career("1111", "Nurse"), _career("2222", "Nursery worker")]
+    assert _soc("i want to be a nurse", cs) == "1111"
