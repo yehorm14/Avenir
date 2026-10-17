@@ -152,13 +152,18 @@ v1.0 flags until then; the three new flags are in the table in section 4.
 | Item | What to do |
 | --- | --- |
 | **History** (`HistoryPoint[]`) | One point per year, 2007 to 2025. Any value can be `null`. 2007 to 2010 have pay but `jobs_k` is `null` (flags `bridged_soc2000`, `bridged_soc2010`); job counts start in 2011. Draw only the lines that have data |
-| **Hedge `evidence`** | `title` (linked to ESCO through at least 3 job titles) or `estimate` (ISCO fallback). Show an "estimate" badge when it is `estimate`. The field is in `schemas/HedgeCandidate.json` and `schemas/Hedge.json` |
+| **Hedge `evidence`** | `title` (linked to ESCO through at least 3 job titles) or `estimate` (ISCO fallback). Show an "estimate" badge when it is `estimate`. The field is **not in `schemas/` yet** (see the note below) |
 | **`resilience_tech_slump`** | Now real data, measured for a broad job-advert category. The `category_level` flag is must-mention: name the category from `extra.adverts_category` |
 | **`exposure`** | When the `sources_disagree` flag is present (two independent research estimates disagree), show its sentence and the wider range. There is no separate field |
 | **`exposure_uk`** | The DfE score as a percentile rank among UK occupations, 0 to 1, where 1 is the most exposed. A cross-check only: never show it as a second headline number. It is `pending` in today's `career_2451.json` |
 | **`resilience_2008`** | Now real: the worse of the jobs change and the real pay change, April 2008 to April 2009. `extra` has both parts and says which one is the headline |
-| **`young_worker_share`** | New optional metric (a fraction): the share of workers aged 16 to 24 in 2016, including the self-employed (ONS APS 2016). A card line if you want it; ignore it otherwise |
-| **`crises[].baseline_real_pay_median`** | Optional on a crisis (the 2008 one has it) |
+| **`young_worker_share`** | New optional metric (a fraction): the share of workers aged 16 to 24 in 2016, including the self-employed (ONS APS 2016). A card line if you want it; ignore it otherwise. Not in `schemas/` yet |
+| **`crises[].baseline_real_pay_median`** | Optional on a crisis (the 2008 one has it). Not in `schemas/` yet |
+
+**Schemas catch up with contract v2.1 (PR #4).** `evidence` (hedge), `baseline_real_pay_median` (crisis) and
+`young_worker_share` (metric key) are added to the API contract in v2.1, PR #4. Until PR #4 is on main they are
+not in `schemas/*.json` or `examples/`. Once it is, the pack is regenerated with `python -m avenir_contracts.examples`;
+build for the fields now and expect them to appear then.
 
 **Accessibility (ours, not Arsenii's).** Every chart needs a text version a screen reader can read, including the timeline.
 
