@@ -197,3 +197,28 @@ def test_worst_adzuna_status_reported(data):
     r = c.post(R, json={"profile": AMIRA, "first_idea": "architect"})
     adz = [s for s in r.json()["meta"]["sources"] if s["name"] == "adzuna"]
     assert [s["status"] for s in adz] == ["mock"]
+
+
+class _BrokenAds:
+    """Live ads adapter whose network call fails."""
+
+    def __init__(self):
+        self.live = True
+
+    def set_live(self, enabled):
+        self.live = enabled
+
+    def ads_now(self, career, region):
+        raise RuntimeError("adzuna down")
+
+
+@pytest.mark.parametrize(
+    "method,path",
+    [("post", "/api/v1/recommendations"), ("get", "/api/v1/careers/2451"), ("get", "/api/v1/careers/2141/hedge")],
+)
+def test_ads_failure_falls_back_to_snapshot(data, method, path):
+    c = TestClient(create_app(data=data, ads=_BrokenAds()))
+    r = c.post(path, json={"profile": AMIRA, "first_idea": "architect"}) if method == "post" else c.get(path)
+    assert r.status_code == 200, r.text
+    adzuna = [s for s in r.json()["meta"]["sources"] if s["name"] == "adzuna"]
+    assert adzuna and adzuna[-1]["status"] != "live"

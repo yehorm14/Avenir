@@ -1,6 +1,8 @@
 """Read-only endpoints. Every response is an envelope; unknown ids are 404."""
 from __future__ import annotations
 
+import logging
+
 from fastapi import APIRouter, Request
 from pydantic import BaseModel
 
@@ -13,6 +15,7 @@ from avenir_contracts import (
     ErrorCode,
     HistoryPoint,
     Route,
+    SnapshotAds,
     SourceInfo,
     SourceStatus,
     Tag,
@@ -20,6 +23,8 @@ from avenir_contracts import (
 from avenir_contracts.vocab import Nation
 
 from .envelope import fail, ok
+
+log = logging.getLogger("avenir_api")
 
 ERROR_RESPONSES: dict[int | str, dict] = {
     422: {"model": Envelope[None]},
@@ -40,8 +45,15 @@ def _not_found(what: str):
 
 
 def with_ads_now(ads: AdsSource, career: Career) -> tuple[Career, SourceStatus]:
-    """Copy of `career` with its ads_now metric from the ads source (never mutates the original)."""
-    metric, status = ads.ads_now(career, "UK")
+    """Copy of `career` with its ads_now metric from the ads source (never mutates the original).
+
+    If the ads source fails (e.g. Adzuna down), fall back to the catalogue's ads_now so the page still loads.
+    """
+    try:
+        metric, status = ads.ads_now(career, "UK")
+    except Exception:
+        log.warning("ads source failed for %s; using catalogue value", career.soc2020, exc_info=True)
+        metric, status = SnapshotAds().ads_now(career, "UK")
     return career.model_copy(update={"metrics": {**career.metrics, "ads_now": metric}}), status
 
 
