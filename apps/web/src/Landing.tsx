@@ -18,28 +18,67 @@ export default function Landing({
   return (
     <div className="aventier-landing">
       <section className="mission-section" aria-labelledby="mission-heading">
+        <svg
+          className="mission-waves"
+          viewBox="0 0 1440 900"
+          preserveAspectRatio="xMidYMid slice"
+          aria-hidden="true"
+        >
+          <defs>
+            <linearGradient
+              id="aventier-wave-light"
+              x1="0"
+              y1="0"
+              x2="1"
+              y2="0"
+            >
+              <stop stopColor="#f4e4bc" stopOpacity="0" />
+              <stop offset=".3" stopColor="#f4e4bc" stopOpacity=".8" />
+              <stop offset=".7" stopColor="#e0bf77" />
+              <stop offset="1" stopColor="#f4e4bc" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          <g fill="none" stroke="url(#aventier-wave-light)" strokeWidth=".75">
+            {Array.from({ length: 30 }, (_, i) => (
+              <path
+                key={i}
+                d={`M -160 ${605 + i * 7} C 180 ${295 + i * 5}, 430 ${1060 - i * 8}, 775 ${655 + i * 2} S 1190 ${190 + i * 10}, 1600 ${415 + i * 8}`}
+                opacity={0.18 + i * 0.009}
+              />
+            ))}
+          </g>
+        </svg>
         <div className="mission-wordmark" aria-label="Aventier">
-          <span className="mission-symbol">a</span>
-          <span>
-            Aventier<span className="mission-period">.</span>
-          </span>
+          AVENTIER
         </div>
         <h1 id="mission-heading">
-          Helping students decide
-          <br />
-          and plan their future.
+          Helping students decide and plan their future.
         </h1>
         <p>
           Find a direction that feels like you.
           <br />
           Then turn it into a plan you can actually follow.
         </p>
+        <div className="mission-actions">
+          <button
+            className="mission-cta mission-cta-primary"
+            onClick={() => scrollTo(choices.current)}
+          >
+            Start wherever you are <Icon name="arrow" size={17} />
+          </button>
+          <button
+            className="mission-cta mission-cta-secondary"
+            onClick={() => scrollTo(reassurance.current)}
+          >
+            Let's take it one step at a time
+          </button>
+        </div>
         <button
           className="scroll-invitation"
           onClick={() => scrollTo(reassurance.current)}
+          aria-label="Read why it's okay not to know what comes next"
         >
-          Let's take it one step at a time
-          <Icon name="down" size={20} />
+          <Icon name="down" size={19} />
         </button>
       </section>
       <section
