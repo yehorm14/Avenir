@@ -42,8 +42,17 @@ def tokens(text: str) -> list[str]:
 
 
 def occupation_text(occ) -> str:
-    parts = [occ.title, occ.soc_title, occ.summary, occ.study_level, " ".join(occ.skills_build), " ".join(occ.skills_have),
-             " ".join(occ.subjects), " ".join(t["task"] for t in occ.ai_tasks), occ.sector or ""]
+    parts = [
+        occ.title,
+        occ.soc_title,
+        occ.summary,
+        occ.study_level,
+        " ".join(occ.skills_build),
+        " ".join(occ.skills_have),
+        " ".join(occ.subjects),
+        " ".join(t["task"] for t in occ.ai_tasks),
+        occ.sector or "",
+    ]
     return " ".join(parts)
 
 
@@ -64,7 +73,7 @@ class TfIdf:
     def rank(self, text: str) -> list[tuple[str, float, list[str]]]:
         q = self._vec(Counter(tokens(text)))
         out = []
-        for soc, d in zip(self.socs, self.vecs):
+        for soc, d in zip(self.socs, self.vecs, strict=False):
             shared = [t for t in q if t in d]
             out.append((soc, sum(q[t] * d[t] for t in shared), sorted(shared, key=lambda t: -q[t] * d[t])))
         out.sort(key=lambda r: (-r[1], r[0]))
@@ -94,7 +103,9 @@ def discover(store: Store, text: str) -> DiscoverResponse:
         for s, sc, m in model.rank(text)[:5]
         if sc > 0
     ]
-    return DiscoverResponse(method="TF-IDF over job descriptions, tasks and skills (stand-in for the fine-tuned matcher)", hits=hits)
+    return DiscoverResponse(
+        method="TF-IDF over job descriptions, tasks and skills (stand-in for the fine-tuned matcher)", hits=hits
+    )
 
 
 def evaluate(store: Store) -> DiscoverEval:
@@ -113,7 +124,12 @@ def evaluate(store: Store) -> DiscoverEval:
         return EvalResult(name=name, n=len(ex), accuracy_at_1=round(a1 / len(ex), 3), accuracy_at_3=round(a3 / len(ex), 3))
 
     return DiscoverEval(
-        note="Held-out pupil-style descriptions, never used for tuning. The same team wrote the job descriptions and these examples, so the scores are optimistic. Next step: have careers advisers label real pupil text. A fine-tuned matcher must beat both rows before it replaces this one.",
+        note=(
+            "Held-out pupil-style descriptions, never used for tuning. "
+            "The same team wrote the job descriptions and these examples, so the scores are optimistic. "
+            "Next step: have careers advisers label real pupil text. "
+            "A fine-tuned matcher must beat both rows before it replaces this one."
+        ),
         results=[
             score("Keyword search over job titles (baseline)", lambda t: keyword_rank(store, t)),
             score("TF-IDF matcher (current)", lambda t: [(s, sc) for s, sc, _ in model.rank(t)]),

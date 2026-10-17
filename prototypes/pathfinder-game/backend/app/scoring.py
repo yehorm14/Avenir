@@ -15,11 +15,19 @@ import math
 from dataclasses import dataclass, replace
 
 from .data import RIASEC, Occupation, Store
-from .path import degree_role_label
 from .models import (
-    CareerSummary, Component, Confidence, Hedge, KeyFigures, MatchRequest, MatchResponse,
-    Scenario, StressTest, Weights,
+    CareerSummary,
+    Component,
+    Confidence,
+    Hedge,
+    KeyFigures,
+    MatchRequest,
+    MatchResponse,
+    Scenario,
+    StressTest,
+    Weights,
 )
+from .path import degree_role_label
 
 FIT_THRESHOLD = 0.5
 KEEP_WITHIN = 5  # a pick "holds" a stress test if it stays in your top 5
@@ -58,6 +66,7 @@ PHRASES = {
 
 # ------------------------------------------------------------- basics ----
 
+
 def profile_from_answers(answers: dict[str, int], items: list[dict]) -> dict[str, float]:
     """Mean answer per RIASEC type, scaled from 1..5 to 0..1."""
     sums = {k: 0.0 for k in RIASEC}
@@ -84,7 +93,7 @@ def pearson(a: list[float], b: list[float]) -> float | None:
     den = math.sqrt(sum(x * x for x in da) * sum(y * y for y in db))
     if den == 0:
         return None
-    return sum(x * y for x, y in zip(da, db)) / den
+    return sum(x * y for x, y in zip(da, db, strict=False)) / den
 
 
 def interest_fit(profile: dict[str, float], riasec: list[float]) -> float | None:
@@ -112,9 +121,11 @@ def normalise_weights(w: Weights) -> Weights:
 
 # --------------------------------------------------- market inputs ----
 
+
 @dataclass(frozen=True)
 class Raw:
     """Market inputs for one occupation, after the regional lens, before scaling."""
+
     growth: float | None
     ssv: float | None
     pay: float | None
@@ -170,6 +181,7 @@ def scale(v: float | None, b: tuple[float, float]) -> float | None:
 
 # ------------------------------------------------------------ context ----
 
+
 @dataclass
 class Context:
     store: Store
@@ -198,10 +210,15 @@ def build_context(req: MatchRequest, store: Store) -> Context:
             fits[soc] = f
     raw = market_raw(store, region)
     return Context(
-        store=store, region=region, profile=profile, code=top_code(profile),
-        weights=normalise_weights(req.weights), fits=fits,
+        store=store,
+        region=region,
+        profile=profile,
+        code=top_code(profile),
+        weights=normalise_weights(req.weights),
+        fits=fits,
         head={soc: head_start(o, req.subjects, req.skills) for soc, o in store.occupations.items()},
-        raw=raw, bounds=bounds_of(raw),
+        raw=raw,
+        bounds=bounds_of(raw),
     )
 
 
@@ -237,6 +254,7 @@ def ranking(ctx: Context, raw: dict[str, Raw], fits: dict[str, float]) -> list[t
 
 
 # ---------------------------------------------------------- summaries ----
+
 
 def _money(v: float) -> str:
     return f"£{v:,.0f}"
@@ -276,38 +294,66 @@ def summarise(ctx: Context, soc: str, rank: int) -> CareerSummary:
     tasks = sorted(occ.ai_tasks, key=lambda t: -t["score"])
 
     detail = {
-        "interest": f"Your interests ({ctx.code}) vs this job ({top_code(dict(zip(RIASEC, occ.riasec)))}): match {fit:.2f}",
-        "demand_future": "No published projection" if occ.growth_2035_pct is None
-        else f"{occ.growth_2035_pct:+g}% projected employment change, 2025 to 2035" + (" · priority occupation" if occ.priority else "") + lens,
-        "demand_now": "No reliable figure published" if raw.ssv is None
+        "interest": (
+            f"Your interests ({ctx.code}) vs this job ({top_code(dict(zip(RIASEC, occ.riasec, strict=False)))}): match {fit:.2f}"
+        ),
+        "demand_future": "No published projection"
+        if occ.growth_2035_pct is None
+        else f"{occ.growth_2035_pct:+g}% projected employment change, 2025 to 2035"
+        + (" · priority occupation" if occ.priority else "")
+        + lens,
+        "demand_now": "No reliable figure published"
+        if raw.ssv is None
         else f"{occ.ssv.get(store.latest_ess):g}% of vacancies hard to fill for skills reasons (ESS {store.latest_ess}){lens}",
-        "pay": "Not published for this occupation (sample too small)" if raw.pay is None
+        "pay": "Not published for this occupation (sample too small)"
+        if raw.pay is None
         else f"Median {_money(raw.pay)} a year, middle half {_money(pay['p25'])} to {_money(pay['p75'])} ({store.pay_edition})",
-        "ai_resilience": "No exposure estimate" if raw.exposure is None
+        "ai_resilience": "No exposure estimate"
+        if raw.exposure is None
         else f"AI exposure {raw.exposure:.2f} on a 0 to 1 scale; most exposed task: {tasks[0]['task'].lower()}",
-        "head_start": ("You have: " + ", ".join(ms + mk)) if (ms or mk) else "None of your subjects or skills listed for this job yet",
+        "head_start": ("You have: " + ", ".join(ms + mk))
+        if (ms or mk)
+        else "None of your subjects or skills listed for this job yet",
     }
     w = ctx.weights.model_dump()
     components = [
         Component(
-            key=k, label=LABELS[k], value=None if v is None else round(v, 3), weight=round(w[k], 3),
-            effective_weight=round(eff[k], 3), contribution=round(100 * eff[k] * (v or 0.0), 1),
-            detail=detail[k], source_id=SOURCE_FOR[k],
+            key=k,
+            label=LABELS[k],
+            value=None if v is None else round(v, 3),
+            weight=round(w[k], 3),
+            effective_weight=round(eff[k], 3),
+            contribution=round(100 * eff[k] * (v or 0.0), 1),
+            detail=detail[k],
+            source_id=SOURCE_FOR[k],
         )
         for k, v in values.items()
     ]
     missing = [k for k, v in values.items() if v is None]
     return CareerSummary(
-        soc=soc, title=occ.title, soc_title=occ.soc_title, summary=occ.summary,
-        score=round(total, 1), rank=rank, interest_fit=round(fit, 3), components=components,
+        soc=soc,
+        title=occ.title,
+        soc_title=occ.soc_title,
+        summary=occ.summary,
+        score=round(total, 1),
+        rank=rank,
+        interest_fit=round(fit, 3),
+        components=components,
         figures=KeyFigures(
-            pay_median=raw.pay, pay_p25=pay.get("p25"), pay_p75=pay.get("p75"),
-            growth_2035_pct=occ.growth_2035_pct, ssv_latest=occ.ssv.get(store.latest_ess),
-            ai_exposure=raw.exposure, region_multiplier=m,
+            pay_median=raw.pay,
+            pay_p25=pay.get("p25"),
+            pay_p75=pay.get("p75"),
+            growth_2035_pct=occ.growth_2035_pct,
+            ssv_latest=occ.ssv.get(store.latest_ess),
+            ai_exposure=raw.exposure,
+            region_multiplier=m,
         ),
-        trade_off=_trade_off(components, missing), missing=missing,
-        sector=occ.sector, priority=occ.priority,
-        family=store.family_of.get(soc, ""), degree_role=degree_role_label(store, soc),
+        trade_off=_trade_off(components, missing),
+        missing=missing,
+        sector=occ.sector,
+        priority=occ.priority,
+        family=store.family_of.get(soc, ""),
+        degree_role=degree_role_label(store, soc),
         degrees=[c["subject"] for c in occ.courses][:4],
     )
 
@@ -316,9 +362,17 @@ def summarise(ctx: Context, soc: str, rank: int) -> CareerSummary:
 
 SCENARIOS = [
     ("ai_faster", "AI moves faster", "AI exposure is 50% higher for every job than today's estimate."),
-    ("sector_slows", "Your sector slows", "Growth to 2035 is 8 points lower and shortages 15 points lower across this career's sector."),
+    (
+        "sector_slows",
+        "Your sector slows",
+        "Growth to 2035 is 8 points lower and shortages 15 points lower across this career's sector.",
+    ),
     ("pay_lags", "Pay falls behind", "Pay in this career's sector is 10% lower than today."),
-    ("interests_shift", "Your interests shift", "Your interest match with this career is 0.15 lower, as tastes often change at 16 to 20."),
+    (
+        "interests_shift",
+        "Your interests shift",
+        "Your interest match with this career is 0.15 lower, as tastes often change at 16 to 20.",
+    ),
 ]
 
 
@@ -350,20 +404,34 @@ def stress_test(ctx: Context, soc: str, baseline: float, hedge: str | None = Non
         hedge_score = None
         if hedge is not None:
             hedge_score = round(total_score(ctx, signal_values(ctx, hedge, raw[hedge], fits[hedge]))[0], 1)
-        out.append(Scenario(
-            id=sid, label=label, description=desc, score=round(score, 1), delta=round(score - baseline, 1),
-            rank=rank, holds=rank is not None and rank <= KEEP_WITHIN, hedge_score=hedge_score,
-        ))
+        out.append(
+            Scenario(
+                id=sid,
+                label=label,
+                description=desc,
+                score=round(score, 1),
+                delta=round(score - baseline, 1),
+                rank=rank,
+                holds=rank is not None and rank <= KEEP_WITHIN,
+                hedge_score=hedge_score,
+            )
+        )
     hedge_baseline = None
     if hedge is not None:
         hedge_baseline = round(total_score(ctx, signal_values(ctx, hedge, ctx.raw[hedge], ctx.fits[hedge]))[0], 1)
     return StressTest(
-        baseline=round(baseline, 1), worst=min(s.score for s in out), holds=sum(s.holds for s in out),
-        total=len(out), keep_within=KEEP_WITHIN, scenarios=out, hedge_baseline=hedge_baseline,
+        baseline=round(baseline, 1),
+        worst=min(s.score for s in out),
+        holds=sum(s.holds for s in out),
+        total=len(out),
+        keep_within=KEEP_WITHIN,
+        scenarios=out,
+        hedge_baseline=hedge_baseline,
     )
 
 
 # --------------------------------------------------------------- hedge ----
+
 
 def features(occ: Occupation) -> set[str]:
     return set(occ.subjects) | set(occ.skills_have)
@@ -405,28 +473,40 @@ def find_hedge(ctx: Context, soc: str, exclude: set[str], scores: dict[str, floa
     _, c_soc, reasons, sim = best
     c = occs[c_soc]
     shared = sorted(features(p) & features(c))
-    letters = [l for l in top_code(dict(zip(RIASEC, p.riasec)), 2) if l in top_code(dict(zip(RIASEC, c.riasec)), 3)]
+    letters = [
+        letter
+        for letter in top_code(dict(zip(RIASEC, p.riasec, strict=False)), 2)
+        if letter in top_code(dict(zip(RIASEC, c.riasec, strict=False)), 3)
+    ]
     names = {"R": "hands-on", "I": "investigative", "A": "creative", "S": "helping", "E": "leading", "C": "organising"}
     if letters:
-        shared = [f"{' and '.join(names[l] for l in letters).capitalize()} interests"] + shared
+        shared = [f"{' and '.join(names[letter] for letter in letters).capitalize()} interests"] + shared
     return Hedge(
-        soc=c_soc, title=c.title, sector=c.sector, similarity=round(sim, 2),
-        interest_fit=round(ctx.fits[c_soc], 3), score=round(scores.get(c_soc, 0.0), 1),
-        shared=shared[:5], diversifies=reasons,
+        soc=c_soc,
+        title=c.title,
+        sector=c.sector,
+        similarity=round(sim, 2),
+        interest_fit=round(ctx.fits[c_soc], 3),
+        score=round(scores.get(c_soc, 0.0), 1),
+        shared=shared[:5],
+        diversifies=reasons,
     )
 
 
 # ---------------------------------------------------------- confidence ----
 
+
 def data_confidence(store: Store, occ: Occupation) -> tuple[float, list[str]]:
     score, reasons = 1.0, []
     raw_missing = [
-        name for name, v in (
+        name
+        for name, v in (
             ("projected growth", occ.growth_2035_pct),
             ("current shortages", occ.ssv.get(store.latest_ess)),
             ("pay", occ.pay_median),
             ("AI exposure", occ.ai_exposure),
-        ) if v is None
+        )
+        if v is None
     ]
     for name in raw_missing:
         score -= 0.15
@@ -459,7 +539,9 @@ def confidence(ctx: Context, soc: str, stress: StressTest) -> Confidence:
         reasons.append(f"Stays in your top {stress.keep_within} in all {stress.total} stress tests")
     elif stress.holds <= stress.total // 2:
         score -= 0.15
-        reasons.append(f"Drops out of your top {stress.keep_within} in {stress.total - stress.holds} of {stress.total} stress tests")
+        reasons.append(
+            f"Drops out of your top {stress.keep_within} in {stress.total - stress.holds} of {stress.total} stress tests"
+        )
     else:
         reasons.append(f"Stays in your top {stress.keep_within} in {stress.holds} of {stress.total} stress tests")
     score = max(0.0, round(score, 2))
@@ -467,6 +549,7 @@ def confidence(ctx: Context, soc: str, stress: StressTest) -> Confidence:
 
 
 # --------------------------------------------------------------- match ----
+
 
 def score_all(req: MatchRequest, store: Store) -> tuple[Context, list[CareerSummary]]:
     """Every occupation we can check, best first (including ones below the cut-off)."""
@@ -489,13 +572,19 @@ def match(req: MatchRequest, store: Store) -> MatchResponse:
     picks: list[CareerSummary] = []
     more: list[CareerSummary] = []
     if flat:
-        notes.append("Your answers were the same for every type of activity, so we cannot tell your interests apart. Try the quiz again and use the full scale.")
+        notes.append(
+            "Your answers were the same for every type of activity, so we cannot tell your interests apart. "
+            "Try the quiz again and use the full scale."
+        )
         hidden = len(store.occupations)
     else:
         if len(order) < 3:
             n = len(order)
             what = "career in our list fits" if n == 1 else "careers in our list fit"
-            notes.append(f"Only {n} {what} your interests well enough (match of {FIT_THRESHOLD} or more). We would rather show fewer than show poor fits.")
+            notes.append(
+                f"Only {n} {what} your interests well enough (match of {FIT_THRESHOLD} or more). "
+                "We would rather show fewer than show poor fits."
+            )
         pick_socs = [s for s, _ in order[: req.limit]]
         for i, soc in enumerate(pick_socs):
             c = summarise(ctx, soc, i + 1)
@@ -503,11 +592,19 @@ def match(req: MatchRequest, store: Store) -> MatchResponse:
             c.stress = stress_test(ctx, soc, scores[soc], c.hedge.soc if c.hedge else None)
             c.confidence = confidence(ctx, soc, c.stress)
             picks.append(c)
-        more = [summarise(ctx, soc, req.limit + i + 1) for i, (soc, _) in enumerate(order[req.limit: req.limit + 2])]
+        more = [summarise(ctx, soc, req.limit + i + 1) for i, (soc, _) in enumerate(order[req.limit : req.limit + 2])]
     return MatchResponse(
-        profile=ctx.profile, code=ctx.code, flat_profile=flat, region=ctx.region,
-        results=picks, more=more, considered=len(store.occupations), hidden_low_fit=hidden,
-        fit_threshold=FIT_THRESHOLD, weights=ctx.weights, notes=notes,
+        profile=ctx.profile,
+        code=ctx.code,
+        flat_profile=flat,
+        region=ctx.region,
+        results=picks,
+        more=more,
+        considered=len(store.occupations),
+        hidden_low_fit=hidden,
+        fit_threshold=FIT_THRESHOLD,
+        weights=ctx.weights,
+        notes=notes,
     )
 
 

@@ -21,8 +21,12 @@ CITE = re.compile(r"\[(E\d+)\]")
 NUMBER = re.compile(r"\d+(?:\.\d+)?")
 
 TOPIC_OF = {
-    "interest": "fit", "head_start": "fit", "demand_future": "demand", "demand_now": "demand",
-    "pay": "pay", "ai_resilience": "risk",
+    "interest": "fit",
+    "head_start": "fit",
+    "demand_future": "demand",
+    "demand_now": "demand",
+    "pay": "pay",
+    "ai_resilience": "risk",
 }
 
 
@@ -39,19 +43,28 @@ def build_evidence(career: CareerSummary, store: Store) -> list[Evidence]:
             add(f"{c.label}: no data. {c.detail}. This signal is left out of the score.", c.source_id, TOPIC_OF[c.key])
         else:
             add(
-                f"{c.label}: {c.detail}. It adds {c.contribution:g} points with a weight of {round(c.effective_weight * 100):g}%.",
-                c.source_id, TOPIC_OF[c.key],
+                f"{c.label}: {c.detail}. It adds {c.contribution:g} points "
+                f"with a weight of {round(c.effective_weight * 100):g}%.",
+                c.source_id,
+                TOPIC_OF[c.key],
             )
     prev, latest = occ.ssv.get(store.previous_ess), occ.ssv.get(store.latest_ess)
     if prev is not None and latest is not None:
-        add(f"Hard-to-fill share went from {prev:g}% in ESS {store.previous_ess} to {latest:g}% in ESS {store.latest_ess}.", "ess", "demand")
+        add(
+            f"Hard-to-fill share went from {prev:g}% in ESS {store.previous_ess} to {latest:g}% in ESS {store.latest_ess}.",
+            "ess",
+            "demand",
+        )
     for t in sorted(occ.ai_tasks, key=lambda t: -t["score"]):
         add(f"Task '{t['task']}' has an AI exposure of {t['score']:.2f}.", "ai_exposure", "risk")
     if career.stress:
         s = career.stress
         held = [x.label for x in s.scenarios if x.holds]
         failed = [x.label for x in s.scenarios if not x.holds]
-        text = f"Stress test: it stays in your top {s.keep_within} in {s.holds} of {s.total} scenarios; the lowest score is {s.worst:g}."
+        text = (
+            f"Stress test: it stays in your top {s.keep_within} in {s.holds} of {s.total} scenarios; "
+            f"the lowest score is {s.worst:g}."
+        )
         if failed:
             text += f" It drops out under: {', '.join(failed)}."
         elif held:
@@ -60,8 +73,10 @@ def build_evidence(career: CareerSummary, store: Store) -> list[Evidence]:
     if career.hedge:
         h = career.hedge
         add(
-            f"Hedge career: {h.title} (similarity {h.similarity:.2f}). It shares {', '.join(h.shared[:3]) or 'some strengths'}; {'; '.join(h.diversifies)}.",
-            "scoring", "risk",
+            f"Hedge career: {h.title} (similarity {h.similarity:.2f}). "
+            f"It shares {', '.join(h.shared[:3]) or 'some strengths'}; {'; '.join(h.diversifies)}.",
+            "scoring",
+            "risk",
         )
     if career.confidence:
         add(f"Confidence: {career.confidence.level}. {'; '.join(career.confidence.reasons)}.", "scoring", "confidence")
@@ -81,8 +96,10 @@ def build_evidence(career: CareerSummary, store: Store) -> list[Evidence]:
             add(f"{course['subject']} ({course['qualification']}): no published earnings figure.", "discover_uni", "pay")
         else:
             add(
-                f"{course['subject']} ({course['qualification']}): median earnings £{course['median_earnings_15m']:,} fifteen months after graduating.",
-                "discover_uni", "pay",
+                f"{course['subject']} ({course['qualification']}): "
+                f"median earnings £{course['median_earnings_15m']:,} fifteen months after graduating.",
+                "discover_uni",
+                "pay",
             )
     if occ.skills_build:
         add(f"Skills to build: {', '.join(occ.skills_build)}.", "occupational_maps", "skills")
@@ -114,7 +131,9 @@ def route_topic(question: str) -> str:
 def template_answer(question: str, evidence: list[Evidence]) -> tuple[str, list[str]]:
     topic = route_topic(question)
     if topic == "why":
-        chosen = [evidence[0]] + [e for e in evidence if e.topic in ("fit", "demand", "pay", "risk") and ("adds" in e.text or "no data" in e.text)]
+        chosen = [evidence[0]] + [
+            e for e in evidence if e.topic in ("fit", "demand", "pay", "risk") and ("adds" in e.text or "no data" in e.text)
+        ]
     else:
         chosen = [e for e in evidence if e.topic == topic]
     if topic == "risk":
@@ -186,8 +205,10 @@ def explain(req: ExplainRequest, store: Store) -> ExplainResponse | None:
             reason = validate(answer, evidence)
             if reason is None:
                 return ExplainResponse(
-                    answer=answer, cited=sorted(set(CITE.findall(answer)), key=lambda s: int(s[1:])),
-                    evidence=evidence, mode="ai",
+                    answer=answer,
+                    cited=sorted(set(CITE.findall(answer)), key=lambda s: int(s[1:])),
+                    evidence=evidence,
+                    mode="ai",
                 )
         except Exception as e:  # model down, timeout, bad JSON
             reason = f"AI unavailable ({type(e).__name__})"

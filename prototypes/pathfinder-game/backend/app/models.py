@@ -35,7 +35,9 @@ class Quiz(BaseModel):
 
 
 class MatchRequest(BaseModel):
-    answers: dict[str, int] = Field(default_factory=dict, description="Quiz item id to answer, 1 (strongly dislike) to 5 (strongly like)")
+    answers: dict[str, int] = Field(
+        default_factory=dict, description="Quiz item id to answer, 1 (strongly dislike) to 5 (strongly like)"
+    )
     profile: dict[RiasecLetter, float] | None = Field(None, description="Optional RIASEC profile (0 to 1) instead of answers")
     subjects: list[str] = Field(default_factory=list)
     skills: list[str] = Field(default_factory=list)
@@ -268,6 +270,7 @@ class ExplainResponse(BaseModel):
 
 # ---------------------------------------------------------------- proof ----
 
+
 class YearMetrics(BaseModel):
     year: int
     outcome_year: int
@@ -317,6 +320,7 @@ class Replay(BaseModel):
 
 # ------------------------------------------------------------- discovery ----
 
+
 class DiscoverRequest(BaseModel):
     text: str = Field(min_length=3, max_length=400)
 
@@ -347,6 +351,7 @@ class DiscoverEval(BaseModel):
 
 # ----------------------------------------------------------------- trust ----
 
+
 class EvalCase(BaseModel):
     id: str
     kind: str
@@ -365,6 +370,7 @@ class TrustReport(BaseModel):
 
 
 # --------------------------------------------------------------- adviser ----
+
 
 class MarketRow(BaseModel):
     soc: str
@@ -387,6 +393,7 @@ class Market(BaseModel):
 
 
 # ------------------------------------------------------------ path plan ----
+
 
 class University(BaseModel):
     name: str
@@ -514,6 +521,7 @@ class PathPlan(BaseModel):
 
 
 # ------------------------------------------------------------ arcade game ----
+
 
 class GameCandidate(BaseModel):
     soc: str
@@ -647,6 +655,7 @@ class Trend(BaseModel):
 
 
 # ---------------------------------------------------------------- pay ----
+
 
 class Band(BaseModel):
     p25: float

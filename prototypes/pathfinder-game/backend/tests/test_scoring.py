@@ -1,7 +1,5 @@
 import copy
 
-from fastapi.testclient import TestClient
-
 from app import backtest
 from app.data import get_store
 from app.discover import evaluate
@@ -10,6 +8,7 @@ from app.main import app
 from app.models import MatchRequest, Weights
 from app.scoring import FIT_THRESHOLD, match, normalise_weights, score_all
 from app.trust import run_eval
+from fastapi.testclient import TestClient
 
 client = TestClient(app)
 INVESTIGATIVE_SOCIAL = {"R": 0.5, "I": 1.0, "A": 0.2, "S": 0.9, "E": 0.3, "C": 0.3}
@@ -17,7 +16,9 @@ REALISTIC = {"R": 1.0, "I": 0.4, "A": 0.1, "S": 0.2, "E": 0.3, "C": 0.5}
 
 
 def test_low_fit_never_shown_even_with_all_weight_on_demand_and_pay():
-    req = MatchRequest(profile=REALISTIC, weights=Weights(interest=0, demand_future=1, demand_now=1, pay=1, ai_resilience=0, head_start=0))
+    req = MatchRequest(
+        profile=REALISTIC, weights=Weights(interest=0, demand_future=1, demand_now=1, pay=1, ai_resilience=0, head_start=0)
+    )
     res = match(req, get_store())
     assert res.results
     assert all(c.interest_fit >= FIT_THRESHOLD for c in res.results + res.more)
@@ -241,9 +242,15 @@ def test_arcade_reveal_scores_fairly_and_rejects_bad_picks():
     assert ok["verdict"] and ok["note"].startswith("SYNTHETIC")
     # The algorithm's picks are the top signals among the ten, whoever you chose.
     again = client.post("/api/game/reveal", json={"year": 2013, "seed": 11, "picks": socs[3:6]}).json()
-    assert {r["soc"] for r in ok["rows"] if r["picked_by_algorithm"]} == {r["soc"] for r in again["rows"] if r["picked_by_algorithm"]}
-    assert client.post("/api/game/reveal", json={"year": 2013, "seed": 11, "picks": [socs[0], socs[0], socs[1]]}).status_code == 422
-    assert client.post("/api/game/reveal", json={"year": 2013, "seed": 11, "picks": ["0000", socs[0], socs[1]]}).status_code == 422
+    assert {r["soc"] for r in ok["rows"] if r["picked_by_algorithm"]} == {
+        r["soc"] for r in again["rows"] if r["picked_by_algorithm"]
+    }
+    assert (
+        client.post("/api/game/reveal", json={"year": 2013, "seed": 11, "picks": [socs[0], socs[0], socs[1]]}).status_code == 422
+    )
+    assert (
+        client.post("/api/game/reveal", json={"year": 2013, "seed": 11, "picks": ["0000", socs[0], socs[1]]}).status_code == 422
+    )
 
 
 def test_radar_filters_by_field_stage_and_nation_and_never_invents_dates():
@@ -261,7 +268,12 @@ def test_radar_filters_by_field_stage_and_nation_and_never_invents_dates():
     # Status comes from typical months, and every item says its timing in words.
     by = {i.id: i.status for i in cyber.items}
     assert by["astro-pi"] == "open" and by["cyberfirst"] == "rolling"
-    assert radar(store, ["digital"], "school", "Scotland", date(2026, 8, 1)).items[0].status in ("open", "soon", "rolling", "later")
+    assert radar(store, ["digital"], "school", "Scotland", date(2026, 8, 1)).items[0].status in (
+        "open",
+        "soon",
+        "rolling",
+        "later",
+    )
     assert not cyber.live and "not connected" in cyber.note
     assert all(i.when and (i.url is None or i.url.startswith("https://")) for i in store.opportunities and cyber.items)
 
@@ -326,8 +338,21 @@ def test_radar_uses_exact_dates_when_a_live_feed_supplies_them_and_drops_expired
     from app.radar import radar
 
     store = copy.copy(get_store())
-    base = {"title": "Dated hack day", "org": "Example", "kind": "hackathon", "stage": ["school"], "nations": ["UK"], "fields": ["digital"],
-            "format": "In person", "cost": "Free", "when": "See organiser", "open_months": [], "rolling": False, "url": "https://example.org/", "why": "Test"}
+    base = {
+        "title": "Dated hack day",
+        "org": "Example",
+        "kind": "hackathon",
+        "stage": ["school"],
+        "nations": ["UK"],
+        "fields": ["digital"],
+        "format": "In person",
+        "cost": "Free",
+        "when": "See organiser",
+        "open_months": [],
+        "rolling": False,
+        "url": "https://example.org/",
+        "why": "Test",
+    }
     store.opportunities = [
         {**base, "id": "closing", "deadline": "2026-10-20"},
         {**base, "id": "expired", "deadline": "2026-10-01"},
@@ -364,7 +389,9 @@ def test_pay_series_is_consistent_real_in_base_year_equals_nominal_and_spread_is
             assert p["real"]["p25"] < p["real"]["median"] < p["real"]["p75"]
             assert p["real"]["median"] >= p["nominal"]["median"]  # earlier pounds were worth more in today's money
         s = c["summary"]
-        assert s["verdict"] == ("Beat inflation" if s["real_change_pct"] >= 3 else "Fell behind" if s["real_change_pct"] <= -3 else "Kept pace")
+        assert s["verdict"] == (
+            "Beat inflation" if s["real_change_pct"] >= 3 else "Fell behind" if s["real_change_pct"] <= -3 else "Kept pace"
+        )
         assert abs(s["median_then_today"] - c["series"][0]["real"]["median"]) <= 1
     # Another base year changes real values but never the nominal ones.
     other = client.get("/api/pay", params={"soc": "2135", "base": 2015}).json()["careers"][0]["series"]
@@ -380,7 +407,11 @@ def test_pay_history_anchors_to_ashe_and_is_never_made_up_where_ons_publishes_no
             assert soc not in series, f"{occ.title}: no ASHE figure, so no series"
         else:
             years = series[soc]["years"]
-            assert len(years) == 11 and years["2025"]["median"] == occ.pay["median"] and years["2024"]["median"] == occ.pay["median_prev"]
+            assert (
+                len(years) == 11
+                and years["2025"]["median"] == occ.pay["median"]
+                and years["2024"]["median"] == occ.pay["median_prev"]
+            )
     nodata = client.get("/api/pay", params={"soc": "2225"}).json()["careers"][0]
     assert nodata["series"] == [] and nodata["summary"] is None
     assert client.get("/api/pay", params={"soc": "0000"}).json()["careers"] == []

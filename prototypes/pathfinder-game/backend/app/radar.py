@@ -75,29 +75,48 @@ def radar(store: Store, fields: list[str], stage: str, nation: str, today: date 
     n = {k: sum(1 for i in items if i.status == k) for k in ORDER}
     where = ", ".join(labels[f].lower() for f in chosen[:3]) if chosen else "all fields"
     if n["open"] or n["soon"]:
-        headline = f"{n['open']} in their usual opening window this month and {n['soon']} opening next month, plus {n['rolling']} you can start any time ({where})."
+        headline = (
+            f"{n['open']} in their usual opening window this month and {n['soon']} opening next month, "
+            f"plus {n['rolling']} you can start any time ({where})."
+        )
     else:
         headline = f"Nothing is in its usual opening window this month in {where}, but {n['rolling']} things are open all year."
     pool = [i for i in items if i.status in ("open", "soon")] or [i for i in items if i.status == "rolling"]
     highlights = [f"{i.title} ({i.org})" for i in pool[:3]]
     return Radar(
-        today=today.isoformat(), month=today.month, stage=stage, nation=nation,
+        today=today.isoformat(),
+        month=today.month,
+        stage=stage,
+        nation=nation,
         fields=[FieldInfo(id=f, label=labels[f]) for f in chosen],
         all_fields=[FieldInfo(id=k, label=v) for k, v in labels.items()],
-        digest=Digest(headline=headline, open=n["open"], soon=n["soon"], rolling=n["rolling"], later=n["later"], highlights=highlights),
-        items=items, live=False, note=NOTE,
+        digest=Digest(
+            headline=headline, open=n["open"], soon=n["soon"], rolling=n["rolling"], later=n["later"], highlights=highlights
+        ),
+        items=items,
+        live=False,
+        note=NOTE,
     )
 
 
 def trends(store: Store) -> list[Trend]:
     out = []
     for t in store.pathways["specialisms"]:
-        out.append(Trend(
-            id=t["id"], name=t["name"], heat=t["heat"], buzz=t["buzz"], reality=t["reality"],
-            specialist_name=t["specialist"]["name"], specialist_level=t["specialist"]["level"], specialist_doors=t["specialist"]["doors"],
-            safer=[TrendChoice(subject=s["subject"], why=s["why"], doors=doors_for(store, s["subject"])) for s in t["safer"]],
-            fade=t["fade"], how=t["how"],
-            related=[CareerRef(soc=s, title=store.occupations[s].title) for s in t["related"] if s in store.occupations],
-            evidence_note=TREND_NOTE,
-        ))
+        out.append(
+            Trend(
+                id=t["id"],
+                name=t["name"],
+                heat=t["heat"],
+                buzz=t["buzz"],
+                reality=t["reality"],
+                specialist_name=t["specialist"]["name"],
+                specialist_level=t["specialist"]["level"],
+                specialist_doors=t["specialist"]["doors"],
+                safer=[TrendChoice(subject=s["subject"], why=s["why"], doors=doors_for(store, s["subject"])) for s in t["safer"]],
+                fade=t["fade"],
+                how=t["how"],
+                related=[CareerRef(soc=s, title=store.occupations[s].title) for s in t["related"] if s in store.occupations],
+                evidence_note=TREND_NOTE,
+            )
+        )
     return out
