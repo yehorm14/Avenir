@@ -1,13 +1,14 @@
 """Resolve the student's free-text first career idea to a career. Pure, deterministic.
 
 Steps on text.strip().casefold(), over title, official_title and aliases: exact SOC code, exact
-name, name contains text or text contains name (shortest name wins), then fuzzy matching
+name, name starts-a-word with text (3+ chars) or whole name inside text (shortest name wins), then fuzzy matching
 (SequenceMatcher ratio >= 0.75, best wins). A step that finds two or more distinct careers
 equally good is ambiguous: nothing is guessed, resolve_first_idea returns None and
 first_idea_candidates returns the tied careers sorted by SOC.
 """
 from __future__ import annotations
 
+import re
 from collections.abc import Sequence
 from difflib import SequenceMatcher
 
@@ -33,6 +34,14 @@ def _best(careers: Sequence[Career], score) -> list[Career]:
     return sorted((c for s, c in per_career.values() if s == top), key=lambda c: c.soc2020)
 
 
+def _contains(q: str, n: str) -> bool:
+    """Whole-word containment only: typed text starts a word in the name (3+ chars), or the whole
+    name appears as words in the typed text. Never a fragment inside a word."""
+    if len(q) >= 3 and re.search(r"\b" + re.escape(q), n):
+        return True
+    return bool(re.search(r"\b" + re.escape(n) + r"\b", q))
+
+
 def _match(text: str, careers: Sequence[Career]) -> list[Career]:
     """Winners of the first step that matches anything: one career if unique, else the tie."""
     q = text.strip().casefold()
@@ -43,7 +52,7 @@ def _match(text: str, careers: Sequence[Career]) -> list[Career]:
         return by_soc[:1]
     steps = (
         lambda n: 0.0 if n == q else None,
-        lambda n: float(len(n)) if q in n or n in q else None,
+        lambda n: float(len(n)) if _contains(q, n) else None,
         # negated so that the best ratio is the lowest score
         lambda n: -r if (r := SequenceMatcher(None, q, n).ratio()) >= _CUTOFF else None,
     )

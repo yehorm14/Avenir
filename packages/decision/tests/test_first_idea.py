@@ -24,6 +24,11 @@ def _soc(text, careers):
         ("analyst", "3544"),
         ("designer", "2141"),
         ("arkitect", "2451"),
+        ("i want to be an architect", "2451"),
+        ("x", None),
+        ("e", None),
+        ("IT", None),
+        ("art", None),
     ],
 )
 def test_resolves(careers, text, soc):
