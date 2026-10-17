@@ -1,0 +1,254 @@
+{
+  "$defs": {
+    "BacktestGroup": {
+      "properties": {
+        "jobs_growth": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Range"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "key": {
+          "title": "Key",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "n": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "N"
+        },
+        "real_pay_growth": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Range"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "share_jobs_fell": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Share Jobs Fell"
+        }
+      },
+      "required": [
+        "key",
+        "label"
+      ],
+      "title": "BacktestGroup",
+      "type": "object"
+    },
+    "BacktestOccupation": {
+      "properties": {
+        "flags": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Flags",
+          "type": "array"
+        },
+        "group_then": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Group Then"
+        },
+        "jobs_growth": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Jobs Growth"
+        },
+        "real_pay_growth": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Real Pay Growth"
+        },
+        "soc2020": {
+          "title": "Soc2020",
+          "type": "string"
+        }
+      },
+      "required": [
+        "soc2020"
+      ],
+      "title": "BacktestOccupation",
+      "type": "object"
+    },
+    "BacktestWindow": {
+      "properties": {
+        "base_year": {
+          "title": "Base Year",
+          "type": "integer"
+        },
+        "coding": {
+          "title": "Coding",
+          "type": "string"
+        },
+        "flags": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Flags",
+          "type": "array"
+        },
+        "groups": {
+          "description": "a group is null while its rule isn't fixed",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/BacktestGroup"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": "Groups",
+          "type": "array"
+        },
+        "horizon": {
+          "title": "Horizon",
+          "type": "integer"
+        },
+        "jobs_comparable": {
+          "title": "Jobs Comparable",
+          "type": "boolean"
+        },
+        "occupations": {
+          "items": {
+            "$ref": "#/$defs/BacktestOccupation"
+          },
+          "title": "Occupations",
+          "type": "array"
+        },
+        "outcome_year": {
+          "title": "Outcome Year",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "base_year",
+        "outcome_year",
+        "horizon",
+        "coding",
+        "jobs_comparable",
+        "groups"
+      ],
+      "title": "BacktestWindow",
+      "type": "object"
+    },
+    "Range": {
+      "properties": {
+        "high": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "High"
+        },
+        "low": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Low"
+        },
+        "median": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Median"
+        }
+      },
+      "title": "Range",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "caveats": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Caveats",
+      "type": "array"
+    },
+    "status": {
+      "description": "file status from backtest.json: final | preliminary | mock",
+      "title": "Status",
+      "type": "string"
+    },
+    "window": {
+      "$ref": "#/$defs/BacktestWindow"
+    }
+  },
+  "required": [
+    "window",
+    "caveats",
+    "status"
+  ],
+  "title": "BacktestOut",
+  "type": "object"
+}

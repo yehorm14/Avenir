@@ -1,0 +1,26 @@
+{
+  "description": "One checklist interest, from ML fit.json.",
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "keywords": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Keywords",
+      "type": "array"
+    },
+    "label": {
+      "title": "Label",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "label"
+  ],
+  "title": "Tag",
+  "type": "object"
+}

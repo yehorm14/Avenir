@@ -1,0 +1,77 @@
+{
+  "description": "One related role from ML hedges.json (CONTRACTS.md 4.3).",
+  "properties": {
+    "evidence": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "title | estimate (ML v1.1)",
+      "title": "Evidence"
+    },
+    "shared_skills": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Shared Skills",
+      "type": "array"
+    },
+    "similarity": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Similarity",
+      "type": "number"
+    },
+    "soc2020": {
+      "pattern": "^\\d{4}$",
+      "title": "Soc2020",
+      "type": "string"
+    },
+    "status": {
+      "anyOf": [
+        {
+          "enum": [
+            "final",
+            "preliminary",
+            "mock",
+            "pending"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "default": "mock",
+      "title": "Status"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "why": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Why"
+    }
+  },
+  "required": [
+    "soc2020",
+    "title",
+    "similarity"
+  ],
+  "title": "HedgeCandidate",
+  "type": "object"
+}

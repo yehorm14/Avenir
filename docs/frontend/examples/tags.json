@@ -1,0 +1,193 @@
+[
+  {
+    "id": "maths",
+    "keywords": [
+      "math",
+      "maths",
+      "numbers",
+      "algebra",
+      "calculus",
+      "equation",
+      "statistic"
+    ],
+    "label": "Maths and numbers"
+  },
+  {
+    "id": "art_drawing",
+    "keywords": [
+      "draw",
+      "art",
+      "paint",
+      "sketch",
+      "illustrat"
+    ],
+    "label": "Art and drawing"
+  },
+  {
+    "id": "design",
+    "keywords": [
+      "design",
+      "layout",
+      "typograph",
+      "visual",
+      "graphics",
+      "ux"
+    ],
+    "label": "Design and visuals"
+  },
+  {
+    "id": "computers_coding",
+    "keywords": [
+      "code",
+      "coding",
+      "program",
+      "software",
+      "computer",
+      "app",
+      "python"
+    ],
+    "label": "Computers and coding"
+  },
+  {
+    "id": "data",
+    "keywords": [
+      "data",
+      "spreadsheet",
+      "excel",
+      "analys",
+      "chart",
+      "trend"
+    ],
+    "label": "Data and spreadsheets"
+  },
+  {
+    "id": "building_spaces",
+    "keywords": [
+      "building",
+      "architect",
+      "house",
+      "interior",
+      "cities",
+      "construction"
+    ],
+    "label": "Buildings and spaces"
+  },
+  {
+    "id": "engineering_making",
+    "keywords": [
+      "engineer",
+      "make things",
+      "build things",
+      "lego",
+      "robot",
+      "machine"
+    ],
+    "label": "Engineering and making things"
+  },
+  {
+    "id": "fixing_hands_on",
+    "keywords": [
+      "fix",
+      "repair",
+      "hands-on",
+      "tools",
+      "wiring",
+      "bike",
+      "practical"
+    ],
+    "label": "Fixing things, hands-on"
+  },
+  {
+    "id": "electricity_energy",
+    "keywords": [
+      "electric",
+      "electronic",
+      "circuit",
+      "energy",
+      "solar",
+      "power"
+    ],
+    "label": "Electricity and energy"
+  },
+  {
+    "id": "science_health",
+    "keywords": [
+      "biology",
+      "medicine",
+      "medical",
+      "health",
+      "hospital",
+      "physics",
+      "science"
+    ],
+    "label": "Science and health"
+  },
+  {
+    "id": "helping_people",
+    "keywords": [
+      "help people",
+      "caring",
+      "patient",
+      "community",
+      "support people"
+    ],
+    "label": "Helping people"
+  },
+  {
+    "id": "teaching_explaining",
+    "keywords": [
+      "teach",
+      "explain",
+      "tutor",
+      "coach",
+      "mentor"
+    ],
+    "label": "Teaching and explaining"
+  },
+  {
+    "id": "money_business",
+    "keywords": [
+      "money",
+      "financ",
+      "invest",
+      "business",
+      "stock",
+      "economic",
+      "trading"
+    ],
+    "label": "Money and business"
+  },
+  {
+    "id": "security_puzzles",
+    "keywords": [
+      "security",
+      "hacking",
+      "cyber",
+      "puzzle",
+      "cipher"
+    ],
+    "label": "Security and puzzles"
+  },
+  {
+    "id": "writing_language",
+    "keywords": [
+      "writ",
+      "language",
+      "english",
+      "stories",
+      "translat"
+    ],
+    "label": "Writing and languages"
+  },
+  {
+    "id": "outdoors_maps",
+    "keywords": [
+      "outdoor",
+      "map",
+      "geograph",
+      "landscape",
+      "survey"
+    ],
+    "label": "Outdoors and maps"
+  }
+]

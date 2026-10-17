@@ -1,0 +1,61 @@
+{
+  "$defs": {
+    "TagMatch": {
+      "properties": {
+        "matched": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Matched",
+          "type": "array"
+        },
+        "score": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Score",
+          "type": "number"
+        },
+        "tag": {
+          "title": "Tag",
+          "type": "string"
+        }
+      },
+      "required": [
+        "tag",
+        "score"
+      ],
+      "title": "TagMatch",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "interests": {
+      "description": "checklist interests plus suggestions; the user confirms them",
+      "items": {
+        "type": "string"
+      },
+      "title": "Interests",
+      "type": "array"
+    },
+    "suggested": {
+      "items": {
+        "$ref": "#/$defs/TagMatch"
+      },
+      "title": "Suggested",
+      "type": "array"
+    },
+    "tag_source": {
+      "description": "keyword | matcher | llm | none",
+      "title": "Tag Source",
+      "type": "string"
+    }
+  },
+  "required": [
+    "suggested",
+    "tag_source",
+    "interests"
+  ],
+  "title": "ProfileOut",
+  "type": "object"
+}

@@ -1,0 +1,77 @@
+{
+  "properties": {
+    "baseline_median": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Baseline Median"
+    },
+    "baseline_real_pay_median": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Baseline Real Pay Median"
+    },
+    "flags": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Flags",
+      "type": "array"
+    },
+    "key": {
+      "title": "Key",
+      "type": "string"
+    },
+    "label": {
+      "title": "Label",
+      "type": "string"
+    },
+    "measure": {
+      "title": "Measure",
+      "type": "string"
+    },
+    "status": {
+      "anyOf": [
+        {
+          "enum": [
+            "final",
+            "preliminary",
+            "mock",
+            "pending"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "default": "preliminary",
+      "title": "Status"
+    },
+    "window": {
+      "title": "Window",
+      "type": "string"
+    }
+  },
+  "required": [
+    "key",
+    "label",
+    "window",
+    "measure"
+  ],
+  "title": "Crisis",
+  "type": "object"
+}
