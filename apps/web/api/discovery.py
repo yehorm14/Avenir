@@ -39,7 +39,7 @@ ALIASES = {
     "2141": ("web designer", "web developer", "ux designer"),
     "2142": ("graphic designer", "graphic design", "multimedia designer", "illustrator", "animator"),
     "2451": ("architect", "architecture"),
-    "2452": ("architectural technologist", "town planner", "planning officer"),
+    "2452": ("town planner", "planning officer"),
     "3120": ("cad technician", "architectural technician", "draughtsperson"),
     "2121": ("civil engineer", "civil engineering"),
     "2123": ("electrical engineer", "electrical engineering", "power engineer"),
@@ -119,7 +119,9 @@ def _resolve(direction: str, careers: list[dict]) -> str | None:
 def _weights(values: str) -> tuple[dict[str, int], str | None]:
     text = values.lower()
     financial = bool(re.search(r"\b(pay|salary|income|earning|earnings|money|financial|well paid)\b", text))
-    stability = bool(re.search(r"\b(stable|stability|job security|secure job|reliable work|employment security)\b", text))
+    stability = bool(
+        re.search(r"\b(stable|stability|job security|secure job|reliable work|employment security|long[- ]term demand)\b", text)
+    )
     if financial and stability:
         weights = {"pay": 25, "interest": 50, "need": 25}
     elif financial:
@@ -163,7 +165,14 @@ def discover(request: DiscoveryRequest, careers: list[dict], tag_matches: list[d
         title = next(career["title"] for career in careers if career["soc"] == target)
         notices.append(f"{title} stays first as your reference career; the next two options are ranked comparisons.")
     elif request.mode == "known" and request.answers.direction.strip():
-        if re.search(r"\b(doctor|physician|surgeon|nurse|dentist|physiotherapist|vet|veterinarian)\b", activity):
+        if re.search(r"\barchitectural technologist\b", activity):
+            selected.update(tag for tag in ("building_spaces", "design") if tag in affinity)
+            related = "2452" if any(career["soc"] == "2452" for career in careers) else None
+            notices.append(
+                "Architectural technologists are included in the broad SOC 2452 occupation group alongside planning roles. "
+                "This grouped profile is a reference, not an exact role-specific estimate; training routes differ."
+            )
+        elif re.search(r"\b(doctor|physician|surgeon|nurse|dentist|physiotherapist|vet|veterinarian)\b", activity):
             selected.update(tag for tag in ("science_health", "helping_people") if tag in affinity)
             related = "2254" if any(career["soc"] == "2254" for career in careers) else None
             notices.append(
@@ -198,6 +207,7 @@ def discover(request: DiscoveryRequest, careers: list[dict], tag_matches: list[d
         "results": ranked[:3],
         "tags": tags,
         "target_soc": target,
+        "reference_soc": reference,
         "profile_summary": summary,
         "notices": notices,
         "weights": weights,

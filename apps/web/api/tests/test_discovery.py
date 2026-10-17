@@ -151,3 +151,43 @@ def test_known_civil_engineer_resolves_exact_reference(client):
     assert response.status_code == 200
     assert response.json()["target_soc"] == "2121"
     assert response.json()["results"][0]["soc"] == "2121"
+
+
+def test_reference_is_distinct_from_an_exact_target_for_related_careers(client):
+    doctor = client.post("/api/discovery", json={"mode": "known", "answers": {"direction": "doctor"}}).json()
+    assert doctor["target_soc"] is None
+    assert doctor["reference_soc"] == doctor["results"][0]["soc"] == "2254"
+    civil = client.post("/api/discovery", json={"mode": "known", "answers": {"direction": "civil engineer"}}).json()
+    assert civil["reference_soc"] == civil["target_soc"] == "2121"
+    explore = client.post("/api/discovery", json={"mode": "explore", "answers": {"subjects": "maths"}}).json()
+    assert explore["reference_soc"] is None
+
+
+def test_architectural_technologist_uses_disclosed_source_group_reference(client):
+    data = client.post(
+        "/api/discovery",
+        json={
+            "mode": "known",
+            "answers": {
+                "direction": "architectural technologist",
+            },
+        },
+    ).json()
+    assert data["target_soc"] is None
+    assert data["reference_soc"] == "2452"
+    assert any("occupation group" in notice.lower() for notice in data["notices"])
+
+
+@pytest.mark.parametrize("value", ["Long-term demand", "long term demand", "job security"])
+def test_demand_priority_chip_increases_need_weight(client, value):
+    data = client.post(
+        "/api/discovery",
+        json={
+            "mode": "explore",
+            "answers": {
+                "subjects": "maths",
+                "values": value,
+            },
+        },
+    ).json()
+    assert data["weights"] == {"pay": 15, "interest": 55, "need": 30}
