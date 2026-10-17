@@ -20,7 +20,7 @@ from avenir_contracts import (
 from avenir_decision import choose_hedge, recommend, score_components
 
 from .envelope import fail, ok
-from .routes_read import ERROR_RESPONSES, with_ads_now
+from .routes_read import ERROR_RESPONSES, Soc, with_ads_now
 
 log = logging.getLogger("avenir_api")
 router = APIRouter(prefix="/api/v1", responses=ERROR_RESPONSES)
@@ -104,7 +104,7 @@ def recommendations(body: RecommendationRequest, request: Request):
 
 
 @router.get("/careers/{soc}/hedge", response_model=Envelope[Hedge | None])
-def hedge(soc: str, request: Request):
+def hedge(soc: Soc, request: Request):
     d = request.app.state.data
     if not d.careers:
         return fail(ErrorCode.UPSTREAM_UNAVAILABLE, "Career data is not available")

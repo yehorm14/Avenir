@@ -2,8 +2,9 @@
 from __future__ import annotations
 
 import logging
+from typing import Annotated
 
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Path, Request
 from pydantic import BaseModel
 
 from avenir_contracts import (
@@ -34,6 +35,8 @@ ERROR_RESPONSES: dict[int | str, dict] = {
     500: {"model": Envelope[None], "description": "INTERNAL envelope"},
 }
 router = APIRouter(prefix="/api/v1", responses=ERROR_RESPONSES)
+# docs/contracts.md: a malformed SOC (not 4 digits) is 422; a well-formed unknown SOC is 404.
+Soc = Annotated[str, Path(pattern=r"^\d{4}$", description="SOC 2020 unit group, 4 digits")]
 
 
 class SourcesOut(BaseModel):
@@ -77,7 +80,7 @@ def careers(request: Request):
 
 
 @router.get("/careers/{soc}", response_model=Envelope[Career])
-def career(soc: str, request: Request):
+def career(soc: Soc, request: Request):
     d = request.app.state.data
     c = d.careers.get(soc)
     if c is None:
@@ -87,7 +90,7 @@ def career(soc: str, request: Request):
 
 
 @router.get("/careers/{soc}/history", response_model=Envelope[list[HistoryPoint]])
-def career_history(soc: str, request: Request):
+def career_history(soc: Soc, request: Request):
     d = request.app.state.data
     if soc not in d.careers:
         return _not_found("Career")
@@ -119,7 +122,7 @@ def backtest(request: Request, year: int | None = None):
 
 
 @router.get("/routes/{soc}", response_model=Envelope[list[Route]])
-def routes(soc: str, request: Request, nation: Nation = "scotland"):
+def routes(soc: Soc, request: Request, nation: Nation = "scotland"):
     d = request.app.state.data
     if soc not in d.careers:
         return _not_found("Career")
