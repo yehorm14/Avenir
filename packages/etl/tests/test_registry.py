@@ -156,3 +156,51 @@ def test_llm_env_gives_llm_writer(monkeypatch):
     monkeypatch.setenv("LLM_MODEL", "model")
 
     assert isinstance(registry.explanation_writer(), LlmExplanation)
+
+
+def test_dotenv_skips_a_bad_line_and_keeps_the_rest(monkeypatch, tmp_path, network):
+    env_file = tmp_path / ".env"
+    env_file.write_bytes(
+        b"LLM_MODEL=bad\x00value\n"  # NUL in a value: os.environ rejects it
+        b"ADZ\x00UNA_X=bad-key\n"  # NUL in a key
+        b"ADZUNA_APP_ID=abc\n"
+        b"ADZUNA_APP_KEY=def\n"
+    )
+    monkeypatch.setattr(registry, "ENV_FILE", env_file)
+
+    ads = registry.ads_source()
+    writer = registry.explanation_writer()
+
+    assert ads.live is True
+    assert os.environ["ADZUNA_APP_ID"] == "abc"
+    assert os.environ["ADZUNA_APP_KEY"] == "def"
+    assert "LLM_MODEL" not in os.environ
+    assert type(writer) is TemplateExplanation
+    assert network == []
+
+
+def test_undecodable_dotenv_gives_defaults_without_raising(monkeypatch, tmp_path, network):
+    env_file = tmp_path / ".env"
+    env_file.write_bytes(b"ADZUNA_APP_ID=\xff\xfe\x80 not utf-8\n")
+    monkeypatch.setattr(registry, "ENV_FILE", env_file)
+
+    ads = registry.ads_source()
+    writer = registry.explanation_writer()
+
+    assert ads.live is False
+    assert type(writer) is TemplateExplanation
+    assert "ADZUNA_APP_ID" not in os.environ
+    assert network == []
+
+
+def test_dotenv_with_utf8_bom_still_sets_the_first_key(monkeypatch, tmp_path):
+    bom_key = "\ufeffADZUNA_APP_ID"
+    monkeypatch.setenv(bom_key, "")  # track the bad key so monkeypatch removes it if the test fails
+    monkeypatch.delenv(bom_key)
+    env_file = tmp_path / ".env"
+    env_file.write_bytes(b"\xef\xbb\xbfADZUNA_APP_ID=abc\nADZUNA_APP_KEY=def\n")
+    monkeypatch.setattr(registry, "ENV_FILE", env_file)
+
+    assert registry.ads_source().live is True
+    assert os.environ["ADZUNA_APP_ID"] == "abc"
+    assert bom_key not in os.environ

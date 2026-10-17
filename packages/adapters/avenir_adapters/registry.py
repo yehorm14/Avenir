@@ -25,7 +25,7 @@ def _load_dotenv(path: Path) -> None:
     """Sets each KEY=VALUE from `path` that is not already in the environment. Missing file: nothing."""
     if not path.is_file():
         return
-    for raw in path.read_text(encoding="utf-8").splitlines():
+    for raw in path.read_text(encoding="utf-8-sig").splitlines():  # utf-8-sig drops a Notepad/PowerShell BOM
         line = raw.strip()
         if not line or line.startswith("#") or "=" not in line:
             continue
@@ -34,7 +34,10 @@ def _load_dotenv(path: Path) -> None:
         if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
             value = value[1:-1]
         if key:
-            os.environ.setdefault(key, value)
+            try:
+                os.environ.setdefault(key, value)
+            except ValueError:  # NUL in key or value: skip this line, keep the rest
+                continue
 
 
 def _ensure_dotenv() -> None:
@@ -44,7 +47,7 @@ def _ensure_dotenv() -> None:
     _dotenv_loaded = True  # set first: a broken .env is not retried on every call
     try:
         _load_dotenv(ENV_FILE)
-    except (OSError, UnicodeDecodeError):
+    except (OSError, ValueError):  # ValueError covers UnicodeDecodeError; a broken .env must never stop start-up
         pass
 
 
