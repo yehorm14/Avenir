@@ -13,7 +13,7 @@ help:
 	@echo "make check       lint + tests + secret scan, run before every push"
 
 run:
-	uvicorn avenir_api.app:app --reload --port 8000
+	$(PY) -m uvicorn avenir_api.app:app --reload --port 8000
 
 openapi:
 	$(PY) -m avenir_api.export_openapi

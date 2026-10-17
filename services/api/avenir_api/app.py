@@ -45,15 +45,16 @@ def create_app(
     app = FastAPI(title="Avenir API", version="1")
     d_ads, d_writer, d_suggester = default_ports()
     app.state.data = data if data is not None else load_data()
-    app.state.ads = ads or d_ads
-    app.state.writer = writer or d_writer
-    app.state.suggester = suggester or d_suggester
+    app.state.ads = ads if ads is not None else d_ads
+    app.state.writer = writer if writer is not None else d_writer
+    app.state.suggester = suggester if suggester is not None else d_suggester
 
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
         allow_methods=["*"],
         allow_headers=["*"],
+        expose_headers=["X-Request-ID"],
     )
 
     @app.exception_handler(RequestValidationError)
@@ -63,10 +64,16 @@ def create_app(
 
     @app.exception_handler(StarletteHTTPException)
     async def _http(request: Request, exc: StarletteHTTPException):
-        if exc.status_code == 404:
-            return fail(ErrorCode.NOT_FOUND, "Not found")
-        log.warning("HTTP %s on %s", exc.status_code, request.url.path)
-        return fail(ErrorCode.INTERNAL, "Something went wrong")
+        if exc.status_code in (404, 405):
+            code, msg = ErrorCode.NOT_FOUND, "Not found"
+        elif 400 <= exc.status_code < 500:
+            code, msg = ErrorCode.VALIDATION_ERROR, "Invalid request"
+        else:
+            log.warning("HTTP %s on %s", exc.status_code, request.url.path)
+            code, msg = ErrorCode.INTERNAL, "Something went wrong"
+        resp = fail(code, msg)
+        resp.status_code = exc.status_code
+        return resp
 
     @app.exception_handler(Exception)
     async def _unhandled(request: Request, exc: Exception):

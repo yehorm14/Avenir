@@ -66,3 +66,13 @@ def test_state_and_cors(data):
     assert app.state.ads and app.state.writer and app.state.suggester
     r = TestClient(app).get("/health", headers={"Origin": "http://localhost:5173"})
     assert r.headers["access-control-allow-origin"] == "http://localhost:5173"
+
+
+def test_method_not_allowed_is_envelope_405(data):
+    from fastapi.testclient import TestClient
+
+    from avenir_api.app import create_app
+
+    r = TestClient(create_app(data=data)).delete("/api/v1/tags")
+    assert r.status_code == 405
+    assert r.json()["ok"] is False

@@ -72,10 +72,10 @@ def test_slider_extremes(client, worry):
 def test_unknown_interest_422(client):
     e = _err(client.post(P, json={"interests": ["juggling"]}), 422, "VALIDATION_ERROR")
     assert "juggling" in str(e["details"])
-    assert e["details"][0]["field"] == "interests"
+    assert e["details"][0]["field"] == "body.interests"
     e = _err(client.post(R, json={"profile": {"interests": ["juggling"]}, "first_idea": "architect"}), 422, "VALIDATION_ERROR")
     assert "juggling" in str(e["details"])
-    assert e["details"][0]["field"] == "profile.interests"
+    assert e["details"][0]["field"] == "body.profile.interests"
 
 
 def test_empty_first_idea_422(client):
@@ -169,3 +169,31 @@ def test_no_data_503_before_tag_check():
     c = TestClient(create_app(data=AvenirData()))
     _err(c.post(P, json={"interests": ["juggling"]}), 503, "UPSTREAM_UNAVAILABLE")
     _err(c.post(R, json={"profile": {"interests": ["juggling"]}, "first_idea": "architect"}), 503, "UPSTREAM_UNAVAILABLE")
+
+
+def test_suggestions_with_unknown_tags_dropped(data):
+    from avenir_contracts import TagMatch
+
+    class Sug:
+        name = "fake"
+
+        def suggest(self, text):
+            return [TagMatch(tag="maths", score=0.9), TagMatch(tag="not_a_tag", score=0.8)]
+
+    c = TestClient(create_app(data=data, suggester=Sug()))
+    out = _ok(c.post(P, json={"free_text": "numbers"}))
+    assert [m["tag"] for m in out["suggested"]] == ["maths"]
+    assert "not_a_tag" not in out["interests"]
+
+
+def test_worst_adzuna_status_reported(data):
+    class Mixed(StubAds):
+        def ads_now(self, career, region):
+            m, _ = super().ads_now(career, region)
+            st = "live" if career.soc2020 == "2141" else "mock"
+            return m, SourceStatus(name="adzuna", status=st)
+
+    c = TestClient(create_app(data=data, ads=Mixed()))
+    r = c.post(R, json={"profile": AMIRA, "first_idea": "architect"})
+    adz = [s for s in r.json()["meta"]["sources"] if s["name"] == "adzuna"]
+    assert [s["status"] for s in adz] == ["mock"]

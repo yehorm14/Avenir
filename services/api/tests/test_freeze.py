@@ -23,8 +23,9 @@ def test_no_mock_at_freeze():
     health = client.get("/health")
     assert health.status_code == 200, health.text
     sources = health.json()["data"]["sources"]
-    mocked = [s["name"] for s in sources if s["name"] in WATCHED and s["status"] == "mock"]
-    assert not mocked, f"mock sources at freeze: {mocked}"
+    seen = {s["name"]: s["status"] for s in sources}
+    bad = {n: seen.get(n) for n in WATCHED if seen.get(n) not in {"snapshot", "live"}}
+    assert not bad, f"watched sources not snapshot/live at freeze: {bad}"
     r = client.post("/api/v1/recommendations", json={"profile": AMIRA, "first_idea": "architect"})
     assert r.status_code == 200, r.text
     bad = [p for p, m in _metrics(r.json()) if _is_mock(m)]
