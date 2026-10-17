@@ -1,0 +1,848 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-10-17T19:38:01+00:00",
+  "status": "mock",
+  "method": "placeholder: same SOC group first, then lower exposure",
+  "occupations": {
+    "2134": [
+      {
+        "soc2020": "2121",
+        "title": "Civil engineers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2123",
+        "title": "Electrical engineers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2142",
+        "title": "Graphic and multimedia designers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2135",
+        "title": "Cyber security professionals",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2133",
+        "title": "IT business analysts, architects and systems designers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      }
+    ],
+    "3544": [
+      {
+        "soc2020": "3113",
+        "title": "Engineering technicians",
+        "similarity": 0.6,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "3120",
+        "title": "CAD, drawing and architectural technicians",
+        "similarity": 0.6,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "5241",
+        "title": "Electricians and electrical fitters",
+        "similarity": 0.3,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2254",
+        "title": "Medical radiographers",
+        "similarity": 0.3,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2453",
+        "title": "Quantity surveyors",
+        "similarity": 0.3,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      }
+    ],
+    "2133": [
+      {
+        "soc2020": "2121",
+        "title": "Civil engineers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2123",
+        "title": "Electrical engineers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2142",
+        "title": "Graphic and multimedia designers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2135",
+        "title": "Cyber security professionals",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2141",
+        "title": "Web design professionals",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      }
+    ],
+    "2135": [
+      {
+        "soc2020": "2121",
+        "title": "Civil engineers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2123",
+        "title": "Electrical engineers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2142",
+        "title": "Graphic and multimedia designers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2133",
+        "title": "IT business analysts, architects and systems designers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2141",
+        "title": "Web design professionals",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      }
+    ],
+    "2141": [
+      {
+        "soc2020": "2121",
+        "title": "Civil engineers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2123",
+        "title": "Electrical engineers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2142",
+        "title": "Graphic and multimedia designers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2135",
+        "title": "Cyber security professionals",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2133",
+        "title": "IT business analysts, architects and systems designers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      }
+    ],
+    "2142": [
+      {
+        "soc2020": "2121",
+        "title": "Civil engineers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2123",
+        "title": "Electrical engineers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2135",
+        "title": "Cyber security professionals",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2133",
+        "title": "IT business analysts, architects and systems designers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2141",
+        "title": "Web design professionals",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      }
+    ],
+    "2451": [
+      {
+        "soc2020": "2453",
+        "title": "Quantity surveyors",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2452",
+        "title": "Chartered architectural technologists, planning officers and consultants",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2454",
+        "title": "Chartered surveyors",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2421",
+        "title": "Chartered and certified accountants",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2433",
+        "title": "Actuaries, economists and statisticians",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      }
+    ],
+    "2452": [
+      {
+        "soc2020": "2453",
+        "title": "Quantity surveyors",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2451",
+        "title": "Architects",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2454",
+        "title": "Chartered surveyors",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2421",
+        "title": "Chartered and certified accountants",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2433",
+        "title": "Actuaries, economists and statisticians",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      }
+    ],
+    "3120": [
+      {
+        "soc2020": "3113",
+        "title": "Engineering technicians",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "3544",
+        "title": "Data analysts",
+        "similarity": 0.6,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "5241",
+        "title": "Electricians and electrical fitters",
+        "similarity": 0.3,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2254",
+        "title": "Medical radiographers",
+        "similarity": 0.3,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2453",
+        "title": "Quantity surveyors",
+        "similarity": 0.3,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      }
+    ],
+    "2121": [
+      {
+        "soc2020": "2123",
+        "title": "Electrical engineers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2142",
+        "title": "Graphic and multimedia designers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2135",
+        "title": "Cyber security professionals",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2133",
+        "title": "IT business analysts, architects and systems designers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2141",
+        "title": "Web design professionals",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      }
+    ],
+    "2123": [
+      {
+        "soc2020": "2121",
+        "title": "Civil engineers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2142",
+        "title": "Graphic and multimedia designers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2135",
+        "title": "Cyber security professionals",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2133",
+        "title": "IT business analysts, architects and systems designers",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2141",
+        "title": "Web design professionals",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      }
+    ],
+    "3113": [
+      {
+        "soc2020": "3120",
+        "title": "CAD, drawing and architectural technicians",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "3544",
+        "title": "Data analysts",
+        "similarity": 0.6,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "5241",
+        "title": "Electricians and electrical fitters",
+        "similarity": 0.3,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2254",
+        "title": "Medical radiographers",
+        "similarity": 0.3,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2453",
+        "title": "Quantity surveyors",
+        "similarity": 0.3,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      }
+    ],
+    "2453": [
+      {
+        "soc2020": "2452",
+        "title": "Chartered architectural technologists, planning officers and consultants",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2451",
+        "title": "Architects",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2454",
+        "title": "Chartered surveyors",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2421",
+        "title": "Chartered and certified accountants",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2433",
+        "title": "Actuaries, economists and statisticians",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      }
+    ],
+    "2454": [
+      {
+        "soc2020": "2453",
+        "title": "Quantity surveyors",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2452",
+        "title": "Chartered architectural technologists, planning officers and consultants",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2451",
+        "title": "Architects",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2421",
+        "title": "Chartered and certified accountants",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2433",
+        "title": "Actuaries, economists and statisticians",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      }
+    ],
+    "2433": [
+      {
+        "soc2020": "2453",
+        "title": "Quantity surveyors",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2452",
+        "title": "Chartered architectural technologists, planning officers and consultants",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2451",
+        "title": "Architects",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2454",
+        "title": "Chartered surveyors",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2421",
+        "title": "Chartered and certified accountants",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      }
+    ],
+    "2422": [
+      {
+        "soc2020": "2453",
+        "title": "Quantity surveyors",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2452",
+        "title": "Chartered architectural technologists, planning officers and consultants",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2451",
+        "title": "Architects",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2454",
+        "title": "Chartered surveyors",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2421",
+        "title": "Chartered and certified accountants",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      }
+    ],
+    "2421": [
+      {
+        "soc2020": "2453",
+        "title": "Quantity surveyors",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2452",
+        "title": "Chartered architectural technologists, planning officers and consultants",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2451",
+        "title": "Architects",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2454",
+        "title": "Chartered surveyors",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2433",
+        "title": "Actuaries, economists and statisticians",
+        "similarity": 0.8,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      }
+    ],
+    "2254": [
+      {
+        "soc2020": "2453",
+        "title": "Quantity surveyors",
+        "similarity": 0.6,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2121",
+        "title": "Civil engineers",
+        "similarity": 0.6,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2313",
+        "title": "Secondary education teaching professionals",
+        "similarity": 0.6,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2123",
+        "title": "Electrical engineers",
+        "similarity": 0.6,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2452",
+        "title": "Chartered architectural technologists, planning officers and consultants",
+        "similarity": 0.6,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      }
+    ],
+    "5241": [
+      {
+        "soc2020": "2254",
+        "title": "Medical radiographers",
+        "similarity": 0.3,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "3113",
+        "title": "Engineering technicians",
+        "similarity": 0.3,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2453",
+        "title": "Quantity surveyors",
+        "similarity": 0.3,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2121",
+        "title": "Civil engineers",
+        "similarity": 0.3,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2313",
+        "title": "Secondary education teaching professionals",
+        "similarity": 0.3,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      }
+    ],
+    "2313": [
+      {
+        "soc2020": "2254",
+        "title": "Medical radiographers",
+        "similarity": 0.6,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2453",
+        "title": "Quantity surveyors",
+        "similarity": 0.6,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2121",
+        "title": "Civil engineers",
+        "similarity": 0.6,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2123",
+        "title": "Electrical engineers",
+        "similarity": 0.6,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      },
+      {
+        "soc2020": "2452",
+        "title": "Chartered architectural technologists, planning officers and consultants",
+        "similarity": 0.6,
+        "shared_skills": [],
+        "why": "Placeholder until ESCO skill overlap is computed (M3).",
+        "status": "mock"
+      }
+    ]
+  }
+}

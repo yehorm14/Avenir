@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-10-17T19:38:01+00:00",
+  "status": "preliminary",
+  "crises": [
+    {
+      "key": "covid",
+      "label": "COVID-19",
+      "window": "2019-2020",
+      "measure": "All-employee jobs, log change",
+      "baseline_median": 0.0,
+      "status": "preliminary",
+      "flags": [
+        "covid_year",
+        "bridged_soc2010"
+      ]
+    },
+    {
+      "key": "cost_of_living",
+      "label": "Cost-of-living shock",
+      "window": "2021-2023",
+      "measure": "Real median full-time pay",
+      "baseline_median": -0.0439,
+      "status": "preliminary",
+      "flags": []
+    },
+    {
+      "key": "tech_slump",
+      "label": "Tech hiring slump",
+      "window": "2022-2024",
+      "measure": "Online job adverts",
+      "baseline_median": null,
+      "status": "pending",
+      "flags": [
+        "pending_source"
+      ]
+    },
+    {
+      "key": "gfc_2008",
+      "label": "2008 financial crisis",
+      "window": "2008-2010",
+      "measure": "Employee jobs",
+      "baseline_median": null,
+      "status": "pending",
+      "flags": [
+        "pending_source"
+      ]
+    }
+  ]
+}

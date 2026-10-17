@@ -1,0 +1,305 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-10-17T19:38:01+00:00",
+  "status": "mock",
+  "method": "hand-assigned placeholder affinities",
+  "tags": [
+    {
+      "id": "maths",
+      "label": "Maths and numbers",
+      "keywords": [
+        "math",
+        "maths",
+        "numbers",
+        "algebra",
+        "calculus",
+        "equation",
+        "statistic"
+      ]
+    },
+    {
+      "id": "art_drawing",
+      "label": "Art and drawing",
+      "keywords": [
+        "draw",
+        "art",
+        "paint",
+        "sketch",
+        "illustrat"
+      ]
+    },
+    {
+      "id": "design",
+      "label": "Design and visuals",
+      "keywords": [
+        "design",
+        "layout",
+        "typograph",
+        "visual",
+        "graphics",
+        "ux"
+      ]
+    },
+    {
+      "id": "computers_coding",
+      "label": "Computers and coding",
+      "keywords": [
+        "code",
+        "coding",
+        "program",
+        "software",
+        "computer",
+        "app",
+        "python"
+      ]
+    },
+    {
+      "id": "data",
+      "label": "Data and spreadsheets",
+      "keywords": [
+        "data",
+        "spreadsheet",
+        "excel",
+        "analys",
+        "chart",
+        "trend"
+      ]
+    },
+    {
+      "id": "building_spaces",
+      "label": "Buildings and spaces",
+      "keywords": [
+        "building",
+        "architect",
+        "house",
+        "interior",
+        "cities",
+        "construction"
+      ]
+    },
+    {
+      "id": "engineering_making",
+      "label": "Engineering and making things",
+      "keywords": [
+        "engineer",
+        "make things",
+        "build things",
+        "lego",
+        "robot",
+        "machine"
+      ]
+    },
+    {
+      "id": "fixing_hands_on",
+      "label": "Fixing things, hands-on",
+      "keywords": [
+        "fix",
+        "repair",
+        "hands-on",
+        "tools",
+        "wiring",
+        "bike",
+        "practical"
+      ]
+    },
+    {
+      "id": "electricity_energy",
+      "label": "Electricity and energy",
+      "keywords": [
+        "electric",
+        "electronic",
+        "circuit",
+        "energy",
+        "solar",
+        "power"
+      ]
+    },
+    {
+      "id": "science_health",
+      "label": "Science and health",
+      "keywords": [
+        "biology",
+        "medicine",
+        "medical",
+        "health",
+        "hospital",
+        "physics",
+        "science"
+      ]
+    },
+    {
+      "id": "helping_people",
+      "label": "Helping people",
+      "keywords": [
+        "help people",
+        "caring",
+        "patient",
+        "community",
+        "support people"
+      ]
+    },
+    {
+      "id": "teaching_explaining",
+      "label": "Teaching and explaining",
+      "keywords": [
+        "teach",
+        "explain",
+        "tutor",
+        "coach",
+        "mentor"
+      ]
+    },
+    {
+      "id": "money_business",
+      "label": "Money and business",
+      "keywords": [
+        "money",
+        "financ",
+        "invest",
+        "business",
+        "stock",
+        "economic",
+        "trading"
+      ]
+    },
+    {
+      "id": "security_puzzles",
+      "label": "Security and puzzles",
+      "keywords": [
+        "security",
+        "hacking",
+        "cyber",
+        "puzzle",
+        "cipher"
+      ]
+    },
+    {
+      "id": "writing_language",
+      "label": "Writing and languages",
+      "keywords": [
+        "writ",
+        "language",
+        "english",
+        "stories",
+        "translat"
+      ]
+    },
+    {
+      "id": "outdoors_maps",
+      "label": "Outdoors and maps",
+      "keywords": [
+        "outdoor",
+        "map",
+        "geograph",
+        "landscape",
+        "survey"
+      ]
+    }
+  ],
+  "affinity": {
+    "maths": {
+      "2433": 0.95,
+      "2422": 0.8,
+      "2421": 0.75,
+      "3544": 0.8,
+      "2134": 0.6,
+      "2121": 0.6,
+      "2123": 0.6,
+      "2453": 0.6,
+      "2313": 0.5,
+      "2135": 0.4
+    },
+    "art_drawing": {
+      "2142": 0.95,
+      "2141": 0.7,
+      "2451": 0.75,
+      "3120": 0.6,
+      "2452": 0.4
+    },
+    "design": {
+      "2142": 0.9,
+      "2141": 0.9,
+      "2451": 0.8,
+      "3120": 0.6,
+      "2452": 0.5,
+      "2133": 0.3
+    },
+    "computers_coding": {
+      "2134": 0.95,
+      "2135": 0.8,
+      "2141": 0.7,
+      "2133": 0.7,
+      "3544": 0.6,
+      "3120": 0.4
+    },
+    "data": {
+      "3544": 0.95,
+      "2433": 0.85,
+      "2422": 0.7,
+      "2133": 0.6,
+      "2421": 0.6,
+      "2134": 0.4
+    },
+    "building_spaces": {
+      "2451": 0.95,
+      "2452": 0.85,
+      "3120": 0.8,
+      "2121": 0.75,
+      "2453": 0.7,
+      "2454": 0.7
+    },
+    "engineering_making": {
+      "2121": 0.9,
+      "2123": 0.9,
+      "3113": 0.9,
+      "5241": 0.6,
+      "2134": 0.3
+    },
+    "fixing_hands_on": {
+      "5241": 0.95,
+      "3113": 0.85,
+      "2123": 0.5,
+      "2254": 0.3
+    },
+    "electricity_energy": {
+      "2123": 0.95,
+      "5241": 0.9,
+      "3113": 0.6
+    },
+    "science_health": {
+      "2254": 0.95,
+      "2313": 0.3,
+      "2433": 0.3
+    },
+    "helping_people": {
+      "2254": 0.8,
+      "2313": 0.85
+    },
+    "teaching_explaining": {
+      "2313": 0.95,
+      "2433": 0.3
+    },
+    "money_business": {
+      "2422": 0.95,
+      "2421": 0.9,
+      "2433": 0.7,
+      "2453": 0.5,
+      "2454": 0.5
+    },
+    "security_puzzles": {
+      "2135": 0.95,
+      "2134": 0.5,
+      "2433": 0.3
+    },
+    "writing_language": {
+      "2313": 0.4,
+      "2133": 0.3
+    },
+    "outdoors_maps": {
+      "2454": 0.8,
+      "2121": 0.6,
+      "2453": 0.4,
+      "2452": 0.5
+    }
+  }
+}

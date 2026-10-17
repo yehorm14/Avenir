@@ -22,10 +22,10 @@ requires = ["setuptools>=69"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-where = ["packages/contracts", "packages/decision", "packages/adapters", "packages/etl", "services/api"]
-include = ["avenir_*"]
+where = ["packages/ml", "packages/contracts", "packages/decision", "packages/adapters", "packages/etl", "services/api"]
+include = ["avenir_*", "pathfinder_ml*"]
 
 [tool.pytest.ini_options]
-testpaths = ["packages/contracts/tests", "packages/decision/tests", "packages/etl/tests", "services/api/tests"]
-pythonpath = ["packages/contracts", "packages/decision", "packages/adapters", "packages/etl", "services/api"]
+testpaths = ["packages/ml/tests", "packages/contracts/tests", "packages/decision/tests", "packages/etl/tests", "services/api/tests"]
+pythonpath = ["packages/ml", "packages/contracts", "packages/decision", "packages/adapters", "packages/etl", "services/api"]
 addopts = "-q"
