@@ -22,7 +22,7 @@ def test_bootstrap_passes_through_actual_arsenii_metrics_and_history(client):
     response = client.get("/api/bootstrap")
     assert response.status_code == 200
     data = response.json()
-    assert len(data["careers"]) == 20
+    assert len(data["careers"]) == 21
     software = next(c for c in data["careers"] if c["soc"] == "2134")
     assert software["metrics"] == ML().occupation("2134")["metrics"]
     assert software["history"] == ML().history("2134")
@@ -52,6 +52,8 @@ def test_match_endpoint_validates_profile_and_returns_every_career(client):
 
 def test_all_twenty_careers_have_paths_without_max_mock_earnings(client):
     for career in client.get("/api/bootstrap").json()["careers"]:
+        if career["soc"] == "5315":
+            continue  # Catalogue-only evidence: unavailable route is tested explicitly.
         response = client.get(f"/api/path/{career['soc']}?nation=Scotland")
         assert response.status_code == 200, career["soc"]
         plan = response.json()

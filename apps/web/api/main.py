@@ -73,6 +73,7 @@ DISPLAY_SECTORS = {
     "2421": "Accounting and finance",
     "2254": "Healthcare and diagnostics",
     "5241": "Skilled trades and energy",
+    "5315": "Skilled trades and energy",
     "2313": "Education",
 }
 
@@ -116,7 +117,11 @@ def _text_soc(soc: str) -> str:
 def _careers() -> list[dict]:
     store = get_store()
     output = []
-    for occupation in ml().occupations(demo_only=True):
+    occupations = ml().occupations(demo_only=True)
+    plumber = ml().occupation("5315")
+    if plumber is not None and all(occupation["soc2020"] != "5315" for occupation in occupations):
+        occupations.append(plumber)
+    for occupation in occupations:
         soc = occupation["soc2020"]
         text_soc = _text_soc(soc)
         text = store.occupations.get(text_soc)
@@ -132,6 +137,10 @@ def _careers() -> list[dict]:
                 "and conversations with people doing the work."
             )
         )
+        if soc == "5315":
+            title = "Plumber"
+            summary = "Install and repair water and heating systems in homes and commercial buildings."
+            skills = ["Practical problem solving", "Working with tools", "Attention to detail", "Customer communication"]
         output.append(
             {
                 "soc": soc,
@@ -146,6 +155,12 @@ def _careers() -> list[dict]:
             }
         )
     return output
+
+
+def _match_careers() -> list[dict]:
+    """Matching stays within the 20 careers covered by the supplied affinity model."""
+    demo_socs = {occupation["soc2020"] for occupation in ml().occupations(demo_only=True)}
+    return [career for career in _careers() if career["soc"] in demo_socs]
 
 
 def _career(soc: str) -> dict:
@@ -193,7 +208,9 @@ def bootstrap() -> dict:
 def matches(request: MatchRequest) -> dict:
     fit = ml()._load("fit")
     try:
-        results = rank_careers(_careers(), request.tags, request.weights.model_dump(), fit["affinity"], fit_status=fit["status"])
+        results = rank_careers(
+            _match_careers(), request.tags, request.weights.model_dump(), fit["affinity"], fit_status=fit["status"]
+        )
     except ValueError as error:
         raise HTTPException(422, str(error)) from error
     return {
@@ -210,7 +227,7 @@ def matches(request: MatchRequest) -> dict:
 @app.post("/api/discovery")
 def discovery(request: DiscoveryRequest) -> dict:
     try:
-        return discover(request, _careers(), ml().match_tags(request.answers.text(), top_k=16), ml()._load("fit"))
+        return discover(request, _match_careers(), ml().match_tags(request.answers.text(), top_k=16), ml()._load("fit"))
     except ValueError as error:
         raise HTTPException(422, str(error)) from error
 
@@ -241,6 +258,13 @@ def path(soc: str, nation: str = "Scotland") -> dict:
 
 def _source_refs(keys: list[str]) -> list[dict]:
     registry = ml().sources()
+    registry["ncs_plumber"] = {
+        "name": "National Careers Service: plumber",
+        "publisher": "Department for Education",
+        "url": "https://nationalcareers.service.gov.uk/job-profiles/plumber",
+        "coverage": "England careers guidance",
+        "licence": "Open Government Licence v3.0",
+    }
     return [{"id": key, **registry[key]} for key in keys if key in registry]
 
 
@@ -327,6 +351,13 @@ def _guide_reply(career: dict, message: str, history: list[GuideTurn]) -> tuple[
             "not a prediction or a promise of a vacancy. Compare it with your interest "
             "in the day-to-day work and build skills that transfer between roles." + _evidence_note(demand),
             ["ons_ashe_t14"],
+        )
+    if career["soc"] == "5315":
+        return (
+            career["summary"] + " Detailed skills and study routes for this profile have not been added yet. "
+            "The National Careers Service describes college, apprenticeship and on-the-job routes. "
+            "Check its plumber profile for the route and entry requirements that fit your situation.",
+            ["ncs_plumber"],
         )
     plan = path(career["soc"])
     if any(word in lower for word in ("skill", "learn", "good at", "practice", "project")):
