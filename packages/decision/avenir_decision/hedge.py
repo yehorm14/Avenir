@@ -38,6 +38,7 @@ def choose_hedge(
     if best is None:
         return None
     _, cand, risk = best
+    extra = {"evidence": getattr(cand, "evidence", None)} if "evidence" in Hedge.model_fields else {}
     return Hedge(
         for_soc=top.soc2020,
         career=careers[cand.soc2020],
@@ -46,4 +47,5 @@ def choose_hedge(
         why=cand.why,
         risk_delta=round(risk - top_risk, 1),
         status=str(cand.status),
+        **extra,
     )
