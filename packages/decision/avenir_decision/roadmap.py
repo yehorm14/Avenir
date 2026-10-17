@@ -17,13 +17,18 @@ def _name(subject: str) -> str:
 
 
 def _subjects_step(profile: ProfileIn, career: Career) -> str:
+    """Wording by nation (Yehor, PR #8): Higher in Scotland, A-level in England, and
+    "A-level or equivalent" in Wales and Northern Ireland."""
     if not career.entry_subjects:
         return "Check the subjects on the route's page."
     held = {q.subject for q in profile.qualifications if q.level in FULL_LEVELS}
     missing = [s for s in career.entry_subjects if s not in held]
-    if missing:
-        return "Take Higher " + ", ".join(_name(s) for s in missing)
-    return "Keep " + ", ".join(_name(s) for s in career.entry_subjects) + " to Higher or Advanced Higher"
+    names = ", ".join(_name(s) for s in (missing or career.entry_subjects))
+    if profile.nation == "scotland":
+        return f"Take Higher {names}" if missing else f"Keep {names} to Higher or Advanced Higher"
+    if profile.nation == "england":
+        return f"Take A-level {names}" if missing else f"Keep {names} to A-level"
+    return f"Take {names} at A-level or equivalent" if missing else f"Keep {names} to A-level or equivalent"
 
 
 def _pick_route(profile: ProfileIn, routes: Sequence[Route]) -> Route | None:
