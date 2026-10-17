@@ -74,6 +74,13 @@ def recommendations(body: RecommendationRequest, request: Request):
         return fail(ErrorCode.UPSTREAM_UNAVAILABLE, "Career data is not available")
     if (err := _unknown_tags(request, body.profile.interests, "body.profile.interests")) is not None:
         return err
+    gaps = [
+        ErrorDetail(field="body.profile.interests", issue=f"no fit data for tag: {t}")
+        for t in body.profile.interests
+        if t not in d.affinity
+    ]
+    if gaps:
+        return fail(ErrorCode.UPSTREAM_UNAVAILABLE, "Fit data is not available for some interests", gaps)
     out = recommend(body, d, request.app.state.writer)
     ads = request.app.state.ads
     statuses: list[SourceStatus] = []

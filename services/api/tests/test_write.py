@@ -222,3 +222,27 @@ def test_ads_failure_falls_back_to_snapshot(data, method, path):
     assert r.status_code == 200, r.text
     adzuna = [s for s in r.json()["meta"]["sources"] if s["name"] == "adzuna"]
     assert adzuna and adzuna[-1]["status"] != "live"
+
+
+def test_tag_without_fit_data_is_503_not_crash(data):
+    # tag is in the checklist but the fit table has no row for it: a data gap, not the user's fault
+    aff = {k: v for k, v in data.affinity.items() if k != "maths"}
+    c = TestClient(create_app(data=replace(data, affinity=aff)))
+    r = c.post(R, json={"profile": {"interests": ["maths", "design"]}, "first_idea": "architect"})
+    assert r.status_code == 503
+    err = r.json()["error"]
+    assert err["code"] == "UPSTREAM_UNAVAILABLE"
+    assert [d["issue"] for d in err["details"]] == ["no fit data for tag: maths"]
+
+
+def test_nan_metric_is_sent_as_null(data):
+    # a NaN in a data file used to make JSON encoding crash with a 500
+    c = data.careers["2451"]
+    m = {**c.metrics, "pay_median": c.metrics["pay_median"].model_copy(update={"value": float("nan")})}
+    d2 = replace(data, careers={**data.careers, "2451": c.model_copy(update={"metrics": m})})
+    client = TestClient(create_app(data=d2))
+    r = client.get("/api/v1/careers/2451")
+    assert r.status_code == 200
+    assert r.json()["data"]["metrics"]["pay_median"]["value"] is None
+    r = client.post(R, json={"profile": AMIRA, "first_idea": "architect"})
+    assert r.status_code == 200
