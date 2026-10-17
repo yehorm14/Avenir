@@ -99,3 +99,10 @@ def test_malformed_json_points_at_body(data):
     )
     assert r.status_code == 422
     assert r.json()["error"]["details"][0]["field"] == "body"
+
+
+def test_fixture_data_is_pinned_to_ml_mock(data):
+    from conftest import ML_MOCK
+
+    assert (ML_MOCK / "occupations.json").is_file()
+    assert len(data.careers) == 20
