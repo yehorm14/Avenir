@@ -16,6 +16,16 @@ class CuratedError(ValueError):
     """One or more curated rows are invalid. The message names every bad row."""
 
 
+REQUIRED_COLUMNS = ("soc2020", "title", "aliases", "description", "entry_subjects", "verified_by")
+
+
+def require_columns(reader: csv.DictReader, required: tuple[str, ...], csv_path: Path) -> None:
+    """Raise CuratedError naming every required header column the file lacks."""
+    missing = [c for c in required if c not in (reader.fieldnames or [])]
+    if missing:
+        raise CuratedError(f"{csv_path}: missing required column(s): {', '.join(missing)}")
+
+
 def _split(cell: str | None) -> list[str]:
     return [p.strip() for p in (cell or "").split("|") if p.strip()]
 
@@ -26,6 +36,7 @@ def load_curated(csv_path: Path, demo_socs: set[str]) -> list[CatalogueEntry]:
     seen: set[str] = set()
     with Path(csv_path).open(encoding="utf-8", newline="") as fh:
         reader = csv.DictReader(fh)
+        require_columns(reader, REQUIRED_COLUMNS, csv_path)
         for row in reader:
             where = f"line {reader.line_num} (soc2020 {(row.get('soc2020') or '').strip()})"
             soc = (row.get("soc2020") or "").strip()
@@ -52,6 +63,8 @@ def load_curated(csv_path: Path, demo_socs: set[str]) -> list[CatalogueEntry]:
                 description=(row.get("description") or "").strip() or None,
                 entry_subjects=subjects,  # type: ignore[arg-type]
             ))
+    if not entries and not problems:
+        raise CuratedError(f"{csv_path}: no data rows (the catalogue would be empty)")
     if problems:
         raise CuratedError(f"{csv_path}: {len(problems)} problem(s)\n" + "\n".join(problems))
     return entries

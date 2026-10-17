@@ -14,6 +14,7 @@ from avenir_etl.curated import CuratedError, load_curated
 FIX = Path(__file__).parent / "fixtures"
 OK = FIX / "occupations_ok.csv"
 BAD = FIX / "occupations_bad.csv"
+ROUTES = FIX / "routes_ok.csv"
 SOCS = {"2451", "2134", "2433", "3544"}
 
 
@@ -106,9 +107,9 @@ def test_demo_socs_matches_ml_mock():
 
 def test_cli_writes_catalogue_json_and_it_loads(tmp_path):
     out = tmp_path / "snap"
-    assert main(["--curated", str(OK), "--out", str(out)]) == 0
+    assert main(["--curated", str(OK), "--routes", str(ROUTES), "--out", str(out)]) == 0
     written = out / "catalogue.json"
-    assert written.is_file() and not (out / "routes.json").exists()
+    assert written.is_file() and (out / "routes.json").is_file()
     cat = CatalogueFile.model_validate_json(written.read_text(encoding="utf-8"))
     assert [e.soc2020 for e in cat.entries] == ["2451", "2134", "2433"]
 
@@ -120,6 +121,6 @@ def test_cli_writes_catalogue_json_and_it_loads(tmp_path):
 
 def test_cli_bad_csv_exits_non_zero(tmp_path, capsys):
     out = tmp_path / "snap"
-    assert main(["--curated", str(BAD), "--out", str(out)]) != 0
+    assert main(["--curated", str(BAD), "--routes", str(ROUTES), "--out", str(out)]) != 0
     assert "line 2 (soc2020 2451)" in capsys.readouterr().out
-    assert not (out / "catalogue.json").exists()
+    assert not (out / "catalogue.json").exists() and not (out / "routes.json").exists()

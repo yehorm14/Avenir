@@ -1,9 +1,10 @@
 """Build snapshots/catalogue.json from the curated CSV plus the data we can load.
 
-    python -m avenir_etl.build [--curated PATH] [--oid PATH] [--out DIR]
+    python -m avenir_etl.build [--curated PATH] [--routes PATH] [--oid PATH] [--out DIR]
 
-Any input that is absent becomes `Metric.missing` for that key (AGENTS.md rule 3).
-Routes come from a separate step.
+Also writes snapshots/routes.json from the curated routes CSV. Both inputs are validated
+before either file is written. Any metric input that is absent becomes `Metric.missing`
+for that key (AGENTS.md rule 3).
 """
 from __future__ import annotations
 
@@ -20,8 +21,10 @@ from avenir_contracts.metric import Metric
 from avenir_contracts.vocab import CATALOGUE_METRICS
 
 from .curated import CuratedError, load_curated
+from .routes import load_routes
 
 DEFAULT_CURATED = REPO_ROOT / "data" / "curated" / "occupations.csv"
+DEFAULT_ROUTES = REPO_ROOT / "data" / "curated" / "routes.csv"
 
 
 def demo_socs() -> set[str]:
@@ -55,20 +58,36 @@ def build_catalogue(curated: list[CatalogueEntry], oid_csv: Path | None = None, 
 
 
 def main(argv: list[str] | None = None) -> int:
-    p = argparse.ArgumentParser(prog="avenir_etl.build", description="Build snapshots/catalogue.json")
+    p = argparse.ArgumentParser(prog="avenir_etl.build", description="Build snapshots/catalogue.json and routes.json")
     p.add_argument("--curated", type=Path, default=DEFAULT_CURATED)
+    p.add_argument("--routes", type=Path, default=DEFAULT_ROUTES)
     p.add_argument("--oid", type=Path, default=None, help="Occupations in Demand file (optional)")
     p.add_argument("--out", type=Path, default=SNAPSHOT_DIR)
     args = p.parse_args(argv)
+    socs = demo_socs()
+    curated, routes, failed = [], None, False
     try:
-        curated = load_curated(args.curated, demo_socs())
+        curated = load_curated(args.curated, socs)
     except CuratedError as err:
         print(err)
+        failed = True
+    try:
+        routes = load_routes(args.routes, socs)
+    except CuratedError as err:
+        print(err)
+        failed = True
+    if failed or routes is None:
         return 1
+    if args.oid is not None and not Path(args.oid).exists():
+        print(f"warning: --oid file not found ({args.oid}); shortage will be missing", file=sys.stderr)
+    if not routes.routes:
+        print("routes.csv has no rows yet; roadmap will show routes as missing", file=sys.stderr)
     cat = build_catalogue(curated, args.oid)
     args.out.mkdir(parents=True, exist_ok=True)
     (args.out / "catalogue.json").write_text(cat.model_dump_json(indent=1), encoding="utf-8")
+    (args.out / "routes.json").write_text(routes.model_dump_json(indent=1), encoding="utf-8")
     print(f"wrote {len(cat.entries)} catalogue entries to {args.out / 'catalogue.json'}")
+    print(f"wrote {len(routes.routes)} routes to {args.out / 'routes.json'}")
     return 0
 
 
