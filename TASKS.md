@@ -8,3 +8,5 @@
 - [x] [codex] Inspect QuantSoc design across the reference site, then apply its visual system throughout Aventier and verify desktop flows.
 
 - [x] [codex] Simplify entry to one screen, remove logo and marketing slogans, and move both clearly labelled career choices into the hero.
+
+- [x] [codex] Add Home / Quiz / Jobs / Chatbot navigation and remove the profile/privacy menu.

@@ -80,6 +80,7 @@ export type Page =
   | "discover"
   | "conversation"
   | "quiz"
+  | "jobs"
   | "matches"
   | "overview"
   | "path"

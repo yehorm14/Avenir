@@ -4594,6 +4594,11 @@ input[type="range"]::-moz-range-thumb {
   color: var(--muted);
   font-size: 12px;
 }
+
+.guide-choices {
+  max-height: calc(100vh - 310px);
+  overflow-y: auto;
+}
 .jobs-grid > .empty-state {
   grid-column: 1 / -1;
 }

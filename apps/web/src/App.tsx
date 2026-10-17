@@ -11,12 +11,13 @@ import Discovery, { type DiscoveryResult } from "./Discovery";
 const pageNames: Record<Page, string> = {
   discover: "Discover",
   conversation: "Your conversation",
-  quiz: "Your discovery",
+  quiz: "Quiz",
+  jobs: "Jobs",
   matches: "Your matches",
   overview: "Overview",
   path: "Your pathway",
   opportunities: "Opportunities",
-  guides: "Career guides",
+  guides: "Chatbot",
   evidence: "The evidence",
 };
 const nav: { id: Page; icon: string }[] = [
@@ -24,7 +25,6 @@ const nav: { id: Page; icon: string }[] = [
   { id: "matches", icon: "compass" },
   { id: "path", icon: "path" },
   { id: "opportunities", icon: "calendar" },
-  { id: "guides", icon: "chat" },
 ];
 const route = (): Page => {
   const p = window.location.hash.replace("#/", "").split("/")[0];
@@ -122,7 +122,6 @@ export default function App() {
   const [matches, setMatches] = useState<Career[]>([]);
   const [ranking, setRanking] = useState(false);
   const [matchError, setMatchError] = useState("");
-  const [settings, setSettings] = useState(false);
   const [toast, setToast] = useState("");
   const [inspect, setInspect] = useState<Career | null>(null);
   const mainRef = useRef<HTMLElement>(null);
@@ -236,13 +235,13 @@ export default function App() {
     go("conversation");
   };
   const finish = () => {
-    update({ completed: true, step: questions.length });
+    update({
+      completed: true,
+      step: questions.length,
+      discovery: undefined,
+      selected: [],
+    });
     go("matches");
-  };
-  const retake = () => {
-    update({ discovery: { mode: "explore", answers: {}, step: 0 } });
-    go("conversation");
-    setSettings(false);
   };
   const completeDiscovery = (result: DiscoveryResult) => {
     setPrefs((p) => ({
@@ -265,8 +264,7 @@ export default function App() {
     setMatches(result.results);
     go("matches");
   };
-  const showShell =
-    prefs.completed && !["discover", "quiz", "conversation"].includes(page);
+  const showShell = !["discover", "quiz", "conversation"].includes(page);
   const exportPlan = () => {
     if (!primary) return;
     const content = getCareerContent(primary.soc, primary.family);
@@ -308,82 +306,37 @@ export default function App() {
         Skip to content
       </a>
       <header className="topbar">
-        {showShell ? (
-          <nav className="workspace-nav" aria-label="Main navigation">
-            <button onClick={() => go("discover")}>Home</button>
-            {[...nav, { id: "evidence" as const, icon: "chart" }].map((n) => (
+        <nav className="top-links" aria-label="Main navigation">
+          {(
+            [
+              ["discover", "Home"],
+              ["quiz", "Quiz"],
+              ["jobs", "Jobs"],
+              ["guides", "Chatbot"],
+            ] as const
+          ).map(([id, label]) => (
+            <button
+              key={id}
+              onClick={() => go(id)}
+              className={page === id ? "active" : ""}
+              aria-current={page === id ? "page" : undefined}
+            >
+              {label}
+            </button>
+          ))}
+          {showShell &&
+            prefs.completed &&
+            [...nav, { id: "evidence" as const, icon: "chart" }].map((n) => (
               <button
                 key={n.id}
                 onClick={() => go(n.id)}
-                aria-current={page === n.id ? "page" : undefined}
                 className={page === n.id ? "active" : ""}
+                aria-current={page === n.id ? "page" : undefined}
               >
-                <Icon name={n.icon} size={17} />
                 {pageNames[n.id]}
-                {n.id === "matches" && <span className="nav-count">3</span>}
               </button>
             ))}
-          </nav>
-        ) : (
-          <nav className="top-links" aria-label="Main navigation">
-            <button onClick={() => go("discover")}>Home</button>
-          </nav>
-        )}
-        <div className="top-actions">
-          <span className="private-note">
-            <Icon name="lock" size={13} /> Private to this device
-          </span>
-          <button
-            className="profile-button"
-            aria-label="Your preferences"
-            aria-expanded={settings}
-            onClick={() => setSettings(!settings)}
-          >
-            You
-          </button>
-        </div>
-        {settings && (
-          <div className="settings-popover">
-            <b>Your preferences</b>
-            <label>
-              Home city
-              <input
-                value={prefs.location}
-                maxLength={60}
-                onChange={(e) => update({ location: e.target.value })}
-              />
-            </label>
-            <label>
-              Home nation
-              <select
-                value={prefs.nation}
-                onChange={(e) => update({ nation: e.target.value })}
-              >
-                {["Scotland", "England", "Wales", "Northern Ireland"].map(
-                  (n) => (
-                    <option key={n}>{n}</option>
-                  ),
-                )}
-              </select>
-            </label>
-            <p>Progress is saved in this browser. No account needed.</p>
-            <button onClick={retake}>Start a new conversation</button>
-            <button
-              onClick={() => {
-                setPrefs(initial);
-                setMatches([]);
-                setSettings(false);
-                go("discover");
-                setToast("Your local progress has been cleared.");
-              }}
-            >
-              Clear my local progress
-            </button>
-            <button className="text-button" onClick={() => setSettings(false)}>
-              Close preferences
-            </button>
-          </div>
-        )}
+        </nav>
       </header>
       <main
         id="main"
@@ -434,6 +387,43 @@ export default function App() {
             )}
             {page === "quiz" && (
               <Quiz prefs={prefs} update={update} finish={finish} go={go} />
+            )}
+            {page === "jobs" && (
+              <>
+                <PageHeading
+                  label="Jobs"
+                  title="Explore careers."
+                  description="Browse the work, skills and pay for each career."
+                />
+                <p className="jobs-count">{careers.length} careers</p>
+                <div className="jobs-grid">
+                  {careers.map((career) => (
+                    <article
+                      className="opportunity-card job-card"
+                      key={career.soc}
+                    >
+                      <CareerMark career={career} />
+                      <span className="job-sector">{career.sector}</span>
+                      <h3>{career.title}</h3>
+                      <p>{career.summary}</p>
+                      <div className="job-pay">
+                        <b>{money(value(career, "pay_median"))}</b>
+                        <span>UK median annual pay</span>
+                      </div>
+                      <button
+                        className="button secondary"
+                        onClick={() => setInspect(career)}
+                      >
+                        Details
+                      </button>
+                    </article>
+                  ))}
+                </div>
+                <p className="fine-print">
+                  ONS ASHE 2025, provisional. Full-time employees; excludes
+                  self-employment. These figures are not starting salaries.
+                </p>
+              </>
             )}
             {page === "matches" &&
               (prefs.completed ? (
@@ -885,12 +875,9 @@ export default function App() {
               ) : (
                 <NeedChoices go={go} />
               ))}
-            {page === "guides" &&
-              (primary ? (
-                <Guides careers={selected} />
-              ) : (
-                <NeedChoices go={go} />
-              ))}
+            {page === "guides" && careers.length > 0 && (
+              <Guides careers={selected.length ? selected : careers} />
+            )}
             {page === "evidence" && (
               <Evidence
                 data={data}
@@ -984,21 +971,40 @@ export default function App() {
               />
             </div>
             <SalaryChart careers={[inspect]} compact />
-            <button
-              className="button primary"
-              disabled={
-                !prefs.selected.includes(inspect.soc) &&
-                prefs.selected.length >= 3
-              }
-              onClick={() => {
-                choose(inspect);
-                setInspect(null);
-              }}
-            >
-              {prefs.selected.includes(inspect.soc)
-                ? "Remove from my choices"
-                : "Add to my choices"}
-            </button>
+            {page === "jobs" ? (
+              <button
+                className="button primary"
+                onClick={() => {
+                  update({
+                    discovery: {
+                      mode: "known",
+                      answers: { direction: inspect.title },
+                      step: 1,
+                    },
+                  });
+                  setInspect(null);
+                  go("conversation");
+                }}
+              >
+                Explore career
+              </button>
+            ) : (
+              <button
+                className="button primary"
+                disabled={
+                  !prefs.selected.includes(inspect.soc) &&
+                  prefs.selected.length >= 3
+                }
+                onClick={() => {
+                  choose(inspect);
+                  setInspect(null);
+                }}
+              >
+                {prefs.selected.includes(inspect.soc)
+                  ? "Remove from my choices"
+                  : "Add to my choices"}
+              </button>
+            )}
           </section>
         </div>
       )}
@@ -1060,58 +1066,24 @@ function Quiz({
   const answered = q ? prefs.answers[q.id] : undefined;
   if (!q)
     return (
-      <section className="quiz-container quiz-location">
-        <div className="quiz-progress">
-          <span>One last thing</span>
-          <span>8 of 8 answered</span>
-        </div>
-        <div className="progress-track">
-          <i style={{ width: "100%" }} />
-        </div>
-        <span className="quiz-theme">Make it relevant to you</span>
-        <h1>
-          Where does your
-          <br />
-          next chapter begin?
-        </h1>
+      <section className="quiz-container">
+        <h1>Quiz complete.</h1>
         <p className="quiz-hint">
-          We'll use your home nation for study routes and local opportunities.
-          Your matches stay UK-wide.
+          Compare three careers based on your answers.
         </p>
-        <label className="form-label">
-          Home city
-          <input
-            value={prefs.location}
-            placeholder="e.g. Glasgow"
-            maxLength={60}
-            onChange={(e) => update({ location: e.target.value })}
-          />
-        </label>
-        <label className="form-label">
-          Home nation
-          <select
-            value={prefs.nation}
-            onChange={(e) => update({ nation: e.target.value })}
-          >
-            {["Scotland", "England", "Wales", "Northern Ireland"].map((n) => (
-              <option key={n}>{n}</option>
-            ))}
-          </select>
-        </label>
         <div className="quiz-footer">
           <button
             className="text-button"
             onClick={() => update({ step: questions.length - 1 })}
           >
-            <Icon name="back" size={17} /> Back
+            Back
           </button>
           <button className="button primary" onClick={finish}>
-            Find my three directions <Icon name="arrow" size={17} />
+            Show careers
           </button>
         </div>
         <p className="fine-print">
-          Your answers stay in this browser. The quiz draws on work-interest
-          psychology; it is an exploration tool, not a validated psychological
+          The quiz explores work interests; it is not a validated psychological
           assessment.
         </p>
       </section>
@@ -1175,15 +1147,13 @@ function Quiz({
         ))}
       </div>
       <div className="quiz-footer">
-        <span className="muted">
-          <Icon name="lock" size={14} /> No right or wrong answers
-        </span>
+        <span className="muted">Choose one answer</span>
         <button
           className="button primary"
           disabled={answered === undefined}
           onClick={() => update({ step: step + 1 })}
         >
-          {step === questions.length - 1 ? "A final detail" : "Continue"}
+          {step === questions.length - 1 ? "Finish quiz" : "Continue"}
           <Icon name="arrow" size={18} />
         </button>
       </div>
@@ -1907,9 +1877,9 @@ function Guides({ careers }: { careers: Career[] }) {
   return (
     <>
       <PageHeading
-        label="A conversation, a little clarity"
-        title="Talk through your next step."
-        description="Meet a guide for your chosen career. Ask the practical questions, or start with the ones below."
+        label="Chatbot"
+        title="Career questions."
+        description="Choose a career and ask about the work, skills or study routes."
       />
       <div className="guide-layout">
         <aside className="guide-choices">

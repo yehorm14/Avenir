@@ -2,12 +2,12 @@
 
 Updated: 17 October 2026
 
-Doing now: Simplified public entry complete locally on codex/quant-soc-branch.
+Doing now: Navigation/account cleanup complete locally on codex/quant-soc-branch.
 
-Done and merged: Removed top-left logo and header slogans. Kept the main Aventier name and mission, removed filler lines and reassurance/choice-intro screens. Both options are on the first screen with Explore career / Find careers buttons. Removed footer slogan/oversized duplicate wordmark. Conversation headings/actions now use direct short labels; removed generic reassurance sidebar copy. No remote push or merge.
+Done and merged: Added permanent Home / Quiz / Jobs / Chatbot navigation. Removed You/profile settings, privacy slogan, lock, home-city/nation forms and account copy. Jobs browses20 supplied careers with evidence/details and opens a prefilled known-career conversation. Chatbot works with the full catalogue before choosing careers. Quiz has8 questions and a results action without location/account fields; completing it clears stale conversational matching context. Existing ranked-choice workspace tools remain available. No remote push or merge.
 
-Interfaces changed: None. Both onChoose callbacks and discovery/data behavior preserved.
+Interfaces changed: Frontend Page union adds jobs. API/contracts/data unchanged.
 
-Verified: TypeScript/Vite production build and whitespace check pass. Browser screenshot confirms one section, both buttons visible within a 1440×960 viewport, no header logo, no removed slogans and no horizontal overflow. Refreshed user preview. No test suite or formal review run. Evidence: apps/web/artifacts/simplified-entry-desktop.jpg.
+Verified: TypeScript/Vite build and whitespace checks pass. Desktop browser opened every primary section, browsed20 jobs, opened career details and prefilled discovery, completed8 quiz questions to3 matches, received a chatbot response, confirmed no account controls/fields and no1440px overflow or console warnings/errors. User preview refreshed. No test suite or formal review run. Evidence: apps/web/artifacts/navigation-no-account-desktop.jpg.
 
 Blocked on: Nothing.

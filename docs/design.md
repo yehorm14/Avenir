@@ -8,3 +8,5 @@ Reference: https://www.quant-soc.com, inspected 17 October 2026 across its homep
 - Desktop content is centered at 1280px. Page headings are 36px; section headings 24–32px; body copy 14–16px. Supporting source notes stay readable.
 - The public entry is one screen: Aventier name and mission, followed immediately by two options. “Explore career” opens the known-career conversation; “Find careers” opens discovery. Remove the top-left logo and generic slogans. Keep visible action labels to two words where possible. Preserve conversation → three matches → ranked choices → pathway. No reference-site logos, copy, illustrations or proprietary assets are reused.
 - Respect reduced motion and keyboard focus. This pass prioritizes desktop, as requested.
+
+- Primary navigation: Home, Quiz, Jobs, Chatbot. No account/profile menu, lock or privacy slogan. Jobs browses careers; Chatbot can be used without completing discovery.
