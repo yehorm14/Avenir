@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter, Request
 
-from avenir_contracts import BacktestOut, ErrorCode
+from avenir_contracts import AdsSource, BacktestOut, Career, ErrorCode, SourceStatus
 from avenir_contracts.vocab import Nation
 
 from .envelope import fail, ok
@@ -13,6 +13,12 @@ router = APIRouter(prefix="/api/v1")
 
 def _not_found(what: str):
     return fail(ErrorCode.NOT_FOUND, f"{what} not found")
+
+
+def with_ads_now(ads: AdsSource, career: Career) -> tuple[Career, SourceStatus]:
+    """Copy of `career` with its ads_now metric from the ads source (never mutates the original)."""
+    metric, status = ads.ads_now(career, "UK")
+    return career.model_copy(update={"metrics": {**career.metrics, "ads_now": metric}}), status
 
 
 @router.get("/tags")
@@ -39,8 +45,7 @@ def career(soc: str, request: Request):
     c = d.careers.get(soc)
     if c is None:
         return _not_found("Career")
-    metric, status = request.app.state.ads.ads_now(c, "UK")
-    c = c.model_copy(update={"metrics": {**c.metrics, "ads_now": metric}})
+    c, status = with_ads_now(request.app.state.ads, c)
     return ok(c, [*d.statuses, status])
 
 

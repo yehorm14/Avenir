@@ -21,6 +21,7 @@ from avenir_contracts import (
 from .deps import default_ports
 from .envelope import fail, ok
 from .routes_read import router as read_router
+from .routes_write import router as write_router
 
 log = logging.getLogger("avenir_api")
 
@@ -63,6 +64,7 @@ def create_app(
         return fail(ErrorCode.INTERNAL, "Something went wrong")
 
     app.include_router(read_router)
+    app.include_router(write_router)
 
     @app.get("/health")
     def health():
