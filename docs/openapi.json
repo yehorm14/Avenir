@@ -2205,7 +2205,7 @@
                 }
               }
             },
-            "description": "Not Found"
+            "description": "NOT_FOUND envelope"
           },
           "422": {
             "content": {
@@ -2215,7 +2215,7 @@
                 }
               }
             },
-            "description": "Unprocessable Entity"
+            "description": "VALIDATION_ERROR envelope"
           },
           "500": {
             "content": {
@@ -2225,7 +2225,7 @@
                 }
               }
             },
-            "description": "Internal Server Error"
+            "description": "INTERNAL envelope"
           },
           "503": {
             "content": {
@@ -2235,7 +2235,7 @@
                 }
               }
             },
-            "description": "Service Unavailable"
+            "description": "UPSTREAM_UNAVAILABLE envelope"
           }
         },
         "summary": "Backtest"
@@ -2263,7 +2263,7 @@
                 }
               }
             },
-            "description": "Not Found"
+            "description": "NOT_FOUND envelope"
           },
           "422": {
             "content": {
@@ -2273,7 +2273,7 @@
                 }
               }
             },
-            "description": "Unprocessable Entity"
+            "description": "VALIDATION_ERROR envelope"
           },
           "500": {
             "content": {
@@ -2283,7 +2283,7 @@
                 }
               }
             },
-            "description": "Internal Server Error"
+            "description": "INTERNAL envelope"
           },
           "503": {
             "content": {
@@ -2293,7 +2293,7 @@
                 }
               }
             },
-            "description": "Service Unavailable"
+            "description": "UPSTREAM_UNAVAILABLE envelope"
           }
         },
         "summary": "Backtest Years"
@@ -2321,7 +2321,7 @@
                 }
               }
             },
-            "description": "Not Found"
+            "description": "NOT_FOUND envelope"
           },
           "422": {
             "content": {
@@ -2331,7 +2331,7 @@
                 }
               }
             },
-            "description": "Unprocessable Entity"
+            "description": "VALIDATION_ERROR envelope"
           },
           "500": {
             "content": {
@@ -2341,7 +2341,7 @@
                 }
               }
             },
-            "description": "Internal Server Error"
+            "description": "INTERNAL envelope"
           },
           "503": {
             "content": {
@@ -2351,7 +2351,7 @@
                 }
               }
             },
-            "description": "Service Unavailable"
+            "description": "UPSTREAM_UNAVAILABLE envelope"
           }
         },
         "summary": "Careers"
@@ -2390,7 +2390,7 @@
                 }
               }
             },
-            "description": "Not Found"
+            "description": "NOT_FOUND envelope"
           },
           "422": {
             "content": {
@@ -2400,7 +2400,7 @@
                 }
               }
             },
-            "description": "Unprocessable Entity"
+            "description": "VALIDATION_ERROR envelope"
           },
           "500": {
             "content": {
@@ -2410,7 +2410,7 @@
                 }
               }
             },
-            "description": "Internal Server Error"
+            "description": "INTERNAL envelope"
           },
           "503": {
             "content": {
@@ -2420,7 +2420,7 @@
                 }
               }
             },
-            "description": "Service Unavailable"
+            "description": "UPSTREAM_UNAVAILABLE envelope"
           }
         },
         "summary": "Career"
@@ -2459,7 +2459,7 @@
                 }
               }
             },
-            "description": "Not Found"
+            "description": "NOT_FOUND envelope"
           },
           "422": {
             "content": {
@@ -2469,7 +2469,7 @@
                 }
               }
             },
-            "description": "Unprocessable Entity"
+            "description": "VALIDATION_ERROR envelope"
           },
           "500": {
             "content": {
@@ -2479,7 +2479,7 @@
                 }
               }
             },
-            "description": "Internal Server Error"
+            "description": "INTERNAL envelope"
           },
           "503": {
             "content": {
@@ -2489,7 +2489,7 @@
                 }
               }
             },
-            "description": "Service Unavailable"
+            "description": "UPSTREAM_UNAVAILABLE envelope"
           }
         },
         "summary": "Hedge"
@@ -2528,7 +2528,7 @@
                 }
               }
             },
-            "description": "Not Found"
+            "description": "NOT_FOUND envelope"
           },
           "422": {
             "content": {
@@ -2538,7 +2538,7 @@
                 }
               }
             },
-            "description": "Unprocessable Entity"
+            "description": "VALIDATION_ERROR envelope"
           },
           "500": {
             "content": {
@@ -2548,7 +2548,7 @@
                 }
               }
             },
-            "description": "Internal Server Error"
+            "description": "INTERNAL envelope"
           },
           "503": {
             "content": {
@@ -2558,7 +2558,7 @@
                 }
               }
             },
-            "description": "Service Unavailable"
+            "description": "UPSTREAM_UNAVAILABLE envelope"
           }
         },
         "summary": "Career History"
@@ -2586,7 +2586,7 @@
                 }
               }
             },
-            "description": "Not Found"
+            "description": "NOT_FOUND envelope"
           },
           "422": {
             "content": {
@@ -2596,7 +2596,7 @@
                 }
               }
             },
-            "description": "Unprocessable Entity"
+            "description": "VALIDATION_ERROR envelope"
           },
           "500": {
             "content": {
@@ -2606,7 +2606,7 @@
                 }
               }
             },
-            "description": "Internal Server Error"
+            "description": "INTERNAL envelope"
           },
           "503": {
             "content": {
@@ -2616,7 +2616,7 @@
                 }
               }
             },
-            "description": "Service Unavailable"
+            "description": "UPSTREAM_UNAVAILABLE envelope"
           }
         },
         "summary": "Crises"
@@ -2654,7 +2654,7 @@
                 }
               }
             },
-            "description": "Not Found"
+            "description": "NOT_FOUND envelope"
           },
           "422": {
             "content": {
@@ -2664,7 +2664,7 @@
                 }
               }
             },
-            "description": "Unprocessable Entity"
+            "description": "VALIDATION_ERROR envelope"
           },
           "500": {
             "content": {
@@ -2674,7 +2674,7 @@
                 }
               }
             },
-            "description": "Internal Server Error"
+            "description": "INTERNAL envelope"
           },
           "503": {
             "content": {
@@ -2684,7 +2684,7 @@
                 }
               }
             },
-            "description": "Service Unavailable"
+            "description": "UPSTREAM_UNAVAILABLE envelope"
           }
         },
         "summary": "Demo Live"
@@ -2722,7 +2722,7 @@
                 }
               }
             },
-            "description": "Not Found"
+            "description": "NOT_FOUND envelope"
           },
           "422": {
             "content": {
@@ -2732,7 +2732,7 @@
                 }
               }
             },
-            "description": "Unprocessable Entity"
+            "description": "VALIDATION_ERROR envelope"
           },
           "500": {
             "content": {
@@ -2742,7 +2742,7 @@
                 }
               }
             },
-            "description": "Internal Server Error"
+            "description": "INTERNAL envelope"
           },
           "503": {
             "content": {
@@ -2752,7 +2752,7 @@
                 }
               }
             },
-            "description": "Service Unavailable"
+            "description": "UPSTREAM_UNAVAILABLE envelope"
           }
         },
         "summary": "Profile"
@@ -2790,7 +2790,7 @@
                 }
               }
             },
-            "description": "Not Found"
+            "description": "NOT_FOUND envelope"
           },
           "422": {
             "content": {
@@ -2800,7 +2800,7 @@
                 }
               }
             },
-            "description": "Unprocessable Entity"
+            "description": "VALIDATION_ERROR envelope"
           },
           "500": {
             "content": {
@@ -2810,7 +2810,7 @@
                 }
               }
             },
-            "description": "Internal Server Error"
+            "description": "INTERNAL envelope"
           },
           "503": {
             "content": {
@@ -2820,7 +2820,7 @@
                 }
               }
             },
-            "description": "Service Unavailable"
+            "description": "UPSTREAM_UNAVAILABLE envelope"
           }
         },
         "summary": "Recommendations"
@@ -2875,7 +2875,7 @@
                 }
               }
             },
-            "description": "Not Found"
+            "description": "NOT_FOUND envelope"
           },
           "422": {
             "content": {
@@ -2885,7 +2885,7 @@
                 }
               }
             },
-            "description": "Unprocessable Entity"
+            "description": "VALIDATION_ERROR envelope"
           },
           "500": {
             "content": {
@@ -2895,7 +2895,7 @@
                 }
               }
             },
-            "description": "Internal Server Error"
+            "description": "INTERNAL envelope"
           },
           "503": {
             "content": {
@@ -2905,7 +2905,7 @@
                 }
               }
             },
-            "description": "Service Unavailable"
+            "description": "UPSTREAM_UNAVAILABLE envelope"
           }
         },
         "summary": "Routes"
@@ -2933,7 +2933,7 @@
                 }
               }
             },
-            "description": "Not Found"
+            "description": "NOT_FOUND envelope"
           },
           "422": {
             "content": {
@@ -2943,7 +2943,7 @@
                 }
               }
             },
-            "description": "Unprocessable Entity"
+            "description": "VALIDATION_ERROR envelope"
           },
           "500": {
             "content": {
@@ -2953,7 +2953,7 @@
                 }
               }
             },
-            "description": "Internal Server Error"
+            "description": "INTERNAL envelope"
           },
           "503": {
             "content": {
@@ -2963,7 +2963,7 @@
                 }
               }
             },
-            "description": "Service Unavailable"
+            "description": "UPSTREAM_UNAVAILABLE envelope"
           }
         },
         "summary": "Sources"
@@ -2991,7 +2991,7 @@
                 }
               }
             },
-            "description": "Not Found"
+            "description": "NOT_FOUND envelope"
           },
           "422": {
             "content": {
@@ -3001,7 +3001,7 @@
                 }
               }
             },
-            "description": "Unprocessable Entity"
+            "description": "VALIDATION_ERROR envelope"
           },
           "500": {
             "content": {
@@ -3011,7 +3011,7 @@
                 }
               }
             },
-            "description": "Internal Server Error"
+            "description": "INTERNAL envelope"
           },
           "503": {
             "content": {
@@ -3021,7 +3021,7 @@
                 }
               }
             },
-            "description": "Service Unavailable"
+            "description": "UPSTREAM_UNAVAILABLE envelope"
           }
         },
         "summary": "Tags"
@@ -3049,7 +3049,7 @@
                 }
               }
             },
-            "description": "Not Found"
+            "description": "NOT_FOUND envelope"
           },
           "422": {
             "content": {
@@ -3059,7 +3059,7 @@
                 }
               }
             },
-            "description": "Unprocessable Entity"
+            "description": "VALIDATION_ERROR envelope"
           },
           "500": {
             "content": {
@@ -3069,7 +3069,7 @@
                 }
               }
             },
-            "description": "Internal Server Error"
+            "description": "INTERNAL envelope"
           },
           "503": {
             "content": {
@@ -3079,7 +3079,7 @@
                 }
               }
             },
-            "description": "Service Unavailable"
+            "description": "UPSTREAM_UNAVAILABLE envelope"
           }
         },
         "summary": "Health"

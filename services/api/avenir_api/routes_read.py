@@ -26,11 +26,12 @@ from .envelope import fail, ok
 
 log = logging.getLogger("avenir_api")
 
+# Own descriptions, so docs/openapi.json does not change with the Starlette version's phrases.
 ERROR_RESPONSES: dict[int | str, dict] = {
-    422: {"model": Envelope[None]},
-    404: {"model": Envelope[None]},
-    503: {"model": Envelope[None]},
-    500: {"model": Envelope[None]},
+    422: {"model": Envelope[None], "description": "VALIDATION_ERROR envelope"},
+    404: {"model": Envelope[None], "description": "NOT_FOUND envelope"},
+    503: {"model": Envelope[None], "description": "UPSTREAM_UNAVAILABLE envelope"},
+    500: {"model": Envelope[None], "description": "INTERNAL envelope"},
 }
 router = APIRouter(prefix="/api/v1", responses=ERROR_RESPONSES)
 

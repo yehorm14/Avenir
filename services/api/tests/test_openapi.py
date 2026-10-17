@@ -55,3 +55,14 @@ def test_documented_errors_are_envelopes():
             for code in ("404", "422", "503", "500"):
                 assert code in op["responses"], f"{method} {path} missing {code}"
             assert "HTTPValidationError" not in json.dumps(op["responses"]["422"])
+
+
+def test_error_descriptions_do_not_depend_on_starlette_version():
+    # Starlette renamed the 422 phrase ("Unprocessable Entity" -> "Unprocessable Content"), which
+    # made the committed file differ between laptops and Docker. Our own descriptions are fixed.
+    schema = json.loads(render(create_app(data=AvenirData())))
+    for path, ops in schema["paths"].items():
+        for method, op in ops.items():
+            for code, resp in op["responses"].items():
+                if code != "200":
+                    assert "Unprocessable" not in resp["description"], (path, method, code)
