@@ -1,0 +1,24 @@
+[
+  {
+    "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
+    "kind": "degree",
+    "name": "MOCK degree for Architect",
+    "nation": "scotland",
+    "provider": "MOCK",
+    "soc2020": "2451",
+    "source": "MOCK",
+    "url": "https://example.org/mock",
+    "verified_by": "MOCK"
+  },
+  {
+    "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
+    "kind": "graduate_apprenticeship",
+    "name": "MOCK graduate apprenticeship for Architect",
+    "nation": "scotland",
+    "provider": "MOCK",
+    "soc2020": "2451",
+    "source": "MOCK",
+    "url": "https://example.org/mock",
+    "verified_by": "MOCK"
+  }
+]

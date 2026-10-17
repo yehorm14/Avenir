@@ -1,0 +1,27 @@
+{
+  "properties": {
+    "matched": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Matched",
+      "type": "array"
+    },
+    "score": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Score",
+      "type": "number"
+    },
+    "tag": {
+      "title": "Tag",
+      "type": "string"
+    }
+  },
+  "required": [
+    "tag",
+    "score"
+  ],
+  "title": "TagMatch",
+  "type": "object"
+}

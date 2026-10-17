@@ -1,0 +1,131 @@
+[
+  {
+    "flags": [
+      "bridged_soc2010"
+    ],
+    "jobs_k": 23.7,
+    "pay_median": 37992.0,
+    "pay_median_real": 56072.0,
+    "year": 2011
+  },
+  {
+    "flags": [
+      "bridged_soc2010"
+    ],
+    "jobs_k": 23.7,
+    "pay_median": 38033.0,
+    "pay_median_real": 54610.0,
+    "year": 2012
+  },
+  {
+    "flags": [
+      "bridged_soc2010"
+    ],
+    "jobs_k": 24.6,
+    "pay_median": 37774.0,
+    "pay_median_real": 53076.0,
+    "year": 2013
+  },
+  {
+    "flags": [
+      "bridged_soc2010"
+    ],
+    "jobs_k": 25.6,
+    "pay_median": 37956.0,
+    "pay_median_real": 52475.0,
+    "year": 2014
+  },
+  {
+    "flags": [
+      "bridged_soc2010"
+    ],
+    "jobs_k": 24.6,
+    "pay_median": 38353.0,
+    "pay_median_real": 52865.0,
+    "year": 2015
+  },
+  {
+    "flags": [
+      "bridged_soc2010"
+    ],
+    "jobs_k": 30.6,
+    "pay_median": 38237.0,
+    "pay_median_real": 51020.0,
+    "year": 2017
+  },
+  {
+    "flags": [
+      "bridged_soc2010",
+      "provisional"
+    ],
+    "jobs_k": 28.6,
+    "pay_median": 39101.0,
+    "pay_median_real": 51035.0,
+    "year": 2018
+  },
+  {
+    "flags": [
+      "bridged_soc2010"
+    ],
+    "jobs_k": 31.5,
+    "pay_median": 41000.0,
+    "pay_median_real": 52469.0,
+    "year": 2019
+  },
+  {
+    "flags": [
+      "bridged_soc2010",
+      "covid_year"
+    ],
+    "jobs_k": 33.5,
+    "pay_median": 42968.0,
+    "pay_median_real": 54482.0,
+    "year": 2020
+  },
+  {
+    "flags": [
+      "recoded_2021"
+    ],
+    "jobs_k": 38.0,
+    "pay_median": 41993.0,
+    "pay_median_real": 52377.0,
+    "year": 2021
+  },
+  {
+    "flags": [
+      "recoded_2021"
+    ],
+    "jobs_k": 31.0,
+    "pay_median": 43463.0,
+    "pay_median_real": 50293.0,
+    "year": 2022
+  },
+  {
+    "flags": [
+      "recoded_2021"
+    ],
+    "jobs_k": 30.0,
+    "pay_median": 45895.0,
+    "pay_median_real": 49258.0,
+    "year": 2023
+  },
+  {
+    "flags": [
+      "recoded_2021"
+    ],
+    "jobs_k": 30.0,
+    "pay_median": 47833.0,
+    "pay_median_real": 49823.0,
+    "year": 2024
+  },
+  {
+    "flags": [
+      "provisional",
+      "recoded_2021"
+    ],
+    "jobs_k": 30.0,
+    "pay_median": 47143.0,
+    "pay_median_real": 47143.0,
+    "year": 2025
+  }
+]

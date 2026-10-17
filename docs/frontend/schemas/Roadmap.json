@@ -1,0 +1,142 @@
+{
+  "$defs": {
+    "RoadmapStep": {
+      "additionalProperties": false,
+      "properties": {
+        "detail": {
+          "title": "Detail",
+          "type": "string"
+        },
+        "order": {
+          "maximum": 3,
+          "minimum": 1,
+          "title": "Order",
+          "type": "integer"
+        },
+        "route": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Route"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "order",
+        "title",
+        "detail"
+      ],
+      "title": "RoadmapStep",
+      "type": "object"
+    },
+    "Route": {
+      "additionalProperties": false,
+      "properties": {
+        "entry_requirements": {
+          "title": "Entry Requirements",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "degree",
+            "graduate_apprenticeship",
+            "apprenticeship",
+            "college"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "nation": {
+          "enum": [
+            "scotland",
+            "england",
+            "wales",
+            "northern_ireland"
+          ],
+          "title": "Nation",
+          "type": "string"
+        },
+        "provider": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider"
+        },
+        "soc2020": {
+          "pattern": "^\\d{4}$",
+          "title": "Soc2020",
+          "type": "string"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "url": {
+          "title": "Url",
+          "type": "string"
+        },
+        "verified_by": {
+          "minLength": 1,
+          "title": "Verified By",
+          "type": "string"
+        }
+      },
+      "required": [
+        "soc2020",
+        "nation",
+        "kind",
+        "name",
+        "entry_requirements",
+        "url",
+        "source",
+        "verified_by"
+      ],
+      "title": "Route",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "soc2020": {
+      "title": "Soc2020",
+      "type": "string"
+    },
+    "steps": {
+      "items": {
+        "$ref": "#/$defs/RoadmapStep"
+      },
+      "maxItems": 3,
+      "title": "Steps",
+      "type": "array"
+    },
+    "this_month": {
+      "title": "This Month",
+      "type": "string"
+    }
+  },
+  "required": [
+    "soc2020",
+    "steps",
+    "this_month"
+  ],
+  "title": "Roadmap",
+  "type": "object"
+}

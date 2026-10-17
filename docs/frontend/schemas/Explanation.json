@@ -1,0 +1,26 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "ai_written": {
+      "title": "Ai Written",
+      "type": "boolean"
+    },
+    "cited_numbers": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Cited Numbers",
+      "type": "array"
+    },
+    "text": {
+      "title": "Text",
+      "type": "string"
+    }
+  },
+  "required": [
+    "text",
+    "ai_written"
+  ],
+  "title": "Explanation",
+  "type": "object"
+}

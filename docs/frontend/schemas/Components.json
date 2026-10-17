@@ -1,0 +1,65 @@
+{
+  "$defs": {
+    "ComponentScore": {
+      "additionalProperties": false,
+      "properties": {
+        "confidence": {
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "score": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "0-100 rank within the demo set; None = missing",
+          "title": "Score"
+        }
+      },
+      "required": [
+        "score",
+        "confidence"
+      ],
+      "title": "ComponentScore",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "disruption_risk": {
+      "$ref": "#/$defs/ComponentScore"
+    },
+    "expected_return": {
+      "$ref": "#/$defs/ComponentScore"
+    },
+    "fit": {
+      "$ref": "#/$defs/ComponentScore"
+    },
+    "market_risk": {
+      "$ref": "#/$defs/ComponentScore"
+    },
+    "risk": {
+      "$ref": "#/$defs/ComponentScore"
+    }
+  },
+  "required": [
+    "fit",
+    "expected_return",
+    "market_risk",
+    "disruption_risk",
+    "risk"
+  ],
+  "title": "Components",
+  "type": "object"
+}

@@ -1,0 +1,83 @@
+{
+  "$defs": {
+    "SourceStatus": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "As Of"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "quality": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "file status when real: final | preliminary",
+          "title": "Quality"
+        },
+        "region": {
+          "default": "UK",
+          "title": "Region",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "live",
+            "snapshot",
+            "mock",
+            "missing"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "status"
+      ],
+      "title": "SourceStatus",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "as_of": {
+      "title": "As Of",
+      "type": "string"
+    },
+    "request_id": {
+      "title": "Request Id",
+      "type": "string"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/SourceStatus"
+      },
+      "title": "Sources",
+      "type": "array"
+    }
+  },
+  "required": [
+    "as_of",
+    "request_id"
+  ],
+  "title": "Meta",
+  "type": "object"
+}

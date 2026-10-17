@@ -1,0 +1,344 @@
+{
+  "$defs": {
+    "Career": {
+      "additionalProperties": false,
+      "properties": {
+        "aliases": {
+          "description": "other names, for matching a typed first idea",
+          "items": {
+            "type": "string"
+          },
+          "title": "Aliases",
+          "type": "array"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "entry_subjects": {
+          "items": {
+            "enum": [
+              "maths",
+              "english",
+              "physics",
+              "chemistry",
+              "biology",
+              "computing",
+              "art",
+              "design_technology",
+              "graphic_communication",
+              "geography",
+              "business",
+              "music"
+            ],
+            "type": "string"
+          },
+          "title": "Entry Subjects",
+          "type": "array"
+        },
+        "isco08": {
+          "items": {
+            "$ref": "#/$defs/IscoShare"
+          },
+          "title": "Isco08",
+          "type": "array"
+        },
+        "metrics": {
+          "additionalProperties": {
+            "$ref": "#/$defs/Metric"
+          },
+          "description": "keys: vocab.ML_METRICS + vocab.CATALOGUE_METRICS; an absent key means missing",
+          "title": "Metrics",
+          "type": "object"
+        },
+        "official_title": {
+          "description": "ONS SOC 2020 unit group title",
+          "title": "Official Title",
+          "type": "string"
+        },
+        "soc2020": {
+          "pattern": "^\\d{4}$",
+          "title": "Soc2020",
+          "type": "string"
+        },
+        "title": {
+          "description": "friendly title: catalogue title, else ML short_title",
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "soc2020",
+        "title",
+        "official_title",
+        "metrics"
+      ],
+      "title": "Career",
+      "type": "object"
+    },
+    "ComponentScore": {
+      "additionalProperties": false,
+      "properties": {
+        "confidence": {
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "score": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "0-100 rank within the demo set; None = missing",
+          "title": "Score"
+        }
+      },
+      "required": [
+        "score",
+        "confidence"
+      ],
+      "title": "ComponentScore",
+      "type": "object"
+    },
+    "Components": {
+      "additionalProperties": false,
+      "properties": {
+        "disruption_risk": {
+          "$ref": "#/$defs/ComponentScore"
+        },
+        "expected_return": {
+          "$ref": "#/$defs/ComponentScore"
+        },
+        "fit": {
+          "$ref": "#/$defs/ComponentScore"
+        },
+        "market_risk": {
+          "$ref": "#/$defs/ComponentScore"
+        },
+        "risk": {
+          "$ref": "#/$defs/ComponentScore"
+        }
+      },
+      "required": [
+        "fit",
+        "expected_return",
+        "market_risk",
+        "disruption_risk",
+        "risk"
+      ],
+      "title": "Components",
+      "type": "object"
+    },
+    "IscoShare": {
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "share": {
+          "title": "Share",
+          "type": "number"
+        }
+      },
+      "required": [
+        "code",
+        "share"
+      ],
+      "title": "IscoShare",
+      "type": "object"
+    },
+    "Metric": {
+      "properties": {
+        "as_of": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "As Of"
+        },
+        "confidence": {
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "extra": {
+          "additionalProperties": true,
+          "title": "Extra",
+          "type": "object"
+        },
+        "flags": {
+          "description": "vocabulary in packages/ml/CONTRACTS.md 2.3",
+          "items": {
+            "type": "string"
+          },
+          "title": "Flags",
+          "type": "array"
+        },
+        "granularity": {
+          "default": "occupation",
+          "description": "occupation | parent_group | major_group | estimate",
+          "title": "Granularity",
+          "type": "string"
+        },
+        "high": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "High"
+        },
+        "low": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Low"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        },
+        "region": {
+          "default": "UK",
+          "title": "Region",
+          "type": "string"
+        },
+        "source": {
+          "description": "key in sources.json / data/manifest.yaml, or MOCK",
+          "minLength": 1,
+          "title": "Source",
+          "type": "string"
+        },
+        "status": {
+          "default": "final",
+          "enum": [
+            "final",
+            "preliminary",
+            "mock",
+            "pending"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "value",
+        "unit",
+        "source",
+        "confidence"
+      ],
+      "title": "Metric",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "career": {
+      "$ref": "#/$defs/Career"
+    },
+    "components": {
+      "$ref": "#/$defs/Components"
+    },
+    "reasons": {
+      "description": "template sentences built only from numbers in this response",
+      "items": {
+        "type": "string"
+      },
+      "title": "Reasons",
+      "type": "array"
+    },
+    "tier": {
+      "enum": [
+        "ambitious",
+        "safe",
+        "balanced"
+      ],
+      "title": "Tier",
+      "type": "string"
+    },
+    "vs_first_idea": {
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "description": "component -> pick score minus first-idea score; None if either is missing",
+      "title": "Vs First Idea",
+      "type": "object"
+    }
+  },
+  "required": [
+    "tier",
+    "career",
+    "components",
+    "vs_first_idea",
+    "reasons"
+  ],
+  "title": "Pick",
+  "type": "object"
+}

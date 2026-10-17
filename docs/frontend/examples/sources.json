@@ -1,0 +1,166 @@
+{
+  "registry": {
+    "census_occupation": {
+      "coverage": "Includes self-employed",
+      "licence": "Open Government Licence v3.0",
+      "name": "Census 2011 and 2021 occupation (England and Wales); Scotland 2011 and 2022",
+      "notes": "Self-employed coverage",
+      "publisher": "ONS / NRS",
+      "status": "pending",
+      "url": "https://www.nomisweb.co.uk/",
+      "years": "2011, 2021/2022"
+    },
+    "dfe_ai_uk_2023": {
+      "coverage": "UK SOC 2020",
+      "licence": "Open Government Licence v3.0",
+      "name": "The impact of AI on UK jobs and training",
+      "notes": "UK cross-check for exposure",
+      "publisher": "Department for Education",
+      "status": "pending",
+      "url": "https://www.gov.uk/government/publications/the-impact-of-ai-on-uk-jobs-and-training",
+      "years": "2023"
+    },
+    "esco": {
+      "coverage": "About 3,000 occupations and 14,000 skills",
+      "licence": "EU open data (attribution)",
+      "name": "ESCO v1.2.1 classification",
+      "notes": "Skills for hedges and matcher training text",
+      "publisher": "European Commission",
+      "status": "pending",
+      "url": "https://esco.ec.europa.eu/",
+      "years": "2025"
+    },
+    "ilo_wp140": {
+      "coverage": "427 ISCO-08 occupations",
+      "licence": "To confirm before public release",
+      "name": "Generative AI and Jobs: A Refined Global Index of Occupational Exposure (Working Paper 140)",
+      "notes": "Mean task exposure and its spread per occupation",
+      "publisher": "ILO",
+      "status": "loaded",
+      "url": "https://webapps.ilo.org/static/english/intserv/working-papers/wp140/index.html",
+      "years": "2025"
+    },
+    "ons_ashe_t14": {
+      "coverage": "UK employees; excludes self-employed",
+      "licence": "Open Government Licence v3.0",
+      "name": "Annual Survey of Hours and Earnings, Table 14 (occupation by 4-digit SOC)",
+      "notes": "SOC 2010 until 2020, SOC 2020 from 2021; 2018 and 2025 provisional",
+      "publisher": "ONS",
+      "status": "loaded",
+      "url": "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/occupation4digitsoc2010ashetable14",
+      "years": "2011-2025"
+    },
+    "ons_cpih": {
+      "coverage": "UK",
+      "licence": "Open Government Licence v3.0",
+      "name": "CPIH index (L522)",
+      "notes": "April values used, the ASHE reference month",
+      "publisher": "ONS",
+      "status": "loaded",
+      "url": "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/l522/mm23",
+      "years": "1988-2026"
+    },
+    "ons_online_job_adverts": {
+      "coverage": "UK",
+      "licence": "Open Government Licence v3.0",
+      "name": "Online job advert estimates",
+      "notes": "Tech slump 2022-24",
+      "publisher": "ONS",
+      "status": "pending",
+      "url": "https://www.ons.gov.uk/",
+      "years": "2018-"
+    },
+    "ons_soc_coding_index": {
+      "coverage": "UK job titles",
+      "licence": "Open Government Licence v3.0",
+      "name": "SOC 2020 Volume 2: the coding index",
+      "notes": "Job title to SOC 2020 and ISCO-08",
+      "publisher": "ONS",
+      "status": "loaded",
+      "url": "https://www.ons.gov.uk/methodology/classificationsandstandards/standardoccupationalclassificationsoc/soc2020/soc2020volume2codingrulesandconventions",
+      "years": "2026"
+    },
+    "ons_soc_crosswalk": {
+      "coverage": "UK (LFS 2014-16, Census 2011 E&W)",
+      "licence": "Open Government Licence v3.0",
+      "name": "Relationship between SOC 2010 and SOC 2020 (July 2021 tables)",
+      "notes": "Used to bridge pre-2021 data",
+      "publisher": "ONS",
+      "status": "loaded",
+      "url": "https://www.ons.gov.uk/methodology/classificationsandstandards/standardoccupationalclassificationsoc/soc2020/therelationshipbetweenstandardoccupationalclassification2010andstandardoccupationalclassification2020",
+      "years": "2021"
+    }
+  },
+  "statuses": [
+    {
+      "as_of": null,
+      "name": "ml_occupations",
+      "quality": "preliminary",
+      "region": "UK",
+      "status": "snapshot"
+    },
+    {
+      "as_of": null,
+      "name": "ml_history",
+      "quality": "preliminary",
+      "region": "UK",
+      "status": "snapshot"
+    },
+    {
+      "as_of": null,
+      "name": "ml_hedges",
+      "quality": null,
+      "region": "UK",
+      "status": "mock"
+    },
+    {
+      "as_of": null,
+      "name": "ml_fit",
+      "quality": null,
+      "region": "UK",
+      "status": "mock"
+    },
+    {
+      "as_of": null,
+      "name": "ml_backtest",
+      "quality": "preliminary",
+      "region": "UK",
+      "status": "snapshot"
+    },
+    {
+      "as_of": null,
+      "name": "ml_crises",
+      "quality": "preliminary",
+      "region": "UK",
+      "status": "snapshot"
+    },
+    {
+      "as_of": null,
+      "name": "ml_sources",
+      "quality": "preliminary",
+      "region": "UK",
+      "status": "snapshot"
+    },
+    {
+      "as_of": null,
+      "name": "ml_eval",
+      "quality": "preliminary",
+      "region": "UK",
+      "status": "snapshot"
+    },
+    {
+      "as_of": "2026-10-17T19:54:42+00:00",
+      "name": "catalogue",
+      "quality": null,
+      "region": "UK",
+      "status": "mock"
+    },
+    {
+      "as_of": "2026-10-17T19:54:42+00:00",
+      "name": "routes",
+      "quality": null,
+      "region": "UK",
+      "status": "mock"
+    }
+  ]
+}
