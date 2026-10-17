@@ -2,7 +2,7 @@
 
 Run from a laptop (keys in .env: ADZUNA_APP_ID, ADZUNA_APP_KEY). Not needed on the cluster.
 Writes snapshots/adzuna/<YYYY-MM-DD>.json: ad count, salary histogram and monthly history
-per occupation query. The API adapter serves this file when the live call fails
+per occupation query, keyed by SOC 2020 code. The API adapter serves this file when the live call fails
 (pull-the-plug demo). Show "Jobs by Adzuna" wherever these numbers appear.
 
     python scripts/fetch/adzuna_snapshot.py
@@ -57,8 +57,12 @@ def main() -> None:
     out = {"retrieved": today, "where": args.where or "UK", "attribution": "Jobs by Adzuna",
            "occupations": {}}
     for o in occs:
+        soc = (o.get("soc2020") or "").strip()
+        if not soc:
+            print(f"  warning: no soc2020 for {o['title']!r}; skipped")
+            continue
         q = {**auth, **where, "what": o["adzuna_query"]}
-        rec: dict = {"title": o["title"], "soc2020": o.get("soc2020", ""), "query": o["adzuna_query"]}
+        rec: dict = {"title": o["title"], "soc2020": soc, "query": o["adzuna_query"]}
         for name, path, extra in [
             ("search", "search/1", {"results_per_page": 1, "content-type": "application/json"}),
             ("histogram", "histogram", {}),
@@ -75,7 +79,7 @@ def main() -> None:
                 rec[name] = None
                 rec.setdefault("errors", []).append(f"{name}: {type(e).__name__}")
             time.sleep(0.3)  # stay well under rate limits
-        out["occupations"][o["title"]] = rec
+        out["occupations"][soc] = rec
         print(f"  {o['title']}: {rec.get('search')}")
 
     dest = REPO / "snapshots" / "adzuna" / f"{today}.json"
