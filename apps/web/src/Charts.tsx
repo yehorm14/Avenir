@@ -10,7 +10,7 @@ export const money = (v: number | null | undefined) =>
       }).format(v);
 export const percent = (v: number | null | undefined) =>
   v == null ? "Not available" : `${v > 0 ? "+" : ""}${(v * 100).toFixed(1)}%`;
-const colors = ["#137a58", "#6482c5", "#b68a44"];
+const colors = ["#6da2f8", "#b49aeb", "#d3b575"];
 export function SalaryChart({
   careers,
   compact = false,
@@ -174,7 +174,7 @@ export function SalaryChart({
                 x2={W - R}
                 y1={y(min + t * range)}
                 y2={y(min + t * range)}
-                stroke="#e8eaec"
+                stroke="#292d35"
               />
               <text x={L - 12} y={y(min + t * range) + 4} textAnchor="end">
                 {mode === "jobs"
@@ -217,7 +217,7 @@ export function SalaryChart({
                 x2={x(2020.5)}
                 y1={T}
                 y2={H - B}
-                stroke="#babdc1"
+                stroke="#5d6675"
                 strokeDasharray="3 4"
               />
               <text x={x(2020.5) + 7} y={T + 12}>
@@ -230,7 +230,7 @@ export function SalaryChart({
             x2={x(chosen)}
             y1={T}
             y2={H - B}
-            stroke="#9daba5"
+            stroke="#7d899c"
             strokeDasharray="3 4"
           />
           {careers.map((c, i) => {
@@ -242,7 +242,7 @@ export function SalaryChart({
                 cy={y(v)}
                 r="5"
                 fill={colors[i % 3]}
-                stroke="white"
+                stroke="var(--white)"
                 strokeWidth="2"
               />
             ) : null;

@@ -457,8 +457,8 @@ export default function App() {
               (prefs.completed ? (
                 <>
                   <PageHeading
-                    label="A few directions worth exploring"
-                    title="Potential looks good on you."
+                    label="Your matches"
+                    title="Three careers to explore."
                     description="Three careers connected to what you shared. Explore the work, compare your priorities, and choose your first, second, and third."
                   />
                   {prefs.discovery?.summary && (
@@ -770,8 +770,8 @@ export default function App() {
               (primary ? (
                 <>
                   <PageHeading
-                    label="Your next chapter"
-                    title="A direction. Not a destination."
+                    label="Your workspace"
+                    title="Your career plan."
                     description="Your interests are a starting point. A little action will tell you much more."
                   />
                   <div className="overview-grid">
@@ -1732,7 +1732,7 @@ function Opportunities({
     <>
       <PageHeading
         label="A reason to keep exploring"
-        title="Your next step is out there."
+        title="Find your next opportunity."
         description={`Communities, experience, and events relevant to your three directions. Start close to ${prefs.location || "home"}, or look a little further.`}
         action={
           <button
@@ -1927,7 +1927,7 @@ function Guides({ careers }: { careers: Career[] }) {
     <>
       <PageHeading
         label="A conversation, a little clarity"
-        title="You don't have to figure it out alone."
+        title="Talk through your next step."
         description="Meet a guide for your chosen career. Ask the practical questions, or start with the ones below."
       />
       <div className="guide-layout">
@@ -2137,7 +2137,7 @@ function Evidence({ data, selected }: { data: Bootstrap; selected: Career[] }) {
     <>
       <PageHeading
         label="Context before confidence"
-        title="See what sits behind the numbers."
+        title="Where the numbers come from."
         description="Real evidence can help you ask better questions. It can't make the decision for you."
       />
       <SalaryChart careers={selected} />
