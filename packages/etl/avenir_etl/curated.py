@@ -34,7 +34,7 @@ def load_curated(csv_path: Path, demo_socs: set[str]) -> list[CatalogueEntry]:
     entries: list[CatalogueEntry] = []
     problems: list[str] = []
     seen: set[str] = set()
-    with Path(csv_path).open(encoding="utf-8", newline="") as fh:
+    with Path(csv_path).open(encoding="utf-8-sig", newline="") as fh:
         reader = csv.DictReader(fh)
         require_columns(reader, REQUIRED_COLUMNS, csv_path)
         for row in reader:

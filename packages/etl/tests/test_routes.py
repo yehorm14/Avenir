@@ -11,7 +11,7 @@ from avenir_contracts.catalogue import RoutesFile
 from avenir_contracts.data import load_data
 from avenir_etl.build import main
 from avenir_etl.curated import CuratedError, load_curated
-from avenir_etl.routes import load_routes
+from avenir_etl.routes import REQUIRED_COLUMNS, load_routes
 
 FIX = Path(__file__).parent / "fixtures"
 OK = FIX / "routes_ok.csv"
@@ -94,7 +94,22 @@ def test_header_only_file_is_an_empty_routes_file(tmp_path):
     f.write_text(HEADER, encoding="utf-8")
     rf = load_routes(f, SOCS)
     assert rf.routes == [] and rf.status == "preliminary"
-    assert load_routes(REAL_ROUTES, SOCS).routes == []  # the committed file ships header-only
+
+
+def test_committed_routes_csv_has_the_expected_header():
+    first_line = REAL_ROUTES.read_text(encoding="utf-8-sig").splitlines()[0]
+    assert first_line.split(",") == list(REQUIRED_COLUMNS)
+
+
+def test_excel_utf8_bom_files_load(tmp_path):
+    bom = b"\xef\xbb\xbf"
+    row = "2451,scotland,degree,TEST a,,r,https://example.org/t,s,test\n"
+    routes = tmp_path / "routes.csv"
+    routes.write_bytes(bom + (HEADER + row).encode())
+    assert len(load_routes(routes, SOCS).routes) == 1
+    occ = tmp_path / "occupations.csv"
+    occ.write_bytes(bom + OCC_OK.read_bytes())
+    assert [e.soc2020 for e in load_curated(occ, SOCS)] == ["2451", "2134", "2433"]
 
 
 def test_missing_column_names_it(tmp_path):

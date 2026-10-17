@@ -29,7 +29,7 @@ def load_routes(csv_path: Path, demo_socs: set[str], *, generated_at: str | None
     routes: list[Route] = []
     problems: list[str] = []
     seen: set[tuple[str, str, str, str]] = set()
-    with Path(csv_path).open(encoding="utf-8", newline="") as fh:
+    with Path(csv_path).open(encoding="utf-8-sig", newline="") as fh:
         reader = csv.DictReader(fh)
         require_columns(reader, REQUIRED_COLUMNS, csv_path)
         for raw in reader:
