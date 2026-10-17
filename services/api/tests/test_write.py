@@ -161,3 +161,11 @@ def test_hedge_endpoint_overlays_ads(data):
     c.post("/api/v1/demo/live", json={"enabled": True})
     r = c.get("/api/v1/careers/2141/hedge")
     assert [s["status"] for s in r.json()["meta"]["sources"] if s["name"] == "adzuna"] == ["live"]
+
+
+def test_no_data_503_before_tag_check():
+    from avenir_contracts import AvenirData
+
+    c = TestClient(create_app(data=AvenirData()))
+    _err(c.post(P, json={"interests": ["juggling"]}), 503, "UPSTREAM_UNAVAILABLE")
+    _err(c.post(R, json={"profile": {"interests": ["juggling"]}, "first_idea": "architect"}), 503, "UPSTREAM_UNAVAILABLE")

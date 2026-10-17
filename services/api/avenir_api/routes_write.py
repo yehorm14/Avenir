@@ -44,6 +44,8 @@ def _unknown_tags(request: Request, interests: list[str], field: str):
 @router.post("/profile", response_model=Envelope[ProfileOut])
 def profile(body: ProfileIn, request: Request):
     d = request.app.state.data
+    if not d.careers:
+        return fail(ErrorCode.UPSTREAM_UNAVAILABLE, "Career data is not available")
     if (err := _unknown_tags(request, body.interests, "interests")) is not None:
         return err
     suggester = request.app.state.suggester
@@ -64,10 +66,10 @@ def profile(body: ProfileIn, request: Request):
 @router.post("/recommendations", response_model=Envelope[RecommendationOut])
 def recommendations(body: RecommendationRequest, request: Request):
     d = request.app.state.data
-    if (err := _unknown_tags(request, body.profile.interests, "profile.interests")) is not None:
-        return err
     if not d.careers:
         return fail(ErrorCode.UPSTREAM_UNAVAILABLE, "Career data is not available")
+    if (err := _unknown_tags(request, body.profile.interests, "profile.interests")) is not None:
+        return err
     out = recommend(body, d, request.app.state.writer)
     ads = request.app.state.ads
     status: SourceStatus | None = None
