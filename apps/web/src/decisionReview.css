@@ -1,0 +1,257 @@
+.decision-review {
+  margin-top: 28px;
+  padding: 26px;
+  border: 1px solid #303540;
+  border-radius: 20px;
+  background: #111216;
+  color: #dae0e7;
+}
+
+.decision-review__heading {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.decision-review__heading h2 {
+  font-size: clamp(23px, 2.3vw, 28px);
+  line-height: 1.2;
+}
+
+.decision-review p,
+.decision-review li {
+  font-size: 14px;
+  line-height: 1.65;
+  color: #acb6c3;
+}
+
+.decision-review__heading p {
+  max-width: 78ch;
+}
+
+.decision-review__context {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 18px;
+}
+
+.decision-review .decision-review__quality {
+  color: #d3b575;
+  font-size: 13px;
+}
+
+.decision-review__table-wrap {
+  overflow-x: auto;
+  border-block: 1px solid #303540;
+  scrollbar-color: #647082 #111216;
+}
+
+.decision-review__table {
+  width: 100%;
+  min-width: 690px;
+  border-collapse: collapse;
+  table-layout: fixed;
+  text-align: left;
+}
+
+.decision-review__table caption {
+  padding: 14px 0;
+  text-align: left;
+  caption-side: bottom;
+  color: #acb6c3;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.decision-review__table th,
+.decision-review__table td {
+  padding: 14px 12px;
+  vertical-align: top;
+  border-bottom: 1px solid #292e37;
+}
+
+.decision-review__table tr > :first-child {
+  padding-left: 0;
+}
+
+.decision-review__table tr > :last-child {
+  padding-right: 0;
+}
+
+.decision-review__table thead th {
+  width: 20%;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.decision-review__table thead th:first-child {
+  width: 19%;
+  color: #acb6c3;
+}
+
+.decision-review__tier {
+  display: block;
+  margin-bottom: 8px;
+  color: #acb6c3;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.decision-review__table button,
+.decision-review__career-link {
+  padding: 0;
+  text-align: left;
+  color: #9fc1ff;
+  font-weight: 550;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.decision-review__table button:hover,
+.decision-review__career-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.decision-review__table tbody th {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.decision-review__reference {
+  background: #dae0e705;
+}
+
+.decision-review__score {
+  display: block;
+  font-size: 18px;
+  font-weight: 550;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.3;
+}
+
+.decision-review__score span,
+.decision-review__confidence,
+.decision-review__direction,
+.decision-review__delta {
+  color: #acb6c3;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.decision-review__confidence,
+.decision-review__direction,
+.decision-review__delta {
+  display: block;
+  margin-top: 5px;
+}
+
+.decision-review__delta {
+  color: #c4cdda;
+}
+
+.decision-review__hedge {
+  display: grid;
+  gap: 7px;
+  padding-block: 22px;
+}
+
+.decision-review__hedge h3,
+.decision-review__detail-body h3 {
+  margin-bottom: 2px;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.decision-review__hedge-status {
+  color: #acb6c3;
+  font-size: 12px;
+}
+
+.decision-review__details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  gap: 12px 24px;
+  border-top: 1px solid #303540;
+}
+
+.decision-review__details details {
+  min-width: 0;
+}
+
+.decision-review__details summary {
+  padding: 16px 0 8px;
+  cursor: pointer;
+  color: #dae0e7;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.decision-review__detail-body {
+  display: grid;
+  gap: 16px;
+  padding: 12px 0;
+}
+
+.decision-review__detail-body ul {
+  margin: 8px 0 0;
+  padding-left: 19px;
+}
+
+.decision-review .decision-review__sources {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.decision-review__sources li {
+  display: grid;
+  gap: 3px;
+  padding: 8px 0;
+  border-bottom: 1px solid #292e37;
+}
+
+.decision-review__sources li > :first-child {
+  color: #dae0e7;
+}
+
+.decision-review__sources li > :last-child {
+  font-size: 12px;
+}
+
+.decision-review__state {
+  padding: 22px 0 6px;
+}
+
+.decision-review__retry {
+  min-height: 40px;
+  margin-top: 12px;
+  padding: 8px 15px;
+  border: 1px solid #647082;
+  border-radius: 20px;
+  color: #dae0e7;
+}
+
+.decision-review__shortfall {
+  margin-top: 14px;
+}
+
+.decision-review :is(button, summary, [tabindex]):focus-visible {
+  outline: 2px solid #6da2f8;
+  outline-offset: 4px;
+}
+
+@media (max-width: 720px) {
+  .decision-review {
+    padding: 20px 16px;
+  }
+
+  .decision-review__details {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
