@@ -3,7 +3,7 @@
 - **Owner:** Nazar (human) / Claude (orchestrator) with Haiku and Sonnet subagents
 - **Branches:** `nazar/decision` (Track A), `nazar/api` (Track B), both on `main` 227b5e9 (contract v2)
 - **PR:** #8 (decision, Tasks 1-10) and #9 (api, Tasks 11-15, built on top of #8), drafts
-- **Status:** ready for review — all 15 plan tasks done; each task reviewed; final whole-branch review of the decision engine done and its fixes re-reviewed
+- **Status:** ready for review — all 15 plan tasks done; each task reviewed; final whole-branch reviews of the decision engine and the API done, fixes applied
 
 ## Task
 Build `packages/decision` (pure scoring: picks, hedge, roadmap, notices, `recommend()`) and
@@ -29,6 +29,7 @@ Build `packages/decision` (pure scoring: picks, hedge, roadmap, notices, `recomm
 | 15 provenance + freeze | api | every metric in a recommendation has source/confidence/status/flags; `AVENIR_FREEZE=1` fails while catalogue/routes are mock |
 | 11 app, envelope, errors | api | `create_app(data)`, `/health` with `ml_mode`; runs with no keys, no data dirs |
 | 12 read endpoints | api | tags, sources, careers, career card (+ads overlay), history, crises, backtest(+years), routes |
+| final fixes | api | typed `Envelope[T]` schemas in OpenAPI (frontend client gets real types); no data → 503 before tag checks; 405 stays 405; error fields all `body.…`; suggester tags filtered to the checklist; meta shows worst adzuna status; `make run` uses the venv python; stricter freeze check |
 
 Each task: tests first, implemented by a subagent, reviewed against the plan by a separate
 reviewer, checked by the orchestrator. One commit per task.
@@ -62,6 +63,7 @@ reviewer, checked by the orchestrator. One commit per task.
     Architect was a guess). Still by plan rule: "maths" → Secondary school teacher (alias "maths teacher"),
     "developer" → Web designer (alias "web developer").
 15. (Orchestrator) the standalone hedge endpoint also shows live `ads_now`, like the hedge in recommendations.
+16. (Orchestrator) `/profile` also returns 503 when no careers are loaded; other 4xx keep their status with code `VALIDATION_ERROR`.
 
 ## For Arsenii
 - Pick rules (Task 5) his backtest groups should use: eligible = fit ≥ max(5, 0.5 × best fit among
@@ -69,8 +71,8 @@ reviewer, checked by the orchestrator. One commit per task.
   rest; balanced = max (return − 50) / max(risk, 10) of the rest; ties: higher fit, then lower SOC.
 
 ## Deferred minor findings (for the final review)
-- API: non-404 HTTP errors (e.g. 405) map to 500; unhandled 500s lack CORS headers; error
-  envelopes have empty `meta.sources`.
+- API: unhandled 500s lack CORS headers; error envelopes have empty `meta.sources`; ad counts are
+  fetched one career at a time (up to 5 calls; coordinate caching with Yehor).
 - Decision: no NaN guard in ranks; double rounding in risk; a short alias inside longer typed text
   can match (plan rule, e.g. "technician"); several coverage gaps noted per task.
 - Repo: `ruff format --check` fails on several files (mostly contract files); not in `make check`.
