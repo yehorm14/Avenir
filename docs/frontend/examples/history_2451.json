@@ -1,6 +1,46 @@
 [
   {
     "flags": [
+      "bridged_soc2000",
+      "bridged_soc2010"
+    ],
+    "jobs_k": null,
+    "pay_median": 33796.0,
+    "pay_median_real": 56001.0,
+    "year": 2007
+  },
+  {
+    "flags": [
+      "bridged_soc2000",
+      "bridged_soc2010"
+    ],
+    "jobs_k": null,
+    "pay_median": 37887.0,
+    "pay_median_real": 60947.0,
+    "year": 2008
+  },
+  {
+    "flags": [
+      "bridged_soc2000",
+      "bridged_soc2010"
+    ],
+    "jobs_k": null,
+    "pay_median": 38045.0,
+    "pay_median_real": 59872.0,
+    "year": 2009
+  },
+  {
+    "flags": [
+      "bridged_soc2000",
+      "bridged_soc2010"
+    ],
+    "jobs_k": null,
+    "pay_median": 37814.0,
+    "pay_median_real": 57920.0,
+    "year": 2010
+  },
+  {
+    "flags": [
       "bridged_soc2010"
     ],
     "jobs_k": 23.7,

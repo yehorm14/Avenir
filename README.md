@@ -1,5 +1,11 @@
 # Avenir
 
+## Integrated app
+
+The complete career discovery experience is in **apps/web**: quiz → five weighted matches → three ranked choices → pathway, universities, opportunities and career guides. Uses Max’s prototype and Arsenii’s latest supplied embedding/evidence artefacts.
+
+Run `node scripts/run-app.mjs` after the one-time setup in [apps/web/README.md](apps/web/README.md). Open http://127.0.0.1:4175. For the built preview, run `npm --prefix apps/web run build` then `node scripts/run-app.mjs --preview`. No API key is required.
+
 **A portfolio manager for your future.** For a UK school leaver, Avenir finds careers that
 fit, shows their return and risk with real UK data, says how sure it is, offers a hedge career,
 maps the route in, and publishes how its own past ratings held up.

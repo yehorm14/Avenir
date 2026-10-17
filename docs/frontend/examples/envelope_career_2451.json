@@ -79,8 +79,10 @@
         "as_of": "2025",
         "confidence": "high",
         "extra": {
+          "dfe_percentile": 0.616,
           "dominant_isco": "2161",
           "gradient": "Minimal Exposure",
+          "ilo_percentile": 0.682,
           "n_isco": 2
         },
         "flags": [
@@ -89,7 +91,7 @@
         "granularity": "occupation",
         "high": 0.37,
         "low": 0.37,
-        "note": "Generative-AI exposure of the occupation's tasks (ILO), averaged over the international codes its job titles map to; range shows their spread.",
+        "note": "Generative-AI exposure of the occupation's tasks (ILO), averaged over the international codes its job titles map to; range shows their spread and any disagreement with the UK (DfE) estimate.",
         "region": "UK",
         "source": "ilo_wp140",
         "status": "preliminary",
@@ -98,20 +100,20 @@
       },
       "exposure_uk": {
         "as_of": "2023",
-        "confidence": "low",
+        "confidence": "medium",
         "extra": {},
         "flags": [
-          "pending_source"
+          "bridged_soc2010"
         ],
         "granularity": "occupation",
         "high": null,
         "low": null,
-        "note": "UK cross-check of AI exposure by SOC 2020 (DfE). Not loaded yet.",
+        "note": "Percentile rank of the DfE's LLM exposure score among UK occupations (1 = most exposed); a cross-check, not a second headline number.",
         "region": "UK",
         "source": "dfe_ai_uk_2023",
-        "status": "pending",
+        "status": "preliminary",
         "unit": "score 0-1",
-        "value": null
+        "value": 0.6161
       },
       "jobs": {
         "as_of": "2025",
@@ -124,7 +126,7 @@
         "granularity": "occupation",
         "high": null,
         "low": null,
-        "note": "Full-time employee jobs (ASHE estimate).",
+        "note": "Full-time employee jobs (ASHE estimate, rounded to the thousand).",
         "region": "UK",
         "source": "ons_ashe_t14",
         "status": "preliminary",
@@ -160,7 +162,7 @@
         "granularity": "occupation",
         "high": null,
         "low": null,
-        "note": "10th percentile of gross annual pay, full-time employees.",
+        "note": "10th percentile (floor) of gross annual pay, full-time employees.",
         "region": "UK",
         "source": "ons_ashe_t14",
         "status": "preliminary",
@@ -179,7 +181,7 @@
         "granularity": "occupation",
         "high": null,
         "low": null,
-        "note": "90th percentile of gross annual pay, full-time employees (a ceiling).",
+        "note": "90th percentile (a ceiling) of gross annual pay, full-time employees.",
         "region": "UK",
         "source": "ons_ashe_t14",
         "status": "preliminary",
@@ -206,21 +208,27 @@
         "value": -0.1082
       },
       "resilience_2008": {
-        "as_of": "2008-2010",
-        "confidence": "low",
-        "extra": {},
+        "as_of": "2008-2009",
+        "confidence": "medium",
+        "extra": {
+          "headline_from": "real_pay",
+          "jobs_vs_typical": 0.0603,
+          "real_pay_vs_typical": -0.0194
+        },
         "flags": [
-          "pending_source"
+          "bridged_soc2000",
+          "bridged_soc2010",
+          "employees_only"
         ],
         "granularity": "occupation",
         "high": null,
         "low": null,
-        "note": "Jobs change 2008 to 2010 vs all occupations (needs ASHE 2007-2011, SOC 2000). Not loaded yet.",
+        "note": "The worse of two hits from April 2008 to April 2009, each compared with the typical occupation: change in all-employee jobs and change in real full-time pay. Measured in the old SOC 2000 codes and carried to today's code.",
         "region": "UK",
         "source": "ons_ashe_t14",
-        "status": "pending",
+        "status": "preliminary",
         "unit": "fraction",
-        "value": null
+        "value": -0.0194
       },
       "resilience_cost_of_living": {
         "as_of": "2021-2023",
@@ -241,14 +249,18 @@
       },
       "resilience_covid": {
         "as_of": "2019-2020",
-        "confidence": "medium",
-        "extra": {},
+        "confidence": "low",
+        "extra": {
+          "adverts_category": "Construction / trades",
+          "adverts_vs_all_2020": -0.2539
+        },
         "flags": [
           "bridged_soc2010",
           "covid_year",
-          "employees_only"
+          "employees_only",
+          "imputed_parent"
         ],
-        "granularity": "occupation",
+        "granularity": "parent_group",
         "high": null,
         "low": null,
         "note": "Change in all-employee jobs from 2019 to 2020 compared with the typical occupation (+0.10 = 10 points better).",
@@ -256,24 +268,26 @@
         "source": "ons_ashe_t14",
         "status": "preliminary",
         "unit": "fraction",
-        "value": 0.0571
+        "value": 0.039
       },
       "resilience_tech_slump": {
         "as_of": "2022-2024",
-        "confidence": "low",
-        "extra": {},
+        "confidence": "medium",
+        "extra": {
+          "adverts_category": "Construction / trades"
+        },
         "flags": [
-          "pending_source"
+          "category_level"
         ],
-        "granularity": "occupation",
+        "granularity": "estimate",
         "high": null,
         "low": null,
-        "note": "Change in online job adverts 2022 to 2024 vs all occupations. Not loaded yet.",
+        "note": "Change in online job adverts for the 'Construction / trades' category from the first half of 2022 to 2024, compared with all adverts.",
         "region": "UK",
         "source": "ons_online_job_adverts",
-        "status": "pending",
+        "status": "preliminary",
         "unit": "fraction",
-        "value": null
+        "value": -0.3057
       },
       "shortage": {
         "as_of": "2025",
@@ -325,6 +339,23 @@
         "status": "mock",
         "unit": "score 0-10",
         "value": 6.9
+      },
+      "young_worker_share": {
+        "as_of": "2016",
+        "confidence": "medium",
+        "extra": {},
+        "flags": [
+          "bridged_soc2010"
+        ],
+        "granularity": "occupation",
+        "high": null,
+        "low": null,
+        "note": "Share of people in this job aged 16 to 24 in 2016, including self-employed: a sign of how open it is to young entrants.",
+        "region": "UK",
+        "source": "ons_aps_2016_age",
+        "status": "preliminary",
+        "unit": "fraction",
+        "value": 0.0332
       }
     },
     "official_title": "Architects",
@@ -353,16 +384,16 @@
       {
         "as_of": null,
         "name": "ml_hedges",
-        "quality": null,
+        "quality": "preliminary",
         "region": "UK",
-        "status": "mock"
+        "status": "snapshot"
       },
       {
         "as_of": null,
         "name": "ml_fit",
-        "quality": null,
+        "quality": "preliminary",
         "region": "UK",
-        "status": "mock"
+        "status": "snapshot"
       },
       {
         "as_of": null,

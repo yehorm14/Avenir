@@ -4,29 +4,29 @@
       "coverage": "Includes self-employed",
       "licence": "Open Government Licence v3.0",
       "name": "Census 2011 and 2021 occupation (England and Wales); Scotland 2011 and 2022",
-      "notes": "Self-employed coverage",
+      "notes": "Self-employed coverage (not loaded yet)",
       "publisher": "ONS / NRS",
       "status": "pending",
       "url": "https://www.nomisweb.co.uk/",
       "years": "2011, 2021/2022"
     },
     "dfe_ai_uk_2023": {
-      "coverage": "UK SOC 2020",
+      "coverage": "365 SOC 2010 occupations (AIOE, LLM exposure)",
       "licence": "Open Government Licence v3.0",
-      "name": "The impact of AI on UK jobs and training",
-      "notes": "UK cross-check for exposure",
+      "name": "The impact of AI on UK jobs and training, Annex 1",
+      "notes": "UK cross-check, used as a percentile rank",
       "publisher": "Department for Education",
-      "status": "pending",
+      "status": "loaded",
       "url": "https://www.gov.uk/government/publications/the-impact-of-ai-on-uk-jobs-and-training",
       "years": "2023"
     },
     "esco": {
-      "coverage": "About 3,000 occupations and 14,000 skills",
+      "coverage": "3,043 occupations, 13,939 skills",
       "licence": "EU open data (attribution)",
       "name": "ESCO v1.2.1 classification",
-      "notes": "Skills for hedges and matcher training text",
+      "notes": "Skills for hedges",
       "publisher": "European Commission",
-      "status": "pending",
+      "status": "loaded",
       "url": "https://esco.ec.europa.eu/",
       "years": "2025"
     },
@@ -34,44 +34,64 @@
       "coverage": "427 ISCO-08 occupations",
       "licence": "To confirm before public release",
       "name": "Generative AI and Jobs: A Refined Global Index of Occupational Exposure (Working Paper 140)",
-      "notes": "Mean task exposure and its spread per occupation",
+      "notes": "Mean task exposure and its spread",
       "publisher": "ILO",
       "status": "loaded",
       "url": "https://webapps.ilo.org/static/english/intserv/working-papers/wp140/index.html",
       "years": "2025"
     },
+    "onet": {
+      "coverage": "US occupations",
+      "licence": "CC BY 4.0",
+      "name": "O*NET 31.0 related occupations and the ESCO to O*NET-SOC crosswalk",
+      "notes": "Reference check of hedges only",
+      "publisher": "US Department of Labor (O*NET)",
+      "status": "loaded",
+      "url": "https://www.onetcenter.org/database.html",
+      "years": "2026"
+    },
+    "ons_aps_2016_age": {
+      "coverage": "UK, includes self-employed",
+      "licence": "Open Government Licence v3.0",
+      "name": "4-digit occupation by age bands, Annual Population Survey 2016 (ad hoc 006998)",
+      "notes": "SOC 2010; small cells suppressed",
+      "publisher": "ONS",
+      "status": "loaded",
+      "url": "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/adhocs/0069984digitoccupationsocand4digitindustrysicbyagebands",
+      "years": "2016"
+    },
     "ons_ashe_t14": {
       "coverage": "UK employees; excludes self-employed",
       "licence": "Open Government Licence v3.0",
       "name": "Annual Survey of Hours and Earnings, Table 14 (occupation by 4-digit SOC)",
-      "notes": "SOC 2010 until 2020, SOC 2020 from 2021; 2018 and 2025 provisional",
+      "notes": "SOC 2000 to 2010, SOC 2010 2011-2020, SOC 2020 from 2021; 2018 and 2025 provisional",
       "publisher": "ONS",
       "status": "loaded",
       "url": "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/occupation4digitsoc2010ashetable14",
-      "years": "2011-2025"
+      "years": "2007-2025"
     },
     "ons_cpih": {
       "coverage": "UK",
       "licence": "Open Government Licence v3.0",
       "name": "CPIH index (L522)",
-      "notes": "April values used, the ASHE reference month",
+      "notes": "April values, the ASHE reference month",
       "publisher": "ONS",
       "status": "loaded",
       "url": "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/l522/mm23",
       "years": "1988-2026"
     },
     "ons_online_job_adverts": {
-      "coverage": "UK",
+      "coverage": "28 job-advert categories, weekly",
       "licence": "Open Government Licence v3.0",
-      "name": "Online job advert estimates",
-      "notes": "Tech slump 2022-24",
+      "name": "Online job advert estimates (source: Adzuna)",
+      "notes": "Discontinued October 2024; category level only",
       "publisher": "ONS",
-      "status": "pending",
-      "url": "https://www.ons.gov.uk/",
-      "years": "2018-"
+      "status": "loaded",
+      "url": "https://www.ons.gov.uk/economy/economicoutputandproductivity/output/datasets/onlinejobadvertestimates",
+      "years": "2018-2024"
     },
     "ons_soc_coding_index": {
-      "coverage": "UK job titles",
+      "coverage": "About 32,000 UK job titles",
       "licence": "Open Government Licence v3.0",
       "name": "SOC 2020 Volume 2: the coding index",
       "notes": "Job title to SOC 2020 and ISCO-08",
@@ -81,14 +101,24 @@
       "years": "2026"
     },
     "ons_soc_crosswalk": {
-      "coverage": "UK (LFS 2014-16, Census 2011 E&W)",
+      "coverage": "LFS 2014-16 and Census 2011 dual coding",
       "licence": "Open Government Licence v3.0",
-      "name": "Relationship between SOC 2010 and SOC 2020 (July 2021 tables)",
-      "notes": "Used to bridge pre-2021 data",
+      "name": "Relationship between SOC 2010 and SOC 2020 (July 2021)",
+      "notes": "Bridges 2011-2020 data",
       "publisher": "ONS",
       "status": "loaded",
       "url": "https://www.ons.gov.uk/methodology/classificationsandstandards/standardoccupationalclassificationsoc/soc2020/therelationshipbetweenstandardoccupationalclassification2010andstandardoccupationalclassification2020",
       "years": "2021"
+    },
+    "ons_soc_crosswalk_2000": {
+      "coverage": "LFS Jan-Mar 2007 and Census 2001 dual coding",
+      "licence": "Open Government Licence v3.0",
+      "name": "Relationship between SOC 2010 and SOC 2000",
+      "notes": "Bridges 2007-2010 data",
+      "publisher": "ONS",
+      "status": "loaded",
+      "url": "https://www.ons.gov.uk/methodology/classificationsandstandards/standardoccupationalclassificationsoc/soc2010",
+      "years": "2010"
     }
   },
   "statuses": [
@@ -109,16 +139,16 @@
     {
       "as_of": null,
       "name": "ml_hedges",
-      "quality": null,
+      "quality": "preliminary",
       "region": "UK",
-      "status": "mock"
+      "status": "snapshot"
     },
     {
       "as_of": null,
       "name": "ml_fit",
-      "quality": null,
+      "quality": "preliminary",
       "region": "UK",
-      "status": "mock"
+      "status": "snapshot"
     },
     {
       "as_of": null,

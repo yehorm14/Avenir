@@ -12,6 +12,18 @@
       "default": null,
       "title": "Baseline Median"
     },
+    "baseline_real_pay_median": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Baseline Real Pay Median"
+    },
     "flags": {
       "items": {
         "type": "string"

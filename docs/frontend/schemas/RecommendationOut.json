@@ -179,6 +179,19 @@
         "career": {
           "$ref": "#/$defs/Career"
         },
+        "evidence": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "title | estimate; show 'estimate' as a badge",
+          "title": "Evidence"
+        },
         "for_soc": {
           "title": "For Soc",
           "type": "string"

@@ -1,7 +1,15 @@
 {
+  "bridged_soc2000": {
+    "must_mention": true,
+    "text": "Figures before 2011 are estimated from the older SOC 2000 occupation codes using two ONS crosswalks."
+  },
   "bridged_soc2010": {
     "must_mention": true,
     "text": "Figures before 2021 are estimated from the older SOC 2010 occupation codes using the ONS crosswalk."
+  },
+  "category_level": {
+    "must_mention": true,
+    "text": "Measured for a broad job-advert category, not for this exact occupation."
   },
   "covid_year": {
     "must_mention": true,
@@ -38,6 +46,10 @@
   "recoded_2021": {
     "must_mention": true,
     "text": "Occupation codes changed in 2021, so job counts before and after 2021 are not directly comparable."
+  },
+  "sources_disagree": {
+    "must_mention": true,
+    "text": "Two independent research estimates disagree for this job, so the range is wider."
   },
   "suppressed": {
     "must_mention": false,

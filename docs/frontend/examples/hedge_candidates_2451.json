@@ -1,42 +1,82 @@
 [
   {
-    "shared_skills": [],
-    "similarity": 0.8,
-    "soc2020": "2453",
-    "status": "mock",
-    "title": "Quantity surveyors",
-    "why": "Placeholder until ESCO skill overlap is computed (M3)."
-  },
-  {
-    "shared_skills": [],
-    "similarity": 0.8,
+    "evidence": "estimate",
+    "shared_skills": [
+      "zoning codes",
+      "architecture regulations",
+      "urban planning",
+      "meet building regulations",
+      "building codes",
+      "design spatial layout of outdoor areas"
+    ],
+    "similarity": 0.2831,
     "soc2020": "2452",
-    "status": "mock",
+    "status": "preliminary",
     "title": "Chartered architectural technologists, planning officers and consultants",
-    "why": "Placeholder until ESCO skill overlap is computed (M3)."
+    "why": "Shares 107 skills, e.g. zoning codes, architecture regulations, urban planning; estimate from few job-title links"
   },
   {
-    "shared_skills": [],
-    "similarity": 0.8,
-    "soc2020": "2454",
-    "status": "mock",
-    "title": "Chartered surveyors",
-    "why": "Placeholder until ESCO skill overlap is computed (M3)."
+    "evidence": "title",
+    "shared_skills": [
+      "integrate measures in architectural designs",
+      "integrated design",
+      "satisfy technical requirements",
+      "architectural design",
+      "integrate building requirements in the architectural design",
+      "consider building constraints in architectural designs"
+    ],
+    "similarity": 0.0987,
+    "soc2020": "2121",
+    "status": "preliminary",
+    "title": "Civil engineers",
+    "why": "Shares 55 skills, e.g. integrate measures in architectural designs, integrated design, satisfy technical requirements"
   },
   {
-    "shared_skills": [],
-    "similarity": 0.8,
-    "soc2020": "2421",
-    "status": "mock",
-    "title": "Chartered and certified accountants",
-    "why": "Placeholder until ESCO skill overlap is computed (M3)."
+    "evidence": "title",
+    "shared_skills": [
+      "execute feasibility study",
+      "provide cost benefit analysis reports",
+      "build business relationships",
+      "design open spaces",
+      "study the relationship between buildings, people and the environment",
+      "write an architectural brief"
+    ],
+    "similarity": 0.0498,
+    "soc2020": "2133",
+    "status": "preliminary",
+    "title": "IT business analysts, architects and systems designers",
+    "why": "Shares 97 skills, e.g. execute feasibility study, provide cost benefit analysis reports, build business relationships"
   },
   {
-    "shared_skills": [],
-    "similarity": 0.8,
-    "soc2020": "2433",
-    "status": "mock",
-    "title": "Actuaries, economists and statisticians",
-    "why": "Placeholder until ESCO skill overlap is computed (M3)."
+    "evidence": "title",
+    "shared_skills": [
+      "green building practices",
+      "interpret technical requirements",
+      "build business relationships",
+      "project management",
+      "identify customer's needs",
+      "participate in governmental tenders"
+    ],
+    "similarity": 0.0399,
+    "soc2020": "1122",
+    "status": "preliminary",
+    "title": "Production managers and directors in construction",
+    "why": "Shares 25 skills, e.g. green building practices, interpret technical requirements, build business relationships"
+  },
+  {
+    "evidence": "title",
+    "shared_skills": [
+      "ecology",
+      "characteristics of plants",
+      "plant species",
+      "perform pest control",
+      "perform weed control operations",
+      "pest control in plants"
+    ],
+    "similarity": 0.0375,
+    "soc2020": "2151",
+    "status": "preliminary",
+    "title": "Conservation professionals",
+    "why": "Shares 20 skills, e.g. ecology, characteristics of plants, plant species"
   }
 ]
