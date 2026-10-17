@@ -1,0 +1,12 @@
+soc2020,nation,kind,name,provider,entry_requirements,url,source,verified_by
+2451,scotland,degree,TEST empty verified,TEST,TEST req,https://example.org/test,TEST src,
+9999,scotland,degree,TEST unknown soc,TEST,TEST req,https://example.org/test,TEST src,test
+2451,mars,degree,TEST bad nation,TEST,TEST req,https://example.org/test,TEST src,test
+2451,scotland,bootcamp,TEST bad kind,TEST,TEST req,https://example.org/test,TEST src,test
+2134,scotland,college,TEST good row,TEST,TEST req,https://example.org/test,TEST src,test
+2451,wales,degree,,TEST,TEST req,https://example.org/test,TEST src,test
+2451,wales,college,TEST empty requirements,TEST,,https://example.org/test,TEST src,test
+2451,wales,apprenticeship,TEST empty url,TEST,TEST req,,TEST src,test
+2451,england,degree,TEST empty source,TEST,TEST req,https://example.org/test,,test
+2451,england,college,TEST http url,TEST,TEST req,http://example.org/test,TEST src,test
+2134,scotland,college,TEST good row,TEST,TEST req,https://example.org/test,TEST src,test

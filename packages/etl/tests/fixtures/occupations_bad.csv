@@ -1,0 +1,7 @@
+soc2020,official_title,title,aliases,description,entry_subjects,adzuna_query,verified_by,notes
+2451,Architects,Architect,architecture,,maths|art,architect,,no verified_by
+9999,Made up,Made up job,,,maths,made up,test,unknown SOC
+2134,Programmers,Software developer,programmer,,astrology|computing,software developer,test,bad subject
+2433,Actuaries,Actuary,,,maths,actuary,test,fine row
+2433,Actuaries,Actuary again,,,maths,actuary,test,duplicate SOC
+3544,Data analysts,,,,maths,data analyst,test,empty title

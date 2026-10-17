@@ -27,6 +27,8 @@ def main() -> None:
     for src in manifest["sources"]:
         base = REPO / src["path"]
         files = sorted(p for p in base.rglob("*") if p.is_file()) if base.is_dir() else []
+        if base.is_file():  # a single committed file, e.g. data/curated/routes.csv
+            files = [base]
         files = [p for p in files if not p.name.endswith(".part")]
         expected = src.get("expect", [])
         absent = [e for e in expected if not any(p.name == e for p in files)]
