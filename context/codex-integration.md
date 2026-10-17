@@ -2,7 +2,7 @@
 
 - **Owner:** Yehor / Codex
 - **Branch:** `codex/integration-harness`
-- **PR:** draft creation follows final diff review
+- **PR:** #7 (draft): https://github.com/yehorm14/Avenir/pull/7
 - **Status:** ready for review
 
 ## Task
@@ -27,6 +27,9 @@ Report cross-slice breakages without modifying the owning slices.
   109 passed, 1 failed; lint clean. Unknown metric keys resolved by contract v1.1.
 - Final harness/report-status verification: `integration-report-2158.md`, same
   results as 21:54; first history year 2007 confirmed by the probe; cleanup successful.
+- Latest report with live-adapters: `integration-report-2159.md`. All five available
+  default branches merged with no conflicts. Baseline 276 passed; ML v1.1 overlay
+  and freeze each 287 passed, 1 failed; lint clean. Adapter and ETL tests pass.
 - Both probes read 412 ML occupations, expose 20 demo careers through `load_data()`,
   preserve all 5,768 joined metric flags and all 280 loaded demo metric flags.
   No JSON file exceeds 5 MB. These counts are observations from overlay `03fb482`.
@@ -37,7 +40,8 @@ Report cross-slice breakages without modifying the owning slices.
 - No harness implementation blocker.
 - Yehor owns `packages/contracts/tests/test_contracts.py::test_everything_else_loads`:
   it asserts history starts in 2011; ML v1.1 history starts in 2007. Do not fix it here.
-- Live-adapters and Arsenii branches were not yet available in the latest recorded run.
+- No Arsenii branch was available in the latest recorded run; the overlay is still
+  needed for v1.1. Live-adapters and contract-v1.1 were both included successfully.
 - Repository-wide gitleaks reports two pre-existing `generic-api-key` findings in
   historical `prototypes/pathfinder-game/frontend/src/screens/Advisers.tsx`, lines 11
   and 22, commit `e928ad8151afb914f4842f91777008e1397c787c`. No finding values were
