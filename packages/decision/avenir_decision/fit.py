@@ -9,6 +9,7 @@ from collections.abc import Mapping, Sequence
 from avenir_contracts import Career, ComponentScore, ProfileIn
 
 _FULL = {"higher", "advanced_higher", "a_level"}
+FULL_LEVELS = _FULL  # shared with roadmap: levels that count as held at Higher or above
 _HALF = {"national5", "gcse"}
 
 
