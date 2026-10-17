@@ -10,7 +10,7 @@ soc2020,official_title,title,aliases,description,entry_subjects,adzuna_query,ver
 3120,"CAD, drawing and architectural technicians",CAD and architectural technician,cad technician|draughtsperson,,maths|graphic_communication,cad and architectural technician,,"SOC from ML demo set; fill description, check subjects"
 2121,Civil engineers,Civil engineer,civil engineering,,maths|physics,civil engineer,,"SOC from ML demo set; fill description, check subjects"
 2123,Electrical engineers,Electrical engineer,power engineer,,maths|physics,electrical engineer,,"SOC from ML demo set; fill description, check subjects"
-3113,Engineering technicians,Engineering technician,technician,,maths|physics,engineering technician,,"SOC from ML demo set; fill description, check subjects"
+3113,Engineering technicians,Engineering technician,,,maths|physics,engineering technician,,"SOC from ML demo set; fill description, check subjects"
 2453,Quantity surveyors,Quantity surveyor,qs,,maths,quantity surveyor,,"SOC from ML demo set; fill description, check subjects"
 2454,Chartered surveyors,Chartered surveyor,surveyor|land surveyor,,maths|geography,chartered surveyor,,"SOC from ML demo set; fill description, check subjects"
 2433,"Actuaries, economists and statisticians","Actuary, economist or statistician",actuary|economist|statistician,,maths,"actuary, economist or statistician",,"SOC from ML demo set; fill description, check subjects"
