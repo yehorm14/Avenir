@@ -1,0 +1,36 @@
+# data: raw downloads never committed
+data/raw/*
+!data/raw/.gitkeep
+*.part
+
+# secrets
+.env
+.env.*
+!.env.example
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# ml artefacts too big for git
+packages/ml/models/
+packages/ml/runs/
+*.pt
+*.safetensors
+*.ckpt
+
+# node
+node_modules/
+dist/
+.vite/
+
+# editors and os
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

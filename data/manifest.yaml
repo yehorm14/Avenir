@@ -1,0 +1,135 @@
+# Every raw input Pathfinder uses. Raw files live in data/raw/ (gitignored).
+# Run `make data-check` after downloading: it checks each `path` exists and records
+# checksums in data/manifest.lock.json (commit the lock file, never the data).
+#
+# how: script = scripts/fetch/<script>; browser = manual download, then rsync to the cluster
+# Fill `licence_checked_by` with your initials once you have read the licence on download.
+
+sources:
+
+  - id: esco
+    name: ESCO v1.2 classification (occupations, skills, occupation-skill relations)
+    how: browser
+    url: https://esco.ec.europa.eu/en/use-esco/download   # (verify path) needs the download form
+    instructions: >
+      Choose version v1.2.x, language English, format CSV, type "classification".
+      The link arrives by email. Unzip into data/raw/esco/.
+    path: data/raw/esco/
+    expect: [occupations_en.csv, skills_en.csv, occupationSkillRelations_en.csv]  # (verify names)
+    coverage: EU, maps to ISCO-08
+    licence: European Commission reuse policy, attribution  # (verify on download)
+    licence_checked_by: ""
+    used_by: [M1 matcher, M2 exposure tasks, M3 hedge]
+
+  - id: ashe_t14
+    name: ONS ASHE Table 14, earnings by occupation (4-digit SOC), 2011 to 2025
+    how: script
+    script: scripts/fetch/ons_ashe.py
+    url: https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/occupation4digitsoc2010ashetable14
+    instructions: >
+      One ONS page holds every edition (the URL says soc2010 for all years). Use "revised"
+      editions where they exist, "2025 provisional" for the latest. 2011 = "2011 revised,
+      based on SOC 2010". Editions from 2021 are coded to SOC 2020 (verify inside the files).
+      Check whether the 2026 provisional edition (due Oct 2026) is out.
+    path: data/raw/ashe/
+    coverage: UK
+    licence: Open Government Licence v3.0
+    licence_checked_by: ""
+    used_by: [pay metrics, M5 backtest]
+
+  - id: soc2010_soc2020
+    name: ONS relationship tables SOC 2010 <-> SOC 2020 (July 2021)
+    how: script
+    script: scripts/fetch/ons_files.py
+    files:
+      - https://www.ons.gov.uk/file?uri=/methodology/classificationsandstandards/standardoccupationalclassificationsoc/soc2020/therelationshipbetweenstandardoccupationalclassification2010andstandardoccupationalclassification2020/soc2010soc2020relationshiptablesjuly2021.xlsx
+      - https://www.ons.gov.uk/file?uri=/methodology/classificationsandstandards/standardoccupationalclassificationsoc/soc2020/therelationshipbetweenstandardoccupationalclassification2010andstandardoccupationalclassification2020/soc2020soc2010relationshiptablesjuly2021.xlsx
+    instructions: >
+      Percentages of dual-coded cases (LFS 2014-16, Census 2011 1% sample), a guide not an
+      exact crosswalk. Split or merged codes get low confidence in the backtest.
+    path: data/raw/crosswalks/
+    coverage: UK
+    licence: Open Government Licence v3.0
+    licence_checked_by: ""
+    used_by: [M5 backtest bridge, ISCO mapping]
+
+  - id: soc2010_isco08
+    name: ONS SOC 2010 to ISCO-08 mapping
+    how: script
+    script: scripts/fetch/ons_files.py
+    files:
+      - https://www.ons.gov.uk/file?uri=/methodology/classificationsandstandards/standardoccupationalclassificationsoc/soc2010/ug201002soc2010toisco08v2_tcm77-283163.xls
+    instructions: >
+      ONS publishes NO SOC 2020 to ISCO-08 file ("no simple mapping, even at unit group
+      level"). Route: SOC 2020 -> SOC 2010 (relationship tables) -> ISCO-08, then a human
+      approves each of our 20 occupations in data/curated/mappings.csv with verified_by.
+    path: data/raw/crosswalks/
+    coverage: UK
+    licence: Open Government Licence v3.0
+    licence_checked_by: ""
+    used_by: [ILO exposure join, ESCO join]
+
+  - id: aps_occupation
+    name: APS employment by occupation (Nomis)
+    how: script
+    script: scripts/fetch/nomis_aps.py
+    datasets:
+      - id: NM_218_1   # Nomis APS218, SOC 2020, 4-digit, latest Apr 2025-Mar 2026
+        years: 2021+
+      - id: NM_168_1   # Nomis APS168, SOC 2010, 4-digit, to Dec 2021
+        years: 2011-2021
+    instructions: >
+      No key needed for basic use. Run with --describe first to list dimension names, then
+      fetch UK, all 4-digit codes, 12-month periods. 4-digit APS counts are small samples:
+      carry n and widen intervals. For years before 2011, ONS EMP04 spreadsheets (2001-2018)
+      are an alternative (verify their SOC level).
+    path: data/raw/aps/
+    coverage: UK
+    licence: Open Government Licence v3.0 (Nomis terms, verify)
+    licence_checked_by: ""
+    used_by: [M4 demand trend, M5 backtest]
+
+  - id: ilo_genai_2025
+    name: ILO GenAI exposure index 2025 (Working Paper 140)
+    how: browser
+    url: https://www.ilo.org/publications/generative-ai-and-jobs-refined-global-index-occupational-exposure
+    instructions: >
+      No machine-readable file was found. Download the WP140 PDF and extract Annex Table A1
+      (ISCO-08 4-digit: mean score, SD, exposure gradient 1-4 / minimal / not exposed) into
+      data/curated/ilo_exposure.csv. A human spot-checks every row used and fills verified_by.
+    path: data/raw/ilo/
+    coverage: International (ISCO-08)
+    licence: ILO publication terms, cite Gmyrek et al. 2025  # (verify)
+    licence_checked_by: ""
+    used_by: [disruption risk, M2 calibration]
+
+  - id: oid_2025
+    name: Skills England / DfE Occupations in Demand 2025 (plus 2024 original and revised)
+    how: browser
+    url: https://explore-education-statistics.service.gov.uk/find-statistics/occupations-in-demand/2025/data-guidance
+    instructions: >
+      Use "Download all data (ZIP)". The supporting file "Occupations by demand" (CSV) has
+      demand level, demand index, worker numbers, uncertainty and imputation flags per
+      4-digit SOC 2020. Data guidance says the index covers the UK labour market (ASHE-based
+      indicators are GB only); the spec labelled it England, so check and label correctly.
+      Symbols: z = not applicable, x = unavailable, c = suppressed. Keep 2024 original for
+      the track-record check.
+    path: data/raw/oid/
+    coverage: UK (some indicators GB)
+    licence: Open Government Licence v3.0  # (verify)
+    licence_checked_by: ""
+    used_by: [shortage flag, market risk]
+
+  - id: adzuna
+    name: Adzuna jobs API (live ad counts, advertised pay, history)
+    how: script
+    script: scripts/fetch/adzuna_snapshot.py
+    url: https://developer.adzuna.com/
+    instructions: >
+      Free app id and key, run from a laptop only (not needed on the cluster). Keys in .env.
+      The script writes a dated snapshot to snapshots/adzuna/ for the demo fallback.
+    path: snapshots/adzuna/
+    coverage: UK
+    licence: Adzuna API terms, show "Jobs by Adzuna"
+    licence_checked_by: ""
+    used_by: [ads_now, nowcast, pull-the-plug demo]
