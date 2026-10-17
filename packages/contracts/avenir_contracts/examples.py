@@ -27,6 +27,7 @@ SCHEMA_MODELS: tuple[str, ...] = (
 )
 DEFAULT_OUT = REPO_ROOT / "docs" / "frontend"
 EXAMPLE_SOC = "2451"
+MANIFEST = "manifest.json"  # lists the files this module generated, so a rerun can remove stale ones
 
 
 def _model(name: str) -> type[BaseModel]:
@@ -95,21 +96,24 @@ def build(data: AvenirData | None = None) -> dict[str, str]:
 
     for name, obj in ex.items():
         files[f"examples/{name}.json"] = _dump(obj)
+    files[MANIFEST] = _dump({"files": sorted(files)})
     return files
 
 
 def write(out: str | Path = DEFAULT_OUT, data: AvenirData | None = None) -> list[Path]:
-    """Write the pack under `out` (schemas/ and examples/), replacing stale generated files."""
+    """Write the pack under `out`. Files a previous run listed in the manifest but this run does not make are
+    deleted; nothing else in `out` is touched."""
     out = Path(out)
     files = build(data)
-    for sub in ("schemas", "examples"):
-        (out / sub).mkdir(parents=True, exist_ok=True)
-        for old in (out / sub).glob("*.json"):
-            if f"{sub}/{old.name}" not in files:
-                old.unlink()
+    old_manifest = out / MANIFEST
+    if old_manifest.is_file():
+        for rel in json.loads(old_manifest.read_text(encoding="utf-8")).get("files", []):
+            if rel not in files and (out / rel).is_file():
+                (out / rel).unlink()
     paths = []
     for rel, text in sorted(files.items()):
         p = out / rel
+        p.parent.mkdir(parents=True, exist_ok=True)
         p.write_text(text, encoding="utf-8", newline="\n")
         paths.append(p)
     return paths

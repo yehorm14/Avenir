@@ -26,8 +26,11 @@ COMMITTED = REPO_ROOT / "docs" / "frontend"
 SUBDIRS = ("schemas", "examples")
 
 
-def _files(root):
-    return {p.relative_to(root).as_posix(): p.read_bytes() for d in SUBDIRS for p in (root / d).glob("*.json")}
+def _files(root, normalise=False):
+    """{relative path: bytes} for the generated files. `normalise` turns CRLF into LF (committed side only)."""
+    paths = [p for d in SUBDIRS for p in (root / d).glob("*.json")] + [root / ex.MANIFEST]
+    out = {p.relative_to(root).as_posix(): p.read_bytes() for p in paths}
+    return {k: v.replace(b"\r\n", b"\n") for k, v in out.items()} if normalise else out
 
 
 @pytest.fixture(scope="module")
@@ -59,7 +62,31 @@ def test_files_are_sorted_indented_with_trailing_newline(generated):
 
 
 def test_committed_pack_is_not_stale(generated):
-    assert _files(COMMITTED) == _files(generated), "run: python -m avenir_contracts.examples"
+    # normalise: a Windows checkout with core.autocrlf=true turns LF into CRLF on disk
+    assert _files(COMMITTED, normalise=True) == _files(generated), "run: python -m avenir_contracts.examples"
+
+
+def test_crlf_checkout_still_compares_equal(generated, tmp_path):
+    crlf = tmp_path / "crlf"
+    for rel, raw in _files(generated).items():
+        (crlf / rel).parent.mkdir(parents=True, exist_ok=True)
+        (crlf / rel).write_bytes(raw.replace(b"\n", b"\r\n"))
+    assert _files(crlf) != _files(generated)
+    assert _files(crlf, normalise=True) == _files(generated)
+
+
+def test_rerun_removes_only_files_it_generated(tmp_path):
+    ex.write(tmp_path)
+    (tmp_path / "README.md").write_text("mine")
+    (tmp_path / "examples" / "hand_made.json").write_text("{}")
+    stale = tmp_path / "examples" / "career_0000.json"
+    stale.write_text("{}")
+    manifest = json.loads((tmp_path / ex.MANIFEST).read_text())
+    manifest["files"].append("examples/career_0000.json")
+    (tmp_path / ex.MANIFEST).write_text(json.dumps(manifest))
+    ex.write(tmp_path)
+    assert not stale.exists()
+    assert (tmp_path / "README.md").exists() and (tmp_path / "examples" / "hand_made.json").exists()
 
 
 def _load(root, name):
@@ -123,12 +150,29 @@ def test_flags_example_matches_ml(generated):
         assert v == {"text": FLAG_TEXT[k], "must_mention": k in MUST_MENTION}
 
 
-def test_no_secrets_or_stray_hosts(generated):
-    secret = re.compile(r"(api[_-]?key|secret|token|password|bearer|sk-[A-Za-z0-9]{8,}|app_key|app_id)", re.I)
+SECRET = re.compile(
+    r'"[^"]*(secret|token|password|api_?key|app_?key|app_?id)[^"]*"\s*:'   # a JSON key that looks like a credential
+    r"|sk-[A-Za-z0-9]{8,}|bearer\s+[A-Za-z0-9._-]{8,}",                    # a value that looks like a key
+    re.I,
+)
+
+
+def test_secret_pattern_catches_keys_but_not_words():
+    assert SECRET.search('{"api_key": "x"}') and SECRET.search("sk-abcdefgh1234") and SECRET.search("Bearer abcdefgh12")
+    assert not SECRET.search('{"note": "tokens and secretaries are words"}')
+
+
+def _walk(node):
+    yield node
+    for child in node.values() if isinstance(node, dict) else node if isinstance(node, list) else []:
+        yield from _walk(child)
+
+
+def test_no_secrets_and_example_org_only_in_mock_objects(generated):
     for name, raw in _files(generated).items():
-        text = raw.decode("utf-8")
-        assert not secret.search(text), name
-        if name.startswith("examples/"):
-            # example.org is only acceptable where it comes straight from mock data
-            if "example.org" in text:
-                assert "MOCK" in text or "mock" in text, name
+        assert not SECRET.search(raw.decode("utf-8")), name
+        if not name.startswith("examples/"):
+            continue
+        for node in _walk(json.loads(raw)):
+            if isinstance(node, dict) and any(isinstance(v, str) and "example.org" in v for v in node.values()):
+                assert node.get("source") == "MOCK", (name, node)
