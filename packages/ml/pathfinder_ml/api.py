@@ -26,10 +26,14 @@ FLAG_TEXT = {
     "imputed_parent": "No direct figure exists; this is estimated from the wider occupation group.",
     "pending_source": "The data source for this figure has not been loaded yet.",
     "mock": "This is sample data, not a real figure.",
+    "category_level": "Measured for a broad job-advert category, not for this exact occupation.",
+    "bridged_soc2000": "Figures before 2011 are estimated from the older SOC 2000 occupation codes using two ONS crosswalks.",
+    "sources_disagree": "Two independent research estimates disagree for this job, so the range is wider.",
 }
 
 # Flags that any generated prose about the number must mention.
-MUST_MENTION = frozenset({"bridged_soc2010", "recoded_2021", "covid_year", "employees_only", "imputed_parent", "mock"})
+MUST_MENTION = frozenset({"bridged_soc2010", "bridged_soc2000", "recoded_2021", "covid_year", "employees_only",
+                          "imputed_parent", "category_level", "sources_disagree", "mock"})
 
 _REPO_ROOT = Path(__file__).resolve().parents[3]
 _REAL_STATUSES = {"final", "preliminary"}
@@ -59,18 +63,23 @@ class ML:
         raise FileNotFoundError(f"{name}.json not found in {self._data_dir} or {self._mock_dir}")
 
     def status(self) -> dict:
-        """Per-artefact status and path, plus an overall mode: real, mock or mixed."""
+        """Per-artefact status, origin ("real" = loaded from the data dir, "mock" = from the mock dir)
+        and path, plus an overall mode: "real" when every artefact came from the data dir with a real
+        status, "mock" when every artefact came from the mock dir, otherwise "mixed"."""
         artefacts = {}
         for name in ARTEFACTS:
             try:
                 data = self._load(name)
-                artefacts[name] = {"status": data.get("status", "unknown"), "path": str(self._paths[name])}
+                path = self._paths[name]
+                origin = "mock" if path.parent.resolve() == self._mock_dir.resolve() else "real"
+                artefacts[name] = {"status": data.get("status", "unknown"), "origin": origin, "path": str(path)}
             except FileNotFoundError:
-                artefacts[name] = {"status": "missing", "path": None}
+                artefacts[name] = {"status": "missing", "origin": None, "path": None}
+        origins = {a["origin"] for a in artefacts.values()}
         statuses = {a["status"] for a in artefacts.values()}
-        if statuses <= _REAL_STATUSES:
+        if origins == {"real"} and statuses <= _REAL_STATUSES:
             mode = "real"
-        elif statuses <= {"mock", "pending", "missing"}:
+        elif origins <= {"mock", None}:
             mode = "mock"
         else:
             mode = "mixed"

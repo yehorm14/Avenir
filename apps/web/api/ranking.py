@@ -26,14 +26,18 @@ def _percentiles(values: dict[str, float | None]) -> dict[str, float | None]:
 
 
 def rank_careers(
-    careers: list[dict], tags: list[str], weights: dict[str, float], affinity: dict[str, dict[str, float]]
+    careers: list[dict],
+    tags: list[str],
+    weights: dict[str, float],
+    affinity: dict[str, dict[str, float]],
+    fit_status: str = "mock",
 ) -> list[dict]:
     """Return all careers with 0–100 component scores and a weighted score.
 
     Pay and need are percentile ranks across available career values. Need uses
     historical 2021–2025 demand, not a forecast. Missing inputs stay null and are
-    omitted from the weighted mean. The mean affinity is the original mock fit
-    method; no interests means a neutral 50. Zero weights use equal importance.
+    omitted from the weighted mean. Mean affinity uses the supplied fit model;
+    no interests means a neutral 50. Zero weights use equal importance.
     """
     selected = sorted(set(tags))
     unknown = [tag for tag in selected if tag not in affinity]
@@ -73,7 +77,7 @@ def rank_careers(
                 "pay_score": pay[soc],
                 "need_score": need[soc],
                 "reasons": reasons,
-                "fit_status": "mock",
+                "fit_status": fit_status,
             }
         )
     return sorted(results, key=lambda c: (c["score"] is None, -(c["score"] or 0), c["soc"]))

@@ -162,6 +162,7 @@ def health() -> dict:
 @app.get("/api/bootstrap")
 def bootstrap() -> dict:
     status = ml().status()
+    fit = ml()._load("fit")
     return {
         "careers": _careers(),
         "tags": ml().tags(),
@@ -171,13 +172,17 @@ def bootstrap() -> dict:
         "data_status": {
             "mode": status["mode"],
             "artefacts": {name: details["status"] for name, details in status["artefacts"].items()},
-            "fit": ml()._load("fit")["status"],
+            "origins": {name: details.get("origin") for name, details in status["artefacts"].items()},
+            "fit": fit["status"],
+            "fit_method": fit.get("method"),
+            "fit_evaluation": fit.get("evaluation"),
             "hedges": ml()._load("hedges")["status"],
             "pathways": "curated_demo",
             "guide": "prepared_demo",
             "note": (
-                "Career evidence is Arsenii's committed dataset. Matching and related-career links "
-                "use his supplied sample models. Pathways are Max's curated examples."
+                "Career evidence and matching use Arsenii's committed dataset and supplied affinities. "
+                "The matching method and evaluation limits are supplied alongside its status. "
+                "Pathways are Max's curated examples."
             ),
         },
     }
@@ -185,8 +190,9 @@ def bootstrap() -> dict:
 
 @app.post("/api/matches")
 def matches(request: MatchRequest) -> dict:
+    fit = ml()._load("fit")
     try:
-        results = rank_careers(_careers(), request.tags, request.weights.model_dump(), ml()._load("fit")["affinity"])
+        results = rank_careers(_careers(), request.tags, request.weights.model_dump(), fit["affinity"], fit_status=fit["status"])
     except ValueError as error:
         raise HTTPException(422, str(error)) from error
     return {
@@ -196,7 +202,7 @@ def matches(request: MatchRequest) -> dict:
             "Missing evidence is excluded; zero weights use equal importance. "
             "Demand is historical, not an LLM forecast."
         ),
-        "fit_status": ml()._load("fit")["status"],
+        "fit_status": fit["status"],
     }
 
 

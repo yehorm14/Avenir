@@ -1,138 +1,695 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/yehorm14/KATYATA/packages/ml/schemas/ml_artefacts.schema.json",
-  "title": "Pathfinder ML artefacts v1.0",
+  "title": "Pathfinder ML artefacts v1.1",
   "description": "One definition per file in snapshots/ml: validate <name>.json against #/$defs/<name>_file. See packages/ml/CONTRACTS.md. Unknown keys are allowed so minor versions can add fields.",
   "$defs": {
-    "status": {"enum": ["final", "preliminary", "mock", "pending"]},
-    "flag": {"enum": ["bridged_soc2010", "recoded_2021", "provisional", "covid_year", "employees_only", "suppressed", "cv_high", "multi_isco", "imputed_parent", "pending_source", "mock"]},
-    "soc2020": {"type": "string", "pattern": "^[0-9]{4}$"},
-    "nullableNumber": {"type": ["number", "null"]},
+    "status": {
+      "enum": [
+        "final",
+        "preliminary",
+        "mock",
+        "pending"
+      ]
+    },
+    "flag": {
+      "enum": [
+        "bridged_soc2010",
+        "recoded_2021",
+        "provisional",
+        "covid_year",
+        "employees_only",
+        "suppressed",
+        "cv_high",
+        "multi_isco",
+        "imputed_parent",
+        "pending_source",
+        "mock",
+        "category_level",
+        "bridged_soc2000",
+        "sources_disagree"
+      ]
+    },
+    "soc2020": {
+      "type": "string",
+      "pattern": "^[0-9]{4}$"
+    },
+    "nullableNumber": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
     "header": {
       "type": "object",
-      "required": ["schema_version", "status", "generated_at"],
+      "required": [
+        "schema_version",
+        "status",
+        "generated_at"
+      ],
       "properties": {
-        "schema_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
-        "status": {"$ref": "#/$defs/status"},
-        "generated_at": {"type": "string"}
+        "schema_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+$"
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "generated_at": {
+          "type": "string"
+        }
       }
     },
     "metric": {
       "type": "object",
-      "required": ["value", "low", "high", "unit", "as_of", "source", "granularity", "confidence", "flags", "status", "note"],
+      "required": [
+        "value",
+        "low",
+        "high",
+        "unit",
+        "as_of",
+        "source",
+        "granularity",
+        "confidence",
+        "flags",
+        "status",
+        "note"
+      ],
       "properties": {
-        "value": {"$ref": "#/$defs/nullableNumber"},
-        "low": {"$ref": "#/$defs/nullableNumber"},
-        "high": {"$ref": "#/$defs/nullableNumber"},
-        "unit": {"enum": ["GBP/year", "fraction", "fraction/year", "thousand jobs", "score 0-1"]},
-        "as_of": {"type": "string"},
-        "source": {"type": "string"},
-        "granularity": {"enum": ["occupation", "parent_group", "major_group", "estimate"]},
-        "confidence": {"enum": ["high", "medium", "low"]},
-        "flags": {"type": "array", "items": {"$ref": "#/$defs/flag"}, "uniqueItems": true},
-        "status": {"$ref": "#/$defs/status"},
-        "note": {"type": "string"},
-        "extra": {"type": "object"}
+        "value": {
+          "$ref": "#/$defs/nullableNumber"
+        },
+        "low": {
+          "$ref": "#/$defs/nullableNumber"
+        },
+        "high": {
+          "$ref": "#/$defs/nullableNumber"
+        },
+        "unit": {
+          "enum": [
+            "GBP/year",
+            "fraction",
+            "fraction/year",
+            "thousand jobs",
+            "score 0-1"
+          ]
+        },
+        "as_of": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "granularity": {
+          "enum": [
+            "occupation",
+            "parent_group",
+            "major_group",
+            "estimate"
+          ]
+        },
+        "confidence": {
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ]
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/flag"
+          },
+          "uniqueItems": true
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "note": {
+          "type": "string"
+        },
+        "extra": {
+          "type": "object"
+        }
       }
     },
     "growthStat": {
-      "type": ["object", "null"],
-      "required": ["median", "low", "high"],
-      "properties": {"median": {"$ref": "#/$defs/nullableNumber"}, "low": {"$ref": "#/$defs/nullableNumber"}, "high": {"$ref": "#/$defs/nullableNumber"}}
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "median",
+        "low",
+        "high"
+      ],
+      "properties": {
+        "median": {
+          "$ref": "#/$defs/nullableNumber"
+        },
+        "low": {
+          "$ref": "#/$defs/nullableNumber"
+        },
+        "high": {
+          "$ref": "#/$defs/nullableNumber"
+        }
+      }
     },
     "occupation": {
       "type": "object",
-      "required": ["soc2020", "title", "short_title", "isco08", "in_demo_set", "metrics"],
+      "required": [
+        "soc2020",
+        "title",
+        "short_title",
+        "isco08",
+        "in_demo_set",
+        "metrics"
+      ],
       "properties": {
-        "soc2020": {"$ref": "#/$defs/soc2020"},
-        "title": {"type": "string"},
-        "short_title": {"type": "string"},
-        "isco08": {"type": "array", "items": {"type": "object", "required": ["code", "share"],
-                    "properties": {"code": {"type": "string", "pattern": "^[0-9]{4}$"}, "share": {"type": "number", "minimum": 0, "maximum": 1}}}},
-        "in_demo_set": {"type": "boolean"},
+        "soc2020": {
+          "$ref": "#/$defs/soc2020"
+        },
+        "title": {
+          "type": "string"
+        },
+        "short_title": {
+          "type": "string"
+        },
+        "isco08": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "code",
+              "share"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "pattern": "^[0-9]{4}$"
+              },
+              "share": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
+          }
+        },
+        "in_demo_set": {
+          "type": "boolean"
+        },
         "metrics": {
           "type": "object",
-          "required": ["pay_median", "pay_p10", "pay_p90", "real_pay_change_10y", "jobs", "demand_trend", "demand_trend_2011_19",
-                       "exposure", "exposure_uk", "resilience_covid", "resilience_cost_of_living", "resilience_tech_slump", "resilience_2008"],
-          "additionalProperties": {"$ref": "#/$defs/metric"}
+          "required": [
+            "pay_median",
+            "pay_p10",
+            "pay_p90",
+            "real_pay_change_10y",
+            "jobs",
+            "demand_trend",
+            "demand_trend_2011_19",
+            "exposure",
+            "exposure_uk",
+            "resilience_covid",
+            "resilience_cost_of_living",
+            "resilience_tech_slump",
+            "resilience_2008",
+            "young_worker_share"
+          ],
+          "additionalProperties": {
+            "$ref": "#/$defs/metric"
+          }
         }
       }
     },
     "occupations_file": {
-      "allOf": [{"$ref": "#/$defs/header"}],
-      "required": ["occupations", "demo_set", "price_base"],
+      "allOf": [
+        {
+          "$ref": "#/$defs/header"
+        }
+      ],
+      "required": [
+        "occupations",
+        "demo_set",
+        "price_base"
+      ],
       "properties": {
-        "occupations": {"type": "array", "items": {"$ref": "#/$defs/occupation"}},
-        "demo_set": {"type": "array", "items": {"$ref": "#/$defs/soc2020"}},
-        "price_base": {"type": "string"}
+        "occupations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/occupation"
+          }
+        },
+        "demo_set": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/soc2020"
+          }
+        },
+        "price_base": {
+          "type": "string"
+        }
       }
     },
     "history_file": {
-      "allOf": [{"$ref": "#/$defs/header"}],
-      "required": ["occupations"],
-      "properties": {"occupations": {"type": "object", "additionalProperties": {"type": "array", "items": {
-        "type": "object", "required": ["year", "pay_median", "pay_median_real", "jobs_k", "flags"],
-        "properties": {"year": {"type": "integer"}, "pay_median": {"$ref": "#/$defs/nullableNumber"}, "pay_median_real": {"$ref": "#/$defs/nullableNumber"},
-                       "jobs_k": {"$ref": "#/$defs/nullableNumber"}, "flags": {"type": "array", "items": {"$ref": "#/$defs/flag"}}}}}}}
+      "allOf": [
+        {
+          "$ref": "#/$defs/header"
+        }
+      ],
+      "required": [
+        "occupations"
+      ],
+      "properties": {
+        "occupations": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "year",
+                "pay_median",
+                "pay_median_real",
+                "jobs_k",
+                "flags"
+              ],
+              "properties": {
+                "year": {
+                  "type": "integer"
+                },
+                "pay_median": {
+                  "$ref": "#/$defs/nullableNumber"
+                },
+                "pay_median_real": {
+                  "$ref": "#/$defs/nullableNumber"
+                },
+                "jobs_k": {
+                  "$ref": "#/$defs/nullableNumber"
+                },
+                "flags": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/flag"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "hedges_file": {
-      "allOf": [{"$ref": "#/$defs/header"}],
-      "required": ["occupations", "method"],
-      "properties": {"occupations": {"type": "object", "additionalProperties": {"type": "array", "items": {
-        "type": "object", "required": ["soc2020", "title", "similarity", "shared_skills", "why", "status"],
-        "properties": {"soc2020": {"$ref": "#/$defs/soc2020"}, "similarity": {"type": "number", "minimum": 0, "maximum": 1},
-                       "shared_skills": {"type": "array", "items": {"type": "string"}}, "status": {"$ref": "#/$defs/status"}}}}}}
+      "allOf": [
+        {
+          "$ref": "#/$defs/header"
+        }
+      ],
+      "required": [
+        "occupations",
+        "method"
+      ],
+      "properties": {
+        "occupations": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "soc2020",
+                "title",
+                "similarity",
+                "shared_skills",
+                "why",
+                "status",
+                "evidence"
+              ],
+              "properties": {
+                "soc2020": {
+                  "$ref": "#/$defs/soc2020"
+                },
+                "similarity": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "shared_skills": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "status": {
+                  "$ref": "#/$defs/status"
+                },
+                "evidence": {
+                  "enum": [
+                    "title",
+                    "estimate"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "fit_file": {
-      "allOf": [{"$ref": "#/$defs/header"}],
-      "required": ["tags", "affinity", "method"],
+      "allOf": [
+        {
+          "$ref": "#/$defs/header"
+        }
+      ],
+      "required": [
+        "tags",
+        "affinity",
+        "method"
+      ],
       "properties": {
-        "tags": {"type": "array", "items": {"type": "object", "required": ["id", "label", "keywords"],
-                 "properties": {"id": {"type": "string"}, "label": {"type": "string"}, "keywords": {"type": "array", "items": {"type": "string"}, "minItems": 1}}}},
-        "affinity": {"type": "object", "additionalProperties": {"type": "object", "additionalProperties": {"type": "number", "minimum": 0, "maximum": 1}}}
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "label",
+              "keywords"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "keywords": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1
+              }
+            }
+          }
+        },
+        "affinity": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        },
+        "evaluation": {
+          "type": "object",
+          "required": [
+            "split",
+            "n",
+            "methods"
+          ],
+          "properties": {
+            "split": {
+              "enum": [
+                "dev",
+                "test",
+                "all"
+              ]
+            },
+            "n": {
+              "type": "integer"
+            },
+            "universe_size": {
+              "type": "integer"
+            },
+            "note": {
+              "type": "string"
+            },
+            "methods": {
+              "type": "object"
+            },
+            "paired_vs_bm25": {
+              "type": "object"
+            },
+            "paired_vs_embed": {
+              "type": "object"
+            }
+          }
+        }
       }
     },
     "backtest_file": {
-      "allOf": [{"$ref": "#/$defs/header"}],
-      "required": ["windows", "caveats", "method"],
+      "allOf": [
+        {
+          "$ref": "#/$defs/header"
+        }
+      ],
+      "required": [
+        "windows",
+        "caveats",
+        "method"
+      ],
       "properties": {
-        "caveats": {"type": "array", "items": {"type": "string"}},
-        "windows": {"type": "array", "items": {
-          "type": "object",
-          "required": ["base_year", "outcome_year", "horizon", "coding", "flags", "jobs_comparable", "groups", "occupations"],
-          "properties": {
-            "flags": {"type": "array", "items": {"$ref": "#/$defs/flag"}},
-            "jobs_comparable": {"type": "boolean"},
-            "groups": {"type": "array", "items": {"oneOf": [
-              {"type": "null"},
-              {"type": "object", "required": ["key", "label", "n", "real_pay_growth", "jobs_growth", "share_jobs_fell"],
-               "properties": {"key": {"enum": ["ambitious", "balanced", "safe", "all"]}, "n": {"type": "integer"},
-                              "real_pay_growth": {"$ref": "#/$defs/growthStat"}, "jobs_growth": {"$ref": "#/$defs/growthStat"},
-                              "share_jobs_fell": {"$ref": "#/$defs/nullableNumber"}}}]}},
-            "occupations": {"type": "array", "items": {"type": "object", "required": ["soc2020", "group_then", "real_pay_growth", "jobs_growth", "flags"]}}
-          }}}
+        "caveats": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "windows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "base_year",
+              "outcome_year",
+              "horizon",
+              "coding",
+              "flags",
+              "jobs_comparable",
+              "groups",
+              "occupations"
+            ],
+            "properties": {
+              "flags": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/flag"
+                }
+              },
+              "jobs_comparable": {
+                "type": "boolean"
+              },
+              "groups": {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "key",
+                        "label",
+                        "n",
+                        "real_pay_growth",
+                        "jobs_growth",
+                        "share_jobs_fell"
+                      ],
+                      "properties": {
+                        "key": {
+                          "enum": [
+                            "ambitious",
+                            "balanced",
+                            "safe",
+                            "all"
+                          ]
+                        },
+                        "n": {
+                          "type": "integer"
+                        },
+                        "real_pay_growth": {
+                          "$ref": "#/$defs/growthStat"
+                        },
+                        "jobs_growth": {
+                          "$ref": "#/$defs/growthStat"
+                        },
+                        "share_jobs_fell": {
+                          "$ref": "#/$defs/nullableNumber"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "occupations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "soc2020",
+                    "group_then",
+                    "real_pay_growth",
+                    "jobs_growth",
+                    "flags"
+                  ]
+                }
+              }
+            }
+          }
+        }
       }
     },
     "crises_file": {
-      "allOf": [{"$ref": "#/$defs/header"}],
-      "required": ["crises"],
-      "properties": {"crises": {"type": "array", "items": {
-        "type": "object", "required": ["key", "label", "window", "measure", "baseline_median", "status", "flags"],
-        "properties": {"key": {"enum": ["covid", "cost_of_living", "tech_slump", "gfc_2008"]}, "baseline_median": {"$ref": "#/$defs/nullableNumber"},
-                       "status": {"$ref": "#/$defs/status"}, "flags": {"type": "array", "items": {"$ref": "#/$defs/flag"}}}}}}
+      "allOf": [
+        {
+          "$ref": "#/$defs/header"
+        }
+      ],
+      "required": [
+        "crises"
+      ],
+      "properties": {
+        "crises": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "key",
+              "label",
+              "window",
+              "measure",
+              "baseline_median",
+              "status",
+              "flags"
+            ],
+            "properties": {
+              "key": {
+                "enum": [
+                  "covid",
+                  "cost_of_living",
+                  "tech_slump",
+                  "gfc_2008"
+                ]
+              },
+              "baseline_median": {
+                "$ref": "#/$defs/nullableNumber"
+              },
+              "status": {
+                "$ref": "#/$defs/status"
+              },
+              "flags": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/flag"
+                }
+              },
+              "baseline_real_pay_median": {
+                "$ref": "#/$defs/nullableNumber"
+              }
+            }
+          }
+        }
+      }
     },
     "sources_file": {
-      "allOf": [{"$ref": "#/$defs/header"}],
-      "required": ["sources"],
-      "properties": {"sources": {"type": "object", "additionalProperties": {
-        "type": "object", "required": ["name", "publisher", "url", "licence", "coverage", "years", "status"]}}}
+      "allOf": [
+        {
+          "$ref": "#/$defs/header"
+        }
+      ],
+      "required": [
+        "sources"
+      ],
+      "properties": {
+        "sources": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "name",
+              "publisher",
+              "url",
+              "licence",
+              "coverage",
+              "years",
+              "status"
+            ]
+          }
+        }
+      }
     },
     "eval_file": {
-      "allOf": [{"$ref": "#/$defs/header"}],
-      "required": ["checks"],
-      "properties": {"checks": {"type": "object", "additionalProperties": {
-        "type": "object", "required": ["status", "date", "summary", "metrics"],
-        "properties": {"status": {"$ref": "#/$defs/status"}}}}}
+      "allOf": [
+        {
+          "$ref": "#/$defs/header"
+        }
+      ],
+      "required": [
+        "checks"
+      ],
+      "properties": {
+        "checks": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "status",
+              "date",
+              "summary",
+              "metrics"
+            ],
+            "properties": {
+              "status": {
+                "$ref": "#/$defs/status"
+              }
+            }
+          }
+        }
+      }
+    },
+    "career_texts_file": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "soc2020",
+          "title",
+          "short_title",
+          "chunks",
+          "skills",
+          "evidence"
+        ],
+        "properties": {
+          "chunks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "label",
+                "text"
+              ]
+            }
+          },
+          "skills": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "evidence": {
+            "enum": [
+              "title",
+              "estimate"
+            ]
+          }
+        }
+      }
     }
   }
 }

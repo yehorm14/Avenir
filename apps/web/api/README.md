@@ -1,6 +1,6 @@
 # Avenir app API
 
-This small API joins Arsenii's actual committed ML fixtures with Max's original
+This small API joins Arsenii's actual committed ML artefacts with Max's original
 Pathfinder pathway planner. No credentials, external requests, generated salary
 figures or replacements for the committed evidence are needed.
 
@@ -49,8 +49,12 @@ job trends. Fit is the mean of Arsenii's supplied tag affinities. All scores run
 0–100, with ties sorted by SOC. Missing evidence stays null and is excluded
 from the weighted mean; all-zero weights become equal weights. If all inputs
 with positive weight are missing, the overall score is also null. Need is a
-historical signal, not an LLM prediction. Interest matching and hedges retain
-the supplied `mock` status. Unknown tags return HTTP 422.
+historical signal, not an LLM prediction. Matching and hedge statuses come from the supplied artefacts. At source commit
+`cb9e169ce417fa35d276826073a1d6ba67815d46`, both are `preliminary`: fit
+affinities were produced by BGE-base embeddings and evaluated on a synthetic
+development set, with held-out human evaluation still pending. The bootstrap
+includes the original fit method/evaluation and each artefact's real/mock origin.
+Unknown tags return HTTP 422.
 
 Some of Arsenii's 20 career codes were absent from Max's earlier prototype.
 The text-only mapping in `TEXT_BRIDGES` reuses a related family pathway and
@@ -58,3 +62,8 @@ adds `related_pathway_soc` plus a visible explanation in `demo_note`. Numeric
 data always comes from the requested Arsenii SOC. University and competition
 content remains curated demo material, not a university ranking or a live
 calendar; the original caution is preserved on every path.
+
+The ML slice is imported unchanged from Arsenii's KATYATA commit
+`cb9e169ce417fa35d276826073a1d6ba67815d46` (`packages/ml` and `snapshots/ml`
+only). It contains evidence for 412 occupations; this app displays the same
+20-career demo set. Histories span 2007–2025, with no job counts before 2011.

@@ -2,6 +2,8 @@
 
 Machines: `dice-fuji1` and `dice-fuji3` (4x RTX A6000 48 GB each). Storage: `/mnt/raid0hdd1/users/arsenii/`. Everything below runs **inside WSL** on the laptop, never in PowerShell.
 
+**Status 18 Oct:** every job so far, including the matcher fine-tune, ran on the laptop GPU in minutes. The cluster is only for the optional bulk LLM labelling (M2 in-house exposure check). Nothing in the demo depends on it.
+
 ## 0. Rules
 
 - **The cluster makes no external API calls.** All data is fetched and checked on the laptop, then copied up. Only model downloads might need the internet there, and even those can be copied up from the laptop.

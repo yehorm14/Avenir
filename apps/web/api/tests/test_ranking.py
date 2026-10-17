@@ -56,3 +56,14 @@ def test_unknown_tags_raise_instead_of_silently_changing_profile():
 
     with pytest.raises(ValueError, match="Unknown interest"):
         rank_careers([career("0001", 100, 0.1)], ["invented"], {"pay": 1}, {})
+
+
+def test_matching_preserves_supplied_fit_status():
+    from api.ranking import rank_careers
+
+    results = rank_careers(
+        [career("0001", 100, 0.1)], ["design"], {"interest": 1}, {"design": {"0001": 0.8}}, fit_status="preliminary"
+    )
+    assert results[0]["fit_status"] == "preliminary"
+    fallback = rank_careers([career("0001", 100, 0.1)], [], {"interest": 1}, {})
+    assert fallback[0]["fit_status"] == "mock"

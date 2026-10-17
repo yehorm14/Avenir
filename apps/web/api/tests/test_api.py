@@ -27,7 +27,9 @@ def test_bootstrap_passes_through_actual_arsenii_metrics_and_history(client):
     assert software["metrics"] == ML().occupation("2134")["metrics"]
     assert software["history"] == ML().history("2134")
     assert software["metrics"]["pay_median"]["value"] == 56914
-    assert data["data_status"]["fit"] == "mock"
+    assert data["data_status"]["fit"] == ML()._load("fit")["status"]
+    assert data["data_status"]["fit_method"] == ML()._load("fit")["method"]
+    assert data["data_status"]["mode"] == ML().status()["mode"]
     assert set(data["sources"]) == set(ML().sources())
 
 
@@ -39,8 +41,12 @@ def test_match_endpoint_validates_profile_and_returns_every_career(client):
     result = response.json()
     assert len(result["results"]) == 20
     assert result["results"][0]["soc"] == "2134"
-    assert result["results"][0]["fit"] == 95
-    assert result["fit_status"] == "mock"
+    from pathfinder_ml import ML
+
+    fit = ML()._load("fit")
+    assert result["results"][0]["fit"] == 100 * fit["affinity"]["computers_coding"]["2134"]
+    assert result["fit_status"] == fit["status"]
+    assert all(career["fit_status"] == fit["status"] for career in result["results"])
     assert client.post("/api/matches", json={"tags": [], "weights": {"pay": -1}}).status_code == 422
 
 
