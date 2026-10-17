@@ -44,6 +44,8 @@ If an endpoint is not built yet, the section says "not available yet" and the ru
 
 That is the honest answer when there is no Adzuna key and no snapshot yet. The summary says:
 "no Adzuna snapshot: ads show 'missing' (run scripts/fetch/adzuna_snapshot.py with keys)".
+If only some careers have no ads, the WARN reads "ads missing for k of n careers: <socs>" instead; those careers have
+no live count and no snapshot value.
 What to say on stage: "Live job ads need an Adzuna key, so that one number shows as missing. Every other number is
 from published UK data." If keys and a snapshot appear later, the same script shows `live`, then `snapshot` after the
 plug is pulled, with no change to the script.

@@ -260,7 +260,8 @@ class Run:
         if st is None:  # network error, already recorded as a FAIL by call()
             return
         if st != 200 or not isinstance(data, dict):
-            message = ((body or {}).get("error") or {}).get("message") if isinstance(body, dict) else None
+            error = body.get("error") if isinstance(body, dict) else None
+            message = error.get("message") if isinstance(error, dict) else None
             line = f"recommendations: HTTP {st}" + (f": {message}" if message else "")
             self.say(f"  {line}")
             (self.fails if st >= 500 else self.warns).append(line)  # 5xx breaks Amira's main flow
@@ -290,8 +291,10 @@ class Run:
             if st != 200:
                 self.fails.append(f"demo/live disable returned HTTP {st}")
                 return
-            _, card, ms = self.call("GET", f"{CAREERS}/{UNPLUG_SOC}")
-            after_card = ads_state(card) if card is not None else None
+            cst, card, ms = self.call("GET", f"{CAREERS}/{UNPLUG_SOC}")
+            if cst is not None and cst != 200:
+                self.fails.append(f"career card {UNPLUG_SOC} after unplug: HTTP {cst}")
+            after_card = ads_state(card) if cst == 200 else None
             after_statuses = self.badges("5b. Badges after")
             if after_card is None:
                 self.say(f"  career {UNPLUG_SOC}: could not be re-fetched")

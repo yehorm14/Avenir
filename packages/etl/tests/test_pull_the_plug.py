@@ -41,7 +41,9 @@ class FakeClient:
     """Mimics Nazar's API. ads_on / ads_off are the adzuna source states with the plug in / out."""
 
     def __init__(self, ads_on="live", ads_off="snapshot", mock=False, recs=True, toggle=True, bad_envelope=False,
-                 fail_refetch: Exception | None = None, overrides: dict | None = None, missing_socs=()):
+                 fail_refetch: Exception | None = None, overrides: dict | None = None, missing_socs=(),
+                 status_after_unplug: int | None = None):
+        self.status_after_unplug = status_after_unplug  # career card HTTP status once the plug is pulled
         self.overrides = overrides or {}  # (method, path) -> (status, body)
         self.missing_socs = set(missing_socs)  # careers whose ads are missing whatever the plug does
         self.ads_on, self.ads_off, self.mock, self.recs, self.toggle = ads_on, ads_off, mock, recs, toggle
@@ -71,6 +73,8 @@ class FakeClient:
         if path.startswith("/api/v1/careers/"):
             if self.fail_refetch is not None and not self.live:
                 raise self.fail_refetch
+            if self.status_after_unplug is not None and not self.live:
+                return self.status_after_unplug, err("INTERNAL", "boom")
             soc = path.rsplit("/", 1)[1]
             state = "missing" if soc in self.missing_socs else self.state
             value = {"live": 120.0, "snapshot": 100.0, "mock": 5.0, "missing": None}[state]
@@ -246,6 +250,25 @@ def test_career_card_error_is_a_fail_naming_soc_and_status(status):
     assert code == 1
     assert f"  FAIL  career card 2135: HTTP {status}" in lines_of(text)
     assert has_row(text, "2135", "Software developer", "-", f"error HTTP {status}")
+
+
+def test_post_unplug_card_error_is_a_fail_not_a_pass_and_plug_is_restored():
+    c = FakeClient(status_after_unplug=500)
+    code, text = run(c)
+    out = lines_of(text)
+    assert code == 1
+    assert "  FAIL  career card 2451 after unplug: HTTP 500" in out
+    assert not [x for x in out if x.startswith("  PASS  ads after unplug")]
+    assert c.posts("/api/v1/demo/live") == [{"enabled": False}, {"enabled": True}]
+    assert c.live is True
+
+
+def test_recommendations_error_body_that_is_not_a_dict_is_tolerated():
+    bad = {("POST", "/api/v1/recommendations"): (422, {"ok": False, "error": "oops",
+                                                       "meta": {"as_of": "x", "request_id": "r", "sources": []}})}
+    code, text = run(FakeClient(overrides=bad))
+    assert code == 0
+    assert "  WARN  recommendations: HTTP 422" in lines_of(text)
 
 
 def test_recommendations_5xx_is_a_fail():
