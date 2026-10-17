@@ -1,0 +1,328 @@
+"""Local app API joining Arsenii's evidence to Max's original pathway planner.
+
+Run from apps/web: python -m uvicorn api.main:app --port 8000
+All paths resolve from this file. No keys or network calls are needed.
+"""
+
+from __future__ import annotations
+
+import copy
+import re
+import sys
+from functools import lru_cache
+from pathlib import Path
+from typing import Literal
+
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, ConfigDict, Field
+
+REPO_ROOT = Path(__file__).resolve().parents[3]
+for module_dir in (REPO_ROOT / "packages/ml", REPO_ROOT / "prototypes/pathfinder-game/backend"):
+    sys.path.insert(0, str(module_dir))
+
+from app.data import get_store  # noqa: E402
+from app.path import build_plan  # noqa: E402
+from pathfinder_ml import ML  # noqa: E402
+
+from .ranking import rank_careers  # noqa: E402
+
+app = FastAPI(title="Avenir app API", version="1.0.0")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[f"http://{host}:{port}" for host in ("localhost", "127.0.0.1") for port in (4175, 5173)],
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["*"],
+)
+
+# Text/pathway bridges only. Numeric data ALWAYS retains the requested ML SOC.
+# These map ML careers absent from Max's earlier 40-career prototype to a
+# related teaching example, with explicit disclosure in the returned path.
+TEXT_BRIDGES = {
+    "3544": "2425",
+    "2133": "2134",
+    "2141": "3421",
+    "2142": "3421",
+    "2452": "2451",
+    "3120": "2451",
+    "3113": "2122",
+    "2454": "2453",
+    "2433": "2425",
+}
+
+
+class Weights(BaseModel):
+    model_config = ConfigDict(extra="forbid", allow_inf_nan=False)
+    pay: float = Field(default=1, ge=0, le=100)
+    interest: float = Field(default=1, ge=0, le=100)
+    need: float = Field(default=1, ge=0, le=100)
+
+
+class MatchRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    tags: list[str] = Field(default_factory=list, max_length=32)
+    weights: Weights = Field(default_factory=Weights)
+
+
+class GuideTurn(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    role: Literal["user", "assistant"]
+    content: str = Field(max_length=4000)
+
+
+class GuideRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    soc: str = Field(pattern=r"^\d{4}$")
+    message: str = Field(min_length=1, max_length=2000)
+    history: list[GuideTurn] = Field(default_factory=list, max_length=30)
+
+
+@lru_cache(maxsize=1)
+def ml() -> ML:
+    return ML()
+
+
+def _text_soc(soc: str) -> str:
+    return soc if soc in get_store().occupations else TEXT_BRIDGES.get(soc, soc)
+
+
+@lru_cache(maxsize=1)
+def _careers() -> list[dict]:
+    store = get_store()
+    output = []
+    for occupation in ml().occupations(demo_only=True):
+        soc = occupation["soc2020"]
+        text_soc = _text_soc(soc)
+        text = store.occupations.get(text_soc)
+        family = store.family_of.get(text_soc, "explore")
+        fam = store.pathways["families"].get(family, {})
+        skills = [item["skill"] for item in fam.get("hard", [])]
+        title = occupation.get("short_title") or occupation["title"]
+        summary = (
+            text.summary
+            if text and text_soc == soc
+            else (
+                f"Explore {title.lower()} through practical projects, relevant study "
+                "and conversations with people doing the work."
+            )
+        )
+        output.append(
+            {
+                "soc": soc,
+                "title": title,
+                "summary": summary,
+                "sector": (text.sector if text else None) or fam.get("field", "Career exploration"),
+                "family": family,
+                "skills": skills or (text.skills_build if text else []),
+                "metrics": occupation["metrics"],
+                "history": ml().history(soc),
+                "hedges": ml().hedges(soc, k=5),
+            }
+        )
+    return output
+
+
+def _career(soc: str) -> dict:
+    found = next((career for career in _careers() if career["soc"] == soc), None)
+    if found is None:
+        raise HTTPException(404, "Career not found")
+    return found
+
+
+@app.get("/api/health")
+def health() -> dict:
+    return {"status": "ok", "careers": len(_careers()), "ml_mode": ml().status()["mode"], "guide_mode": "prepared_demo"}
+
+
+@app.get("/api/bootstrap")
+def bootstrap() -> dict:
+    status = ml().status()
+    return {
+        "careers": _careers(),
+        "tags": ml().tags(),
+        "sources": ml().sources(),
+        "backtest": ml()._load("backtest"),
+        "crises": ml().crises(),
+        "data_status": {
+            "mode": status["mode"],
+            "artefacts": {name: details["status"] for name, details in status["artefacts"].items()},
+            "fit": ml()._load("fit")["status"],
+            "hedges": ml()._load("hedges")["status"],
+            "pathways": "curated_demo",
+            "guide": "prepared_demo",
+            "note": (
+                "Career evidence is Arsenii's committed dataset. Matching and related-career links "
+                "use his supplied sample models. Pathways are Max's curated examples."
+            ),
+        },
+    }
+
+
+@app.post("/api/matches")
+def matches(request: MatchRequest) -> dict:
+    try:
+        results = rank_careers(_careers(), request.tags, request.weights.model_dump(), ml()._load("fit")["affinity"])
+    except ValueError as error:
+        raise HTTPException(422, str(error)) from error
+    return {
+        "results": results,
+        "method": (
+            "Weighted mean of pay percentile, supplied interest affinity and observed demand percentile. "
+            "Missing evidence is excluded; zero weights use equal importance. "
+            "Demand is historical, not an LLM forecast."
+        ),
+        "fit_status": ml()._load("fit")["status"],
+    }
+
+
+@app.get("/api/path/{soc}")
+def path(soc: str, nation: str = "Scotland") -> dict:
+    career = _career(soc)
+    nation_names = {n.lower().replace("_", " "): n for n in ("Scotland", "England", "Wales", "Northern Ireland")}
+    nation = nation_names.get(nation.lower().replace("_", " "), "Scotland")
+    text_soc = _text_soc(soc)
+    plan = build_plan(get_store(), text_soc, nation)
+    if plan is None:
+        raise HTTPException(404, "A pathway example is not available for this career yet")
+    data = copy.deepcopy(plan.model_dump())
+    data.update(soc=soc, title=career["title"], summary=career["summary"], pathway_status="curated_demo")
+    # Max's original prototype earnings are illustrative and must never replace
+    # Arsenii's sourced evidence. The API does not serve them as career statistics.
+    for degree in data["degrees"]:
+        degree["median_earnings_15m"] = None
+    if text_soc != soc:
+        data["related_pathway_soc"] = text_soc
+        data["demo_note"] = (
+            f"This is a related {get_store().occupations[text_soc].title.lower()} pathway example "
+            f"adapted for {career['title'].lower()}; check requirements for the exact career. " + data["demo_note"]
+        )
+    return data
+
+
+def _source_refs(keys: list[str]) -> list[dict]:
+    registry = ml().sources()
+    return [{"id": key, **registry[key]} for key in keys if key in registry]
+
+
+def _guide_reply(career: dict, message: str, history: list[GuideTurn]) -> tuple[str, list[str]]:
+    lower = message.lower()
+    # A prepared guide does not interpret instructions or generate arbitrary content.
+    if re.search(
+        r"ignore (all |previous |your )|system prompt|write .*(poem|story|code)|politic|recipe|weather|football|malware", lower
+    ):
+        return (
+            "I can help explore this career: the work, pay, skills, study routes and automation evidence. "
+            "Try asking what to learn first or how salaries compare after inflation.",
+            [],
+        )
+    if re.fullmatch(r"(and |what about )?(that|it|more|why)[?.! ]*", lower):
+        previous = next((turn.content for turn in reversed(history) if turn.role == "user"), "")
+        lower += " " + previous.lower()
+    metrics = career["metrics"]
+    if any(word in lower for word in ("pay", "salary", "earn", "inflation", "money", "income")):
+        pay = metrics.get("pay_median", {})
+        value = pay.get("value")
+        if value is None:
+            return (
+                f"The supplied dataset has no reliable median salary for {career['title'].lower()}. "
+                "Missing evidence stays missing. Compare the work and routes while checking ONS for updated figures.",
+                ["ons_ashe_t14"],
+            )
+        text = f"The published median for {career['title'].lower()} is £{value:,.0f} a year ({pay.get('as_of', 'latest year')})."
+        if pay.get("low") is not None and pay.get("high") is not None:
+            text += (
+                f" The middle half of full-time employees earn £{pay['low']:,.0f}–£{pay['high']:,.0f}; "
+                "this is not a starting-salary promise."
+            )
+        text += (
+            " These figures cover employees, excluding freelancers and the self-employed. "
+            "Use the inflation-adjusted chart to compare purchasing power in April 2025 prices."
+        )
+        if pay.get("status") == "preliminary":
+            text += " The supplied estimate is preliminary."
+        return text, ["ons_ashe_t14", "ons_cpih"]
+    if any(word in lower for word in (" ai", "ai ", "automation", "robot", "replace", "exposure")) or lower == "ai":
+        exposure = metrics.get("exposure", {})
+        if exposure.get("value") is None:
+            return (
+                "Automation exposure is not available for this career in the supplied dataset. "
+                "It would be misleading to predict job loss. Build transferable skills "
+                "and revisit the evidence as it develops.",
+                ["ilo_wp140"],
+            )
+        text = (
+            f"The ILO research estimate of task exposure is {exposure['value']:.4f} on a 0–1 scale. "
+            "Exposure is not a forecast of job losses: it describes tasks that generative AI could affect."
+        )
+        if exposure.get("low") is not None and exposure.get("high") is not None:
+            text += f" The supplied range is {exposure['low']:.4f}–{exposure['high']:.4f}."
+        text += " Strengthen judgement, communication and the ability to check AI output alongside your practical skills."
+        return text, ["ilo_wp140"]
+    if any(word in lower for word in ("need", "demand", "future", "growth", "opportunit", "jobs", "forecast")):
+        demand = metrics.get("demand_trend", {})
+        if demand.get("value") is None:
+            return (
+                "The supplied dataset has no reliable employment trend for this career. "
+                "The app cannot honestly estimate how needed it will be from missing evidence.",
+                ["ons_ashe_t14"],
+            )
+        return (
+            f"The observed full-time employee job trend was {100 * demand['value']:+.2f}% per year "
+            f"over {demand.get('as_of', '2021–2025')}. This is a historical signal, "
+            "not a prediction or a promise of a vacancy. Compare it with your interest "
+            "in the day-to-day work and build skills that transfer between roles.",
+            ["ons_ashe_t14"],
+        )
+    plan = path(career["soc"])
+    if any(word in lower for word in ("skill", "learn", "good at", "practice", "project")):
+        skills = plan.get("hard_skills", [])[:3]
+        text = "Build evidence of skill through small projects: " + "; ".join(
+            f"{item['skill']}: {item['how']}" for item in skills
+        )
+        text += " " + " ".join(item["how"] for item in plan.get("soft_skills", [])[:1])
+        return text, []
+    if any(
+        word in lower
+        for word in (
+            "university",
+            "universities",
+            "degree",
+            "study",
+            "route",
+            "start",
+            "path",
+            "apprentice",
+            "course",
+            "event",
+            "societ",
+        )
+    ):
+        text = plan["first_step"] + " " + plan["degree_role"]["note"]
+        subjects = [degree["subject"] for degree in plan["degrees"]]
+        if subjects:
+            text += " Degree subjects to compare: " + ", ".join(subjects[:3]) + "."
+        text += " " + plan["demo_note"]
+        return text, []
+    if any(
+        word in lower for word in ("career", "work", "role", "day", "tell", "hello", "hi", "help", "fit", "interest", "enjoy")
+    ):
+        return career["summary"] + " " + plan[
+            "first_step"
+        ] + " Ask me about pay, skills, study routes, demand or automation evidence.", []
+    return (
+        "This prepared guide focuses on your career choice. Ask about the work, pay, skills, "
+        "study routes, demand or automation evidence.",
+        [],
+    )
+
+
+@app.post("/api/guide")
+def guide(request: GuideRequest) -> dict:
+    text, keys = _guide_reply(_career(request.soc), request.message, request.history)
+    return {
+        "text": text,
+        "mode": "prepared_demo",
+        "ai_written": False,
+        "sources": _source_refs(keys),
+        "note": "Prepared demo guide using the supplied data and curated pathways; no live language model is connected.",
+    }
