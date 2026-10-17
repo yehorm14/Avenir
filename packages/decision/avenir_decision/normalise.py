@@ -1,10 +1,11 @@
 """0-100 percentile ranks within one set of occupations.
 
-Pure function: no I/O, no network, no LLM. A missing value (None) stays None and is not
-ranked, so it never shifts the other ranks.
+Pure function: no I/O, no network, no LLM. A missing value (None, NaN or infinite) becomes
+None and is not ranked, so it never shifts the other ranks.
 """
 from __future__ import annotations
 
+import math
 from bisect import bisect_left, bisect_right
 from collections.abc import Mapping
 
@@ -15,7 +16,9 @@ def rank_0_100(values: Mapping[str, float | None], higher_is_better: bool = True
     Ties share the average of their rank positions. A single ranked value scores 50.
     Results are rounded to one decimal place and keep the input key order.
     """
-    present = {k: (v if higher_is_better else -v) for k, v in values.items() if v is not None}
+    present = {
+        k: (v if higher_is_better else -v) for k, v in values.items() if v is not None and math.isfinite(v)
+    }
     ordered = sorted(present.values())
     n = len(ordered)
 
@@ -25,8 +28,8 @@ def rank_0_100(values: Mapping[str, float | None], higher_is_better: bool = True
         return (first + last) / 2
 
     ranks: dict[str, float | None] = {}
-    for key, value in values.items():
-        if value is None:
+    for key in values:
+        if key not in present:
             ranks[key] = None
         elif n == 1:
             ranks[key] = 50.0
