@@ -57,7 +57,8 @@ Deadline: code freeze **Sunday 18 Oct, 11:30**. A working end-to-end demo beats 
 10. **Secrets** only in `.env` (gitignored). Commit `.env.example` with empty values.
     Nothing secret in the frontend, in snapshots, in logs or in PR text.
 11. **Raw data is never committed.** It lives in `data/raw/` (gitignored) and is listed in
-    `data/manifest.yaml`. Only small derived files (< 1 MB each) go in `snapshots/`.
+    `data/manifest.yaml`. Only small derived files go in `snapshots/`: under 1 MB each, except ML artefacts in
+    `snapshots/ml/`, which may be up to 5 MB each (derived, not raw; agreed 17 Oct).
 12. **Stay in your lane.** Do not edit another slice's folder or `docs/contracts.md`.
     Contract changes go through a PR to the contract owner with the box ticked in the template.
 

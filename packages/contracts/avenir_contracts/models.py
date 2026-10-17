@@ -1,4 +1,4 @@
-"""API models. ML pass-through shapes mirror packages/ml/CONTRACTS.md v1.0 (Arsenii); the rest is ours.
+"""API models. ML pass-through shapes mirror packages/ml/CONTRACTS.md v1.1 (Arsenii); the rest is ours.
 
 STRICT models are request/response models we own. LOOSE models mirror ML artefacts and ignore
 unknown keys, because ML minor versions may add fields (CONTRACTS.md section 7).
@@ -36,6 +36,13 @@ class Career(BaseModel):
         description="keys: vocab.ML_METRICS + vocab.CATALOGUE_METRICS; an absent key means missing")
 
 
+class CareerRef(BaseModel):
+    """Light pointer to a career, for 'Did you mean...?' lists."""
+    model_config = STRICT
+    soc2020: str = SOC
+    title: str
+
+
 class Tag(BaseModel):
     """One checklist interest, from ML fit.json."""
     model_config = LOOSE
@@ -67,6 +74,7 @@ class Crisis(BaseModel):
     window: str
     measure: str
     baseline_median: float | None = None
+    baseline_real_pay_median: float | None = None
     status: MetricStatus | str = "preliminary"
     flags: list[str] = Field(default_factory=list)
 
@@ -144,6 +152,7 @@ class HedgeCandidate(BaseModel):
     similarity: float = Field(ge=0, le=1)
     shared_skills: list[str] = Field(default_factory=list)
     why: str | None = None
+    evidence: str | None = Field(default=None, description="title | estimate (ML v1.1)")
     status: MetricStatus | str = "mock"
 
 
@@ -154,6 +163,7 @@ class Hedge(BaseModel):
     similarity: float = Field(ge=0, le=1)
     shared_skills: list[str]
     why: str | None
+    evidence: str | None = Field(default=None, description="title | estimate; show 'estimate' as a badge")
     risk_delta: float | None = Field(description="hedge risk minus top-pick risk; negative = safer")
     status: str
 
@@ -202,6 +212,9 @@ class RecommendationRequest(BaseModel):
 class RecommendationOut(BaseModel):
     model_config = STRICT
     first_idea: Career | None
+    first_idea_candidates: list[CareerRef] = Field(
+        default_factory=list,
+        description="careers the typed first idea matches equally; first_idea is null then")
     first_idea_components: Components | None
     picks: list[Pick] = Field(max_length=3, description="0-3; fewer if not enough careers pass the fit gate")
     hedge: Hedge | None
