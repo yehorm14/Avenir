@@ -30,6 +30,7 @@ class SourceStatus(BaseModel):
     model_config = ConfigDict(extra="forbid")
     name: str
     status: SourceState
+    quality: str | None = Field(default=None, description="file status when real: final | preliminary")
     as_of: str | None = None
     region: str = "UK"
 

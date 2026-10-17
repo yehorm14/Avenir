@@ -1,34 +1,47 @@
+import json
+from pathlib import Path
+
 import pytest
 from pydantic import ValidationError
 
 from avenir_contracts import (
-    METRIC_UNITS,
+    ML_METRICS,
+    KeywordSuggester,
     Metric,
     ProfileIn,
     RecommendationRequest,
     SnapshotAds,
-    load_snapshots,
+    load_data,
 )
 from avenir_contracts.mock import write
 
-
-def test_missing_metric_must_be_low_confidence():
-    with pytest.raises(ValidationError):
-        Metric(value=None, unit="pct", source="x", region="UK", granularity="occupation", confidence="high")
-    assert Metric.missing("pct", "ashe_t14").is_missing
+ML_MOCK = Path(__file__).resolve().parents[3] / "snapshots" / "ml" / "mock"
 
 
-def test_low_above_high_rejected():
-    with pytest.raises(ValidationError):
-        Metric(value=1, low=5, high=2, unit="pct", source="x", region="UK",
-               granularity="occupation", confidence="low")
+@pytest.fixture
+def data(tmp_path):
+    write(tmp_path / "mock")
+    return load_data(ml_dir=tmp_path / "no_real_ml", snapshot_dir=tmp_path)
+
+
+def test_ml_metric_parses_unchanged():
+    occ = json.loads((ML_MOCK / "occupations.json").read_text())["occupations"][0]
+    m = Metric.model_validate(occ["metrics"]["pay_median"])
+    assert m.unit == "GBP/year" and m.region == "UK" and "employees_only" in m.flags
+
+
+def test_unknown_metric_fields_ignored():
+    m = Metric.model_validate({"value": 1, "unit": "x", "source": "s", "confidence": "low", "new_field": 3})
+    assert m.value == 1
+
+
+def test_missing_metric_shape():
+    m = Metric.missing("count", "adzuna")
+    assert m.is_missing and m.status == "pending" and m.confidence == "low"
 
 
 @pytest.mark.parametrize("bad", [
-    {"automation_worry": 1.5},
-    {"free_text": "x" * 301},
-    {"interests": ["juggling"]},
-    {"unknown_field": 1},
+    {"automation_worry": 1.5}, {"free_text": "x" * 301}, {"unknown_field": 1}, {"interests": ["x"] * 17},
 ])
 def test_profile_validation(bad):
     with pytest.raises(ValidationError):
@@ -40,28 +53,37 @@ def test_first_idea_required():
         RecommendationRequest(profile=ProfileIn(), first_idea="")
 
 
-def test_mock_round_trip(tmp_path):
-    write(tmp_path / "mock")
-    snap = load_snapshots(tmp_path)
-    assert len(snap.careers) == 20
-    assert {s.status for s in snap.statuses} == {"mock"}
-    c = next(iter(snap.careers.values()))
-    assert c.soc2020.startswith("00")
-    for name, unit in METRIC_UNITS.items():
-        assert getattr(c.metrics, name).unit == unit
-    assert set(snap.backtest) == set(range(2010, 2020))
-    assert all(len(v) == 3 for v in snap.hedges.values())
+def test_join_gives_20_careers_with_ml_and_catalogue_metrics(data):
+    assert len(data.careers) == 20
+    arch = data.careers["2451"]
+    assert arch.official_title == "Architects" and arch.title
+    assert set(ML_METRICS) <= set(arch.metrics)
+    assert {"shortage", "wellbeing", "stress", "ads_now"} <= set(arch.metrics)
+    assert arch.entry_subjects == ["maths", "art", "physics"]
 
 
-def test_missing_snapshots_reported(tmp_path):
-    snap = load_snapshots(tmp_path)
-    assert snap.careers == {}
-    assert {s.status for s in snap.statuses} == {"missing"}
+def test_everything_else_loads(data):
+    assert data.tags and data.affinity and data.backtest and data.crises and data.sources
+    assert all(len(v) <= 5 for v in data.hedges.values())
+    assert data.history["2134"][0].year == 2011
+    assert data.routes["2451"][0].nation == "scotland"
+    names = {s.name: s.status for s in data.statuses}
+    assert names["catalogue"] == "mock" and names["routes"] == "mock"
+    assert names["ml_occupations"] == "snapshot"  # preliminary real values in Arsenii's mock
 
 
-def test_snapshot_ads_never_live():
-    snap_c = next(iter(load_snapshots().careers.values()), None)
-    if snap_c is None:
-        pytest.skip("no snapshots")
-    m, st = SnapshotAds().ads_now(snap_c, "UK")
-    assert st.status in {"mock", "snapshot", "missing"}
+def test_no_catalogue_still_loads(tmp_path):
+    d = load_data(snapshot_dir=tmp_path)
+    assert len(d.careers) == 20 and d.careers["2134"].title == "Software developer"
+    assert {s.name: s.status for s in d.statuses}["catalogue"] == "missing"
+
+
+def test_keyword_suggester_uses_ml_tags():
+    out = KeywordSuggester().suggest("I like drawing and fixing bikes")
+    assert {m.tag for m in out} & {"art_drawing", "fixing_hands_on"}
+    assert KeywordSuggester().suggest("") == []
+
+
+def test_snapshot_ads(data):
+    m, st = SnapshotAds().ads_now(data.careers["2451"], "UK")
+    assert st.status == "mock" and m.unit == "count"

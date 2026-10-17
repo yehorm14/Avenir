@@ -1,65 +1,86 @@
-"""Domain and API models. The API serves exactly these; the frontend client is generated from them."""
+"""API models. ML pass-through shapes mirror packages/ml/CONTRACTS.md v1.0 (Arsenii); the rest is ours.
+
+STRICT models are request/response models we own. LOOSE models mirror ML artefacts and ignore
+unknown keys, because ML minor versions may add fields (CONTRACTS.md section 7).
+"""
 from __future__ import annotations
 
 from pydantic import BaseModel, ConfigDict, Field
 
 from .metric import Metric
-from .vocab import (
-    BacktestTier,
-    Confidence,
-    InterestTag,
-    Nation,
-    PickTier,
-    QualLevel,
-    RouteKind,
-    Subject,
-)
+from .vocab import Confidence, MetricStatus, Nation, PickTier, QualLevel, RouteKind, Subject
 
 STRICT = ConfigDict(extra="forbid")
-
-# Units each career metric must use. ETL and mocks are checked against this.
-METRIC_UNITS: dict[str, str] = {
-    "pay_now": "GBP_per_year",          # ASHE median gross annual pay, all employees
-    "pay_early": "GBP_per_year",        # ASHE median, age band 22-29 (verify band in Table 14)
-    "pay_ceiling": "GBP_per_year",      # ASHE 75th percentile
-    "pay_growth_10y": "pct",            # real growth of the median over ten years, CPIH-deflated
-    "pay_spread": "ratio",              # p90 / p10
-    "demand_trend": "pct_per_year",     # Theil-Sen slope of APS employment over five years
-    "shortage": "flag",                 # 1.0 = Occupations in Demand level elevated or critical
-    "ads_now": "count",                 # live Adzuna ad count
-    "exposure_ilo": "index_0_1",        # ILO WP140 mean exposure score
-    "exposure_inhouse": "index_0_1",    # M2 research estimate
-    "wellbeing": "score_0_10",          # ONS APS, job group level only
-    "stress": "rate_per_100k",          # HSE, job group level only
-}
+LOOSE = ConfigDict(extra="ignore")
+SOC = Field(pattern=r"^\d{4}$")
 
 
-class CareerMetrics(BaseModel):
-    model_config = STRICT
-    pay_now: Metric
-    pay_early: Metric
-    pay_ceiling: Metric
-    pay_growth_10y: Metric
-    pay_spread: Metric
-    demand_trend: Metric
-    shortage: Metric
-    ads_now: Metric
-    exposure_ilo: Metric
-    exposure_inhouse: Metric
-    wellbeing: Metric
-    stress: Metric
+# ---------- careers (ML occupation + catalogue + live ads, joined on soc2020) ----------
+
+class IscoShare(BaseModel):
+    model_config = LOOSE
+    code: str
+    share: float
 
 
 class Career(BaseModel):
     model_config = STRICT
-    soc2020: str = Field(pattern=r"^\d{4}$")
-    title: str
-    aliases: list[str] = Field(default_factory=list, description="other names used to match a typed first idea")
-    isco08: list[str] = Field(default_factory=list)
-    esco_id: str | None = None
-    interest_tags: list[InterestTag] = Field(default_factory=list)
-    entry_subjects: list[Subject] = Field(default_factory=list, description="school subjects usually asked for")
-    metrics: CareerMetrics
+    soc2020: str = SOC
+    title: str = Field(description="friendly title: catalogue title, else ML short_title")
+    official_title: str = Field(description="ONS SOC 2020 unit group title")
+    aliases: list[str] = Field(default_factory=list, description="other names, for matching a typed first idea")
+    description: str | None = None
+    isco08: list[IscoShare] = Field(default_factory=list)
+    entry_subjects: list[Subject] = Field(default_factory=list)
+    metrics: dict[str, Metric] = Field(
+        description="keys: vocab.ML_METRICS + vocab.CATALOGUE_METRICS; an absent key means missing")
+
+
+class Tag(BaseModel):
+    """One checklist interest, from ML fit.json."""
+    model_config = LOOSE
+    id: str
+    label: str
+    keywords: list[str] = Field(default_factory=list)
+
+
+class TagMatch(BaseModel):
+    model_config = LOOSE
+    tag: str
+    score: float = Field(ge=0, le=1)
+    matched: list[str] = Field(default_factory=list)
+
+
+class HistoryPoint(BaseModel):
+    model_config = LOOSE
+    year: int
+    pay_median: float | None = None
+    pay_median_real: float | None = None
+    jobs_k: float | None = None
+    flags: list[str] = Field(default_factory=list)
+
+
+class Crisis(BaseModel):
+    model_config = LOOSE
+    key: str
+    label: str
+    window: str
+    measure: str
+    baseline_median: float | None = None
+    status: MetricStatus | str = "preliminary"
+    flags: list[str] = Field(default_factory=list)
+
+
+class SourceInfo(BaseModel):
+    model_config = LOOSE
+    name: str
+    publisher: str | None = None
+    url: str | None = None
+    licence: str | None = None
+    coverage: str | None = None
+    years: str | None = None
+    status: str | None = None
+    notes: str | None = None
 
 
 # ---------- profile ----------
@@ -73,7 +94,7 @@ class Qualification(BaseModel):
 
 class ProfileIn(BaseModel):
     model_config = STRICT
-    interests: list[InterestTag] = Field(default_factory=list, max_length=12)
+    interests: list[str] = Field(default_factory=list, max_length=16, description="tag ids from GET /api/v1/tags")
     free_text: str = Field(default="", max_length=300)
     qualifications: list[Qualification] = Field(default_factory=list, max_length=20)
     nation: Nation = "scotland"
@@ -83,16 +104,16 @@ class ProfileIn(BaseModel):
 
 class ProfileOut(BaseModel):
     model_config = STRICT
-    suggested_tags: list[InterestTag]
-    tag_source: str = Field(description="matcher | keyword | none")
-    interests: list[InterestTag] = Field(description="checklist interests merged with suggestions, user confirms")
+    suggested: list[TagMatch]
+    tag_source: str = Field(description="keyword | matcher | llm | none")
+    interests: list[str] = Field(description="checklist interests plus suggestions; the user confirms them")
 
 
 # ---------- recommendations ----------
 
 class ComponentScore(BaseModel):
     model_config = STRICT
-    score: float | None = Field(ge=0, le=100, description="0-100 rank within the occupation set; None = missing")
+    score: float | None = Field(ge=0, le=100, description="0-100 rank within the demo set; None = missing")
     confidence: Confidence
 
 
@@ -111,25 +132,30 @@ class Pick(BaseModel):
     career: Career
     components: Components
     vs_first_idea: dict[str, float | None] = Field(
-        description="component name -> pick score minus first-idea score; None if either is missing")
+        description="component -> pick score minus first-idea score; None if either is missing")
     reasons: list[str] = Field(description="template sentences built only from numbers in this response")
 
 
 class HedgeCandidate(BaseModel):
-    """One related role from ML artefact hedge.json (M3)."""
-    model_config = STRICT
-    soc2020: str = Field(pattern=r"^\d{4}$")
-    shared_skills: list[str]
-    skill_overlap: float = Field(ge=0, le=1)
+    """One related role from ML hedges.json (CONTRACTS.md 4.3)."""
+    model_config = LOOSE
+    soc2020: str = SOC
+    title: str
+    similarity: float = Field(ge=0, le=1)
+    shared_skills: list[str] = Field(default_factory=list)
+    why: str | None = None
+    status: MetricStatus | str = "mock"
 
 
 class Hedge(BaseModel):
     model_config = STRICT
     for_soc: str
     career: Career
+    similarity: float = Field(ge=0, le=1)
     shared_skills: list[str]
-    skill_overlap: float = Field(ge=0, le=1)
+    why: str | None
     risk_delta: float | None = Field(description="hedge risk minus top-pick risk; negative = safer")
+    status: str
 
 
 class Explanation(BaseModel):
@@ -141,7 +167,7 @@ class Explanation(BaseModel):
 
 class Route(BaseModel):
     model_config = STRICT
-    soc2020: str = Field(pattern=r"^\d{4}$")
+    soc2020: str = SOC
     nation: Nation
     kind: RouteKind
     name: str
@@ -180,34 +206,54 @@ class RecommendationOut(BaseModel):
     picks: list[Pick] = Field(max_length=3, description="0-3; fewer if not enough careers pass the fit gate")
     hedge: Hedge | None
     roadmap: Roadmap | None
+    notices: list[str] = Field(
+        default_factory=list,
+        description="FLAG_TEXT for every MUST_MENTION flag on a metric in this response; shown and cited by the LLM")
     explanation: Explanation
 
 
-# ---------- backtest ----------
+# ---------- track record (mirrors CONTRACTS.md 4.5) ----------
+
+class Range(BaseModel):
+    model_config = LOOSE
+    median: float | None = None
+    low: float | None = None
+    high: float | None = None
+
+
+class BacktestGroup(BaseModel):
+    model_config = LOOSE
+    key: str  # ambitious | safe | balanced | all
+    label: str
+    n: int | None = None
+    real_pay_growth: Range | None = None
+    jobs_growth: Range | None = None
+    share_jobs_fell: float | None = None
+
 
 class BacktestOccupation(BaseModel):
+    model_config = LOOSE
+    soc2020: str
+    group_then: str | None = None
+    real_pay_growth: float | None = None
+    jobs_growth: float | None = None
+    flags: list[str] = Field(default_factory=list)
+
+
+class BacktestWindow(BaseModel):
+    model_config = LOOSE
+    base_year: int
+    outcome_year: int
+    horizon: int
+    coding: str
+    flags: list[str] = Field(default_factory=list)
+    jobs_comparable: bool
+    groups: list[BacktestGroup | None] = Field(description="a group is null while its rule isn't fixed")
+    occupations: list[BacktestOccupation] = Field(default_factory=list)
+
+
+class BacktestOut(BaseModel):
     model_config = STRICT
-    soc: str
-    title: str
-    rating: float = Field(ge=0, le=100)
-    pay_growth_5y: float | None
-    employment_growth_5y: float | None
-    confidence: Confidence
-
-
-class BacktestTierResult(BaseModel):
-    model_config = STRICT
-    tier: BacktestTier
-    occupations: list[BacktestOccupation]
-    median_pay_growth_5y: float | None
-    share_employment_decline: float | None = Field(ge=0, le=1)
-    worst_case: BacktestOccupation | None
-
-
-class BacktestYear(BaseModel):
-    model_config = STRICT
-    year: int = Field(ge=2010, le=2020)
-    horizon_years: int = 5
-    tiers: list[BacktestTierResult]
+    window: BacktestWindow
     caveats: list[str]
-    source: str
+    status: str = Field(description="file status from backtest.json: final | preliminary | mock")

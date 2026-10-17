@@ -1,21 +1,21 @@
-title,aliases,soc2020,isco08,esco_id,interest_tags,entry_subjects,adzuna_query,mapping_quality,verified_by,notes
-Software developer,programmer|software engineer|coder,,,,computers|maths,maths|computing,software developer,,,
-Data analyst,data scientist,,,,maths|computers|business,maths,data analyst,,,
-UX designer,ui designer|user experience designer,,,,design|computers|people,art,ux designer,,,
-Architect,architecture,,,,art|design|building|maths,maths|art|physics,architect,,,"Amira's first idea"
-Architectural technologist,,,,,design|building|computers,maths|graphic_communication,architectural technologist,,,
-Civil engineer,,,,,building|maths|outdoors,maths|physics,civil engineer,,,
-Structural engineer,,,,,building|maths|science,maths|physics,structural engineer,,,
-Electrical power networks engineer,power engineer,,,,fixing_things|science|maths,maths|physics,power networks engineer,,,
-Building controls (BEMS) engineer,bems engineer,,,,fixing_things|computers|building,maths|physics,bems engineer,,,
-Quantity surveyor,,,,,building|maths|business,maths,quantity surveyor,,,
-Geospatial surveyor,land surveyor,,,,outdoors|maths|computers,maths|geography,geospatial surveyor,,,
-Actuary,,,,,maths|business,maths,actuary,,,
-Accountant,,,,,maths|business,maths,accountant,,,
-Graphic designer,,,,,art|design,art|graphic_communication,graphic designer,,,
-Animator / VFX artist,animator|vfx artist,,,,art|computers|design,art,animator,,,
-Product designer,industrial designer,,,,design|art|fixing_things,art|design_technology,product designer,,,
-Maths teacher,teacher,,,,maths|people,maths,maths teacher,,,
-Radiographer,,,,,health|science|people,biology|physics,radiographer,,,
-Electrician,,,,,fixing_things|building,maths,electrician,,,
-Marketing analyst,,,,,business|maths|writing,maths|english,marketing analyst,,,
+soc2020,official_title,title,aliases,description,entry_subjects,adzuna_query,verified_by,notes
+2134,Programmers and software development professionals,Software developer,programmer|software engineer|coder,,maths|computing,software developer,,"SOC from ML demo set; fill description, check subjects"
+3544,Data analysts,Data analyst,data scientist,,maths,data analyst,,"SOC from ML demo set; fill description, check subjects"
+2133,"IT business analysts, architects and systems designers",IT business analyst or systems designer,systems analyst|business analyst,,maths|computing,it business analyst or systems designer,,"SOC from ML demo set; fill description, check subjects"
+2135,Cyber security professionals,Cyber security professional,cyber security|ethical hacker,,computing|maths,cyber security professional,,"SOC from ML demo set; fill description, check subjects"
+2141,Web design professionals,Web designer,web developer|ux designer,,art|computing,web designer,,"SOC from ML demo set; fill description, check subjects"
+2142,Graphic and multimedia designers,Graphic and multimedia designer,graphic designer|animator|illustrator,,art|graphic_communication,graphic and multimedia designer,,"SOC from ML demo set; fill description, check subjects"
+2451,Architects,Architect,architecture,,maths|art|physics,architect,,"SOC from ML demo set; fill description, check subjects"
+2452,"Chartered architectural technologists, planning officers and consultants",Architectural technologist or planner,town planner|architectural technologist,,maths|graphic_communication,architectural technologist or planner,,"SOC from ML demo set; fill description, check subjects"
+3120,"CAD, drawing and architectural technicians",CAD and architectural technician,cad technician|draughtsperson,,maths|graphic_communication,cad and architectural technician,,"SOC from ML demo set; fill description, check subjects"
+2121,Civil engineers,Civil engineer,civil engineering,,maths|physics,civil engineer,,"SOC from ML demo set; fill description, check subjects"
+2123,Electrical engineers,Electrical engineer,power engineer,,maths|physics,electrical engineer,,"SOC from ML demo set; fill description, check subjects"
+3113,Engineering technicians,Engineering technician,technician,,maths|physics,engineering technician,,"SOC from ML demo set; fill description, check subjects"
+2453,Quantity surveyors,Quantity surveyor,qs,,maths,quantity surveyor,,"SOC from ML demo set; fill description, check subjects"
+2454,Chartered surveyors,Chartered surveyor,surveyor|land surveyor,,maths|geography,chartered surveyor,,"SOC from ML demo set; fill description, check subjects"
+2433,"Actuaries, economists and statisticians","Actuary, economist or statistician",actuary|economist|statistician,,maths,"actuary, economist or statistician",,"SOC from ML demo set; fill description, check subjects"
+2422,Finance and investment analysts and advisers,Finance and investment analyst,investment analyst|financial analyst,,maths|business,finance and investment analyst,,"SOC from ML demo set; fill description, check subjects"
+2421,Chartered and certified accountants,Accountant,accounting,,maths,accountant,,"SOC from ML demo set; fill description, check subjects"
+2254,Medical radiographers,Medical radiographer,radiographer,,biology|physics,medical radiographer,,"SOC from ML demo set; fill description, check subjects"
+5241,Electricians and electrical fitters,Electrician,electrician,,maths|physics,electrician,,"SOC from ML demo set; fill description, check subjects"
+2313,Secondary education teaching professionals,Secondary school teacher,teacher|maths teacher,,maths|english,secondary school teacher,,"SOC from ML demo set; fill description, check subjects"

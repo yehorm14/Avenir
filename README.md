@@ -22,8 +22,8 @@ GUTS Hackathon 2026, Aladdin by BlackRock challenge: "One app. One clear decisio
 | `services/api` | FastAPI backend |
 | `packages/decision` | Pure scoring: fit, return, risk, picks, hedge, roadmap |
 | `packages/adapters/<source>` | One adapter per data source, each with a snapshot |
-| `packages/ml` | Arsenii: backtest, matcher, exposure, hedge similarity, demand trend |
-| `snapshots/` | Small committed artefacts the app loads (`careers.json`, `backtest.json`, ...) |
+| `packages/ml` | Arsenii: ML data contract (`CONTRACTS.md`), `pathfinder_ml` loader, pipeline |
+| `snapshots/` | Committed artefacts the app loads: `ml/` (Arsenii), `catalogue.json`, `routes.json`, mocks |
 
 ## Getting the data
 

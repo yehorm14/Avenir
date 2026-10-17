@@ -1,6 +1,6 @@
 line-length = 130
 target-version = "py312"
-extend-exclude = ["snapshots", "data"]
+extend-exclude = ["snapshots", "data", "packages/ml"]  # packages/ml follows its owner's style
 
 [lint]
 select = ["E", "F", "I", "B", "UP"]

@@ -5,7 +5,7 @@ Read this whole file before you write anything. It applies to every coding agent
 If this file and a task prompt disagree, this file wins; ask in your PR.
 
 The full design is in `docs/superpowers/specs/2026-10-18-avenir-design.md`.
-The API contract is in `docs/contracts.md`. Data sources are in `docs/data-sources.md`.
+The ML data contract is `packages/ml/CONTRACTS.md`; the API contract is `docs/contracts.md`. Data sources are in `docs/data-sources.md`.
 
 ---
 
@@ -66,9 +66,9 @@ Deadline: code freeze **Sunday 18 Oct, 11:30**. A working end-to-end demo beats 
 | Slice | Folder | Owner |
 | --- | --- | --- |
 | Contract (models, envelope, snapshot formats, ports) | `packages/contracts/`, `docs/contracts.md` | Yehor |
-| Data ETL and live adapters | `packages/adapters/`, `packages/etl/`, `scripts/fetch/`, `data/` | Yehor |
+| Catalogue, routes and live adapters (Adzuna, LLM) | `packages/adapters/`, `packages/etl/`, `scripts/fetch/`, `data/` | Yehor |
 | Decision engine and API | `packages/decision/`, `services/api/`, `docker-compose.yml`, `docs/openapi.json` | Nazar |
-| ML and training (M1 to M6, backtest) | `packages/ml/` | Arsenii |
+| ML artefacts and training (pay, demand, exposure, resilience, hedges, fit, backtest) | `packages/ml/`, `snapshots/ml/` | Arsenii |
 | Frontend and glue | `apps/web/`, README, diagram, pitch | TBD |
 
 Backend split and timeline: `docs/backend-split.md`. Plans: `docs/superpowers/plans/`.
@@ -79,10 +79,10 @@ Humans fill in TBD. Agents do not change this table.
 - Backend: Python 3.12, FastAPI, Pydantic v2, pandas, pytest, ruff.
 - Frontend: React + Vite + TypeScript, client types generated from the OpenAPI schema, ESLint, Prettier.
 - ML: PyTorch (laptop `torch-cuda` env or the cluster), sentence-transformers, scikit-learn.
-- Data: JSON artefacts loaded at start, no database. `careers.json` plus
-  `backtest.json`, `hedge.json`, `demand.json`, `exposure.json`, `matcher_eval.json` in `snapshots/`.
+- Data: JSON artefacts loaded at start through `avenir_contracts.load_data()`, no database:
+  `snapshots/ml/*.json` (Arsenii) plus `snapshots/catalogue.json` and `routes.json` (Yehor).
 - Install: `pip install -e ".[dev]"`. Run: `docker compose up` or `make run`. Test: `pytest`.
-- Mock data: `python -m avenir_contracts.mock` writes `snapshots/mock/` (source `MOCK`, SOC `00NN`).
+- Mock data: ML mocks in `snapshots/ml/mock/` (Arsenii); `python -m avenir_contracts.mock` writes the catalogue and routes mocks to `snapshots/mock/`.
 
 ## 5. How to work
 

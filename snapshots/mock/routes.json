@@ -1,8 +1,9 @@
 {
- "generated_at": "2026-10-17",
+ "generated_at": "2026-10-17T19:54:42+00:00",
+ "status": "mock",
  "routes": [
   {
-   "soc2020": "0001",
+   "soc2020": "2134",
    "nation": "scotland",
    "kind": "degree",
    "name": "MOCK degree for Software developer",
@@ -13,7 +14,7 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0001",
+   "soc2020": "2134",
    "nation": "scotland",
    "kind": "graduate_apprenticeship",
    "name": "MOCK graduate apprenticeship for Software developer",
@@ -24,7 +25,7 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0002",
+   "soc2020": "3544",
    "nation": "scotland",
    "kind": "degree",
    "name": "MOCK degree for Data analyst",
@@ -35,7 +36,7 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0002",
+   "soc2020": "3544",
    "nation": "scotland",
    "kind": "graduate_apprenticeship",
    "name": "MOCK graduate apprenticeship for Data analyst",
@@ -46,10 +47,10 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0003",
+   "soc2020": "2133",
    "nation": "scotland",
    "kind": "degree",
-   "name": "MOCK degree for UX designer",
+   "name": "MOCK degree for IT business analyst or systems designer",
    "provider": "MOCK",
    "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
    "url": "https://example.org/mock",
@@ -57,10 +58,10 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0003",
+   "soc2020": "2133",
    "nation": "scotland",
    "kind": "graduate_apprenticeship",
-   "name": "MOCK graduate apprenticeship for UX designer",
+   "name": "MOCK graduate apprenticeship for IT business analyst or systems designer",
    "provider": "MOCK",
    "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
    "url": "https://example.org/mock",
@@ -68,7 +69,73 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0004",
+   "soc2020": "2135",
+   "nation": "scotland",
+   "kind": "degree",
+   "name": "MOCK degree for Cyber security professional",
+   "provider": "MOCK",
+   "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
+   "url": "https://example.org/mock",
+   "source": "MOCK",
+   "verified_by": "MOCK"
+  },
+  {
+   "soc2020": "2135",
+   "nation": "scotland",
+   "kind": "graduate_apprenticeship",
+   "name": "MOCK graduate apprenticeship for Cyber security professional",
+   "provider": "MOCK",
+   "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
+   "url": "https://example.org/mock",
+   "source": "MOCK",
+   "verified_by": "MOCK"
+  },
+  {
+   "soc2020": "2141",
+   "nation": "scotland",
+   "kind": "degree",
+   "name": "MOCK degree for Web designer",
+   "provider": "MOCK",
+   "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
+   "url": "https://example.org/mock",
+   "source": "MOCK",
+   "verified_by": "MOCK"
+  },
+  {
+   "soc2020": "2141",
+   "nation": "scotland",
+   "kind": "graduate_apprenticeship",
+   "name": "MOCK graduate apprenticeship for Web designer",
+   "provider": "MOCK",
+   "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
+   "url": "https://example.org/mock",
+   "source": "MOCK",
+   "verified_by": "MOCK"
+  },
+  {
+   "soc2020": "2142",
+   "nation": "scotland",
+   "kind": "degree",
+   "name": "MOCK degree for Graphic and multimedia designer",
+   "provider": "MOCK",
+   "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
+   "url": "https://example.org/mock",
+   "source": "MOCK",
+   "verified_by": "MOCK"
+  },
+  {
+   "soc2020": "2142",
+   "nation": "scotland",
+   "kind": "graduate_apprenticeship",
+   "name": "MOCK graduate apprenticeship for Graphic and multimedia designer",
+   "provider": "MOCK",
+   "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
+   "url": "https://example.org/mock",
+   "source": "MOCK",
+   "verified_by": "MOCK"
+  },
+  {
+   "soc2020": "2451",
    "nation": "scotland",
    "kind": "degree",
    "name": "MOCK degree for Architect",
@@ -79,7 +146,7 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0004",
+   "soc2020": "2451",
    "nation": "scotland",
    "kind": "graduate_apprenticeship",
    "name": "MOCK graduate apprenticeship for Architect",
@@ -90,10 +157,10 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0005",
+   "soc2020": "2452",
    "nation": "scotland",
    "kind": "degree",
-   "name": "MOCK degree for Architectural technologist",
+   "name": "MOCK degree for Architectural technologist or planner",
    "provider": "MOCK",
    "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
    "url": "https://example.org/mock",
@@ -101,10 +168,10 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0005",
+   "soc2020": "2452",
    "nation": "scotland",
    "kind": "graduate_apprenticeship",
-   "name": "MOCK graduate apprenticeship for Architectural technologist",
+   "name": "MOCK graduate apprenticeship for Architectural technologist or planner",
    "provider": "MOCK",
    "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
    "url": "https://example.org/mock",
@@ -112,7 +179,29 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0006",
+   "soc2020": "3120",
+   "nation": "scotland",
+   "kind": "degree",
+   "name": "MOCK degree for CAD and architectural technician",
+   "provider": "MOCK",
+   "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
+   "url": "https://example.org/mock",
+   "source": "MOCK",
+   "verified_by": "MOCK"
+  },
+  {
+   "soc2020": "3120",
+   "nation": "scotland",
+   "kind": "graduate_apprenticeship",
+   "name": "MOCK graduate apprenticeship for CAD and architectural technician",
+   "provider": "MOCK",
+   "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
+   "url": "https://example.org/mock",
+   "source": "MOCK",
+   "verified_by": "MOCK"
+  },
+  {
+   "soc2020": "2121",
    "nation": "scotland",
    "kind": "degree",
    "name": "MOCK degree for Civil engineer",
@@ -123,7 +212,7 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0006",
+   "soc2020": "2121",
    "nation": "scotland",
    "kind": "graduate_apprenticeship",
    "name": "MOCK graduate apprenticeship for Civil engineer",
@@ -134,10 +223,10 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0007",
+   "soc2020": "2123",
    "nation": "scotland",
    "kind": "degree",
-   "name": "MOCK degree for Structural engineer",
+   "name": "MOCK degree for Electrical engineer",
    "provider": "MOCK",
    "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
    "url": "https://example.org/mock",
@@ -145,10 +234,10 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0007",
+   "soc2020": "2123",
    "nation": "scotland",
    "kind": "graduate_apprenticeship",
-   "name": "MOCK graduate apprenticeship for Structural engineer",
+   "name": "MOCK graduate apprenticeship for Electrical engineer",
    "provider": "MOCK",
    "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
    "url": "https://example.org/mock",
@@ -156,10 +245,10 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0008",
+   "soc2020": "3113",
    "nation": "scotland",
    "kind": "degree",
-   "name": "MOCK degree for Electrical power networks engineer",
+   "name": "MOCK degree for Engineering technician",
    "provider": "MOCK",
    "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
    "url": "https://example.org/mock",
@@ -167,10 +256,10 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0008",
+   "soc2020": "3113",
    "nation": "scotland",
    "kind": "graduate_apprenticeship",
-   "name": "MOCK graduate apprenticeship for Electrical power networks engineer",
+   "name": "MOCK graduate apprenticeship for Engineering technician",
    "provider": "MOCK",
    "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
    "url": "https://example.org/mock",
@@ -178,29 +267,7 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0009",
-   "nation": "scotland",
-   "kind": "degree",
-   "name": "MOCK degree for Building controls (BEMS) engineer",
-   "provider": "MOCK",
-   "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
-   "url": "https://example.org/mock",
-   "source": "MOCK",
-   "verified_by": "MOCK"
-  },
-  {
-   "soc2020": "0009",
-   "nation": "scotland",
-   "kind": "graduate_apprenticeship",
-   "name": "MOCK graduate apprenticeship for Building controls (BEMS) engineer",
-   "provider": "MOCK",
-   "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
-   "url": "https://example.org/mock",
-   "source": "MOCK",
-   "verified_by": "MOCK"
-  },
-  {
-   "soc2020": "0010",
+   "soc2020": "2453",
    "nation": "scotland",
    "kind": "degree",
    "name": "MOCK degree for Quantity surveyor",
@@ -211,7 +278,7 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0010",
+   "soc2020": "2453",
    "nation": "scotland",
    "kind": "graduate_apprenticeship",
    "name": "MOCK graduate apprenticeship for Quantity surveyor",
@@ -222,10 +289,10 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0011",
+   "soc2020": "2454",
    "nation": "scotland",
    "kind": "degree",
-   "name": "MOCK degree for Geospatial surveyor",
+   "name": "MOCK degree for Chartered surveyor",
    "provider": "MOCK",
    "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
    "url": "https://example.org/mock",
@@ -233,10 +300,10 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0011",
+   "soc2020": "2454",
    "nation": "scotland",
    "kind": "graduate_apprenticeship",
-   "name": "MOCK graduate apprenticeship for Geospatial surveyor",
+   "name": "MOCK graduate apprenticeship for Chartered surveyor",
    "provider": "MOCK",
    "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
    "url": "https://example.org/mock",
@@ -244,10 +311,10 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0012",
+   "soc2020": "2433",
    "nation": "scotland",
    "kind": "degree",
-   "name": "MOCK degree for Actuary",
+   "name": "MOCK degree for Actuary, economist or statistician",
    "provider": "MOCK",
    "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
    "url": "https://example.org/mock",
@@ -255,10 +322,10 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0012",
+   "soc2020": "2433",
    "nation": "scotland",
    "kind": "graduate_apprenticeship",
-   "name": "MOCK graduate apprenticeship for Actuary",
+   "name": "MOCK graduate apprenticeship for Actuary, economist or statistician",
    "provider": "MOCK",
    "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
    "url": "https://example.org/mock",
@@ -266,7 +333,29 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0013",
+   "soc2020": "2422",
+   "nation": "scotland",
+   "kind": "degree",
+   "name": "MOCK degree for Finance and investment analyst",
+   "provider": "MOCK",
+   "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
+   "url": "https://example.org/mock",
+   "source": "MOCK",
+   "verified_by": "MOCK"
+  },
+  {
+   "soc2020": "2422",
+   "nation": "scotland",
+   "kind": "graduate_apprenticeship",
+   "name": "MOCK graduate apprenticeship for Finance and investment analyst",
+   "provider": "MOCK",
+   "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
+   "url": "https://example.org/mock",
+   "source": "MOCK",
+   "verified_by": "MOCK"
+  },
+  {
+   "soc2020": "2421",
    "nation": "scotland",
    "kind": "degree",
    "name": "MOCK degree for Accountant",
@@ -277,7 +366,7 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0013",
+   "soc2020": "2421",
    "nation": "scotland",
    "kind": "graduate_apprenticeship",
    "name": "MOCK graduate apprenticeship for Accountant",
@@ -288,10 +377,10 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0014",
+   "soc2020": "2254",
    "nation": "scotland",
    "kind": "degree",
-   "name": "MOCK degree for Graphic designer",
+   "name": "MOCK degree for Medical radiographer",
    "provider": "MOCK",
    "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
    "url": "https://example.org/mock",
@@ -299,10 +388,10 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0014",
+   "soc2020": "2254",
    "nation": "scotland",
    "kind": "graduate_apprenticeship",
-   "name": "MOCK graduate apprenticeship for Graphic designer",
+   "name": "MOCK graduate apprenticeship for Medical radiographer",
    "provider": "MOCK",
    "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
    "url": "https://example.org/mock",
@@ -310,95 +399,7 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0015",
-   "nation": "scotland",
-   "kind": "degree",
-   "name": "MOCK degree for Animator / VFX artist",
-   "provider": "MOCK",
-   "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
-   "url": "https://example.org/mock",
-   "source": "MOCK",
-   "verified_by": "MOCK"
-  },
-  {
-   "soc2020": "0015",
-   "nation": "scotland",
-   "kind": "graduate_apprenticeship",
-   "name": "MOCK graduate apprenticeship for Animator / VFX artist",
-   "provider": "MOCK",
-   "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
-   "url": "https://example.org/mock",
-   "source": "MOCK",
-   "verified_by": "MOCK"
-  },
-  {
-   "soc2020": "0016",
-   "nation": "scotland",
-   "kind": "degree",
-   "name": "MOCK degree for Product designer",
-   "provider": "MOCK",
-   "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
-   "url": "https://example.org/mock",
-   "source": "MOCK",
-   "verified_by": "MOCK"
-  },
-  {
-   "soc2020": "0016",
-   "nation": "scotland",
-   "kind": "graduate_apprenticeship",
-   "name": "MOCK graduate apprenticeship for Product designer",
-   "provider": "MOCK",
-   "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
-   "url": "https://example.org/mock",
-   "source": "MOCK",
-   "verified_by": "MOCK"
-  },
-  {
-   "soc2020": "0017",
-   "nation": "scotland",
-   "kind": "degree",
-   "name": "MOCK degree for Maths teacher",
-   "provider": "MOCK",
-   "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
-   "url": "https://example.org/mock",
-   "source": "MOCK",
-   "verified_by": "MOCK"
-  },
-  {
-   "soc2020": "0017",
-   "nation": "scotland",
-   "kind": "graduate_apprenticeship",
-   "name": "MOCK graduate apprenticeship for Maths teacher",
-   "provider": "MOCK",
-   "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
-   "url": "https://example.org/mock",
-   "source": "MOCK",
-   "verified_by": "MOCK"
-  },
-  {
-   "soc2020": "0018",
-   "nation": "scotland",
-   "kind": "degree",
-   "name": "MOCK degree for Radiographer",
-   "provider": "MOCK",
-   "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
-   "url": "https://example.org/mock",
-   "source": "MOCK",
-   "verified_by": "MOCK"
-  },
-  {
-   "soc2020": "0018",
-   "nation": "scotland",
-   "kind": "graduate_apprenticeship",
-   "name": "MOCK graduate apprenticeship for Radiographer",
-   "provider": "MOCK",
-   "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
-   "url": "https://example.org/mock",
-   "source": "MOCK",
-   "verified_by": "MOCK"
-  },
-  {
-   "soc2020": "0019",
+   "soc2020": "5241",
    "nation": "scotland",
    "kind": "degree",
    "name": "MOCK degree for Electrician",
@@ -409,7 +410,7 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0019",
+   "soc2020": "5241",
    "nation": "scotland",
    "kind": "graduate_apprenticeship",
    "name": "MOCK graduate apprenticeship for Electrician",
@@ -420,10 +421,10 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0020",
+   "soc2020": "2313",
    "nation": "scotland",
    "kind": "degree",
-   "name": "MOCK degree for Marketing analyst",
+   "name": "MOCK degree for Secondary school teacher",
    "provider": "MOCK",
    "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
    "url": "https://example.org/mock",
@@ -431,10 +432,10 @@
    "verified_by": "MOCK"
   },
   {
-   "soc2020": "0020",
+   "soc2020": "2313",
    "nation": "scotland",
    "kind": "graduate_apprenticeship",
-   "name": "MOCK graduate apprenticeship for Marketing analyst",
+   "name": "MOCK graduate apprenticeship for Secondary school teacher",
    "provider": "MOCK",
    "entry_requirements": "MOCK: e.g. 4 Highers including Maths",
    "url": "https://example.org/mock",

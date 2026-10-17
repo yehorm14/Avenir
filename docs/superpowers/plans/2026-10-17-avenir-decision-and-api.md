@@ -1,59 +1,55 @@
-# Avenir Decision Engine and API Implementation Plan (Nazar)
+# Avenir Decision Engine and API Implementation Plan (Nazar), v2
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Turn a student profile plus `snapshots/*.json` into three picks, a hedge, a roadmap and a backtest view, served by a FastAPI app that follows `docs/contracts.md`.
+**Goal:** Turn a student profile plus the loaded data (ML artefacts, catalogue, routes) into three picks against her first idea, a hedge, a roadmap and a track record, served by a FastAPI app with one envelope.
 
-**Architecture:** `packages/decision/avenir_decision/` is pure Python (no I/O, no network, no LLM): ranks, components, picks, hedge, roadmap, reasons, one `recommend()` entry point. `services/api/avenir_api/` is FastAPI: it loads snapshots once at start-up, calls `recommend()`, and wraps every response in the envelope. Live sources (ads, LLM text, tag suggestions) come in through the Protocols in `avenir_contracts.ports`; their real versions are Yehor's work, so you use the safe defaults until his `avenir_adapters.registry` lands.
+**Architecture:** `avenir_contracts.load_data()` joins Arsenii's ML artefacts (`snapshots/ml/`, via `pathfinder_ml.ML`) with Yehor's catalogue and routes into one `AvenirData` (20 `Career`s with `metrics: dict[str, Metric]`, tags, fit affinities, hedge candidates, history, backtest windows, crises, sources, statuses). `packages/decision/avenir_decision/` is pure Python over `AvenirData` (no I/O, no network, no LLM) with one entry point `recommend()`. `services/api/avenir_api/` is FastAPI: loads data once, calls `recommend()`, wraps every response in the envelope. Live pieces (ads, LLM text, tag suggestions) come through `avenir_contracts.ports`; real versions arrive from Yehor's `avenir_adapters.registry`.
 
-**Tech Stack:** Python 3.12, Pydantic v2, FastAPI, pytest, httpx (TestClient), ruff.
+**Tech Stack:** Python 3.12, Pydantic v2, FastAPI, pytest, httpx, ruff.
 
-**Spec:** `docs/superpowers/specs/2026-10-18-avenir-design.md` (sections 1, 2, 4, 7, 8). Contract in code: `packages/contracts/avenir_contracts/` (read `models.py`, `ports.py`, `snapshots.py`, `envelope.py` first; do not edit them, ask Yehor by PR).
+**Spec:** `docs/superpowers/specs/2026-10-18-avenir-design.md` (sections 1, 2, 4, 7, 8). Data contract: `packages/ml/CONTRACTS.md` (Arsenii, v1.0: metric keys, flags, confidence, backtest shape). API contract in code: `packages/contracts/avenir_contracts/` (`models.py`, `metric.py`, `data.py`, `ports.py`, `envelope.py`, `vocab.py`). Read all of them first; edit none (ask Yehor in a PR).
 
 ## Global Constraints
 
-- AGENTS.md applies in full. Key rules: no LLM in ranking; every number keeps its `Metric` provenance; missing stays missing (`None`, confidence `low`), never filled; only your folders: `packages/decision/`, `services/api/`, `docker-compose.yml`, `docs/openapi.json`.
-- Python ≥ 3.12. No new runtime dependencies beyond `pyproject.toml` without asking Yehor.
-- Component scores are 0 to 100 ranks across the loaded occupation set, `None` when inputs are missing.
-- Wording shown to users: "worth exploring", "automation exposure (research estimate)". Never "you should", "don't", "will disappear".
-- The demo must run with no API keys and with only `snapshots/mock/` present.
-- Scoring uses the numbers in `careers.json` only. Live ad counts are overlaid for display after scoring, so the same request always gives the same picks.
-- Branches `nazar/decision` and `nazar/api` from `main`; draft PRs with `.github/pull_request_template.md`; context file `context/nazar-backend.md`.
-- Run everything from the repo root: `pip install -e ".[dev]"` once, then `pytest`, `ruff check .`.
+- AGENTS.md applies in full: no LLM in ranking; every number keeps its `Metric`; missing stays missing; only your folders (`packages/decision/`, `services/api/`, `docker-compose.yml`, `docs/openapi.json`, `context/nazar-backend.md`).
+- Python ≥ 3.12; no new runtime dependencies without asking Yehor.
+- Component scores are 0 to 100. Fit is absolute (mean affinity × 100 × head start); the other four are ranks across the 20 demo careers, `None` when their inputs are missing.
+- Metric keys are exactly `vocab.ML_METRICS` and `vocab.CATALOGUE_METRICS`; a key absent from `career.metrics` is treated as missing.
+- Wording: "worth exploring", "GenAI exposure (research estimate)". Never "you should", "don't", "will disappear".
+- Any text that shows a number carrying a `MUST_MENTION` flag (`pathfinder_ml.MUST_MENTION`) must come with that flag's sentence (`pathfinder_ml.FLAG_TEXT`); `RecommendationOut.notices` carries them.
+- The demo must run with no API keys, on `snapshots/ml/mock/` plus `snapshots/mock/` only.
+- Scoring uses loaded data only; live ad counts are overlaid after scoring, for display.
+- Branches `nazar/decision` and `nazar/api` from `main`; draft PRs with `.github/pull_request_template.md`; squash merge.
+- Setup: `pip install -e ".[dev]"`; then `pytest` and `ruff check .` from the repo root.
 
 ## Review Focus
 
-1. A first idea typed loosely (`"Architect "`, `"architecture"`, `"ARCHITECT"`) or unknown (`"astronaut"`) → 200 with `first_idea` resolved or `null`, never 500. Test in Task 6.
-2. Empty profile (no interests, no qualifications, no text) → 200, every fit 50 with confidence `low`, picks still returned. Test in Task 3.
-3. A metric missing for every career (e.g. all `exposure_inhouse` None) → ranks `None` for that input, components fall back to the inputs present, no ZeroDivisionError. Test in Tasks 1 and 4.
-4. Zero or one career passes the fit gate → fewer picks, `hedge` may be `null`, explanation says so, no IndexError. Test in Task 5 and Task 13.
-5. No snapshots at all (fresh clone where `snapshots/mock/` was deleted) → app still starts, `/health` reports `missing`, `/api/v1/recommendations` returns 503 `UPSTREAM_UNAVAILABLE` in the envelope. Test in Task 12.
+1. First idea typed loosely (`"Architect "`, `"ARCHITECTS"`, `"programmer"`) or unknown (`"astronaut"`) → 200 with `first_idea` resolved or `null`. Test in Task 6.
+2. Empty profile (no interests, no qualifications) → 200, every fit 50 with confidence `low`, picks still returned. Test in Task 3.
+3. Pending metrics everywhere (`exposure_uk`, `resilience_tech_slump`, `resilience_2008` are null in the mocks) → those inputs are skipped, no ZeroDivisionError. Tests in Tasks 1 and 4.
+4. A narrow profile where only 1 or 2 careers pass the fit gate → fewer picks, hedge may be `null`, no IndexError. Tests in Tasks 5 and 13.
+5. An interest id not in `GET /api/v1/tags` (e.g. `"juggling"`) → 422 `VALIDATION_ERROR` naming it, not 500. Test in Task 13.
 
 ## File Structure
 
 ```
 packages/decision/avenir_decision/
-  normalise.py    rank_0_100
-  confidence.py   lowest, component_confidence, downgrade
-  fit.py          head_start, fit_scores
-  components.py   score_components (return, market risk, disruption risk, risk)
-  picks.py        choose_picks
-  compare.py      vs_first_idea, COMPONENT_NAMES
-  first_idea.py   resolve_first_idea
-  hedge.py        choose_hedge
-  roadmap.py      build_roadmap
-  reasons.py      pick_reasons
-  recommend.py    recommend  (the one entry point the API calls)
-packages/decision/tests/test_<module>.py   one per module, plus conftest.py with fixtures
+  normalise.py   rank_0_100
+  confidence.py  lowest, downgrade, component_confidence
+  fit.py         head_start, fit_scores
+  components.py  score_components
+  picks.py       FIT_RELATIVE, FIT_FLOOR, eligible, choose_picks
+  compare.py     COMPONENT_NAMES, vs_first_idea
+  first_idea.py  resolve_first_idea
+  hedge.py       choose_hedge
+  roadmap.py     build_roadmap
+  reasons.py     pick_reasons, notices_for
+  recommend.py   recommend
+packages/decision/tests/conftest.py + test_<module>.py
 services/api/avenir_api/
-  app.py          create_app, startup snapshot load, CORS
-  envelope.py     ok(), fail(), exception handlers, request ids
-  deps.py         default ports (registry if importable, else contract defaults)
-  routes_read.py  /health, /sources, careers, hedge, backtest, routes
-  routes_write.py /profile, /recommendations, /demo/live
-  export_openapi.py
-services/api/tests/test_*.py
-services/api/Dockerfile, docker-compose.yml (repo root), docs/openapi.json
+  app.py, envelope.py, deps.py, routes_read.py, routes_write.py, export_openapi.py
+services/api/tests/test_*.py, services/api/Dockerfile, docker-compose.yml, docs/openapi.json
 ```
 
 ---
@@ -62,11 +58,11 @@ services/api/Dockerfile, docker-compose.yml (repo root), docs/openapi.json
 
 ### Task 1: Ranks
 
-**Files:** Create `packages/decision/avenir_decision/normalise.py`, `packages/decision/tests/conftest.py`, `packages/decision/tests/test_normalise.py`
+**Files:** `avenir_decision/normalise.py`, `tests/conftest.py`, `tests/test_normalise.py`
 
 **Interfaces:**
-- Produces: `rank_0_100(values: Mapping[str, float | None], higher_is_better: bool = True) -> dict[str, float | None]`
-- Produces (conftest): fixtures `snap` (= `avenir_contracts.mock.build()` loaded into a `Snapshots`, careers keyed by SOC), `careers` (list of 20 `Career`), `profile_amira` (`ProfileIn(interests=["maths","art","design"], qualifications=[Qualification(subject="maths", level="higher"), Qualification(subject="art", level="higher")], automation_worry=0.5)`).
+- Produces: `rank_0_100(values: Mapping[str, float | None], higher_is_better: bool = True) -> dict[str, float | None]`.
+- Produces (conftest): `data` = `load_data(snapshot_dir=tmp)` after `avenir_contracts.mock.write(tmp / "mock")` (20 careers, mock catalogue, Arsenii's ML mocks); `careers` = `list(data.careers.values())`; `amira` = `ProfileIn(interests=["maths","art_drawing","design","building_spaces"], qualifications=[Qualification(subject="maths", level="higher"), Qualification(subject="art", level="higher")], nation="scotland", automation_worry=0.5)`.
 
 - [ ] **Step 1: Failing tests**
 ```python
@@ -82,244 +78,229 @@ def test_all_missing():
     assert rank_0_100({"a": None, "b": None}) == {"a": None, "b": None}
 ```
 - [ ] **Step 2:** `pytest packages/decision/tests/test_normalise.py` → FAIL (import error).
-- [ ] **Step 3:** Implement. Percentile of average rank among non-None values: `(avg_rank_index) / (n - 1) * 100`, rounded to 1 decimal; `n == 1` → 50.0.
-- [ ] **Step 4:** Tests pass.
-- [ ] **Step 5:** Commit `feat(decision): 0-100 ranks with ties and missing values`.
+- [ ] **Step 3:** Implement: average rank index among non-None values, `/(n-1)*100`, 1 decimal; `n == 1` → 50.0.
+- [ ] **Step 4:** PASS. **Step 5:** commit `feat(decision): 0-100 ranks with ties and missing values`.
 
 ### Task 2: Confidence
 
 **Files:** `avenir_decision/confidence.py`, `tests/test_confidence.py`
 
-**Interfaces:**
-- Produces: `lowest(*levels: Confidence) -> Confidence`; `downgrade(level: Confidence) -> Confidence` (high→medium→low→low); `component_confidence(metrics: Sequence[Metric]) -> Confidence`: lowest confidence among present metrics, then `downgrade` once if any input is missing; all missing → `"low"`.
+**Interfaces:** `lowest(*levels: Confidence) -> Confidence`; `downgrade(level) -> Confidence` (high→medium→low→low); `component_confidence(metrics: Sequence[Metric | None]) -> Confidence`: lowest among present metrics, `downgrade` once if any input is missing (None or `value is None`); all missing → `"low"`.
 
-- [ ] **Step 1: Failing tests**: `lowest("high","medium") == "medium"`; `downgrade("low") == "low"`; two present high + one missing → `"medium"`; all missing → `"low"`.
-- [ ] **Steps 2-5:** run (fail), implement with `CONFIDENCE_ORDER` from `avenir_contracts.vocab`, run (pass), commit `feat(decision): confidence rules`.
+- [ ] Tests: `lowest("high","medium") == "medium"`; `downgrade("low") == "low"`; two present `high` + one missing → `"medium"`; all missing → `"low"`. Fail, implement with `CONFIDENCE_ORDER`, pass, commit `feat(decision): confidence rules`.
 
 ### Task 3: Fit and head start
 
 **Files:** `avenir_decision/fit.py`, `tests/test_fit.py`
 
 **Interfaces:**
-- Consumes: `ProfileIn`, `Career` from `avenir_contracts`.
-- Produces: `head_start(profile: ProfileIn, career: Career) -> float` in 0..1; `fit_scores(profile: ProfileIn, careers: Sequence[Career]) -> dict[str, ComponentScore]` keyed by `soc2020`.
+- Consumes: `AvenirData.affinity` (`tag -> soc -> 0..1`, from `fit.json`).
+- Produces: `head_start(profile: ProfileIn, career: Career) -> float` (0..1); `fit_scores(profile: ProfileIn, careers: Sequence[Career], affinity: Mapping[str, Mapping[str, float]]) -> dict[str, ComponentScore]`.
 
-Rules (decided here, not in the spec):
-- `head_start`: share of `career.entry_subjects` the student holds; a subject at `higher`, `advanced_higher` or `a_level` counts 1.0, at `national5` or `gcse` 0.5 (take the best level per subject). No entry subjects → 1.0.
-- `fit = 100 * overlap * (0.8 + 0.2 * head_start)`, rounded to 1 decimal, where `overlap = |P ∩ C| / min(|P|, |C|)`, P = profile interests, C = career interest tags; C empty → overlap 0.
-- P empty → every career gets `ComponentScore(score=50.0, confidence="low")`.
-- Confidence `high` if `len(P) >= 3`, else `medium`.
+Rules:
+- Base = mean over the profile's interests of `affinity[tag].get(soc, 0.0)` (the same formula as `pathfinder_ml.ML.fit_scores`). Unknown tag → `ValueError` naming it (the API validates before calling).
+- `head_start`: share of `career.entry_subjects` held; `higher`, `advanced_higher`, `a_level` count 1.0, `national5`, `gcse` 0.5 (best level per subject); no entry subjects → 1.0.
+- `fit = round(100 * base * (0.8 + 0.2 * head_start), 1)`.
+- No interests → every career `ComponentScore(score=50.0, confidence="low")`.
+- Confidence `high` if 3 or more interests, else `medium`.
 
 - [ ] **Step 1: Failing tests**
 ```python
-def test_amira_fits_architect_better_than_radiographer(profile_amira, careers):
-    s = fit_scores(profile_amira, careers)
-    arch = next(c for c in careers if c.title == "Architect").soc2020
-    rad = next(c for c in careers if c.title == "Radiographer").soc2020
-    assert s[arch].score > s[rad].score
-def test_empty_profile_is_neutral(careers):
-    s = fit_scores(ProfileIn(), careers)
+def test_amira_fits_architect_best(amira, careers, data):
+    s = fit_scores(amira, careers, data.affinity)
+    assert max(s, key=lambda k: s[k].score) == "2451"          # Architects
+    assert s["2451"].score > s["2254"].score                    # vs Medical radiographers
+def test_empty_profile_is_neutral(careers, data):
+    s = fit_scores(ProfileIn(), careers, data.affinity)
     assert {v.score for v in s.values()} == {50.0} and {v.confidence for v in s.values()} == {"low"}
-def test_head_start_counts_national5_as_half(careers):
-    arch = next(c for c in careers if c.title == "Architect")   # entry: maths, art, physics
+def test_unknown_tag_raises(careers, data):
+    with pytest.raises(ValueError, match="juggling"):
+        fit_scores(ProfileIn(interests=["juggling"]), careers, data.affinity)
+def test_head_start_counts_national5_as_half(data):
+    arch = data.careers["2451"]                                 # mock entry subjects: maths, art, physics
     p = ProfileIn(qualifications=[Qualification(subject="maths", level="national5")])
     assert head_start(p, arch) == pytest.approx(0.5 / 3)
-def test_fit_bounded(profile_amira, careers):
-    assert all(0 <= v.score <= 100 for v in fit_scores(profile_amira, careers).values())
 ```
-- [ ] **Steps 2-5:** fail, implement, pass, commit `feat(decision): fit and head start`.
+- [ ] Fail, implement, pass, commit `feat(decision): fit and head start`.
 
 ### Task 4: Return and risk components
 
 **Files:** `avenir_decision/components.py`, `tests/test_components.py`
 
-**Interfaces:**
-- Consumes: `rank_0_100`, `component_confidence`, `downgrade`, `fit_scores`.
-- Produces: `score_components(profile: ProfileIn, careers: Sequence[Career]) -> dict[str, Components]`; constant `RISK_WEIGHT_RANGE = (0.2, 0.8)`.
+**Interfaces:** `score_components(profile: ProfileIn, careers: Sequence[Career], affinity: Mapping[str, Mapping[str, float]]) -> dict[str, Components]`.
 
-Rules (each sub-score is a weighted mean over the inputs that are present, weights renormalised; all inputs missing → `score=None, confidence="low"`):
-- `expected_return` = ranks (higher is better) of `pay_now` 0.4, `pay_early` 0.2, `pay_ceiling` 0.2, `pay_growth_10y` 0.2.
-- `market_risk` (higher = riskier) = rank of `demand_trend` with `higher_is_better=False` 0.5; shortage 0.25 where flag 1.0 → 0, flag 0.0 → 100; rank of `ads_now` with `higher_is_better=False` 0.25.
-- `disruption_risk` = rank of blended exposure, blend = `0.7*exposure_ilo + 0.3*exposure_inhouse` when both present, else whichever is present. If both present and `abs(ilo - inhouse) > 0.2`, `downgrade` the confidence (spec section 4: "confidence widens when they disagree").
-- `risk` = `(1-w)*market_risk + w*disruption_risk`, `w = 0.2 + 0.6*profile.automation_worry`; one side missing → the other alone; confidence `lowest` of the two present.
-- Confidence of each component: `component_confidence` of its input metrics. `pay_spread`, `wellbeing`, `stress` are display-only: never scored.
+Rules. Each component is a weighted mean of the inputs that are present (weights renormalised); all inputs missing → `score=None, confidence="low"`. "rank" = `rank_0_100` across the careers passed in.
+- `expected_return` (higher = better): rank `pay_median` 0.5, rank `pay_p90` 0.2, rank `real_pay_change_10y` 0.3.
+- `market_risk` (higher = riskier): rank `demand_trend` with `higher_is_better=False` 0.5; resilience 0.35 = rank, `higher_is_better=False`, of the mean of the present `resilience_covid`, `resilience_cost_of_living`, `resilience_tech_slump`, `resilience_2008` values; shortage 0.15 = 0 if `shortage.value == 1` else 100 (skip if missing).
+- `disruption_risk`: rank of `exposure`. `downgrade` confidence once if `exposure.high - exposure.low > 0.2` (wide `multi_isco` spread), and once more if `exposure_uk` is present and differs from `exposure` by more than 0.15.
+- `risk = (1-w)*market_risk + w*disruption_risk`, `w = 0.2 + 0.6*profile.automation_worry`; one side missing → the other alone; confidence = `lowest` of the two present.
+- `fit` from Task 3.
+- Display-only, never scored: `pay_p10`, `jobs`, `demand_trend_2011_19`, `wellbeing`, `stress`, `ads_now`.
+- Each component's confidence = `component_confidence` of its input metrics (then the downgrades above).
 
 - [ ] **Step 1: Failing tests**
 ```python
-def test_slider_moves_risk_toward_disruption(careers):
-    lo = score_components(ProfileIn(automation_worry=0.0), careers)
-    hi = score_components(ProfileIn(automation_worry=1.0), careers)
-    soc = careers[0].soc2020
-    c = hi[soc]
-    expected = 0.2 * c.market_risk.score + 0.8 * c.disruption_risk.score
-    assert c.risk.score == pytest.approx(expected, abs=0.1)
+def test_slider_moves_risk_toward_disruption(careers, data):
+    lo = score_components(ProfileIn(automation_worry=0.0), careers, data.affinity)
+    hi = score_components(ProfileIn(automation_worry=1.0), careers, data.affinity)
+    c = hi["2134"]
+    assert c.risk.score == pytest.approx(0.2 * c.market_risk.score + 0.8 * c.disruption_risk.score, abs=0.1)
     assert any(lo[s].risk.score != hi[s].risk.score for s in hi)
-def test_all_inhouse_missing_falls_back_to_ilo(careers):
-    stripped = [c.model_copy(update={"metrics": c.metrics.model_copy(update={
-        "exposure_inhouse": Metric.missing("index_0_1", "m2")})}) for c in careers]
-    out = score_components(ProfileIn(), stripped)
-    assert all(v.disruption_risk.score is not None or c.metrics.exposure_ilo.is_missing
-               for c, v in zip(stripped, out.values()))
-def test_every_component_present_and_bounded(profile_amira, careers):
-    for comps in score_components(profile_amira, careers).values():
+def test_pending_resilience_is_skipped(careers, data):
+    out = score_components(ProfileIn(), careers, data.affinity)    # tech_slump and 2008 are null in mocks
+    assert all(v.market_risk.score is not None for v in out.values())
+def test_scores_bounded(amira, careers, data):
+    for comps in score_components(amira, careers, data.affinity).values():
         for cs in comps.model_dump().values():
             assert cs["score"] is None or 0 <= cs["score"] <= 100
 ```
-- [ ] **Steps 2-5:** fail, implement, pass, commit `feat(decision): return and risk components`.
+- [ ] Fail, implement, pass, commit `feat(decision): return and risk components`.
 
 ### Task 5: Picks
 
 **Files:** `avenir_decision/picks.py`, `tests/test_picks.py`
 
-**Interfaces:**
-- Produces: `FIT_THRESHOLD = 40.0`; `choose_picks(components: Mapping[str, Components], exclude: Collection[str] = (), fit_threshold: float = FIT_THRESHOLD) -> list[tuple[PickTier, str]]`.
+**Interfaces:** `FIT_RELATIVE = 0.5`, `FIT_FLOOR = 5.0`; `eligible(components: Mapping[str, Components], exclude: Collection[str] = ()) -> list[str]`; `choose_picks(components, exclude=()) -> list[tuple[PickTier, str]]`.
 
-Rules: eligible = `fit.score >= fit_threshold` and `expected_return.score` and `risk.score` not None and SOC not in `exclude` (the first idea is excluded, so picks are alternatives to it). Picks are distinct, chosen in this order: `ambitious` = max return; `safe` = min risk among the rest; `balanced` = max `(return - 50) / max(risk, 10)` among the rest. Ties: higher fit, then lower SOC string. Fewer eligible → fewer picks, same order.
+Rules (checked on the mock affinities: Amira's profile gives 6 eligible):
+- Eligible: not in `exclude` (the first idea), `expected_return.score` and `risk.score` not None, and `fit.score >= max(FIT_FLOOR, FIT_RELATIVE * best_fit)` where `best_fit` is the highest fit among non-excluded careers. With no interests every fit is 50, so all qualify.
+- Distinct picks, in this order: `ambitious` = max return; `safe` = min risk among the rest; `balanced` = max `(return - 50) / max(risk, 10)` among the rest. Ties: higher fit, then lower SOC string. Fewer eligible → fewer picks.
+- Tell Arsenii these rules in your PR: his backtest groups (`backtest.json`) must use the same ones (his `balanced` group is null until they are fixed).
 
-- [ ] **Step 1: Failing tests**: (a) built `Components` dicts where the answers are known by hand, asserting exact `[("ambitious","A"),("safe","B"),("balanced","C")]`; (b) first idea excluded; (c) one eligible → `[("ambitious", soc)]`; (d) none eligible → `[]`.
-- [ ] **Steps 2-5:** fail, implement, pass, commit `feat(decision): ambitious, safe, balanced picks`.
+- [ ] Tests: hand-built `Components` with known answers → exact `[("ambitious","A"),("safe","B"),("balanced","C")]`; first idea excluded; relative gate (best fit 60 → a career at 29 is out, 30 is in); one eligible → one pick; none → `[]`. Fail, implement, pass, commit `feat(decision): ambitious, safe, balanced picks`.
 
 ### Task 6: First idea and comparison
 
-**Files:** `avenir_decision/first_idea.py`, `avenir_decision/compare.py`, `tests/test_first_idea.py`, `tests/test_compare.py`
+**Files:** `avenir_decision/first_idea.py`, `avenir_decision/compare.py`, tests
 
-**Interfaces:**
-- Produces: `resolve_first_idea(text: str, careers: Sequence[Career]) -> Career | None`; `COMPONENT_NAMES = ("fit","expected_return","market_risk","disruption_risk","risk")`; `vs_first_idea(pick: Components, first: Components | None) -> dict[str, float | None]` (pick minus first, 1 decimal; `None` when either side is None or `first` is None).
+**Interfaces:** `resolve_first_idea(text: str, careers: Sequence[Career]) -> Career | None`; `COMPONENT_NAMES = ("fit","expected_return","market_risk","disruption_risk","risk")`; `vs_first_idea(pick: Components, first: Components | None) -> dict[str, float | None]` (pick minus first, 1 decimal; None where either side is None).
 
-Resolution order, on `text.strip().casefold()`: exact SOC code → exact title or alias → title or alias contains the text or the text contains it (prefer the shortest title) → `difflib.get_close_matches(cutoff=0.75)` over titles and aliases → `None`.
+Resolution on `text.strip().casefold()` over `title`, `official_title` and `aliases`: exact SOC code → exact name → name contains text or text contains name (prefer the shortest name) → `difflib.get_close_matches(cutoff=0.75)` → `None`.
 
-- [ ] **Step 1: Failing tests**: `"Architect "`, `"ARCHITECT"`, `"architecture"` (alias) → Architect; `"programmer"` → Software developer; `"0004"` → the career with that SOC; `"astronaut"` → None; `vs_first_idea(x, None)` → all None.
-- [ ] **Steps 2-5:** fail, implement, pass, commit `feat(decision): resolve first idea and compare`.
+- [ ] Tests: `"Architect "`, `"ARCHITECTS"`, `"architecture"` → 2451; `"programmer"` → 2134; `"2254"` → 2254; `"astronaut"` → None; `vs_first_idea(x, None)` → all None. Fail, implement, pass, commit `feat(decision): resolve first idea and compare`.
 
 ### Task 7: Hedge
 
-**Files:** `avenir_decision/hedge.py`, `tests/test_hedge.py`
+**Files:** `avenir_decision/hedge.py`, tests
 
-**Interfaces:**
-- Consumes: `HedgeCandidate` lists from `Snapshots.hedges`.
-- Produces: `choose_hedge(top: Career, candidates: Sequence[HedgeCandidate], components: Mapping[str, Components], careers: Mapping[str, Career]) -> Hedge | None`.
+**Interfaces:** `choose_hedge(top: Career, candidates: Sequence[HedgeCandidate], components: Mapping[str, Components], careers: Mapping[str, Career]) -> Hedge | None`.
 
-Rule: keep candidates that are in `careers` and whose `risk.score` is lower than the top pick's; choose max `skill_overlap` (tie: lower risk). `risk_delta = candidate risk - top risk` (negative). None qualify → `None`.
+Rule (CONTRACTS.md 4.3: "highest similarity among candidates with lower risk"): keep candidates in `careers` with `risk.score` lower than the top pick's; choose max `similarity` (tie: lower risk). `Hedge(for_soc=top.soc2020, career=..., similarity, shared_skills, why, risk_delta=cand_risk - top_risk, status=cand.status)`. None qualify → `None`.
 
-- [ ] **Step 1: Failing tests**: safer candidate chosen over a higher-overlap riskier one; unknown SOC skipped; no safer candidate → None.
-- [ ] **Steps 2-5:** fail, implement, pass, commit `feat(decision): hedge career`.
+- [ ] Tests: safer lower-similarity candidate beats a riskier higher one; unknown SOC skipped; none safer → None. Fail, implement, pass, commit `feat(decision): hedge career`.
 
 ### Task 8: Roadmap
 
-**Files:** `avenir_decision/roadmap.py`, `tests/test_roadmap.py`
+**Files:** `avenir_decision/roadmap.py`, tests
 
-**Interfaces:**
-- Produces: `build_roadmap(profile: ProfileIn, career: Career, routes: Sequence[Route]) -> Roadmap`.
+**Interfaces:** `build_roadmap(profile: ProfileIn, career: Career, routes: Sequence[Route]) -> Roadmap`.
 
-Rules: use only routes with `route.nation == profile.nation`.
-- Step 1 "Subjects": entry subjects the student lacks at Higher level or above → "Take Higher <Subject, Subject>"; none lacking → "Keep <subjects> to Higher or Advanced Higher". Subject names title-cased with `_` → space.
-- Step 2 "Route in": first route by kind preference `graduate_apprenticeship`, `degree`, `apprenticeship`, `college`; `detail` = `f"{route.name}: {route.entry_requirements}"`, `route` set. No route for the nation → title "Route in", detail "Routes for this nation are missing from our data.", `route=None`.
-- Step 3 "First milestone": with a route → "Check the application deadline and open days on the route's page."; without → "Ask your school's careers adviser about routes into <title>."
-- `this_month`: with a route → `f"Read {route.name} at {route.url} and note its entry requirements."`; without → `f"Talk to your careers adviser about {career.title}."`
-- Never state a deadline date or grade you did not get from the route data.
+Rules (only routes with `route.nation == profile.nation`):
+- Step 1 "Subjects": entry subjects not held at Higher or above → `"Take Higher <Subject, Subject>"`; none missing → `"Keep <subjects> to Higher or Advanced Higher"`; subject names title-cased, `_` → space. No entry subjects → "Check the subjects on the route's page."
+- Step 2 "Route in": first route by kind preference `graduate_apprenticeship`, `degree`, `apprenticeship`, `college`; `detail = f"{route.name}: {route.entry_requirements}"`. None for the nation → detail "Routes for this nation are missing from our data.", `route=None`.
+- Step 3 "First milestone": with a route "Check the application deadline and open days on the route's page."; without, `f"Ask your school's careers adviser about routes into {career.title}."`
+- `this_month`: with a route `f"Read {route.name} at {route.url} and note its entry requirements."`; without `f"Talk to your careers adviser about {career.title}."`
+- Never state a date or grade that isn't in the route data.
 
-- [ ] **Step 1: Failing tests**: Scottish profile gets a Scottish route; English profile with only Scottish routes → missing message and `route is None`; student holding maths at Higher is not told to take maths.
-- [ ] **Steps 2-5:** fail, implement, pass, commit `feat(decision): three-step roadmap`.
+- [ ] Tests: Scottish profile gets a Scottish route; English profile with only Scottish routes → missing message, `route is None`; maths held at Higher is not listed. Fail, implement, pass, commit `feat(decision): three-step roadmap`.
 
-### Task 9: Reasons
+### Task 9: Reasons and notices
 
-**Files:** `avenir_decision/reasons.py`, `tests/test_reasons.py`
+**Files:** `avenir_decision/reasons.py`, tests
 
-**Interfaces:**
-- Produces: `pick_reasons(tier: PickTier, career: Career, comps: Components) -> list[str]` (2 or 3 sentences).
+**Interfaces:** `SOURCE_LABELS = {"ons_ashe_t14": "ONS ASHE", "ilo_wp140": "ILO", "MOCK": "sample data"}`; `pick_reasons(tier: PickTier, career: Career, comps: Components) -> list[str]`; `notices_for(careers: Sequence[Career]) -> list[str]`.
 
-Templates (fill only from present metrics; skip a sentence whose metric is missing):
-- pay: `f"Median pay £{v:,.0f} a year ({source_label}, {year})."` from `pay_now`
-- demand: `f"Employment trend {v:+.1f}% a year."` from `demand_trend`
-- exposure: `f"Automation exposure (research estimate): {v:.2f} on a 0 to 1 scale, {confidence} confidence."` from `exposure_ilo`
+Templates (skip a sentence whose metric is missing):
 - tier line: ambitious "Highest expected return among careers that fit you."; safe "Lowest overall risk among careers that fit you."; balanced "Best return for the risk among careers that fit you."
-`source_label`: `{"ashe_t14": "ONS ASHE", "MOCK": "MOCK DATA"}` else the source id.
+- `pay_median`: `f"Median pay £{v:,.0f} a year for full-time employees ({label}, {as_of})."`
+- `demand_trend`: `f"Jobs trend {v*100:+.1f}% a year ({as_of})."`
+- `exposure`: `f"GenAI exposure (research estimate): {v:.2f} on a 0 to 1 scale, {confidence} confidence."`
+- `notices_for`: for every metric of the given careers, every flag in `pathfinder_ml.MUST_MENTION` → `pathfinder_ml.FLAG_TEXT[flag]`, unique, in first-seen order.
 
-- [ ] **Step 1: Failing tests**: every number in the output string appears in the career's metrics; a missing `pay_now` → no pay sentence; mock data says "MOCK DATA".
-- [ ] **Steps 2-5:** fail, implement, pass, commit `feat(decision): template reasons`.
+- [ ] Tests: every number in the reasons appears in the career's metrics (after the stated formatting); missing `pay_median` → no pay sentence; a career with `bridged_soc2010` on any metric → its FLAG_TEXT in `notices_for`. Fail, implement, pass, commit `feat(decision): reasons and notices`.
 
 ### Task 10: recommend()
 
-**Files:** `avenir_decision/recommend.py`, `avenir_decision/__init__.py` (export `recommend`, `score_components`, `choose_hedge`, `resolve_first_idea`, `build_roadmap`), `tests/test_recommend.py`
+**Files:** `avenir_decision/recommend.py`, `avenir_decision/__init__.py` (export `recommend`, `score_components`, `choose_hedge`, `resolve_first_idea`, `build_roadmap`, `fit_scores`), tests
 
-**Interfaces:**
-- Consumes: everything above; `Snapshots`; `ExplanationWriter`, `TemplateExplanation` from `avenir_contracts.ports`.
-- Produces: `recommend(req: RecommendationRequest, snap: Snapshots, writer: ExplanationWriter | None = None) -> RecommendationOut`.
+**Interfaces:** `recommend(req: RecommendationRequest, data: AvenirData, writer: ExplanationWriter | None = None) -> RecommendationOut`.
 
-Flow: components for all careers → resolve first idea → `choose_picks(exclude={first.soc2020})` → build `Pick`s with `vs_first_idea` and `pick_reasons` → hedge for the first pick (`snap.hedges.get(soc, [])`) → roadmap for the first pick (`snap.routes.get(soc, [])`) → `writer.explain(out)` (default `TemplateExplanation()`), and if the writer raises, fall back to `TemplateExplanation`. Raises `ValueError("no careers loaded")` if `snap.careers` is empty.
+Flow: `score_components` over `data.careers` → `resolve_first_idea` → `choose_picks(exclude={first.soc2020} if first else ())` → `Pick`s with `vs_first_idea` and `pick_reasons` → hedge for the first pick from `data.hedges.get(soc, [])` → roadmap for the first pick from `data.routes.get(soc, [])` → `notices = notices_for(picks + first idea + hedge careers)` → `writer.explain(out)` (default `TemplateExplanation()`; if it raises, use `TemplateExplanation`). `ValueError("no careers loaded")` if `data.careers` is empty.
 
-- [ ] **Step 1: Failing tests**: Amira + "architect" on mock data → `first_idea.title == "Architect"`, 1 to 3 picks, none is Architect, each has 5 `vs_first_idea` keys; same request twice → identical output (determinism); a writer that raises → template text, `ai_written is False`; empty careers → ValueError.
-- [ ] **Steps 2-5:** fail, implement, pass, commit `feat(decision): recommend entry point`.
-- [ ] **Step 6:** `pytest packages/decision && ruff check packages/decision`, push, open draft PR "nazar: decision engine".
+- [ ] Tests: Amira + "architect" → `first_idea.soc2020 == "2451"`, 1 to 3 picks, none is 2451, 5 keys in each `vs_first_idea`, `notices` non-empty (mocks carry `bridged_soc2010`); same request twice → identical; a writer that raises → template, `ai_written is False`; empty data → ValueError. Fail, implement, pass, commit `feat(decision): recommend entry point`.
+- [ ] `pytest packages/decision && ruff check packages/decision`; push; draft PR "nazar: decision engine".
 
 ---
 
-## Track B: API (branch `nazar/api`; Tasks 11 to 12 run in parallel with Track A, Task 13 on needs Track A merged)
+## Track B: API (branch `nazar/api`; Tasks 11-12 in parallel with Track A; Task 13 on after Track A is merged)
 
 ### Task 11: App, envelope, errors
 
-**Files:** `services/api/avenir_api/{app.py,envelope.py,deps.py}`, `services/api/tests/conftest.py`, `services/api/tests/test_envelope.py`
+**Files:** `services/api/avenir_api/{app.py,envelope.py,deps.py}`, `services/api/tests/conftest.py`, `test_envelope.py`
 
 **Interfaces:**
-- Consumes: `Envelope`, `Meta`, `ErrorBody`, `ErrorCode`, `HTTP_STATUS`, `SourceStatus`, `load_snapshots`, ports defaults.
-- Produces: `create_app(snapshots: Snapshots | None = None, ads: AdsSource | None = None, writer: ExplanationWriter | None = None, suggester: TagSuggester | None = None) -> FastAPI`; `ok(data, sources: list[SourceStatus]) -> JSONResponse`; `fail(code: ErrorCode, message: str, details: list[ErrorDetail] = []) -> JSONResponse`. App state: `app.state.snap`, `.ads`, `.writer`, `.suggester`.
-- `deps.default_ports()`: `try: from avenir_adapters.registry import ads_source, explanation_writer, tag_suggester` → use them; `except ImportError` → `SnapshotAds()`, `TemplateExplanation()`, `NoTagSuggester()`.
-- Exception handlers: `RequestValidationError` → 422 `VALIDATION_ERROR` with one `ErrorDetail(field=".".join(loc), issue=msg)` per error; `HTTPException(404)` → `NOT_FOUND`; any other exception → 500 `INTERNAL` with message "Something went wrong" (log the traceback, never return it).
-- `meta.as_of` = today ISO date; `meta.request_id` = `uuid4().hex[:12]`, also sent as header `X-Request-ID`.
-- CORS: allow `http://localhost:5173` and `http://127.0.0.1:5173`.
+- `create_app(data: AvenirData | None = None, ads: AdsSource | None = None, writer: ExplanationWriter | None = None, suggester: TagSuggester | None = None) -> FastAPI`; `data` defaults to `load_data()`; state on `app.state.data/.ads/.writer/.suggester`; module-level `app = create_app()` only in `app.py`'s `if`-free bottom line used by uvicorn (tests build their own).
+- `ok(data, sources: list[SourceStatus]) -> JSONResponse`; `fail(code: ErrorCode, message: str, details: list[ErrorDetail] | None = None) -> JSONResponse`.
+- `deps.default_ports()`: `try: from avenir_adapters.registry import ads_source, explanation_writer, tag_suggester` → use them; `except ImportError` → `SnapshotAds()`, `TemplateExplanation()`, `KeywordSuggester()`.
+- Handlers: `RequestValidationError` → 422 `VALIDATION_ERROR`, one `ErrorDetail(field=".".join(map(str, loc)), issue=msg)` per error; 404 → `NOT_FOUND`; anything else → 500 `INTERNAL`, message "Something went wrong" (log the traceback, never return it).
+- `meta.as_of` = today; `meta.request_id = uuid4().hex[:12]`, also header `X-Request-ID`; `meta.sources` = `data.statuses` (+ adzuna status when ads are shown).
+- CORS: `http://localhost:5173`, `http://127.0.0.1:5173`.
 
-- [ ] **Step 1: Failing tests** with `TestClient(create_app(snapshots=<mock Snapshots>))`: unknown route → 404 envelope `ok: false`, `error.code == "NOT_FOUND"`; `create_app(snapshots=Snapshots())` (empty) starts and `/health` shows every source `missing`.
-- [ ] **Steps 2-5:** fail, implement, pass, commit `feat(api): app, envelope and error handling`.
+- [ ] Tests: unknown route → 404 envelope `ok: false`, `error.code == "NOT_FOUND"`; `create_app(data=AvenirData())` starts and `/health` reports `ml_mode == "missing"`. Fail, implement, pass, commit `feat(api): app, envelope and error handling`.
 
 ### Task 12: Read endpoints
 
-**Files:** `services/api/avenir_api/routes_read.py`, `services/api/tests/test_read.py`
+**Files:** `services/api/avenir_api/routes_read.py`, `tests/test_read.py`
 
-**Interfaces:** routes exactly as `docs/contracts.md`; every 200 returns `Envelope[T]` with `meta.sources` = `app.state.snap.statuses` (+ the ads status where ads are shown).
-- `GET /health` → `{"status": "ok", "sources": [...]}`
-- `GET /api/v1/sources` → `list[SourceStatus]`
-- `GET /api/v1/careers/{soc}` → `Career`, with `metrics.ads_now` replaced by `ads.ads_now(career, "UK")[0]`; unknown → 404
-- `GET /api/v1/backtest/years` → `list[int]` sorted; `GET /api/v1/backtest?year=Y` → `BacktestYear`; missing year → 404; `year` outside 2010-2020 → 422
+All return `Envelope[T]`:
+- `GET /health` → `{"status": "ok", "ml_mode": data.ml_mode, "sources": [...]}`
+- `GET /api/v1/tags` → `list[Tag]` (the checklist)
+- `GET /api/v1/sources` → `{"statuses": list[SourceStatus], "registry": dict[str, SourceInfo]}`
+- `GET /api/v1/careers` → `list[Career]` (demo set, for the first-idea picker)
+- `GET /api/v1/careers/{soc}` → `Career` with `metrics["ads_now"]` replaced by `ads.ads_now(career, "UK")[0]`; unknown → 404
+- `GET /api/v1/careers/{soc}/history` → `list[HistoryPoint]`; unknown → 404
+- `GET /api/v1/crises` → `list[Crisis]`
+- `GET /api/v1/backtest/years` → sorted `list[int]`; `GET /api/v1/backtest?year=Y` → `BacktestOut(window, caveats=data.backtest_caveats, status=data.backtest_status)`; no `year` → latest; unknown year → 404
 - `GET /api/v1/routes/{soc}?nation=scotland` → `list[Route]` for that nation (may be empty); unknown SOC → 404; bad nation → 422
 
-- [ ] **Step 1: Failing tests** for each route: happy path on mock data, 404 and 422 cases, and `meta.sources` non-empty.
-- [ ] **Steps 2-5:** fail, implement, pass, commit `feat(api): read endpoints`. Push, draft PR "nazar: API skeleton".
+- [ ] Tests per route: happy path on mock data, 404 and 422 cases, non-empty `meta.sources`. Fail, implement, pass, commit `feat(api): read endpoints`. Push; draft PR "nazar: API skeleton".
 
-### Task 13: Write endpoints (after Track A is merged; rebase `nazar/api` on `main`)
+### Task 13: Write endpoints (after Track A is merged; rebase first)
 
-**Files:** `services/api/avenir_api/routes_write.py`, `services/api/tests/test_write.py`
+**Files:** `services/api/avenir_api/routes_write.py`, `tests/test_write.py`
 
-**Interfaces:**
-- `POST /api/v1/profile` body `ProfileIn` → `ProfileOut`: `suggested_tags = suggester.suggest(free_text)` (an exception → `[]`); `interests` = profile interests then new suggestions, no duplicates; `tag_source = suggester.name` (or `"none"` if it failed).
-- `POST /api/v1/recommendations` body `RecommendationRequest` → `RecommendationOut` from `recommend(req, snap, writer)`; then overlay `ads_now` for each pick, the first idea and the hedge career via `ads.ads_now`; add the ads `SourceStatus` to `meta.sources`. `snap.careers` empty → 503 `UPSTREAM_UNAVAILABLE`.
-- `GET /api/v1/careers/{soc}/hedge` → `Hedge | None` using `score_components(ProfileIn(), careers)` and `choose_hedge`.
-- `POST /api/v1/demo/live` body `{"enabled": bool}` → `{"live": bool}`, calls `ads.set_live(enabled)` (pull the plug).
+- `POST /api/v1/profile` body `ProfileIn` → `ProfileOut`: unknown interest ids → 422 naming them; `suggested = suggester.suggest(free_text)` (exception → `[]`, `tag_source="none"`); `interests` = profile interests, then suggested tags not already there.
+- `POST /api/v1/recommendations` body `RecommendationRequest` → `RecommendationOut` from `recommend(req, data, writer)`; unknown interest ids → 422; no careers → 503 `UPSTREAM_UNAVAILABLE`; then overlay `ads_now` on every pick, the first idea and the hedge career via `ads.ads_now`, and add the adzuna `SourceStatus` to `meta.sources`.
+- `GET /api/v1/careers/{soc}/hedge` → `Hedge | None` using `score_components(ProfileIn(), ...)` and `choose_hedge`.
+- `POST /api/v1/demo/live` body `{"enabled": bool}` → `{"live": bool}`; calls `ads.set_live(enabled)` (pull the plug).
 
-- [ ] **Step 1: Failing tests**: Amira flow end to end (profile → recommendations) returns picks and `explanation.text`; slider 0 vs 1 can change the order and both are 200; `{"first_idea": ""}` → 422 with `details[0].field` ending in `first_idea`; empty snapshots → 503; `demo/live false` then recommendations → ads status not `live`.
-- [ ] **Steps 2-5:** fail, implement, pass, commit `feat(api): profile, recommendations, hedge, pull the plug`.
+- [ ] Tests: Amira flow (profile → recommendations) returns picks, notices and `explanation.text`; slider 0 and 1 both 200; `{"interests": ["juggling"]}` → 422 with "juggling" in `details`; `{"first_idea": ""}` → 422 with field ending `first_idea`; empty data → 503; `demo/live false` → adzuna status not `live`. Fail, implement, pass, commit `feat(api): profile, recommendations, hedge, pull the plug`.
 
 ### Task 14: OpenAPI export and Docker
 
 **Files:** `services/api/avenir_api/export_openapi.py`, `docs/openapi.json`, `services/api/Dockerfile`, `docker-compose.yml`, `Makefile` (add `run` and `openapi` targets only)
 
-**Interfaces:**
-- `python -m avenir_api.export_openapi` writes `docs/openapi.json` (pretty, sorted keys). The frontend generates its TypeScript client from this file; re-run and commit it whenever an endpoint changes.
-- `docker compose up` starts `api` on port 8000 (`uvicorn avenir_api.app:app --host 0.0.0.0 --port 8000`, where `app = create_app()` at module level), mounting `./snapshots` read-only. Leave a commented `web:` service for the frontend team.
+- `python -m avenir_api.export_openapi` writes `docs/openapi.json` (indent 2, sorted keys). The frontend generates its client from it; re-export whenever an endpoint changes.
+- `docker compose up` starts `api` on 8000 (`uvicorn avenir_api.app:app --host 0.0.0.0 --port 8000`) mounting `./snapshots` read-only; a commented `web:` service for the frontend.
 - `make run` = `uvicorn avenir_api.app:app --reload --port 8000`.
 
-- [ ] **Step 1:** Test: exported schema contains every path in `docs/contracts.md`.
-- [ ] **Steps 2-5:** fail, implement, pass, commit `feat(api): openapi export and docker compose`.
+- [ ] Test: the exported schema contains every path in Tasks 12 and 13. Fail, implement, pass, commit `feat(api): openapi export and docker compose`.
 
 ### Task 15: Provenance and freeze tests
 
 **Files:** `services/api/tests/test_provenance.py`, `services/api/tests/test_freeze.py`
 
-- [ ] **Step 1:** `test_every_metric_has_provenance`: walk the JSON of `/api/v1/recommendations` (Amira + "architect"); every dict that has a `"unit"` key also has non-empty `source`, `region`, `granularity`, `confidence`.
-- [ ] **Step 2:** `test_no_mock_at_freeze`: `pytest.mark.skipif(os.environ.get("AVENIR_FREEZE") != "1")`; with the default snapshot dir, no `SourceStatus.status == "mock"` and no metric `source == "MOCK"`.
-- [ ] **Step 3:** Run all: `pytest && ruff check .` → green. Commit `test(api): provenance and freeze checks`. Mark the PR ready, update `context/nazar-backend.md`, tell Yehor.
+- [ ] `test_every_metric_has_provenance`: walk the JSON of `/api/v1/recommendations` (Amira + "architect"); every dict with a `"unit"` key has non-empty `source`, `confidence`, `status`, and a `flags` list.
+- [ ] `test_no_mock_at_freeze` (skip unless `AVENIR_FREEZE=1`): with default data, no `SourceStatus.status == "mock"` for `catalogue`, `routes`, `ml_occupations`, `ml_backtest`, and no metric in a recommendation `is_mock`.
+- [ ] `pytest && ruff check .` green. Commit `test(api): provenance and freeze checks`. Mark PR ready; update `context/nazar-backend.md`; tell Yehor.
 
 ---
 
+## Handoffs
+- **Arsenii:** the pick rules in Task 5 are the ones his backtest groups should use; ask him for public `ML.affinity()` and `ML.backtest_years()` (we read `ml._load(...)` until then, in `avenir_contracts/data.py`, not in your code).
+- **Yehor:** `avenir_adapters.registry` (keyword/LLM suggester, Adzuna, LLM explanation) is picked up automatically by `deps.default_ports()`.
+- **Frontend:** `docs/openapi.json` after Task 14; the API on `:8000` from the 01:00 checkpoint.
+
 ## Self-review notes
-- Spec section 4 coverage: fit (T3), return (T4), market risk (T4), disruption risk with disagreement (T4), risk with slider (T4), picks (T5), hedge (T7), comparison (T6), confidence (T2, T4), roadmap (T8). Section 7 endpoints: T12, T13. Section 8 "explanation cites only numbers": template reasons (T9); the LLM validator is Yehor's.
-- Not in this plan: backtest computation (Arsenii), ETL and live adapters (Yehor), frontend.
+- Spec 4 coverage: fit (T3), return (T4), market and disruption risk (T4), slider (T4), picks (T5), hedge (T7), comparison (T6), confidence (T2, T4), roadmap (T8). Spec 7 endpoints: T12, T13 (plus tags, history, crises, careers list for the ML contract's extra artefacts). Spec 8 explanation citing numbers: T9 templates plus `notices`; the LLM number check is Yehor's.
+- Changed from the spec on purpose (per `packages/ml/CONTRACTS.md` section 6): no `pay_early`; ceiling is `pay_p90`; no in-house exposure number shown; resilience added to market risk.

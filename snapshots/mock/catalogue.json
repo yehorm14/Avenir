@@ -1,0 +1,1657 @@
+{
+ "generated_at": "2026-10-17T19:54:42+00:00",
+ "status": "mock",
+ "entries": [
+  {
+   "soc2020": "2134",
+   "title": "Software developer",
+   "aliases": [
+    "programmer",
+    "software engineer",
+    "coder"
+   ],
+   "description": "MOCK description of Software developer.",
+   "entry_subjects": [
+    "maths",
+    "computing"
+   ],
+   "metrics": {
+    "shortage": {
+     "value": 0.0,
+     "low": null,
+     "high": null,
+     "unit": "flag",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "wellbeing": {
+     "value": 7.0,
+     "low": null,
+     "high": null,
+     "unit": "score 0-10",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "stress": {
+     "value": 2006.6,
+     "low": null,
+     "high": null,
+     "unit": "rate per 100k",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "ads_now": {
+     "value": 326.8,
+     "low": null,
+     "high": null,
+     "unit": "count",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    }
+   }
+  },
+  {
+   "soc2020": "3544",
+   "title": "Data analyst",
+   "aliases": [
+    "data scientist"
+   ],
+   "description": "MOCK description of Data analyst.",
+   "entry_subjects": [
+    "maths"
+   ],
+   "metrics": {
+    "shortage": {
+     "value": 0.0,
+     "low": null,
+     "high": null,
+     "unit": "flag",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "wellbeing": {
+     "value": 7.2,
+     "low": null,
+     "high": null,
+     "unit": "score 0-10",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "stress": {
+     "value": 998.6,
+     "low": null,
+     "high": null,
+     "unit": "rate per 100k",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "ads_now": {
+     "value": 2049.4,
+     "low": null,
+     "high": null,
+     "unit": "count",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    }
+   }
+  },
+  {
+   "soc2020": "2133",
+   "title": "IT business analyst or systems designer",
+   "aliases": [
+    "systems analyst",
+    "business analyst"
+   ],
+   "description": "MOCK description of IT business analyst or systems designer.",
+   "entry_subjects": [
+    "maths",
+    "computing"
+   ],
+   "metrics": {
+    "shortage": {
+     "value": 1.0,
+     "low": null,
+     "high": null,
+     "unit": "flag",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "wellbeing": {
+     "value": 7.2,
+     "low": null,
+     "high": null,
+     "unit": "score 0-10",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "stress": {
+     "value": 1018.8,
+     "low": null,
+     "high": null,
+     "unit": "rate per 100k",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "ads_now": {
+     "value": 399.2,
+     "low": null,
+     "high": null,
+     "unit": "count",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    }
+   }
+  },
+  {
+   "soc2020": "2135",
+   "title": "Cyber security professional",
+   "aliases": [
+    "cyber security",
+    "ethical hacker"
+   ],
+   "description": "MOCK description of Cyber security professional.",
+   "entry_subjects": [
+    "computing",
+    "maths"
+   ],
+   "metrics": {
+    "shortage": {
+     "value": 0.0,
+     "low": null,
+     "high": null,
+     "unit": "flag",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "wellbeing": {
+     "value": 7.6,
+     "low": null,
+     "high": null,
+     "unit": "score 0-10",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "stress": {
+     "value": 1110.5,
+     "low": null,
+     "high": null,
+     "unit": "rate per 100k",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "ads_now": {
+     "value": 924.0,
+     "low": null,
+     "high": null,
+     "unit": "count",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    }
+   }
+  },
+  {
+   "soc2020": "2141",
+   "title": "Web designer",
+   "aliases": [
+    "web developer",
+    "ux designer"
+   ],
+   "description": "MOCK description of Web designer.",
+   "entry_subjects": [
+    "art",
+    "computing"
+   ],
+   "metrics": {
+    "shortage": {
+     "value": 0.0,
+     "low": null,
+     "high": null,
+     "unit": "flag",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "wellbeing": {
+     "value": 7.7,
+     "low": null,
+     "high": null,
+     "unit": "score 0-10",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "stress": {
+     "value": 1881.1,
+     "low": null,
+     "high": null,
+     "unit": "rate per 100k",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "ads_now": {
+     "value": 1610.9,
+     "low": null,
+     "high": null,
+     "unit": "count",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    }
+   }
+  },
+  {
+   "soc2020": "2142",
+   "title": "Graphic and multimedia designer",
+   "aliases": [
+    "graphic designer",
+    "animator",
+    "illustrator"
+   ],
+   "description": "MOCK description of Graphic and multimedia designer.",
+   "entry_subjects": [
+    "art",
+    "graphic_communication"
+   ],
+   "metrics": {
+    "shortage": {
+     "value": 0.0,
+     "low": null,
+     "high": null,
+     "unit": "flag",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "wellbeing": {
+     "value": 6.8,
+     "low": null,
+     "high": null,
+     "unit": "score 0-10",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "stress": {
+     "value": 2359.4,
+     "low": null,
+     "high": null,
+     "unit": "rate per 100k",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "ads_now": {
+     "value": 1186.9,
+     "low": null,
+     "high": null,
+     "unit": "count",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    }
+   }
+  },
+  {
+   "soc2020": "2451",
+   "title": "Architect",
+   "aliases": [
+    "architecture"
+   ],
+   "description": "MOCK description of Architect.",
+   "entry_subjects": [
+    "maths",
+    "art",
+    "physics"
+   ],
+   "metrics": {
+    "shortage": {
+     "value": 1.0,
+     "low": null,
+     "high": null,
+     "unit": "flag",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "wellbeing": {
+     "value": 6.9,
+     "low": null,
+     "high": null,
+     "unit": "score 0-10",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "stress": {
+     "value": 1424.4,
+     "low": null,
+     "high": null,
+     "unit": "rate per 100k",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "ads_now": {
+     "value": 3271.9,
+     "low": null,
+     "high": null,
+     "unit": "count",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    }
+   }
+  },
+  {
+   "soc2020": "2452",
+   "title": "Architectural technologist or planner",
+   "aliases": [
+    "town planner",
+    "architectural technologist"
+   ],
+   "description": "MOCK description of Architectural technologist or planner.",
+   "entry_subjects": [
+    "maths",
+    "graphic_communication"
+   ],
+   "metrics": {
+    "shortage": {
+     "value": 1.0,
+     "low": null,
+     "high": null,
+     "unit": "flag",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "wellbeing": {
+     "value": 7.4,
+     "low": null,
+     "high": null,
+     "unit": "score 0-10",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "stress": {
+     "value": 1986.2,
+     "low": null,
+     "high": null,
+     "unit": "rate per 100k",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "ads_now": {
+     "value": 1514.7,
+     "low": null,
+     "high": null,
+     "unit": "count",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    }
+   }
+  },
+  {
+   "soc2020": "3120",
+   "title": "CAD and architectural technician",
+   "aliases": [
+    "cad technician",
+    "draughtsperson"
+   ],
+   "description": "MOCK description of CAD and architectural technician.",
+   "entry_subjects": [
+    "maths",
+    "graphic_communication"
+   ],
+   "metrics": {
+    "shortage": {
+     "value": 0.0,
+     "low": null,
+     "high": null,
+     "unit": "flag",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "wellbeing": {
+     "value": 6.9,
+     "low": null,
+     "high": null,
+     "unit": "score 0-10",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "stress": {
+     "value": 1001.3,
+     "low": null,
+     "high": null,
+     "unit": "rate per 100k",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "ads_now": {
+     "value": 855.6,
+     "low": null,
+     "high": null,
+     "unit": "count",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    }
+   }
+  },
+  {
+   "soc2020": "2121",
+   "title": "Civil engineer",
+   "aliases": [
+    "civil engineering"
+   ],
+   "description": "MOCK description of Civil engineer.",
+   "entry_subjects": [
+    "maths",
+    "physics"
+   ],
+   "metrics": {
+    "shortage": {
+     "value": 0.0,
+     "low": null,
+     "high": null,
+     "unit": "flag",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "wellbeing": {
+     "value": 7.2,
+     "low": null,
+     "high": null,
+     "unit": "score 0-10",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "stress": {
+     "value": 1434.1,
+     "low": null,
+     "high": null,
+     "unit": "rate per 100k",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "ads_now": {
+     "value": 2358.8,
+     "low": null,
+     "high": null,
+     "unit": "count",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    }
+   }
+  },
+  {
+   "soc2020": "2123",
+   "title": "Electrical engineer",
+   "aliases": [
+    "power engineer"
+   ],
+   "description": "MOCK description of Electrical engineer.",
+   "entry_subjects": [
+    "maths",
+    "physics"
+   ],
+   "metrics": {
+    "shortage": {
+     "value": 0.0,
+     "low": null,
+     "high": null,
+     "unit": "flag",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "wellbeing": {
+     "value": 7.1,
+     "low": null,
+     "high": null,
+     "unit": "score 0-10",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "stress": {
+     "value": 2250.4,
+     "low": null,
+     "high": null,
+     "unit": "rate per 100k",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "ads_now": {
+     "value": 2808.0,
+     "low": null,
+     "high": null,
+     "unit": "count",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    }
+   }
+  },
+  {
+   "soc2020": "3113",
+   "title": "Engineering technician",
+   "aliases": [
+    "technician"
+   ],
+   "description": "MOCK description of Engineering technician.",
+   "entry_subjects": [
+    "maths",
+    "physics"
+   ],
+   "metrics": {
+    "shortage": {
+     "value": 1.0,
+     "low": null,
+     "high": null,
+     "unit": "flag",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "wellbeing": {
+     "value": 7.4,
+     "low": null,
+     "high": null,
+     "unit": "score 0-10",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "stress": {
+     "value": 1792.8,
+     "low": null,
+     "high": null,
+     "unit": "rate per 100k",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "ads_now": {
+     "value": 3505.5,
+     "low": null,
+     "high": null,
+     "unit": "count",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    }
+   }
+  },
+  {
+   "soc2020": "2453",
+   "title": "Quantity surveyor",
+   "aliases": [
+    "qs"
+   ],
+   "description": "MOCK description of Quantity surveyor.",
+   "entry_subjects": [
+    "maths"
+   ],
+   "metrics": {
+    "shortage": {
+     "value": 0.0,
+     "low": null,
+     "high": null,
+     "unit": "flag",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "wellbeing": {
+     "value": 7.1,
+     "low": null,
+     "high": null,
+     "unit": "score 0-10",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "stress": {
+     "value": 2566.3,
+     "low": null,
+     "high": null,
+     "unit": "rate per 100k",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "ads_now": {
+     "value": 507.5,
+     "low": null,
+     "high": null,
+     "unit": "count",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    }
+   }
+  },
+  {
+   "soc2020": "2454",
+   "title": "Chartered surveyor",
+   "aliases": [
+    "surveyor",
+    "land surveyor"
+   ],
+   "description": "MOCK description of Chartered surveyor.",
+   "entry_subjects": [
+    "maths",
+    "geography"
+   ],
+   "metrics": {
+    "shortage": {
+     "value": 0.0,
+     "low": null,
+     "high": null,
+     "unit": "flag",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "wellbeing": {
+     "value": 7.6,
+     "low": null,
+     "high": null,
+     "unit": "score 0-10",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "stress": {
+     "value": 1158.4,
+     "low": null,
+     "high": null,
+     "unit": "rate per 100k",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "ads_now": {
+     "value": 1976.3,
+     "low": null,
+     "high": null,
+     "unit": "count",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    }
+   }
+  },
+  {
+   "soc2020": "2433",
+   "title": "Actuary, economist or statistician",
+   "aliases": [
+    "actuary",
+    "economist",
+    "statistician"
+   ],
+   "description": "MOCK description of Actuary, economist or statistician.",
+   "entry_subjects": [
+    "maths"
+   ],
+   "metrics": {
+    "shortage": {
+     "value": 1.0,
+     "low": null,
+     "high": null,
+     "unit": "flag",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "wellbeing": {
+     "value": 7.5,
+     "low": null,
+     "high": null,
+     "unit": "score 0-10",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "stress": {
+     "value": 2199.8,
+     "low": null,
+     "high": null,
+     "unit": "rate per 100k",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "ads_now": {
+     "value": 2309.2,
+     "low": null,
+     "high": null,
+     "unit": "count",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    }
+   }
+  },
+  {
+   "soc2020": "2422",
+   "title": "Finance and investment analyst",
+   "aliases": [
+    "investment analyst",
+    "financial analyst"
+   ],
+   "description": "MOCK description of Finance and investment analyst.",
+   "entry_subjects": [
+    "maths",
+    "business"
+   ],
+   "metrics": {
+    "shortage": {
+     "value": 0.0,
+     "low": null,
+     "high": null,
+     "unit": "flag",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "wellbeing": {
+     "value": 7.1,
+     "low": null,
+     "high": null,
+     "unit": "score 0-10",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "stress": {
+     "value": 2082.0,
+     "low": null,
+     "high": null,
+     "unit": "rate per 100k",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "ads_now": {
+     "value": 2393.7,
+     "low": null,
+     "high": null,
+     "unit": "count",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    }
+   }
+  },
+  {
+   "soc2020": "2421",
+   "title": "Accountant",
+   "aliases": [
+    "accounting"
+   ],
+   "description": "MOCK description of Accountant.",
+   "entry_subjects": [
+    "maths"
+   ],
+   "metrics": {
+    "shortage": {
+     "value": 0.0,
+     "low": null,
+     "high": null,
+     "unit": "flag",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "wellbeing": {
+     "value": 7.3,
+     "low": null,
+     "high": null,
+     "unit": "score 0-10",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "stress": {
+     "value": 2327.9,
+     "low": null,
+     "high": null,
+     "unit": "rate per 100k",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "ads_now": {
+     "value": 3780.9,
+     "low": null,
+     "high": null,
+     "unit": "count",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    }
+   }
+  },
+  {
+   "soc2020": "2254",
+   "title": "Medical radiographer",
+   "aliases": [
+    "radiographer"
+   ],
+   "description": "MOCK description of Medical radiographer.",
+   "entry_subjects": [
+    "biology",
+    "physics"
+   ],
+   "metrics": {
+    "shortage": {
+     "value": 0.0,
+     "low": null,
+     "high": null,
+     "unit": "flag",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "wellbeing": {
+     "value": 7.5,
+     "low": null,
+     "high": null,
+     "unit": "score 0-10",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "stress": {
+     "value": 1003.1,
+     "low": null,
+     "high": null,
+     "unit": "rate per 100k",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "ads_now": {
+     "value": 2817.9,
+     "low": null,
+     "high": null,
+     "unit": "count",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    }
+   }
+  },
+  {
+   "soc2020": "5241",
+   "title": "Electrician",
+   "aliases": [
+    "electrician"
+   ],
+   "description": "MOCK description of Electrician.",
+   "entry_subjects": [
+    "maths",
+    "physics"
+   ],
+   "metrics": {
+    "shortage": {
+     "value": 0.0,
+     "low": null,
+     "high": null,
+     "unit": "flag",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "wellbeing": {
+     "value": 7.8,
+     "low": null,
+     "high": null,
+     "unit": "score 0-10",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "stress": {
+     "value": 2297.3,
+     "low": null,
+     "high": null,
+     "unit": "rate per 100k",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "ads_now": {
+     "value": 1167.0,
+     "low": null,
+     "high": null,
+     "unit": "count",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    }
+   }
+  },
+  {
+   "soc2020": "2313",
+   "title": "Secondary school teacher",
+   "aliases": [
+    "teacher",
+    "maths teacher"
+   ],
+   "description": "MOCK description of Secondary school teacher.",
+   "entry_subjects": [
+    "maths",
+    "english"
+   ],
+   "metrics": {
+    "shortage": {
+     "value": 0.0,
+     "low": null,
+     "high": null,
+     "unit": "flag",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "wellbeing": {
+     "value": 7.5,
+     "low": null,
+     "high": null,
+     "unit": "score 0-10",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "stress": {
+     "value": 938.4,
+     "low": null,
+     "high": null,
+     "unit": "rate per 100k",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "major_group",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    },
+    "ads_now": {
+     "value": 1868.3,
+     "low": null,
+     "high": null,
+     "unit": "count",
+     "as_of": "2025",
+     "source": "MOCK",
+     "granularity": "occupation",
+     "confidence": "low",
+     "flags": [
+      "mock"
+     ],
+     "status": "mock",
+     "note": "Sample data, not a real figure.",
+     "extra": {},
+     "region": "UK"
+    }
+   }
+  }
+ ]
+}

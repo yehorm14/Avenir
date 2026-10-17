@@ -1,32 +1,40 @@
-"""Avenir shared contract: models, envelope, snapshot formats, adapter interfaces.
+"""Avenir shared contract v2: built on packages/ml/CONTRACTS.md v1.0 (Arsenii).
 
 Owner: Yehor. Change only through a PR with "needs a contract change" ticked.
 """
+from .catalogue import CatalogueEntry, CatalogueFile, RoutesFile
+from .data import AvenirData, join_career, load_data
 from .envelope import HTTP_STATUS, Envelope, ErrorBody, ErrorCode, ErrorDetail, Meta, SourceStatus
 from .metric import MOCK_SOURCE, Metric
 from .models import (
-    METRIC_UNITS,
+    BacktestGroup,
     BacktestOccupation,
-    BacktestTierResult,
-    BacktestYear,
+    BacktestOut,
+    BacktestWindow,
     Career,
-    CareerMetrics,
     Components,
     ComponentScore,
+    Crisis,
     Explanation,
     Hedge,
     HedgeCandidate,
+    HistoryPoint,
+    IscoShare,
     Pick,
     ProfileIn,
     ProfileOut,
     Qualification,
+    Range,
     RecommendationOut,
     RecommendationRequest,
     Roadmap,
     RoadmapStep,
     Route,
+    SourceInfo,
+    Tag,
+    TagMatch,
 )
-from .ports import AdsSource, ExplanationWriter, NoTagSuggester, SnapshotAds, TagSuggester, TemplateExplanation
-from .snapshots import BacktestFile, CareersFile, HedgeFile, MetricFile, RoutesFile, Snapshots, load_snapshots
+from .ports import AdsSource, ExplanationWriter, KeywordSuggester, SnapshotAds, TagSuggester, TemplateExplanation
+from .vocab import CATALOGUE_METRICS, ML_METRICS
 
 __all__ = [n for n in dir() if not n.startswith("_")]

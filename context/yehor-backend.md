@@ -1,29 +1,31 @@
-# yehor: backend (contract, ETL, live adapters)
+# yehor: backend (contract, catalogue, routes, live adapters)
 
 - **Owner:** Yehor (human) / Claude (agents)
-- **Branch:** `yehor/wave0-contracts`, then `yehor/<topic>`
-- **PR:** contract PR (this one)
-- **Status:** in progress
+- **Branch:** `yehor/wave0-contracts` (PR #1), then `yehor/live-adapters`, `yehor/catalogue`
+- **PR:** #1
+- **Status:** ready for review (PR #1); next work planned, not started
 
 ## Task
-Contract in code, backend split with Nazar, then the ETL and live adapters plan.
+Contract in code, built on Arsenii's ML contract; backend split with Nazar; then my plan v2.
 
 ## Done so far
-- `packages/contracts`: models, metric, envelope, snapshot formats, ports with safe defaults, mock generator (tests green).
-- `snapshots/mock/` generated (source MOCK, SOC 00NN).
-- Plans: `docs/superpowers/plans/2026-10-17-avenir-decision-and-api.md` (Nazar), `...-data-and-adapters.md` (Yehor).
-- `docs/backend-split.md`, `prompts/nazar-claude.md`.
+- Ported Arsenii's ML slice from KATYATA #9 (his authorship kept): `packages/ml`, `snapshots/ml/mock`, `docs/decisions.md`.
+- Contract v2 in `packages/contracts`: Metric = ML shape + region; Career joins ML occupation + catalogue; catalogue and routes files; `load_data()`; ports with no-network defaults (ML keyword suggester); mock catalogue and routes for the 20 ML demo SOCs.
+- Plans v2: Nazar `docs/superpowers/plans/2026-10-17-avenir-decision-and-api.md`, me `...-data-and-adapters.md`.
+- `docs/contracts.md` v2, `docs/backend-split.md`, `prompts/nazar-claude.md`, `prompts/yehor-claude.md`.
+- `data/curated/occupations.csv` pre-filled with the ML demo SOCs (verified_by empty).
+- Tests: 32 passed (19 ML, 13 contract).
 
 ## Blocked on
-- Real data downloads (laptop; this cloud workspace cannot reach ONS, Nomis, ILO, ESCO).
+- PR #1 merge (Yehor, on GitHub).
 
 ## Open questions (for humans)
-- Confirm the 20 occupations and fill SOC 2020 codes in `data/curated/occupations.csv`.
-- Which LLM endpoint (spec says "ELM"); the adapter takes any OpenAI-compatible URL.
+- Arsenii: public `ML.affinity()` and `ML.backtest_years()` (we use `ml._load` in `data.py` for now); use the pick rules from Nazar's plan Task 5 for the backtest groups (balanced is null today).
+- Team: confirm the 20 demo careers (Arsenii's set differs from the spec's list).
+- LLM endpoint (spec says ELM); the adapter takes any OpenAI-compatible URL.
 
 ## Marked (verify)
-- ASHE table number for annual gross pay (14.7a) and the age band for early-career pay.
-- Occupations in Demand level labels.
+- Occupations in Demand level labels; ELM API shape.
 
 ## Next step
-Merge the contract PR, send Nazar `prompts/nazar-claude.md`, start plan Tasks 1 to 3.
+Merge PR #1, send Nazar `prompts/nazar-claude.md`, continue in VS Code with `prompts/yehor-claude.md`.
