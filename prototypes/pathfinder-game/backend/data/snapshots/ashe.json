@@ -1,0 +1,288 @@
+{
+  "source_id": "ashe",
+  "edition": "ASHE 2025 (demo snapshot)",
+  "previous_edition": "ASHE 2024 (demo snapshot)",
+  "_note": "Annual gross pay for full-time employees, UK, by SOC 2020 (Annual Survey of Hours and Earnings, ONS, Table 14). p25/median/p75 in GBP. 'quality' mirrors the ONS coefficient-of-variation flag. DEMO VALUES: illustrative, to be replaced from the published tables.",
+  "occupations": {
+    "2134": {
+      "p25": 38000,
+      "median": 48000,
+      "p75": 62000,
+      "median_prev": 46500,
+      "quality": "precise"
+    },
+    "2135": {
+      "p25": 41000,
+      "median": 52000,
+      "p75": 66000,
+      "median_prev": 50000,
+      "quality": "reasonably precise"
+    },
+    "2425": {
+      "p25": 37000,
+      "median": 47000,
+      "p75": 62000,
+      "median_prev": 45500,
+      "quality": "reasonably precise"
+    },
+    "3132": {
+      "p25": 25000,
+      "median": 30000,
+      "p75": 36000,
+      "median_prev": 29200,
+      "quality": "precise"
+    },
+    "2122": {
+      "p25": 38000,
+      "median": 46000,
+      "p75": 56000,
+      "median_prev": 44800,
+      "quality": "precise"
+    },
+    "2121": {
+      "p25": 37000,
+      "median": 45000,
+      "p75": 55000,
+      "median_prev": 43500,
+      "quality": "precise"
+    },
+    "2123": {
+      "p25": 41000,
+      "median": 50000,
+      "p75": 61000,
+      "median_prev": 48000,
+      "quality": "reasonably precise"
+    },
+    "5241": {
+      "p25": 30000,
+      "median": 36000,
+      "p75": 43000,
+      "median_prev": 34600,
+      "quality": "precise"
+    },
+    "5314": {
+      "p25": 29000,
+      "median": 35000,
+      "p75": 42000,
+      "median_prev": 33800,
+      "quality": "precise"
+    },
+    "5316": {
+      "p25": 27000,
+      "median": 32000,
+      "p75": 38000,
+      "median_prev": 31200,
+      "quality": "reasonably precise"
+    },
+    "5313": {
+      "p25": 27000,
+      "median": 33000,
+      "p75": 40000,
+      "median_prev": 32000,
+      "quality": "use with caution"
+    },
+    "5231": {
+      "p25": 26000,
+      "median": 31000,
+      "p75": 37000,
+      "median_prev": 30100,
+      "quality": "precise"
+    },
+    "2232": {
+      "p25": 33000,
+      "median": 38000,
+      "p75": 44000,
+      "median_prev": 36900,
+      "quality": "precise"
+    },
+    "2235": {
+      "p25": 33000,
+      "median": 38000,
+      "p75": 45000,
+      "median_prev": 36800,
+      "quality": "reasonably precise"
+    },
+    "2221": {
+      "p25": 33000,
+      "median": 39000,
+      "p75": 46000,
+      "median_prev": 37900,
+      "quality": "reasonably precise"
+    },
+    "2222": {
+      "p25": 32000,
+      "median": 37000,
+      "p75": 44000,
+      "median_prev": 36000,
+      "quality": "reasonably precise"
+    },
+    "2223": {
+      "p25": 33000,
+      "median": 38000,
+      "p75": 45000,
+      "median_prev": 37000,
+      "quality": "use with caution"
+    },
+    "2255": {
+      "p25": 35000,
+      "median": 40000,
+      "p75": 47000,
+      "median_prev": 38800,
+      "quality": "reasonably precise"
+    },
+    "2251": {
+      "p25": 40000,
+      "median": 46000,
+      "p75": 54000,
+      "median_prev": 45200,
+      "quality": "reasonably precise"
+    },
+    "2254": {
+      "p25": 34000,
+      "median": 39000,
+      "p75": 46000,
+      "median_prev": 37900,
+      "quality": "reasonably precise"
+    },
+    "6135": {
+      "p25": 21000,
+      "median": 23000,
+      "p75": 25500,
+      "median_prev": 22000,
+      "quality": "precise"
+    },
+    "2313": {
+      "p25": 34000,
+      "median": 40000,
+      "p75": 46000,
+      "median_prev": 38500,
+      "quality": "precise"
+    },
+    "2314": {
+      "p25": 31000,
+      "median": 37000,
+      "p75": 43000,
+      "median_prev": 35800,
+      "quality": "precise"
+    },
+    "2461": {
+      "p25": 34000,
+      "median": 39000,
+      "p75": 44000,
+      "median_prev": 37900,
+      "quality": "precise"
+    },
+    "2225": {
+      "p25": null,
+      "median": null,
+      "p75": null,
+      "median_prev": null,
+      "quality": "not published"
+    },
+    "2421": {
+      "p25": 35000,
+      "median": 45000,
+      "p75": 60000,
+      "median_prev": 43800,
+      "quality": "precise"
+    },
+    "2412": {
+      "p25": 40000,
+      "median": 55000,
+      "p75": 80000,
+      "median_prev": 53500,
+      "quality": "reasonably precise"
+    },
+    "2451": {
+      "p25": 36000,
+      "median": 44000,
+      "p75": 55000,
+      "median_prev": 43000,
+      "quality": "use with caution"
+    },
+    "3421": {
+      "p25": 24000,
+      "median": 29000,
+      "p75": 35000,
+      "median_prev": 28500,
+      "quality": "reasonably precise"
+    },
+    "2453": {
+      "p25": 36000,
+      "median": 45000,
+      "p75": 56000,
+      "median_prev": 43600,
+      "quality": "reasonably precise"
+    },
+    "2152": {
+      "p25": 30000,
+      "median": 36000,
+      "p75": 43000,
+      "median_prev": 35000,
+      "quality": "reasonably precise"
+    },
+    "5434": {
+      "p25": 22000,
+      "median": 25000,
+      "p75": 29000,
+      "median_prev": 24000,
+      "quality": "precise"
+    },
+    "2113": {
+      "p25": 31000,
+      "median": 36000,
+      "p75": 42000,
+      "median_prev": 35100,
+      "quality": "reasonably precise"
+    },
+    "2240": {
+      "p25": 40000,
+      "median": 50000,
+      "p75": 62000,
+      "median_prev": 48500,
+      "quality": "use with caution"
+    },
+    "3312": {
+      "p25": 37000,
+      "median": 42000,
+      "p75": 47000,
+      "median_prev": 40800,
+      "quality": "precise"
+    },
+    "2422": {
+      "p25": 37000,
+      "median": 50000,
+      "p75": 70000,
+      "median_prev": 48000,
+      "quality": "reasonably precise"
+    },
+    "2440": {
+      "p25": 40000,
+      "median": 50000,
+      "p75": 62000,
+      "median_prev": 48500,
+      "quality": "reasonably precise"
+    },
+    "3556": {
+      "p25": 35000,
+      "median": 45000,
+      "p75": 60000,
+      "median_prev": 43800,
+      "quality": "precise"
+    },
+    "3554": {
+      "p25": 27000,
+      "median": 33000,
+      "p75": 40000,
+      "median_prev": 32000,
+      "quality": "reasonably precise"
+    },
+    "1122": {
+      "p25": 42000,
+      "median": 52000,
+      "p75": 65000,
+      "median_prev": 50000,
+      "quality": "reasonably precise"
+    }
+  }
+}

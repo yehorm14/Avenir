@@ -1,0 +1,336 @@
+{
+  "source_id": "discover_uni",
+  "edition": "2025-26 (demo snapshot)",
+  "_note": "Example course subjects (CAH) linked to each occupation, with median earnings 15 months after graduating (Graduate Outcomes, all UK). DEMO VALUES: illustrative subject-level figures, to be replaced with the Discover Uni dataset. null means no published figure.",
+  "occupations": {
+    "2134": [
+      {
+        "subject": "Computer science",
+        "qualification": "BSc",
+        "median_earnings_15m": 30000
+      },
+      {
+        "subject": "Software engineering",
+        "qualification": "BEng or BSc",
+        "median_earnings_15m": 31000
+      },
+      {
+        "subject": "Mathematics",
+        "qualification": "BSc",
+        "median_earnings_15m": 29000
+      }
+    ],
+    "2135": [
+      {
+        "subject": "Cyber security",
+        "qualification": "BSc",
+        "median_earnings_15m": 29000
+      },
+      {
+        "subject": "Computer science",
+        "qualification": "BSc",
+        "median_earnings_15m": 30000
+      }
+    ],
+    "2425": [
+      {
+        "subject": "Mathematics",
+        "qualification": "BSc",
+        "median_earnings_15m": 29000
+      },
+      {
+        "subject": "Statistics",
+        "qualification": "BSc",
+        "median_earnings_15m": 30000
+      },
+      {
+        "subject": "Economics",
+        "qualification": "BSc or MA (Scotland)",
+        "median_earnings_15m": 31000
+      },
+      {
+        "subject": "Computer science",
+        "qualification": "BSc",
+        "median_earnings_15m": 30000
+      }
+    ],
+    "3132": [
+      {
+        "subject": "Information technology",
+        "qualification": "HNC or HND",
+        "median_earnings_15m": null
+      }
+    ],
+    "2122": [
+      {
+        "subject": "Mechanical engineering",
+        "qualification": "BEng or MEng",
+        "median_earnings_15m": 30000
+      },
+      {
+        "subject": "Physics",
+        "qualification": "BSc or MPhys",
+        "median_earnings_15m": 29000
+      }
+    ],
+    "2121": [
+      {
+        "subject": "Civil engineering",
+        "qualification": "BEng or MEng",
+        "median_earnings_15m": 29000
+      }
+    ],
+    "2123": [
+      {
+        "subject": "Electrical and electronic engineering",
+        "qualification": "BEng or MEng",
+        "median_earnings_15m": 31000
+      },
+      {
+        "subject": "Physics",
+        "qualification": "BSc or MPhys",
+        "median_earnings_15m": 29000
+      }
+    ],
+    "5241": [],
+    "5314": [],
+    "5316": [],
+    "5313": [],
+    "5231": [],
+    "2232": [
+      {
+        "subject": "Adult nursing",
+        "qualification": "BSc or BN",
+        "median_earnings_15m": 29000
+      }
+    ],
+    "2235": [
+      {
+        "subject": "Mental health nursing",
+        "qualification": "BSc or BN",
+        "median_earnings_15m": 29000
+      }
+    ],
+    "2221": [
+      {
+        "subject": "Physiotherapy",
+        "qualification": "BSc",
+        "median_earnings_15m": 28000
+      }
+    ],
+    "2222": [
+      {
+        "subject": "Occupational therapy",
+        "qualification": "BSc",
+        "median_earnings_15m": 28000
+      }
+    ],
+    "2223": [
+      {
+        "subject": "Speech and language therapy",
+        "qualification": "BSc",
+        "median_earnings_15m": 28000
+      }
+    ],
+    "2255": [
+      {
+        "subject": "Paramedic science",
+        "qualification": "BSc",
+        "median_earnings_15m": 29000
+      }
+    ],
+    "2251": [
+      {
+        "subject": "Pharmacy",
+        "qualification": "MPharm",
+        "median_earnings_15m": 27000
+      }
+    ],
+    "2254": [
+      {
+        "subject": "Diagnostic radiography",
+        "qualification": "BSc",
+        "median_earnings_15m": 29000
+      }
+    ],
+    "6135": [],
+    "2313": [
+      {
+        "subject": "Teacher training (secondary)",
+        "qualification": "PGDE or PGCE",
+        "median_earnings_15m": 28000
+      },
+      {
+        "subject": "Mathematics",
+        "qualification": "BSc",
+        "median_earnings_15m": 29000
+      },
+      {
+        "subject": "Physics",
+        "qualification": "BSc or MPhys",
+        "median_earnings_15m": 29000
+      }
+    ],
+    "2314": [
+      {
+        "subject": "Primary education",
+        "qualification": "BEd or MA with PGDE",
+        "median_earnings_15m": 27000
+      }
+    ],
+    "2461": [
+      {
+        "subject": "Social work",
+        "qualification": "BA",
+        "median_earnings_15m": 28000
+      }
+    ],
+    "2225": [
+      {
+        "subject": "Psychology",
+        "qualification": "BSc or MA (Scotland)",
+        "median_earnings_15m": 22000
+      }
+    ],
+    "2421": [
+      {
+        "subject": "Accounting and finance",
+        "qualification": "BA or BAcc",
+        "median_earnings_15m": 27000
+      },
+      {
+        "subject": "Business and management",
+        "qualification": "BA or BSc",
+        "median_earnings_15m": 26000
+      },
+      {
+        "subject": "Economics",
+        "qualification": "BSc or MA (Scotland)",
+        "median_earnings_15m": 31000
+      }
+    ],
+    "2412": [
+      {
+        "subject": "Law",
+        "qualification": "LLB",
+        "median_earnings_15m": 24000
+      }
+    ],
+    "2451": [
+      {
+        "subject": "Architecture",
+        "qualification": "BA or BSc (Part 1)",
+        "median_earnings_15m": 24000
+      }
+    ],
+    "3421": [
+      {
+        "subject": "Graphic design",
+        "qualification": "BA or BDes",
+        "median_earnings_15m": 21000
+      }
+    ],
+    "2453": [
+      {
+        "subject": "Quantity surveying",
+        "qualification": "BSc",
+        "median_earnings_15m": 30000
+      }
+    ],
+    "2152": [
+      {
+        "subject": "Environmental science",
+        "qualification": "BSc",
+        "median_earnings_15m": 24000
+      }
+    ],
+    "5434": [
+      {
+        "subject": "Hospitality and culinary arts",
+        "qualification": "HNC or BA",
+        "median_earnings_15m": null
+      }
+    ],
+    "2113": [
+      {
+        "subject": "Biomedical sciences",
+        "qualification": "BSc",
+        "median_earnings_15m": 24000
+      }
+    ],
+    "2240": [
+      {
+        "subject": "Veterinary medicine",
+        "qualification": "BVMS or BVSc",
+        "median_earnings_15m": 34000
+      }
+    ],
+    "3312": [
+      {
+        "subject": "Professional policing",
+        "qualification": "BSc",
+        "median_earnings_15m": 27000
+      }
+    ],
+    "2422": [
+      {
+        "subject": "Finance",
+        "qualification": "BSc or BA",
+        "median_earnings_15m": 30000
+      },
+      {
+        "subject": "Economics",
+        "qualification": "BSc or MA (Scotland)",
+        "median_earnings_15m": 31000
+      },
+      {
+        "subject": "Business and management",
+        "qualification": "BA or BSc",
+        "median_earnings_15m": 26000
+      },
+      {
+        "subject": "Accounting and finance",
+        "qualification": "BA or BAcc",
+        "median_earnings_15m": 27000
+      },
+      {
+        "subject": "Mathematics",
+        "qualification": "BSc",
+        "median_earnings_15m": 29000
+      }
+    ],
+    "2440": [
+      {
+        "subject": "Business and management",
+        "qualification": "BA or BSc",
+        "median_earnings_15m": 26000
+      },
+      {
+        "subject": "Project management",
+        "qualification": "BSc",
+        "median_earnings_15m": 27000
+      }
+    ],
+    "3556": [
+      {
+        "subject": "Business and management",
+        "qualification": "BA or BSc",
+        "median_earnings_15m": 26000
+      }
+    ],
+    "3554": [
+      {
+        "subject": "Marketing",
+        "qualification": "BA",
+        "median_earnings_15m": 24000
+      }
+    ],
+    "1122": [
+      {
+        "subject": "Construction management",
+        "qualification": "BSc",
+        "median_earnings_15m": 30000
+      }
+    ]
+  }
+}

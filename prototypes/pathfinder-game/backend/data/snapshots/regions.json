@@ -1,0 +1,241 @@
+{
+  "source_id": "regions",
+  "edition": "2025-26 (demo snapshot)",
+  "_note": "Sector demand multipliers relative to the UK average, applied to both demand signals before scaling. DEMO VALUES: to be derived from Occupations in Demand (England regions), SDS Regional Skills Assessments (Scotland), and the Welsh and Northern Ireland regional skills partnerships.",
+  "regions": {
+    "UK-wide": {
+      "nation": "UK",
+      "source_id": "skills_england",
+      "multipliers": {
+        "Digital and technologies": 1.0,
+        "Advanced manufacturing": 1.0,
+        "Construction": 1.0,
+        "Clean energy": 1.0,
+        "Health and social care": 1.0,
+        "Education": 1.0,
+        "Professional and business services": 1.0,
+        "Creative industries": 1.0,
+        "Hospitality": 1.0,
+        "Life sciences": 1.0,
+        "Public services": 1.0,
+        "Financial services": 1.0
+      }
+    },
+    "Scotland": {
+      "nation": "Scotland",
+      "source_id": "sds_rsa",
+      "multipliers": {
+        "Digital and technologies": 0.95,
+        "Advanced manufacturing": 1.0,
+        "Construction": 1.0,
+        "Clean energy": 1.3,
+        "Health and social care": 1.1,
+        "Education": 1.0,
+        "Professional and business services": 0.9,
+        "Creative industries": 1.0,
+        "Hospitality": 1.0,
+        "Life sciences": 1.1,
+        "Public services": 1.0,
+        "Financial services": 1.1
+      }
+    },
+    "Wales": {
+      "nation": "Wales",
+      "source_id": "regional_wales",
+      "multipliers": {
+        "Digital and technologies": 0.85,
+        "Advanced manufacturing": 1.15,
+        "Construction": 1.0,
+        "Clean energy": 1.15,
+        "Health and social care": 1.15,
+        "Education": 1.0,
+        "Professional and business services": 0.85,
+        "Creative industries": 1.0,
+        "Hospitality": 1.0,
+        "Life sciences": 1.0,
+        "Public services": 1.0,
+        "Financial services": 1.0
+      }
+    },
+    "Northern Ireland": {
+      "nation": "Northern Ireland",
+      "source_id": "regional_ni",
+      "multipliers": {
+        "Digital and technologies": 1.1,
+        "Advanced manufacturing": 1.15,
+        "Construction": 1.0,
+        "Clean energy": 1.0,
+        "Health and social care": 1.0,
+        "Education": 1.0,
+        "Professional and business services": 0.95,
+        "Creative industries": 0.9,
+        "Hospitality": 1.0,
+        "Life sciences": 1.0,
+        "Public services": 1.0,
+        "Financial services": 1.0
+      }
+    },
+    "North East": {
+      "nation": "England",
+      "source_id": "oid",
+      "multipliers": {
+        "Digital and technologies": 0.85,
+        "Advanced manufacturing": 1.2,
+        "Construction": 1.0,
+        "Clean energy": 1.3,
+        "Health and social care": 1.0,
+        "Education": 1.0,
+        "Professional and business services": 0.85,
+        "Creative industries": 1.0,
+        "Hospitality": 1.0,
+        "Life sciences": 1.0,
+        "Public services": 1.0,
+        "Financial services": 0.8
+      }
+    },
+    "North West": {
+      "nation": "England",
+      "source_id": "oid",
+      "multipliers": {
+        "Digital and technologies": 1.05,
+        "Advanced manufacturing": 1.1,
+        "Construction": 1.0,
+        "Clean energy": 1.0,
+        "Health and social care": 1.05,
+        "Education": 1.0,
+        "Professional and business services": 1.0,
+        "Creative industries": 1.0,
+        "Hospitality": 1.0,
+        "Life sciences": 1.0,
+        "Public services": 1.0,
+        "Financial services": 1.0
+      }
+    },
+    "Yorkshire and the Humber": {
+      "nation": "England",
+      "source_id": "oid",
+      "multipliers": {
+        "Digital and technologies": 0.9,
+        "Advanced manufacturing": 1.1,
+        "Construction": 1.0,
+        "Clean energy": 1.2,
+        "Health and social care": 1.0,
+        "Education": 1.0,
+        "Professional and business services": 1.0,
+        "Creative industries": 1.0,
+        "Hospitality": 1.0,
+        "Life sciences": 1.0,
+        "Public services": 1.0,
+        "Financial services": 1.0
+      }
+    },
+    "East Midlands": {
+      "nation": "England",
+      "source_id": "oid",
+      "multipliers": {
+        "Digital and technologies": 0.85,
+        "Advanced manufacturing": 1.2,
+        "Construction": 1.05,
+        "Clean energy": 1.0,
+        "Health and social care": 1.0,
+        "Education": 1.0,
+        "Professional and business services": 1.0,
+        "Creative industries": 1.0,
+        "Hospitality": 1.0,
+        "Life sciences": 1.0,
+        "Public services": 1.0,
+        "Financial services": 1.0
+      }
+    },
+    "West Midlands": {
+      "nation": "England",
+      "source_id": "oid",
+      "multipliers": {
+        "Digital and technologies": 0.95,
+        "Advanced manufacturing": 1.25,
+        "Construction": 1.1,
+        "Clean energy": 1.0,
+        "Health and social care": 1.0,
+        "Education": 1.0,
+        "Professional and business services": 1.0,
+        "Creative industries": 1.0,
+        "Hospitality": 1.0,
+        "Life sciences": 1.0,
+        "Public services": 1.0,
+        "Financial services": 1.0
+      }
+    },
+    "East of England": {
+      "nation": "England",
+      "source_id": "oid",
+      "multipliers": {
+        "Digital and technologies": 1.0,
+        "Advanced manufacturing": 1.0,
+        "Construction": 1.1,
+        "Clean energy": 1.0,
+        "Health and social care": 1.0,
+        "Education": 1.0,
+        "Professional and business services": 1.0,
+        "Creative industries": 1.0,
+        "Hospitality": 1.0,
+        "Life sciences": 1.3,
+        "Public services": 1.0,
+        "Financial services": 1.0
+      }
+    },
+    "London": {
+      "nation": "England",
+      "source_id": "oid",
+      "multipliers": {
+        "Digital and technologies": 1.3,
+        "Advanced manufacturing": 0.7,
+        "Construction": 1.0,
+        "Clean energy": 0.85,
+        "Health and social care": 1.0,
+        "Education": 1.0,
+        "Professional and business services": 1.3,
+        "Creative industries": 1.3,
+        "Hospitality": 1.15,
+        "Life sciences": 1.0,
+        "Public services": 1.0,
+        "Financial services": 1.4
+      }
+    },
+    "South East": {
+      "nation": "England",
+      "source_id": "oid",
+      "multipliers": {
+        "Digital and technologies": 1.1,
+        "Advanced manufacturing": 1.0,
+        "Construction": 1.1,
+        "Clean energy": 1.0,
+        "Health and social care": 1.0,
+        "Education": 1.0,
+        "Professional and business services": 1.0,
+        "Creative industries": 1.0,
+        "Hospitality": 1.0,
+        "Life sciences": 1.15,
+        "Public services": 1.0,
+        "Financial services": 1.0
+      }
+    },
+    "South West": {
+      "nation": "England",
+      "source_id": "oid",
+      "multipliers": {
+        "Digital and technologies": 0.9,
+        "Advanced manufacturing": 1.05,
+        "Construction": 1.0,
+        "Clean energy": 1.1,
+        "Health and social care": 1.0,
+        "Education": 1.0,
+        "Professional and business services": 1.0,
+        "Creative industries": 1.0,
+        "Hospitality": 1.15,
+        "Life sciences": 1.0,
+        "Public services": 1.0,
+        "Financial services": 1.0
+      }
+    }
+  }
+}

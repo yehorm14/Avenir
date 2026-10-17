@@ -1,0 +1,898 @@
+{
+  "source_id": "occupational_maps",
+  "edition": "2026 (demo snapshot)",
+  "_note": "Apprenticeship standards, T Levels and core skills per occupation from the Skills England occupational maps. Covers England only. DEMO SNAPSHOT: names and levels to be confirmed against the live maps.",
+  "occupations": {
+    "2134": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Software developer",
+          "level": "Level 4"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Digital and technology solutions professional (degree)",
+          "level": "Level 6"
+        },
+        {
+          "type": "T Level",
+          "name": "Digital Production, Design and Development",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Programming in at least one language",
+        "Testing and debugging",
+        "Version control",
+        "Breaking problems into steps",
+        "Working in a team"
+      ]
+    },
+    "2135": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Cyber security technologist",
+          "level": "Level 4"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Cyber security technical professional (degree)",
+          "level": "Level 6"
+        },
+        {
+          "type": "T Level",
+          "name": "Digital Support Services",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Networks and operating systems",
+        "Threat analysis",
+        "Scripting",
+        "Attention to detail",
+        "Clear reporting"
+      ]
+    },
+    "2425": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Data scientist (integrated degree)",
+          "level": "Level 6"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Data technician",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Statistics",
+        "Programming (Python or R)",
+        "Data cleaning",
+        "Data visualisation",
+        "Explaining findings"
+      ]
+    },
+    "3132": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Information communications technician",
+          "level": "Level 3"
+        },
+        {
+          "type": "T Level",
+          "name": "Digital Support Services",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Troubleshooting",
+        "Hardware and networks",
+        "Customer service",
+        "Clear written instructions"
+      ]
+    },
+    "2122": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Product design and development engineer (degree)",
+          "level": "Level 6"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Engineering technician",
+          "level": "Level 3"
+        },
+        {
+          "type": "T Level",
+          "name": "Design and Development for Engineering and Manufacturing",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Engineering maths",
+        "Computer-aided design (CAD)",
+        "Materials and mechanics",
+        "Problem solving",
+        "Project work"
+      ]
+    },
+    "2121": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Civil engineer (degree)",
+          "level": "Level 6"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Civil engineering technician",
+          "level": "Level 3"
+        },
+        {
+          "type": "T Level",
+          "name": "Design, Surveying and Planning for Construction",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Engineering maths",
+        "Structural analysis",
+        "CAD and site drawings",
+        "Health and safety",
+        "Project planning"
+      ]
+    },
+    "2123": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Electrical or electronic technical support engineer (degree)",
+          "level": "Level 6"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Engineering technician",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Circuit theory",
+        "Power systems",
+        "Programming for control",
+        "Safety standards",
+        "Fault finding"
+      ]
+    },
+    "5241": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Installation and maintenance electrician",
+          "level": "Level 3"
+        },
+        {
+          "type": "T Level",
+          "name": "Building Services Engineering for Construction",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Wiring regulations (BS 7671)",
+        "Testing and inspection",
+        "Reading technical drawings",
+        "Solar and EV charger installation",
+        "Working safely"
+      ]
+    },
+    "5314": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Plumbing and domestic heating technician",
+          "level": "Level 3"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Low carbon heating technician",
+          "level": "Level 3"
+        },
+        {
+          "type": "T Level",
+          "name": "Building Services Engineering for Construction",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Pipework and fitting",
+        "Heat pump systems",
+        "Gas and water safety",
+        "Customer care",
+        "Fault finding"
+      ]
+    },
+    "5316": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Carpentry and joinery",
+          "level": "Level 2"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Advanced carpentry and joinery",
+          "level": "Level 3"
+        },
+        {
+          "type": "T Level",
+          "name": "Onsite Construction",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Measuring and marking out",
+        "Hand and power tools",
+        "Reading drawings",
+        "Finishing work",
+        "Working safely"
+      ]
+    },
+    "5313": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Bricklayer",
+          "level": "Level 2"
+        },
+        {
+          "type": "T Level",
+          "name": "Onsite Construction",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Setting out",
+        "Laying brick and block",
+        "Reading drawings",
+        "Working at height safely"
+      ]
+    },
+    "5231": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Motor vehicle service and maintenance technician (light vehicle)",
+          "level": "Level 3"
+        },
+        {
+          "type": "T Level",
+          "name": "Maintenance, Installation and Repair for Engineering and Manufacturing",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Diagnostics",
+        "Electric and hybrid vehicle safety",
+        "Mechanical repair",
+        "Customer communication"
+      ]
+    },
+    "2232": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Registered nurse (degree)",
+          "level": "Level 6"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Nursing associate",
+          "level": "Level 5"
+        },
+        {
+          "type": "T Level",
+          "name": "Health",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Clinical assessment",
+        "Medicines management",
+        "Communication with patients and families",
+        "Record keeping",
+        "Resilience"
+      ]
+    },
+    "2235": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Registered nurse (degree), mental health",
+          "level": "Level 6"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Nursing associate",
+          "level": "Level 5"
+        },
+        {
+          "type": "T Level",
+          "name": "Health",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Active listening",
+        "Risk assessment",
+        "Therapeutic relationships",
+        "Medicines management",
+        "Resilience"
+      ]
+    },
+    "2221": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Physiotherapist (degree)",
+          "level": "Level 6"
+        },
+        {
+          "type": "T Level",
+          "name": "Health",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Anatomy and physiology",
+        "Exercise planning",
+        "Hands-on treatment",
+        "Motivating patients"
+      ]
+    },
+    "2222": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Occupational therapist (degree)",
+          "level": "Level 6"
+        },
+        {
+          "type": "T Level",
+          "name": "Health",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Assessing daily living",
+        "Adapting environments",
+        "Creative problem solving",
+        "Communication"
+      ]
+    },
+    "2223": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Speech and language therapist (degree)",
+          "level": "Level 6"
+        }
+      ],
+      "skills": [
+        "Linguistics",
+        "Assessment",
+        "Working with families and teachers",
+        "Patience"
+      ]
+    },
+    "2255": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Paramedic (degree)",
+          "level": "Level 6"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Ambulance support worker",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Emergency care",
+        "Decision making under pressure",
+        "Driving (category C1 later)",
+        "Calm communication"
+      ]
+    },
+    "2251": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Pharmacy technician",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Pharmacology",
+        "Accuracy",
+        "Advising patients",
+        "Legal and ethical practice"
+      ]
+    },
+    "2254": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Diagnostic radiographer (degree)",
+          "level": "Level 6"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Therapeutic radiographer (degree)",
+          "level": "Level 6"
+        },
+        {
+          "type": "T Level",
+          "name": "Healthcare Science",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Imaging physics",
+        "Patient care",
+        "Radiation safety",
+        "Using complex equipment"
+      ]
+    },
+    "6135": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Adult care worker",
+          "level": "Level 2"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Lead adult care worker",
+          "level": "Level 3"
+        },
+        {
+          "type": "T Level",
+          "name": "Health",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Personal care",
+        "Safeguarding",
+        "Communication",
+        "Empathy",
+        "Reliability"
+      ]
+    },
+    "2313": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Teacher",
+          "level": "Level 6"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Teaching assistant",
+          "level": "Level 3"
+        },
+        {
+          "type": "T Level",
+          "name": "Education and Early Years",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Deep subject knowledge",
+        "Explaining clearly",
+        "Classroom management",
+        "Planning lessons"
+      ]
+    },
+    "2314": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Teacher",
+          "level": "Level 6"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Teaching assistant",
+          "level": "Level 3"
+        },
+        {
+          "type": "T Level",
+          "name": "Education and Early Years",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Child development",
+        "Phonics and early maths",
+        "Classroom management",
+        "Creativity"
+      ]
+    },
+    "2461": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Social worker (degree)",
+          "level": "Level 6"
+        }
+      ],
+      "skills": [
+        "Safeguarding",
+        "Assessment and report writing",
+        "Building trust",
+        "Resilience"
+      ]
+    },
+    "2225": {
+      "routes": [],
+      "skills": [
+        "Research methods",
+        "Psychological assessment",
+        "Talking therapies",
+        "Reflective practice"
+      ]
+    },
+    "2421": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Professional accounting or taxation technician",
+          "level": "Level 4"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Accountancy or taxation professional",
+          "level": "Level 7"
+        },
+        {
+          "type": "T Level",
+          "name": "Accounting",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Bookkeeping",
+        "Spreadsheets",
+        "Tax and financial reporting",
+        "Business awareness"
+      ]
+    },
+    "2412": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Solicitor",
+          "level": "Level 7"
+        },
+        {
+          "type": "T Level",
+          "name": "Legal Services",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Legal research",
+        "Precise writing",
+        "Negotiation",
+        "Client care"
+      ]
+    },
+    "2451": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Architect",
+          "level": "Level 7"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Architectural assistant",
+          "level": "Level 6"
+        },
+        {
+          "type": "T Level",
+          "name": "Design, Surveying and Planning for Construction",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Design and drawing",
+        "3D modelling",
+        "Building regulations",
+        "Presenting ideas"
+      ]
+    },
+    "3421": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Junior content producer",
+          "level": "Level 3"
+        },
+        {
+          "type": "T Level",
+          "name": "Craft and Design",
+          "level": "Level 3"
+        },
+        {
+          "type": "T Level",
+          "name": "Media, Broadcast and Production",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Typography and layout",
+        "Design software",
+        "Briefs and deadlines",
+        "Visual storytelling"
+      ]
+    },
+    "2453": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Chartered surveyor (degree)",
+          "level": "Level 6"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Surveying technician",
+          "level": "Level 3"
+        },
+        {
+          "type": "T Level",
+          "name": "Design, Surveying and Planning for Construction",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Cost estimating",
+        "Contracts",
+        "Spreadsheets",
+        "Negotiation"
+      ]
+    },
+    "2152": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Environmental practitioner (degree)",
+          "level": "Level 6"
+        },
+        {
+          "type": "T Level",
+          "name": "Agriculture, Land Management and Production",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Fieldwork and sampling",
+        "Data analysis",
+        "Environmental law",
+        "Report writing"
+      ]
+    },
+    "5434": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Commis chef",
+          "level": "Level 2"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Chef de partie",
+          "level": "Level 3"
+        },
+        {
+          "type": "T Level",
+          "name": "Catering",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Cooking techniques",
+        "Food safety",
+        "Working fast under pressure",
+        "Menu costing"
+      ]
+    },
+    "2113": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Healthcare science practitioner (degree)",
+          "level": "Level 6"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Laboratory technician",
+          "level": "Level 3"
+        },
+        {
+          "type": "T Level",
+          "name": "Healthcare Science",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Lab techniques",
+        "Accuracy and quality control",
+        "Data recording",
+        "Biology and chemistry"
+      ]
+    },
+    "2240": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Veterinary nurse",
+          "level": "Level 3"
+        },
+        {
+          "type": "T Level",
+          "name": "Animal Care and Management",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Animal anatomy",
+        "Diagnosis",
+        "Surgery",
+        "Talking with owners"
+      ]
+    },
+    "3312": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Police constable (degree)",
+          "level": "Level 6"
+        }
+      ],
+      "skills": [
+        "Communication and de-escalation",
+        "Law and procedure",
+        "Judgement",
+        "Physical fitness"
+      ]
+    },
+    "2422": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Investment operations specialist",
+          "level": "Level 4"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Financial services professional (degree)",
+          "level": "Level 6"
+        },
+        {
+          "type": "T Level",
+          "name": "Finance",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Financial modelling",
+        "Spreadsheets",
+        "Researching companies",
+        "Explaining risk clearly"
+      ]
+    },
+    "2440": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Associate project manager",
+          "level": "Level 4"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Project manager (degree)",
+          "level": "Level 6"
+        },
+        {
+          "type": "T Level",
+          "name": "Management and Administration",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Planning and scheduling",
+        "Managing risk",
+        "Leading teams",
+        "Budgets"
+      ]
+    },
+    "3556": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Sales executive",
+          "level": "Level 4"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Business-to-business sales professional (degree)",
+          "level": "Level 6"
+        }
+      ],
+      "skills": [
+        "Building relationships",
+        "Negotiation",
+        "Understanding customers",
+        "Resilience"
+      ]
+    },
+    "3554": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Marketing assistant",
+          "level": "Level 3"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Marketing executive",
+          "level": "Level 4"
+        },
+        {
+          "type": "T Level",
+          "name": "Media, Broadcast and Production",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Copywriting",
+        "Social media and analytics",
+        "Campaign planning",
+        "Brand thinking"
+      ]
+    },
+    "1122": {
+      "routes": [
+        {
+          "type": "Apprenticeship",
+          "name": "Construction site supervisor",
+          "level": "Level 4"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Construction site management (degree)",
+          "level": "Level 6"
+        },
+        {
+          "type": "T Level",
+          "name": "Onsite Construction",
+          "level": "Level 3"
+        }
+      ],
+      "skills": [
+        "Site safety",
+        "Programme planning",
+        "Managing contractors",
+        "Cost control"
+      ]
+    }
+  }
+}

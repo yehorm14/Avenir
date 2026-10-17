@@ -1,0 +1,4856 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Pathfinder API",
+    "description": "The analysis an investor would expect before committing years to a career: fit, pay, demand, AI exposure, confidence, a hedge career and a next step. Publishes its own track record.",
+    "version": "2.0.0"
+  },
+  "paths": {
+    "/api/quiz": {
+      "get": {
+        "summary": "Get Quiz",
+        "operationId": "get_quiz_api_quiz_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Quiz"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/match": {
+      "post": {
+        "summary": "Post Match",
+        "operationId": "post_match_api_match_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/path/{soc}": {
+      "get": {
+        "summary": "Get Path",
+        "description": "Degrees, universities, skills, societies, competitions, alumni kit and a year-by-year plan.",
+        "operationId": "get_path_api_path__soc__get",
+        "parameters": [
+          {
+            "name": "soc",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Soc"
+            }
+          },
+          {
+            "name": "nation",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "England",
+              "title": "Nation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PathPlan"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pay": {
+      "get": {
+        "summary": "Get Pay",
+        "description": "Pay each year with its spread, nominal and in real terms (CPI-adjusted to the base year).",
+        "operationId": "get_pay_api_pay_get",
+        "parameters": [
+          {
+            "name": "soc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 6,
+              "default": [],
+              "title": "Soc"
+            }
+          },
+          {
+            "name": "base",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Base"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PayResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/inflation": {
+      "get": {
+        "summary": "Get Inflation",
+        "description": "What an amount from one year is worth in another year's money.",
+        "operationId": "get_inflation_api_inflation_get",
+        "parameters": [
+          {
+            "name": "amount",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "maximum": 10000000,
+              "minimum": 0,
+              "default": 50000,
+              "title": "Amount"
+            }
+          },
+          {
+            "name": "from_year",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 2015,
+              "title": "From Year"
+            }
+          },
+          {
+            "name": "to_year",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 2025,
+              "title": "To Year"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Inflation"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/radar": {
+      "get": {
+        "summary": "Get Radar",
+        "description": "Opportunities in your fields, with a digest. `today` is for testing; it defaults to the server date.",
+        "operationId": "get_radar_api_radar_get",
+        "parameters": [
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": [],
+              "title": "Fields"
+            }
+          },
+          {
+            "name": "stage",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "school",
+              "title": "Stage"
+            }
+          },
+          {
+            "name": "nation",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "England",
+              "title": "Nation"
+            }
+          },
+          {
+            "name": "today",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Today"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Radar"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/trends": {
+      "get": {
+        "summary": "Get Trends",
+        "description": "Hot specialisms, and the broader degrees that lead to them while keeping other doors open.",
+        "operationId": "get_trends_api_trends_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Trend"
+                  },
+                  "type": "array",
+                  "title": "Response Get Trends Api Trends Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/analyse": {
+      "post": {
+        "summary": "Post Analyse",
+        "description": "Stress test, hedge and confidence for one career, given your answers.",
+        "operationId": "post_analyse_api_analyse_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyseRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CareerSummary"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/careers/{soc}": {
+      "get": {
+        "summary": "Get Career",
+        "operationId": "get_career_api_careers__soc__get",
+        "parameters": [
+          {
+            "name": "soc",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Soc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CareerDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/changes": {
+      "get": {
+        "summary": "Get Changes",
+        "operationId": "get_changes_api_changes_get",
+        "parameters": [
+          {
+            "name": "soc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 5,
+              "default": [],
+              "title": "Soc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangesResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/explain": {
+      "post": {
+        "summary": "Post Explain",
+        "operationId": "post_explain_api_explain_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExplainRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExplainResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/backtest": {
+      "get": {
+        "summary": "Get Backtest",
+        "operationId": "get_backtest_api_backtest_get",
+        "parameters": [
+          {
+            "name": "exclude_bridged",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Exclude Bridged"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BacktestSummary"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/backtest/{year}": {
+      "get": {
+        "summary": "Get Replay",
+        "operationId": "get_replay_api_backtest__year__get",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Year"
+            }
+          },
+          {
+            "name": "exclude_bridged",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Exclude Bridged"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Replay"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/game/round": {
+      "get": {
+        "summary": "Get Game Round",
+        "description": "Ten careers as they looked in a past year, without the outcomes. Same year and seed, same ten.",
+        "operationId": "get_game_round_api_game_round_get",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Year"
+            }
+          },
+          {
+            "name": "seed",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "title": "Seed"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameRound"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/game/reveal": {
+      "post": {
+        "summary": "Post Game Reveal",
+        "operationId": "post_game_reveal_api_game_reveal_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GameRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameReveal"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/discover": {
+      "post": {
+        "summary": "Post Discover",
+        "operationId": "post_discover_api_discover_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiscoverRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DiscoverResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/discover/eval": {
+      "get": {
+        "summary": "Get Discover Eval",
+        "operationId": "get_discover_eval_api_discover_eval_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DiscoverEval"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/trust": {
+      "get": {
+        "summary": "Get Trust",
+        "operationId": "get_trust_api_trust_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrustReport"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/market": {
+      "get": {
+        "summary": "Get Market",
+        "description": "The adviser view: every career at a glance, for one nation or region.",
+        "operationId": "get_market_api_market_get",
+        "parameters": [
+          {
+            "name": "region",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "UK-wide",
+              "title": "Region"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Market"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sources": {
+      "get": {
+        "summary": "Get Sources",
+        "operationId": "get_sources_api_sources_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SourceOut"
+                  },
+                  "type": "array",
+                  "title": "Response Get Sources Api Sources Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AlumniKit": {
+        "properties": {
+          "why": {
+            "type": "string",
+            "title": "Why"
+          },
+          "find": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Find"
+          },
+          "who": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Who"
+          },
+          "tips": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Tips"
+          },
+          "questions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Questions"
+          },
+          "template": {
+            "type": "string",
+            "title": "Template"
+          },
+          "template_apprenticeship": {
+            "type": "string",
+            "title": "Template Apprenticeship"
+          }
+        },
+        "type": "object",
+        "required": [
+          "why",
+          "find",
+          "who",
+          "tips",
+          "questions",
+          "template",
+          "template_apprenticeship"
+        ],
+        "title": "AlumniKit"
+      },
+      "AnalyseRequest": {
+        "properties": {
+          "answers": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Answers",
+            "description": "Quiz item id to answer, 1 (strongly dislike) to 5 (strongly like)"
+          },
+          "profile": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "number"
+                },
+                "propertyNames": {
+                  "enum": [
+                    "R",
+                    "I",
+                    "A",
+                    "S",
+                    "E",
+                    "C"
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Profile",
+            "description": "Optional RIASEC profile (0 to 1) instead of answers"
+          },
+          "subjects": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Subjects"
+          },
+          "skills": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Skills"
+          },
+          "region": {
+            "type": "string",
+            "title": "Region",
+            "description": "UK nation or English region for the regional lens",
+            "default": "UK-wide"
+          },
+          "weights": {
+            "$ref": "#/components/schemas/Weights"
+          },
+          "limit": {
+            "type": "integer",
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Limit",
+            "description": "Number of picks (the plan says three)",
+            "default": 3
+          },
+          "soc": {
+            "type": "string",
+            "title": "Soc"
+          }
+        },
+        "type": "object",
+        "required": [
+          "soc"
+        ],
+        "title": "AnalyseRequest"
+      },
+      "ApprenticeshipRoute": {
+        "properties": {
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "employers": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Employers"
+          },
+          "routes": {
+            "items": {
+              "$ref": "#/components/schemas/Route"
+            },
+            "type": "array",
+            "title": "Routes"
+          },
+          "finders": {
+            "items": {
+              "$ref": "#/components/schemas/Link"
+            },
+            "type": "array",
+            "title": "Finders"
+          }
+        },
+        "type": "object",
+        "required": [
+          "summary",
+          "employers",
+          "routes",
+          "finders"
+        ],
+        "title": "ApprenticeshipRoute"
+      },
+      "BacktestSummary": {
+        "properties": {
+          "synthetic": {
+            "type": "boolean",
+            "title": "Synthetic"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note"
+          },
+          "horizon_years": {
+            "type": "integer",
+            "title": "Horizon Years"
+          },
+          "exclude_bridged": {
+            "type": "boolean",
+            "title": "Exclude Bridged"
+          },
+          "years": {
+            "items": {
+              "$ref": "#/components/schemas/YearMetrics"
+            },
+            "type": "array",
+            "title": "Years"
+          },
+          "pooled_n": {
+            "type": "integer",
+            "title": "Pooled N"
+          },
+          "mean_spearman": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mean Spearman"
+          },
+          "pooled_hit_rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pooled Hit Rate"
+          },
+          "verdict": {
+            "type": "string",
+            "title": "Verdict"
+          },
+          "caveats": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Caveats"
+          }
+        },
+        "type": "object",
+        "required": [
+          "synthetic",
+          "note",
+          "horizon_years",
+          "exclude_bridged",
+          "years",
+          "pooled_n",
+          "mean_spearman",
+          "pooled_hit_rate",
+          "verdict",
+          "caveats"
+        ],
+        "title": "BacktestSummary"
+      },
+      "Band": {
+        "properties": {
+          "p25": {
+            "type": "number",
+            "title": "P25"
+          },
+          "median": {
+            "type": "number",
+            "title": "Median"
+          },
+          "p75": {
+            "type": "number",
+            "title": "P75"
+          }
+        },
+        "type": "object",
+        "required": [
+          "p25",
+          "median",
+          "p75"
+        ],
+        "title": "Band"
+      },
+      "CareerDetail": {
+        "properties": {
+          "soc": {
+            "type": "string",
+            "title": "Soc"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "soc_title": {
+            "type": "string",
+            "title": "Soc Title"
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "study_level": {
+            "type": "string",
+            "title": "Study Level"
+          },
+          "routes": {
+            "items": {
+              "$ref": "#/components/schemas/Route"
+            },
+            "type": "array",
+            "title": "Routes"
+          },
+          "courses": {
+            "items": {
+              "$ref": "#/components/schemas/Course"
+            },
+            "type": "array",
+            "title": "Courses"
+          },
+          "skills": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Skills"
+          },
+          "first_step": {
+            "type": "string",
+            "title": "First Step"
+          },
+          "onet_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Onet Code"
+          },
+          "onet_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Onet Title"
+          },
+          "onet_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Onet Url"
+          },
+          "riasec": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "propertyNames": {
+              "enum": [
+                "R",
+                "I",
+                "A",
+                "S",
+                "E",
+                "C"
+              ]
+            },
+            "type": "object",
+            "title": "Riasec"
+          },
+          "figures": {
+            "$ref": "#/components/schemas/Figures"
+          },
+          "soc2010": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Soc2010"
+          },
+          "bridge": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bridge"
+          },
+          "track": {
+            "items": {
+              "$ref": "#/components/schemas/TrackPoint"
+            },
+            "type": "array",
+            "title": "Track"
+          },
+          "track_synthetic": {
+            "type": "boolean",
+            "title": "Track Synthetic"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/SourceOut"
+            },
+            "type": "array",
+            "title": "Sources"
+          },
+          "notes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Notes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "soc",
+          "title",
+          "soc_title",
+          "summary",
+          "study_level",
+          "routes",
+          "courses",
+          "skills",
+          "first_step",
+          "onet_code",
+          "onet_title",
+          "onet_url",
+          "riasec",
+          "figures",
+          "soc2010",
+          "bridge",
+          "track",
+          "track_synthetic",
+          "sources",
+          "notes"
+        ],
+        "title": "CareerDetail"
+      },
+      "CareerRef": {
+        "properties": {
+          "soc": {
+            "type": "string",
+            "title": "Soc"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          }
+        },
+        "type": "object",
+        "required": [
+          "soc",
+          "title"
+        ],
+        "title": "CareerRef"
+      },
+      "CareerSummary": {
+        "properties": {
+          "soc": {
+            "type": "string",
+            "title": "Soc"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "soc_title": {
+            "type": "string",
+            "title": "Soc Title"
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "score": {
+            "type": "number",
+            "title": "Score",
+            "description": "0 to 100"
+          },
+          "rank": {
+            "type": "integer",
+            "title": "Rank"
+          },
+          "interest_fit": {
+            "type": "number",
+            "title": "Interest Fit"
+          },
+          "components": {
+            "items": {
+              "$ref": "#/components/schemas/Component"
+            },
+            "type": "array",
+            "title": "Components"
+          },
+          "figures": {
+            "$ref": "#/components/schemas/KeyFigures"
+          },
+          "trade_off": {
+            "type": "string",
+            "title": "Trade Off"
+          },
+          "missing": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missing"
+          },
+          "sector": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sector"
+          },
+          "priority": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Priority"
+          },
+          "family": {
+            "type": "string",
+            "title": "Family",
+            "description": "The career group (field) this belongs to",
+            "default": ""
+          },
+          "degree_role": {
+            "type": "string",
+            "title": "Degree Role",
+            "description": "How much the degree matters for this career",
+            "default": ""
+          },
+          "degrees": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Degrees",
+            "description": "Degree subjects to consider"
+          },
+          "confidence": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Confidence"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stress": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StressTest"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "hedge": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Hedge"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "soc",
+          "title",
+          "soc_title",
+          "summary",
+          "score",
+          "rank",
+          "interest_fit",
+          "components",
+          "figures",
+          "trade_off",
+          "missing",
+          "sector",
+          "priority"
+        ],
+        "title": "CareerSummary"
+      },
+      "ChangeItem": {
+        "properties": {
+          "soc": {
+            "type": "string",
+            "title": "Soc"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "previous": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previous"
+          },
+          "latest": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest"
+          },
+          "delta": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Delta"
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "up",
+              "down",
+              "same",
+              "no data"
+            ],
+            "title": "Direction"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "pay_previous": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pay Previous"
+          },
+          "pay_latest": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pay Latest"
+          },
+          "pay_message": {
+            "type": "string",
+            "title": "Pay Message"
+          },
+          "growth_2035_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Growth 2035 Pct"
+          },
+          "priority": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Priority"
+          }
+        },
+        "type": "object",
+        "required": [
+          "soc",
+          "title",
+          "previous",
+          "latest",
+          "delta",
+          "direction",
+          "message",
+          "pay_previous",
+          "pay_latest",
+          "pay_message",
+          "growth_2035_pct",
+          "priority"
+        ],
+        "title": "ChangeItem"
+      },
+      "ChangesResponse": {
+        "properties": {
+          "latest_edition": {
+            "type": "string",
+            "title": "Latest Edition"
+          },
+          "previous_edition": {
+            "type": "string",
+            "title": "Previous Edition"
+          },
+          "pay_edition": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pay Edition"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ChangeItem"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "latest_edition",
+          "previous_edition",
+          "pay_edition",
+          "items"
+        ],
+        "title": "ChangesResponse"
+      },
+      "Competition": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "what": {
+            "type": "string",
+            "title": "What"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "what"
+        ],
+        "title": "Competition"
+      },
+      "Component": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "enum": [
+              "interest",
+              "demand_future",
+              "demand_now",
+              "pay",
+              "ai_resilience",
+              "head_start"
+            ],
+            "title": "Key"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value",
+            "description": "0 to 1, or null when there is no data"
+          },
+          "weight": {
+            "type": "number",
+            "title": "Weight",
+            "description": "Weight the user asked for, normalised to sum to 1"
+          },
+          "effective_weight": {
+            "type": "number",
+            "title": "Effective Weight",
+            "description": "Weight actually used after skipping missing data"
+          },
+          "contribution": {
+            "type": "number",
+            "title": "Contribution",
+            "description": "Points (0 to 100) this signal adds to the score"
+          },
+          "detail": {
+            "type": "string",
+            "title": "Detail"
+          },
+          "source_id": {
+            "type": "string",
+            "title": "Source Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "label",
+          "value",
+          "weight",
+          "effective_weight",
+          "contribution",
+          "detail",
+          "source_id"
+        ],
+        "title": "Component"
+      },
+      "Confidence": {
+        "properties": {
+          "level": {
+            "type": "string",
+            "enum": [
+              "High",
+              "Medium",
+              "Low"
+            ],
+            "title": "Level"
+          },
+          "score": {
+            "type": "number",
+            "title": "Score"
+          },
+          "reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Reasons"
+          }
+        },
+        "type": "object",
+        "required": [
+          "level",
+          "score",
+          "reasons"
+        ],
+        "title": "Confidence"
+      },
+      "Course": {
+        "properties": {
+          "subject": {
+            "type": "string",
+            "title": "Subject"
+          },
+          "qualification": {
+            "type": "string",
+            "title": "Qualification"
+          },
+          "median_earnings_15m": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median Earnings 15M"
+          },
+          "source_id": {
+            "type": "string",
+            "title": "Source Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "subject",
+          "qualification",
+          "median_earnings_15m",
+          "source_id"
+        ],
+        "title": "Course"
+      },
+      "CpiPoint": {
+        "properties": {
+          "year": {
+            "type": "integer",
+            "title": "Year"
+          },
+          "index": {
+            "type": "number",
+            "title": "Index"
+          },
+          "change_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Change Pct"
+          }
+        },
+        "type": "object",
+        "required": [
+          "year",
+          "index",
+          "change_pct"
+        ],
+        "title": "CpiPoint"
+      },
+      "DegreeOption": {
+        "properties": {
+          "subject": {
+            "type": "string",
+            "title": "Subject"
+          },
+          "qualification": {
+            "type": "string",
+            "title": "Qualification"
+          },
+          "median_earnings_15m": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median Earnings 15M"
+          },
+          "doors": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Doors",
+            "description": "Careers in our list that this degree leads to"
+          },
+          "about": {
+            "type": "string",
+            "title": "About"
+          },
+          "builds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Builds"
+          },
+          "best_if": {
+            "type": "string",
+            "title": "Best If"
+          },
+          "search": {
+            "type": "string",
+            "title": "Search"
+          },
+          "universities": {
+            "items": {
+              "$ref": "#/components/schemas/University"
+            },
+            "type": "array",
+            "title": "Universities"
+          }
+        },
+        "type": "object",
+        "required": [
+          "subject",
+          "qualification",
+          "median_earnings_15m",
+          "about",
+          "builds",
+          "best_if",
+          "search",
+          "universities"
+        ],
+        "title": "DegreeOption"
+      },
+      "DegreeRole": {
+        "properties": {
+          "level": {
+            "type": "string",
+            "enum": [
+              "required",
+              "preferred",
+              "flexible",
+              "optional"
+            ],
+            "title": "Level"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "tone": {
+            "type": "string",
+            "title": "Tone"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note"
+          }
+        },
+        "type": "object",
+        "required": [
+          "level",
+          "label",
+          "tone",
+          "note"
+        ],
+        "title": "DegreeRole"
+      },
+      "Digest": {
+        "properties": {
+          "headline": {
+            "type": "string",
+            "title": "Headline"
+          },
+          "open": {
+            "type": "integer",
+            "title": "Open"
+          },
+          "soon": {
+            "type": "integer",
+            "title": "Soon"
+          },
+          "rolling": {
+            "type": "integer",
+            "title": "Rolling"
+          },
+          "later": {
+            "type": "integer",
+            "title": "Later"
+          },
+          "highlights": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Highlights"
+          }
+        },
+        "type": "object",
+        "required": [
+          "headline",
+          "open",
+          "soon",
+          "rolling",
+          "later",
+          "highlights"
+        ],
+        "title": "Digest"
+      },
+      "DiscoverEval": {
+        "properties": {
+          "note": {
+            "type": "string",
+            "title": "Note"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/EvalResult"
+            },
+            "type": "array",
+            "title": "Results"
+          }
+        },
+        "type": "object",
+        "required": [
+          "note",
+          "results"
+        ],
+        "title": "DiscoverEval"
+      },
+      "DiscoverHit": {
+        "properties": {
+          "soc": {
+            "type": "string",
+            "title": "Soc"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "score": {
+            "type": "number",
+            "title": "Score"
+          },
+          "matched": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Matched"
+          }
+        },
+        "type": "object",
+        "required": [
+          "soc",
+          "title",
+          "score",
+          "matched"
+        ],
+        "title": "DiscoverHit"
+      },
+      "DiscoverRequest": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "maxLength": 400,
+            "minLength": 3,
+            "title": "Text"
+          }
+        },
+        "type": "object",
+        "required": [
+          "text"
+        ],
+        "title": "DiscoverRequest"
+      },
+      "DiscoverResponse": {
+        "properties": {
+          "method": {
+            "type": "string",
+            "title": "Method"
+          },
+          "hits": {
+            "items": {
+              "$ref": "#/components/schemas/DiscoverHit"
+            },
+            "type": "array",
+            "title": "Hits"
+          }
+        },
+        "type": "object",
+        "required": [
+          "method",
+          "hits"
+        ],
+        "title": "DiscoverResponse"
+      },
+      "EvalCase": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind"
+          },
+          "input": {
+            "type": "string",
+            "title": "Input"
+          },
+          "expected": {
+            "type": "string",
+            "title": "Expected"
+          },
+          "got": {
+            "type": "string",
+            "title": "Got"
+          },
+          "passed": {
+            "type": "boolean",
+            "title": "Passed"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "input",
+          "expected",
+          "got",
+          "passed"
+        ],
+        "title": "EvalCase"
+      },
+      "EvalResult": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "n": {
+            "type": "integer",
+            "title": "N"
+          },
+          "accuracy_at_1": {
+            "type": "number",
+            "title": "Accuracy At 1"
+          },
+          "accuracy_at_3": {
+            "type": "number",
+            "title": "Accuracy At 3"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "n",
+          "accuracy_at_1",
+          "accuracy_at_3"
+        ],
+        "title": "EvalResult"
+      },
+      "Evidence": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "source_id": {
+            "type": "string",
+            "title": "Source Id"
+          },
+          "topic": {
+            "type": "string",
+            "title": "Topic"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "text",
+          "source_id",
+          "topic"
+        ],
+        "title": "Evidence"
+      },
+      "ExplainRequest": {
+        "properties": {
+          "answers": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Answers",
+            "description": "Quiz item id to answer, 1 (strongly dislike) to 5 (strongly like)"
+          },
+          "profile": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "number"
+                },
+                "propertyNames": {
+                  "enum": [
+                    "R",
+                    "I",
+                    "A",
+                    "S",
+                    "E",
+                    "C"
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Profile",
+            "description": "Optional RIASEC profile (0 to 1) instead of answers"
+          },
+          "subjects": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Subjects"
+          },
+          "skills": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Skills"
+          },
+          "region": {
+            "type": "string",
+            "title": "Region",
+            "description": "UK nation or English region for the regional lens",
+            "default": "UK-wide"
+          },
+          "weights": {
+            "$ref": "#/components/schemas/Weights"
+          },
+          "limit": {
+            "type": "integer",
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Limit",
+            "description": "Number of picks (the plan says three)",
+            "default": 3
+          },
+          "soc": {
+            "type": "string",
+            "title": "Soc"
+          },
+          "question": {
+            "type": "string",
+            "maxLength": 300,
+            "minLength": 1,
+            "title": "Question"
+          }
+        },
+        "type": "object",
+        "required": [
+          "soc",
+          "question"
+        ],
+        "title": "ExplainRequest"
+      },
+      "ExplainResponse": {
+        "properties": {
+          "answer": {
+            "type": "string",
+            "title": "Answer"
+          },
+          "cited": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Cited"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/Evidence"
+            },
+            "type": "array",
+            "title": "Evidence"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "ai",
+              "template"
+            ],
+            "title": "Mode"
+          },
+          "fallback_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fallback Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "answer",
+          "cited",
+          "evidence",
+          "mode"
+        ],
+        "title": "ExplainResponse"
+      },
+      "FieldInfo": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "label"
+        ],
+        "title": "FieldInfo"
+      },
+      "Figures": {
+        "properties": {
+          "growth_2035_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Growth 2035 Pct"
+          },
+          "priority": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Priority"
+          },
+          "sector": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sector"
+          },
+          "ssv_latest": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ssv Latest"
+          },
+          "ssv_previous": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ssv Previous"
+          },
+          "latest_edition": {
+            "type": "string",
+            "title": "Latest Edition"
+          },
+          "previous_edition": {
+            "type": "string",
+            "title": "Previous Edition"
+          },
+          "pay_median": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pay Median"
+          },
+          "pay_p25": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pay P25"
+          },
+          "pay_p75": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pay P75"
+          },
+          "pay_quality": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pay Quality"
+          },
+          "pay_edition": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pay Edition"
+          },
+          "ai_exposure": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ai Exposure"
+          },
+          "ai_tasks": {
+            "items": {
+              "$ref": "#/components/schemas/Task"
+            },
+            "type": "array",
+            "title": "Ai Tasks"
+          }
+        },
+        "type": "object",
+        "required": [
+          "growth_2035_pct",
+          "priority",
+          "sector",
+          "ssv_latest",
+          "ssv_previous",
+          "latest_edition",
+          "previous_edition",
+          "pay_median",
+          "pay_p25",
+          "pay_p75",
+          "pay_quality",
+          "pay_edition",
+          "ai_exposure",
+          "ai_tasks"
+        ],
+        "title": "Figures"
+      },
+      "GameCandidate": {
+        "properties": {
+          "soc": {
+            "type": "string",
+            "title": "Soc"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "sector": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sector"
+          },
+          "ssv": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ssv"
+          },
+          "projection_10y_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Projection 10Y Pct"
+          },
+          "bridge": {
+            "type": "string",
+            "title": "Bridge"
+          }
+        },
+        "type": "object",
+        "required": [
+          "soc",
+          "title",
+          "sector",
+          "ssv",
+          "projection_10y_pct",
+          "bridge"
+        ],
+        "title": "GameCandidate"
+      },
+      "GameRequest": {
+        "properties": {
+          "year": {
+            "type": "integer",
+            "title": "Year"
+          },
+          "seed": {
+            "type": "integer",
+            "maximum": 10000000.0,
+            "minimum": 0.0,
+            "title": "Seed"
+          },
+          "picks": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 3,
+            "minItems": 3,
+            "title": "Picks"
+          }
+        },
+        "type": "object",
+        "required": [
+          "year",
+          "seed",
+          "picks"
+        ],
+        "title": "GameRequest"
+      },
+      "GameReveal": {
+        "properties": {
+          "year": {
+            "type": "integer",
+            "title": "Year"
+          },
+          "outcome_year": {
+            "type": "integer",
+            "title": "Outcome Year"
+          },
+          "synthetic": {
+            "type": "boolean",
+            "title": "Synthetic"
+          },
+          "rows": {
+            "items": {
+              "$ref": "#/components/schemas/GameRow"
+            },
+            "type": "array",
+            "title": "Rows"
+          },
+          "median_change": {
+            "type": "number",
+            "title": "Median Change"
+          },
+          "you": {
+            "$ref": "#/components/schemas/GameSide"
+          },
+          "algorithm": {
+            "$ref": "#/components/schemas/GameSide"
+          },
+          "best": {
+            "$ref": "#/components/schemas/GameSide"
+          },
+          "result": {
+            "type": "string",
+            "enum": [
+              "win",
+              "tie",
+              "lose"
+            ],
+            "title": "Result"
+          },
+          "verdict": {
+            "type": "string",
+            "title": "Verdict"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note"
+          }
+        },
+        "type": "object",
+        "required": [
+          "year",
+          "outcome_year",
+          "synthetic",
+          "rows",
+          "median_change",
+          "you",
+          "algorithm",
+          "best",
+          "result",
+          "verdict",
+          "note"
+        ],
+        "title": "GameReveal"
+      },
+      "GameRound": {
+        "properties": {
+          "year": {
+            "type": "integer",
+            "title": "Year"
+          },
+          "outcome_year": {
+            "type": "integer",
+            "title": "Outcome Year"
+          },
+          "seed": {
+            "type": "integer",
+            "title": "Seed"
+          },
+          "synthetic": {
+            "type": "boolean",
+            "title": "Synthetic"
+          },
+          "picks_needed": {
+            "type": "integer",
+            "title": "Picks Needed"
+          },
+          "candidates": {
+            "items": {
+              "$ref": "#/components/schemas/GameCandidate"
+            },
+            "type": "array",
+            "title": "Candidates"
+          }
+        },
+        "type": "object",
+        "required": [
+          "year",
+          "outcome_year",
+          "seed",
+          "synthetic",
+          "picks_needed",
+          "candidates"
+        ],
+        "title": "GameRound"
+      },
+      "GameRow": {
+        "properties": {
+          "soc": {
+            "type": "string",
+            "title": "Soc"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "sector": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sector"
+          },
+          "signal": {
+            "type": "number",
+            "title": "Signal"
+          },
+          "employment_change_pct": {
+            "type": "number",
+            "title": "Employment Change Pct"
+          },
+          "beat_median": {
+            "type": "boolean",
+            "title": "Beat Median"
+          },
+          "picked_by_you": {
+            "type": "boolean",
+            "title": "Picked By You"
+          },
+          "picked_by_algorithm": {
+            "type": "boolean",
+            "title": "Picked By Algorithm"
+          },
+          "best": {
+            "type": "boolean",
+            "title": "Best"
+          }
+        },
+        "type": "object",
+        "required": [
+          "soc",
+          "title",
+          "sector",
+          "signal",
+          "employment_change_pct",
+          "beat_median",
+          "picked_by_you",
+          "picked_by_algorithm",
+          "best"
+        ],
+        "title": "GameRow"
+      },
+      "GameSide": {
+        "properties": {
+          "avg_change": {
+            "type": "number",
+            "title": "Avg Change"
+          },
+          "beat_median": {
+            "type": "integer",
+            "title": "Beat Median"
+          }
+        },
+        "type": "object",
+        "required": [
+          "avg_change",
+          "beat_median"
+        ],
+        "title": "GameSide"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "Hedge": {
+        "properties": {
+          "soc": {
+            "type": "string",
+            "title": "Soc"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "sector": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sector"
+          },
+          "similarity": {
+            "type": "number",
+            "title": "Similarity"
+          },
+          "interest_fit": {
+            "type": "number",
+            "title": "Interest Fit"
+          },
+          "score": {
+            "type": "number",
+            "title": "Score"
+          },
+          "shared": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Shared"
+          },
+          "diversifies": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Diversifies"
+          }
+        },
+        "type": "object",
+        "required": [
+          "soc",
+          "title",
+          "sector",
+          "similarity",
+          "interest_fit",
+          "score",
+          "shared",
+          "diversifies"
+        ],
+        "title": "Hedge"
+      },
+      "Inflation": {
+        "properties": {
+          "amount": {
+            "type": "number",
+            "title": "Amount"
+          },
+          "from_year": {
+            "type": "integer",
+            "title": "From Year"
+          },
+          "to_year": {
+            "type": "integer",
+            "title": "To Year"
+          },
+          "equivalent": {
+            "type": "number",
+            "title": "Equivalent"
+          },
+          "change_pct": {
+            "type": "number",
+            "title": "Change Pct"
+          },
+          "cpi_from": {
+            "type": "number",
+            "title": "Cpi From"
+          },
+          "cpi_to": {
+            "type": "number",
+            "title": "Cpi To"
+          },
+          "sentence": {
+            "type": "string",
+            "title": "Sentence"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note"
+          }
+        },
+        "type": "object",
+        "required": [
+          "amount",
+          "from_year",
+          "to_year",
+          "equivalent",
+          "change_pct",
+          "cpi_from",
+          "cpi_to",
+          "sentence",
+          "note"
+        ],
+        "title": "Inflation"
+      },
+      "KeyFigures": {
+        "properties": {
+          "pay_median": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pay Median"
+          },
+          "pay_p25": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pay P25"
+          },
+          "pay_p75": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pay P75"
+          },
+          "growth_2035_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Growth 2035 Pct"
+          },
+          "ssv_latest": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ssv Latest"
+          },
+          "ai_exposure": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ai Exposure"
+          },
+          "region_multiplier": {
+            "type": "number",
+            "title": "Region Multiplier"
+          }
+        },
+        "type": "object",
+        "required": [
+          "pay_median",
+          "pay_p25",
+          "pay_p75",
+          "growth_2035_pct",
+          "ssv_latest",
+          "ai_exposure",
+          "region_multiplier"
+        ],
+        "title": "KeyFigures"
+      },
+      "Link": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "nation": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nation"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "url"
+        ],
+        "title": "Link"
+      },
+      "Market": {
+        "properties": {
+          "region": {
+            "type": "string",
+            "title": "Region"
+          },
+          "regions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Regions"
+          },
+          "rows": {
+            "items": {
+              "$ref": "#/components/schemas/MarketRow"
+            },
+            "type": "array",
+            "title": "Rows"
+          }
+        },
+        "type": "object",
+        "required": [
+          "region",
+          "regions",
+          "rows"
+        ],
+        "title": "Market"
+      },
+      "MarketRow": {
+        "properties": {
+          "soc": {
+            "type": "string",
+            "title": "Soc"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "sector": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sector"
+          },
+          "priority": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Priority"
+          },
+          "growth_2035_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Growth 2035 Pct"
+          },
+          "ssv_latest": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ssv Latest"
+          },
+          "pay_median": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pay Median"
+          },
+          "ai_exposure": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ai Exposure"
+          },
+          "region_multiplier": {
+            "type": "number",
+            "title": "Region Multiplier"
+          },
+          "data_confidence": {
+            "type": "string",
+            "enum": [
+              "High",
+              "Medium",
+              "Low"
+            ],
+            "title": "Data Confidence"
+          },
+          "riasec_code": {
+            "type": "string",
+            "title": "Riasec Code"
+          }
+        },
+        "type": "object",
+        "required": [
+          "soc",
+          "title",
+          "sector",
+          "priority",
+          "growth_2035_pct",
+          "ssv_latest",
+          "pay_median",
+          "ai_exposure",
+          "region_multiplier",
+          "data_confidence",
+          "riasec_code"
+        ],
+        "title": "MarketRow"
+      },
+      "MatchRequest": {
+        "properties": {
+          "answers": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Answers",
+            "description": "Quiz item id to answer, 1 (strongly dislike) to 5 (strongly like)"
+          },
+          "profile": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "number"
+                },
+                "propertyNames": {
+                  "enum": [
+                    "R",
+                    "I",
+                    "A",
+                    "S",
+                    "E",
+                    "C"
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Profile",
+            "description": "Optional RIASEC profile (0 to 1) instead of answers"
+          },
+          "subjects": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Subjects"
+          },
+          "skills": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Skills"
+          },
+          "region": {
+            "type": "string",
+            "title": "Region",
+            "description": "UK nation or English region for the regional lens",
+            "default": "UK-wide"
+          },
+          "weights": {
+            "$ref": "#/components/schemas/Weights"
+          },
+          "limit": {
+            "type": "integer",
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Limit",
+            "description": "Number of picks (the plan says three)",
+            "default": 3
+          }
+        },
+        "type": "object",
+        "title": "MatchRequest"
+      },
+      "MatchResponse": {
+        "properties": {
+          "profile": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "propertyNames": {
+              "enum": [
+                "R",
+                "I",
+                "A",
+                "S",
+                "E",
+                "C"
+              ]
+            },
+            "type": "object",
+            "title": "Profile"
+          },
+          "code": {
+            "type": "string",
+            "title": "Code",
+            "description": "Your top three interest letters, e.g. ISR"
+          },
+          "flat_profile": {
+            "type": "boolean",
+            "title": "Flat Profile"
+          },
+          "region": {
+            "type": "string",
+            "title": "Region"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/CareerSummary"
+            },
+            "type": "array",
+            "title": "Results"
+          },
+          "more": {
+            "items": {
+              "$ref": "#/components/schemas/CareerSummary"
+            },
+            "type": "array",
+            "title": "More",
+            "description": "The next two matches, without stress test or hedge"
+          },
+          "considered": {
+            "type": "integer",
+            "title": "Considered"
+          },
+          "hidden_low_fit": {
+            "type": "integer",
+            "title": "Hidden Low Fit"
+          },
+          "fit_threshold": {
+            "type": "number",
+            "title": "Fit Threshold"
+          },
+          "weights": {
+            "$ref": "#/components/schemas/Weights"
+          },
+          "notes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Notes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "profile",
+          "code",
+          "flat_profile",
+          "region",
+          "results",
+          "more",
+          "considered",
+          "hidden_low_fit",
+          "fit_threshold",
+          "weights",
+          "notes"
+        ],
+        "title": "MatchResponse"
+      },
+      "Opportunity": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "org": {
+            "type": "string",
+            "title": "Org"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind"
+          },
+          "stage": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Stage"
+          },
+          "nations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Nations"
+          },
+          "fields": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Fields"
+          },
+          "format": {
+            "type": "string",
+            "title": "Format"
+          },
+          "cost": {
+            "type": "string",
+            "title": "Cost"
+          },
+          "when": {
+            "type": "string",
+            "title": "When"
+          },
+          "open_months": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Open Months"
+          },
+          "rolling": {
+            "type": "boolean",
+            "title": "Rolling"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url"
+          },
+          "why": {
+            "type": "string",
+            "title": "Why"
+          },
+          "opens": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Opens",
+            "description": "ISO date, only when a live feed supplies one"
+          },
+          "deadline": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deadline",
+            "description": "ISO date, only when a live feed supplies one"
+          },
+          "closing_soon": {
+            "type": "boolean",
+            "title": "Closing Soon",
+            "default": false
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "open",
+              "soon",
+              "rolling",
+              "later"
+            ],
+            "title": "Status"
+          },
+          "matches": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Matches",
+            "description": "Your fields this opportunity matches"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "org",
+          "kind",
+          "stage",
+          "nations",
+          "fields",
+          "format",
+          "cost",
+          "when",
+          "open_months",
+          "rolling",
+          "url",
+          "why",
+          "status",
+          "matches"
+        ],
+        "title": "Opportunity"
+      },
+      "PathPlan": {
+        "properties": {
+          "soc": {
+            "type": "string",
+            "title": "Soc"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "study_level": {
+            "type": "string",
+            "title": "Study Level"
+          },
+          "first_step": {
+            "type": "string",
+            "title": "First Step"
+          },
+          "nation": {
+            "type": "string",
+            "title": "Nation"
+          },
+          "field": {
+            "type": "string",
+            "title": "Field"
+          },
+          "degree_role": {
+            "$ref": "#/components/schemas/DegreeRole"
+          },
+          "routes": {
+            "items": {
+              "$ref": "#/components/schemas/RouteChoice"
+            },
+            "type": "array",
+            "title": "Routes"
+          },
+          "default_route": {
+            "type": "string",
+            "enum": [
+              "university",
+              "apprenticeship"
+            ],
+            "title": "Default Route"
+          },
+          "degrees": {
+            "items": {
+              "$ref": "#/components/schemas/DegreeOption"
+            },
+            "type": "array",
+            "title": "Degrees"
+          },
+          "safe_path": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SafePath"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "apprenticeship": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ApprenticeshipRoute"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "school_subjects": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "School Subjects"
+          },
+          "hard_skills": {
+            "items": {
+              "$ref": "#/components/schemas/SkillItem"
+            },
+            "type": "array",
+            "title": "Hard Skills"
+          },
+          "soft_skills": {
+            "items": {
+              "$ref": "#/components/schemas/SkillItem"
+            },
+            "type": "array",
+            "title": "Soft Skills"
+          },
+          "societies": {
+            "items": {
+              "$ref": "#/components/schemas/Society"
+            },
+            "type": "array",
+            "title": "Societies"
+          },
+          "competitions": {
+            "items": {
+              "$ref": "#/components/schemas/Competition"
+            },
+            "type": "array",
+            "title": "Competitions"
+          },
+          "alumni": {
+            "$ref": "#/components/schemas/AlumniKit"
+          },
+          "experience": {
+            "type": "string",
+            "title": "Experience"
+          },
+          "experience_detail": {
+            "type": "string",
+            "title": "Experience Detail"
+          },
+          "timelines": {
+            "additionalProperties": {
+              "items": {
+                "$ref": "#/components/schemas/TimelineStage"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Timelines"
+          },
+          "funding": {
+            "$ref": "#/components/schemas/Link"
+          },
+          "tools": {
+            "items": {
+              "$ref": "#/components/schemas/Link"
+            },
+            "type": "array",
+            "title": "Tools"
+          },
+          "demo_note": {
+            "type": "string",
+            "title": "Demo Note"
+          }
+        },
+        "type": "object",
+        "required": [
+          "soc",
+          "title",
+          "summary",
+          "study_level",
+          "first_step",
+          "nation",
+          "field",
+          "degree_role",
+          "routes",
+          "default_route",
+          "degrees",
+          "apprenticeship",
+          "school_subjects",
+          "hard_skills",
+          "soft_skills",
+          "societies",
+          "competitions",
+          "alumni",
+          "experience",
+          "experience_detail",
+          "timelines",
+          "funding",
+          "tools",
+          "demo_note"
+        ],
+        "title": "PathPlan"
+      },
+      "PayCareer": {
+        "properties": {
+          "soc": {
+            "type": "string",
+            "title": "Soc"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "quality": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Quality"
+          },
+          "series": {
+            "items": {
+              "$ref": "#/components/schemas/PayPoint"
+            },
+            "type": "array",
+            "title": "Series"
+          },
+          "summary": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PaySummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "soc",
+          "title",
+          "quality",
+          "series",
+          "summary"
+        ],
+        "title": "PayCareer"
+      },
+      "PayPoint": {
+        "properties": {
+          "year": {
+            "type": "integer",
+            "title": "Year"
+          },
+          "nominal": {
+            "$ref": "#/components/schemas/Band",
+            "description": "Pounds of that year"
+          },
+          "real": {
+            "$ref": "#/components/schemas/Band",
+            "description": "Pounds in the base year's prices, after CPI"
+          },
+          "cpi": {
+            "type": "number",
+            "title": "Cpi"
+          }
+        },
+        "type": "object",
+        "required": [
+          "year",
+          "nominal",
+          "real",
+          "cpi"
+        ],
+        "title": "PayPoint"
+      },
+      "PayResponse": {
+        "properties": {
+          "base_year": {
+            "type": "integer",
+            "title": "Base Year"
+          },
+          "first_year": {
+            "type": "integer",
+            "title": "First Year"
+          },
+          "last_year": {
+            "type": "integer",
+            "title": "Last Year"
+          },
+          "cpi": {
+            "items": {
+              "$ref": "#/components/schemas/CpiPoint"
+            },
+            "type": "array",
+            "title": "Cpi"
+          },
+          "careers": {
+            "items": {
+              "$ref": "#/components/schemas/PayCareer"
+            },
+            "type": "array",
+            "title": "Careers"
+          },
+          "synthetic": {
+            "type": "boolean",
+            "title": "Synthetic"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note"
+          }
+        },
+        "type": "object",
+        "required": [
+          "base_year",
+          "first_year",
+          "last_year",
+          "cpi",
+          "careers",
+          "synthetic",
+          "note"
+        ],
+        "title": "PayResponse"
+      },
+      "PaySummary": {
+        "properties": {
+          "first_year": {
+            "type": "integer",
+            "title": "First Year"
+          },
+          "last_year": {
+            "type": "integer",
+            "title": "Last Year"
+          },
+          "median_then": {
+            "type": "number",
+            "title": "Median Then",
+            "description": "Median in pounds of the first year"
+          },
+          "median_then_today": {
+            "type": "number",
+            "title": "Median Then Today",
+            "description": "That same median, in last-year prices"
+          },
+          "median_now": {
+            "type": "number",
+            "title": "Median Now"
+          },
+          "nominal_change_pct": {
+            "type": "number",
+            "title": "Nominal Change Pct"
+          },
+          "real_change_pct": {
+            "type": "number",
+            "title": "Real Change Pct"
+          },
+          "verdict": {
+            "type": "string",
+            "enum": [
+              "Beat inflation",
+              "Kept pace",
+              "Fell behind"
+            ],
+            "title": "Verdict"
+          },
+          "spread_now": {
+            "type": "number",
+            "title": "Spread Now",
+            "description": "Middle half: p75 minus p25, in last-year pounds"
+          },
+          "spread_then": {
+            "type": "number",
+            "title": "Spread Then",
+            "description": "The same, for the first year, in last-year prices"
+          },
+          "spread_change_pct": {
+            "type": "number",
+            "title": "Spread Change Pct"
+          },
+          "sentence": {
+            "type": "string",
+            "title": "Sentence"
+          }
+        },
+        "type": "object",
+        "required": [
+          "first_year",
+          "last_year",
+          "median_then",
+          "median_then_today",
+          "median_now",
+          "nominal_change_pct",
+          "real_change_pct",
+          "verdict",
+          "spread_now",
+          "spread_then",
+          "spread_change_pct",
+          "sentence"
+        ],
+        "title": "PaySummary"
+      },
+      "Quiz": {
+        "properties": {
+          "scale": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Scale"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/QuizItem"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "subjects": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Subjects"
+          },
+          "skills": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Skills"
+          },
+          "regions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Regions"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note"
+          }
+        },
+        "type": "object",
+        "required": [
+          "scale",
+          "items",
+          "subjects",
+          "skills",
+          "regions",
+          "note"
+        ],
+        "title": "Quiz"
+      },
+      "QuizItem": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "R",
+              "I",
+              "A",
+              "S",
+              "E",
+              "C"
+            ],
+            "title": "Type"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "text"
+        ],
+        "title": "QuizItem"
+      },
+      "Radar": {
+        "properties": {
+          "today": {
+            "type": "string",
+            "title": "Today"
+          },
+          "month": {
+            "type": "integer",
+            "title": "Month"
+          },
+          "stage": {
+            "type": "string",
+            "title": "Stage"
+          },
+          "nation": {
+            "type": "string",
+            "title": "Nation"
+          },
+          "fields": {
+            "items": {
+              "$ref": "#/components/schemas/FieldInfo"
+            },
+            "type": "array",
+            "title": "Fields"
+          },
+          "all_fields": {
+            "items": {
+              "$ref": "#/components/schemas/FieldInfo"
+            },
+            "type": "array",
+            "title": "All Fields"
+          },
+          "digest": {
+            "$ref": "#/components/schemas/Digest"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Opportunity"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "live": {
+            "type": "boolean",
+            "title": "Live",
+            "description": "True only when dated live feeds are connected"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note"
+          }
+        },
+        "type": "object",
+        "required": [
+          "today",
+          "month",
+          "stage",
+          "nation",
+          "fields",
+          "all_fields",
+          "digest",
+          "items",
+          "live",
+          "note"
+        ],
+        "title": "Radar"
+      },
+      "Replay": {
+        "properties": {
+          "year": {
+            "type": "integer",
+            "title": "Year"
+          },
+          "outcome_year": {
+            "type": "integer",
+            "title": "Outcome Year"
+          },
+          "synthetic": {
+            "type": "boolean",
+            "title": "Synthetic"
+          },
+          "metrics": {
+            "$ref": "#/components/schemas/YearMetrics"
+          },
+          "median_change": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median Change"
+          },
+          "top": {
+            "items": {
+              "$ref": "#/components/schemas/ReplayRow"
+            },
+            "type": "array",
+            "title": "Top"
+          },
+          "bottom": {
+            "items": {
+              "$ref": "#/components/schemas/ReplayRow"
+            },
+            "type": "array",
+            "title": "Bottom"
+          }
+        },
+        "type": "object",
+        "required": [
+          "year",
+          "outcome_year",
+          "synthetic",
+          "metrics",
+          "median_change",
+          "top",
+          "bottom"
+        ],
+        "title": "Replay"
+      },
+      "ReplayRow": {
+        "properties": {
+          "soc": {
+            "type": "string",
+            "title": "Soc"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "sector": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sector"
+          },
+          "signal": {
+            "type": "number",
+            "title": "Signal"
+          },
+          "ssv": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ssv"
+          },
+          "projection_10y_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Projection 10Y Pct"
+          },
+          "employment_change_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Employment Change Pct"
+          },
+          "pay_change_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pay Change Pct"
+          },
+          "beat_median": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Beat Median"
+          },
+          "bridge": {
+            "type": "string",
+            "title": "Bridge"
+          }
+        },
+        "type": "object",
+        "required": [
+          "soc",
+          "title",
+          "sector",
+          "signal",
+          "ssv",
+          "projection_10y_pct",
+          "employment_change_pct",
+          "pay_change_pct",
+          "beat_median",
+          "bridge"
+        ],
+        "title": "ReplayRow"
+      },
+      "Route": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "title": "Type"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "level": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Level"
+          },
+          "detail": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Detail"
+          },
+          "nation": {
+            "type": "string",
+            "title": "Nation",
+            "default": "England"
+          },
+          "source_id": {
+            "type": "string",
+            "title": "Source Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "name",
+          "source_id"
+        ],
+        "title": "Route"
+      },
+      "RouteChoice": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": [
+              "university",
+              "apprenticeship"
+            ],
+            "title": "Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "available": {
+            "type": "boolean",
+            "title": "Available"
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "available",
+          "summary"
+        ],
+        "title": "RouteChoice"
+      },
+      "SafeChoice": {
+        "properties": {
+          "subject": {
+            "type": "string",
+            "title": "Subject"
+          },
+          "doors": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Doors"
+          }
+        },
+        "type": "object",
+        "required": [
+          "subject",
+          "doors"
+        ],
+        "title": "SafeChoice"
+      },
+      "SafePath": {
+        "properties": {
+          "headline": {
+            "type": "string",
+            "title": "Headline"
+          },
+          "most_direct": {
+            "$ref": "#/components/schemas/SafeChoice"
+          },
+          "most_doors": {
+            "$ref": "#/components/schemas/SafeChoice"
+          },
+          "how_to_specialise": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "How To Specialise"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note"
+          }
+        },
+        "type": "object",
+        "required": [
+          "headline",
+          "most_direct",
+          "most_doors",
+          "how_to_specialise",
+          "note"
+        ],
+        "title": "SafePath"
+      },
+      "Scenario": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "score": {
+            "type": "number",
+            "title": "Score"
+          },
+          "delta": {
+            "type": "number",
+            "title": "Delta"
+          },
+          "rank": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rank",
+            "description": "Rank among careers that fit you, or null if it would be hidden"
+          },
+          "holds": {
+            "type": "boolean",
+            "title": "Holds"
+          },
+          "hedge_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hedge Score",
+            "description": "Your backup career's score in the same scenario"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "description",
+          "score",
+          "delta",
+          "rank",
+          "holds"
+        ],
+        "title": "Scenario"
+      },
+      "SkillItem": {
+        "properties": {
+          "skill": {
+            "type": "string",
+            "title": "Skill"
+          },
+          "how": {
+            "type": "string",
+            "title": "How"
+          },
+          "proof": {
+            "type": "string",
+            "title": "Proof"
+          }
+        },
+        "type": "object",
+        "required": [
+          "skill",
+          "how",
+          "proof"
+        ],
+        "title": "SkillItem"
+      },
+      "Society": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "what": {
+            "type": "string",
+            "title": "What"
+          },
+          "builds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Builds"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "what",
+          "builds"
+        ],
+        "title": "Society"
+      },
+      "SourceOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "publisher": {
+            "type": "string",
+            "title": "Publisher"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url"
+          },
+          "licence": {
+            "type": "string",
+            "title": "Licence"
+          },
+          "gives": {
+            "type": "string",
+            "title": "Gives"
+          },
+          "coverage": {
+            "type": "string",
+            "title": "Coverage"
+          },
+          "scored": {
+            "type": "boolean",
+            "title": "Scored"
+          },
+          "mode": {
+            "type": "string",
+            "title": "Mode"
+          },
+          "edition": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Edition"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "publisher",
+          "url",
+          "licence",
+          "gives",
+          "coverage",
+          "scored",
+          "mode",
+          "edition"
+        ],
+        "title": "SourceOut"
+      },
+      "StressTest": {
+        "properties": {
+          "baseline": {
+            "type": "number",
+            "title": "Baseline"
+          },
+          "worst": {
+            "type": "number",
+            "title": "Worst"
+          },
+          "holds": {
+            "type": "integer",
+            "title": "Holds"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "keep_within": {
+            "type": "integer",
+            "title": "Keep Within"
+          },
+          "scenarios": {
+            "items": {
+              "$ref": "#/components/schemas/Scenario"
+            },
+            "type": "array",
+            "title": "Scenarios"
+          },
+          "hedge_baseline": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hedge Baseline"
+          }
+        },
+        "type": "object",
+        "required": [
+          "baseline",
+          "worst",
+          "holds",
+          "total",
+          "keep_within",
+          "scenarios"
+        ],
+        "title": "StressTest"
+      },
+      "Task": {
+        "properties": {
+          "task": {
+            "type": "string",
+            "title": "Task"
+          },
+          "score": {
+            "type": "number",
+            "title": "Score"
+          }
+        },
+        "type": "object",
+        "required": [
+          "task",
+          "score"
+        ],
+        "title": "Task"
+      },
+      "TimelineStage": {
+        "properties": {
+          "stage": {
+            "type": "string",
+            "title": "Stage"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "items": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "stage",
+          "title",
+          "items"
+        ],
+        "title": "TimelineStage"
+      },
+      "TrackPoint": {
+        "properties": {
+          "year": {
+            "type": "integer",
+            "title": "Year"
+          },
+          "signal_pct": {
+            "type": "number",
+            "title": "Signal Pct",
+            "description": "Percentile of our demand signal that year (0 to 100)"
+          },
+          "outcome_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Outcome Pct",
+            "description": "Percentile of employment change 4 years later"
+          },
+          "employment_change_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Employment Change Pct"
+          }
+        },
+        "type": "object",
+        "required": [
+          "year",
+          "signal_pct",
+          "outcome_pct",
+          "employment_change_pct"
+        ],
+        "title": "TrackPoint"
+      },
+      "Trend": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "heat": {
+            "type": "string",
+            "title": "Heat"
+          },
+          "buzz": {
+            "type": "string",
+            "title": "Buzz"
+          },
+          "reality": {
+            "type": "string",
+            "title": "Reality"
+          },
+          "specialist_name": {
+            "type": "string",
+            "title": "Specialist Name"
+          },
+          "specialist_level": {
+            "type": "string",
+            "title": "Specialist Level"
+          },
+          "specialist_doors": {
+            "type": "string",
+            "title": "Specialist Doors"
+          },
+          "safer": {
+            "items": {
+              "$ref": "#/components/schemas/TrendChoice"
+            },
+            "type": "array",
+            "title": "Safer"
+          },
+          "fade": {
+            "type": "string",
+            "title": "Fade"
+          },
+          "how": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "How"
+          },
+          "related": {
+            "items": {
+              "$ref": "#/components/schemas/CareerRef"
+            },
+            "type": "array",
+            "title": "Related"
+          },
+          "evidence_note": {
+            "type": "string",
+            "title": "Evidence Note"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "heat",
+          "buzz",
+          "reality",
+          "specialist_name",
+          "specialist_level",
+          "specialist_doors",
+          "safer",
+          "fade",
+          "how",
+          "related",
+          "evidence_note"
+        ],
+        "title": "Trend"
+      },
+      "TrendChoice": {
+        "properties": {
+          "subject": {
+            "type": "string",
+            "title": "Subject"
+          },
+          "why": {
+            "type": "string",
+            "title": "Why"
+          },
+          "doors": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Doors"
+          }
+        },
+        "type": "object",
+        "required": [
+          "subject",
+          "why",
+          "doors"
+        ],
+        "title": "TrendChoice"
+      },
+      "TrustReport": {
+        "properties": {
+          "validator_cases": {
+            "type": "integer",
+            "title": "Validator Cases"
+          },
+          "validator_passed": {
+            "type": "integer",
+            "title": "Validator Passed"
+          },
+          "routing_cases": {
+            "type": "integer",
+            "title": "Routing Cases"
+          },
+          "routing_passed": {
+            "type": "integer",
+            "title": "Routing Passed"
+          },
+          "cases": {
+            "items": {
+              "$ref": "#/components/schemas/EvalCase"
+            },
+            "type": "array",
+            "title": "Cases"
+          }
+        },
+        "type": "object",
+        "required": [
+          "validator_cases",
+          "validator_passed",
+          "routing_cases",
+          "routing_passed",
+          "cases"
+        ],
+        "title": "TrustReport"
+      },
+      "University": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "nation": {
+            "type": "string",
+            "title": "Nation"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "university",
+              "college"
+            ],
+            "title": "Kind",
+            "default": "university"
+          },
+          "home": {
+            "type": "boolean",
+            "title": "Home",
+            "description": "In the nation the user chose",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "nation"
+        ],
+        "title": "University"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "Weights": {
+        "properties": {
+          "interest": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Interest",
+            "default": 0.3
+          },
+          "demand_future": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Demand Future",
+            "default": 0.2
+          },
+          "demand_now": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Demand Now",
+            "default": 0.15
+          },
+          "pay": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Pay",
+            "default": 0.15
+          },
+          "ai_resilience": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Ai Resilience",
+            "default": 0.1
+          },
+          "head_start": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Head Start",
+            "default": 0.1
+          }
+        },
+        "type": "object",
+        "title": "Weights"
+      },
+      "YearMetrics": {
+        "properties": {
+          "year": {
+            "type": "integer",
+            "title": "Year"
+          },
+          "outcome_year": {
+            "type": "integer",
+            "title": "Outcome Year"
+          },
+          "n": {
+            "type": "integer",
+            "title": "N"
+          },
+          "spearman": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Spearman",
+            "description": "Rank correlation between our signal and employment change"
+          },
+          "hit_rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hit Rate",
+            "description": "Share of our top third that beat the median outcome (chance = 0.5)"
+          },
+          "top_third_change": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Top Third Change"
+          },
+          "bottom_third_change": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bottom Third Change"
+          },
+          "pay_spearman": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pay Spearman"
+          }
+        },
+        "type": "object",
+        "required": [
+          "year",
+          "outcome_year",
+          "n",
+          "spearman",
+          "hit_rate",
+          "top_third_change",
+          "bottom_third_change",
+          "pay_spearman"
+        ],
+        "title": "YearMetrics"
+      }
+    }
+  }
+}

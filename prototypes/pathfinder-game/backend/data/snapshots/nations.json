@@ -1,0 +1,1102 @@
+{
+  "source_id": "nations",
+  "edition": "2026 (demo snapshot)",
+  "_note": "Routes outside England: Modern, Foundation and Graduate Apprenticeships (Scotland, apprenticeships.scot), Apprenticeships Wales, ApprenticeshipsNI. DEMO SNAPSHOT: framework titles and levels to be confirmed with each nation's service.",
+  "occupations": {
+    "2134": {
+      "Scotland": [
+        {
+          "type": "Graduate Apprenticeship",
+          "name": "Software Development",
+          "level": "SCQF 9–10"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "IT: Software Development",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "Degree apprenticeship",
+          "name": "Degree apprenticeship (digital or engineering, funded in Wales)",
+          "level": "Level 6"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Higher Apprenticeship via Apprenticeships Wales",
+          "level": "Level 4–5"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Higher Level Apprenticeship",
+          "name": "Higher Level Apprenticeship (NI)",
+          "level": "Level 4–6"
+        }
+      ]
+    },
+    "2135": {
+      "Scotland": [
+        {
+          "type": "Graduate Apprenticeship",
+          "name": "Cyber Security",
+          "level": "SCQF 9–10"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "IT: Software Development",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "Degree apprenticeship",
+          "name": "Degree apprenticeship (digital or engineering, funded in Wales)",
+          "level": "Level 6"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Higher Apprenticeship via Apprenticeships Wales",
+          "level": "Level 4–5"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Higher Level Apprenticeship",
+          "name": "Higher Level Apprenticeship (NI)",
+          "level": "Level 4–6"
+        }
+      ]
+    },
+    "2425": {
+      "Scotland": [
+        {
+          "type": "Graduate Apprenticeship",
+          "name": "Data Science",
+          "level": "SCQF 9–10"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "IT: Software Development",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "Degree apprenticeship",
+          "name": "Degree apprenticeship (digital or engineering, funded in Wales)",
+          "level": "Level 6"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Higher Apprenticeship via Apprenticeships Wales",
+          "level": "Level 4–5"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Higher Level Apprenticeship",
+          "name": "Higher Level Apprenticeship (NI)",
+          "level": "Level 4–6"
+        }
+      ]
+    },
+    "3132": {
+      "Scotland": [
+        {
+          "type": "Modern Apprenticeship",
+          "name": "IT and Telecommunications",
+          "level": "SCQF 6"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "IT: Hardware and System Support",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "Apprenticeship",
+          "name": "Apprenticeship via Apprenticeships Wales",
+          "level": "Level 2–3"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Apprenticeship",
+          "name": "ApprenticeshipsNI",
+          "level": "Level 2–3"
+        }
+      ]
+    },
+    "2122": {
+      "Scotland": [
+        {
+          "type": "Graduate Apprenticeship",
+          "name": "Engineering: Design and Manufacture",
+          "level": "SCQF 9–10"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "Engineering",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "Degree apprenticeship",
+          "name": "Degree apprenticeship (digital or engineering, funded in Wales)",
+          "level": "Level 6"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Higher Apprenticeship via Apprenticeships Wales",
+          "level": "Level 4–5"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Higher Level Apprenticeship",
+          "name": "Higher Level Apprenticeship (NI)",
+          "level": "Level 4–6"
+        }
+      ]
+    },
+    "2123": {
+      "Scotland": [
+        {
+          "type": "Graduate Apprenticeship",
+          "name": "Engineering: Instrumentation, Measurement and Control",
+          "level": "SCQF 9–10"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "Engineering",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "Degree apprenticeship",
+          "name": "Degree apprenticeship (digital or engineering, funded in Wales)",
+          "level": "Level 6"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Higher Apprenticeship via Apprenticeships Wales",
+          "level": "Level 4–5"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Higher Level Apprenticeship",
+          "name": "Higher Level Apprenticeship (NI)",
+          "level": "Level 4–6"
+        }
+      ]
+    },
+    "2121": {
+      "Scotland": [
+        {
+          "type": "Graduate Apprenticeship",
+          "name": "Civil Engineering",
+          "level": "SCQF 9–10"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "Civil Engineering",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "Degree apprenticeship",
+          "name": "Degree apprenticeship (digital or engineering, funded in Wales)",
+          "level": "Level 6"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Higher Apprenticeship via Apprenticeships Wales",
+          "level": "Level 4–5"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Higher Level Apprenticeship",
+          "name": "Higher Level Apprenticeship (NI)",
+          "level": "Level 4–6"
+        }
+      ]
+    },
+    "2453": {
+      "Scotland": [
+        {
+          "type": "Graduate Apprenticeship",
+          "name": "Construction and the Built Environment",
+          "level": "SCQF 9–10"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "Civil Engineering",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "Degree apprenticeship",
+          "name": "Degree apprenticeship (digital or engineering, funded in Wales)",
+          "level": "Level 6"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Higher Apprenticeship via Apprenticeships Wales",
+          "level": "Level 4–5"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Higher Level Apprenticeship",
+          "name": "Higher Level Apprenticeship (NI)",
+          "level": "Level 4–6"
+        }
+      ]
+    },
+    "1122": {
+      "Scotland": [
+        {
+          "type": "Graduate Apprenticeship",
+          "name": "Construction and the Built Environment",
+          "level": "SCQF 9–10"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "Civil Engineering",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "Degree apprenticeship",
+          "name": "Degree apprenticeship (digital or engineering, funded in Wales)",
+          "level": "Level 6"
+        },
+        {
+          "type": "Apprenticeship",
+          "name": "Higher Apprenticeship via Apprenticeships Wales",
+          "level": "Level 4–5"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Higher Level Apprenticeship",
+          "name": "Higher Level Apprenticeship (NI)",
+          "level": "Level 4–6"
+        }
+      ]
+    },
+    "2422": {
+      "Scotland": [
+        {
+          "type": "Graduate Apprenticeship",
+          "name": "Business Management",
+          "level": "SCQF 9–10"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "Business Skills",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "Apprenticeship",
+          "name": "Higher Apprenticeship via Apprenticeships Wales",
+          "level": "Level 4–5"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Higher Level Apprenticeship",
+          "name": "Higher Level Apprenticeship (NI)",
+          "level": "Level 4–6"
+        }
+      ]
+    },
+    "2440": {
+      "Scotland": [
+        {
+          "type": "Graduate Apprenticeship",
+          "name": "Business Management",
+          "level": "SCQF 9–10"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "Business Skills",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "Apprenticeship",
+          "name": "Higher Apprenticeship via Apprenticeships Wales",
+          "level": "Level 4–5"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Higher Level Apprenticeship",
+          "name": "Higher Level Apprenticeship (NI)",
+          "level": "Level 4–6"
+        }
+      ]
+    },
+    "3556": {
+      "Scotland": [
+        {
+          "type": "Graduate Apprenticeship",
+          "name": "Business Management",
+          "level": "SCQF 9–10"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "Business Skills",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "Apprenticeship",
+          "name": "Higher Apprenticeship via Apprenticeships Wales",
+          "level": "Level 4–5"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Higher Level Apprenticeship",
+          "name": "Higher Level Apprenticeship (NI)",
+          "level": "Level 4–6"
+        }
+      ]
+    },
+    "3554": {
+      "Scotland": [
+        {
+          "type": "Graduate Apprenticeship",
+          "name": "Business Management",
+          "level": "SCQF 9–10"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "Business Skills",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "Apprenticeship",
+          "name": "Higher Apprenticeship via Apprenticeships Wales",
+          "level": "Level 4–5"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Higher Level Apprenticeship",
+          "name": "Higher Level Apprenticeship (NI)",
+          "level": "Level 4–6"
+        }
+      ]
+    },
+    "5241": {
+      "Scotland": [
+        {
+          "type": "Modern Apprenticeship",
+          "name": "Electrical Installation",
+          "level": "SCQF 6–7"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "Apprenticeship",
+          "name": "Apprenticeship via Apprenticeships Wales",
+          "level": "Level 2–3"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Apprenticeship",
+          "name": "ApprenticeshipsNI",
+          "level": "Level 2–3"
+        }
+      ]
+    },
+    "5314": {
+      "Scotland": [
+        {
+          "type": "Modern Apprenticeship",
+          "name": "Plumbing and Heating",
+          "level": "SCQF 6–7"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "Apprenticeship",
+          "name": "Apprenticeship via Apprenticeships Wales",
+          "level": "Level 2–3"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Apprenticeship",
+          "name": "ApprenticeshipsNI",
+          "level": "Level 2–3"
+        }
+      ]
+    },
+    "5316": {
+      "Scotland": [
+        {
+          "type": "Modern Apprenticeship",
+          "name": "Construction: Building (Carpentry and Joinery)",
+          "level": "SCQF 6–7"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "Apprenticeship",
+          "name": "Apprenticeship via Apprenticeships Wales",
+          "level": "Level 2–3"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Apprenticeship",
+          "name": "ApprenticeshipsNI",
+          "level": "Level 2–3"
+        }
+      ]
+    },
+    "5313": {
+      "Scotland": [
+        {
+          "type": "Modern Apprenticeship",
+          "name": "Construction: Building (Brickwork)",
+          "level": "SCQF 6–7"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "Apprenticeship",
+          "name": "Apprenticeship via Apprenticeships Wales",
+          "level": "Level 2–3"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Apprenticeship",
+          "name": "ApprenticeshipsNI",
+          "level": "Level 2–3"
+        }
+      ]
+    },
+    "5231": {
+      "Scotland": [
+        {
+          "type": "Modern Apprenticeship",
+          "name": "Vehicle Maintenance and Repair",
+          "level": "SCQF 6–7"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "Apprenticeship",
+          "name": "Apprenticeship via Apprenticeships Wales",
+          "level": "Level 2–3"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Apprenticeship",
+          "name": "ApprenticeshipsNI",
+          "level": "Level 2–3"
+        }
+      ]
+    },
+    "2232": {
+      "Scotland": [
+        {
+          "type": "University",
+          "name": "Degree at a Scottish university (no degree apprenticeship route)",
+          "level": "SCQF 9–10"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "Social Services and Healthcare",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "University",
+          "name": "Degree at a Welsh or other UK university (no degree apprenticeship in Wales)",
+          "level": "Level 6"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "University",
+          "name": "Degree at a Northern Ireland or other UK university",
+          "level": "Level 6"
+        }
+      ]
+    },
+    "2235": {
+      "Scotland": [
+        {
+          "type": "University",
+          "name": "Degree at a Scottish university (no degree apprenticeship route)",
+          "level": "SCQF 9–10"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "Social Services and Healthcare",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "University",
+          "name": "Degree at a Welsh or other UK university (no degree apprenticeship in Wales)",
+          "level": "Level 6"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "University",
+          "name": "Degree at a Northern Ireland or other UK university",
+          "level": "Level 6"
+        }
+      ]
+    },
+    "2221": {
+      "Scotland": [
+        {
+          "type": "University",
+          "name": "Degree at a Scottish university (no degree apprenticeship route)",
+          "level": "SCQF 9–10"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "Social Services and Healthcare",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "University",
+          "name": "Degree at a Welsh or other UK university (no degree apprenticeship in Wales)",
+          "level": "Level 6"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "University",
+          "name": "Degree at a Northern Ireland or other UK university",
+          "level": "Level 6"
+        }
+      ]
+    },
+    "2222": {
+      "Scotland": [
+        {
+          "type": "University",
+          "name": "Degree at a Scottish university (no degree apprenticeship route)",
+          "level": "SCQF 9–10"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "Social Services and Healthcare",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "University",
+          "name": "Degree at a Welsh or other UK university (no degree apprenticeship in Wales)",
+          "level": "Level 6"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "University",
+          "name": "Degree at a Northern Ireland or other UK university",
+          "level": "Level 6"
+        }
+      ]
+    },
+    "2223": {
+      "Scotland": [
+        {
+          "type": "University",
+          "name": "Degree at a Scottish university (no degree apprenticeship route)",
+          "level": "SCQF 9–10"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "Social Services and Healthcare",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "University",
+          "name": "Degree at a Welsh or other UK university (no degree apprenticeship in Wales)",
+          "level": "Level 6"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "University",
+          "name": "Degree at a Northern Ireland or other UK university",
+          "level": "Level 6"
+        }
+      ]
+    },
+    "2255": {
+      "Scotland": [
+        {
+          "type": "University",
+          "name": "Degree at a Scottish university (no degree apprenticeship route)",
+          "level": "SCQF 9–10"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "Social Services and Healthcare",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "University",
+          "name": "Degree at a Welsh or other UK university (no degree apprenticeship in Wales)",
+          "level": "Level 6"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "University",
+          "name": "Degree at a Northern Ireland or other UK university",
+          "level": "Level 6"
+        }
+      ]
+    },
+    "2254": {
+      "Scotland": [
+        {
+          "type": "University",
+          "name": "Degree at a Scottish university (no degree apprenticeship route)",
+          "level": "SCQF 9–10"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "Social Services and Healthcare",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "University",
+          "name": "Degree at a Welsh or other UK university (no degree apprenticeship in Wales)",
+          "level": "Level 6"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "University",
+          "name": "Degree at a Northern Ireland or other UK university",
+          "level": "Level 6"
+        }
+      ]
+    },
+    "2251": {
+      "Scotland": [
+        {
+          "type": "University",
+          "name": "Degree at a Scottish university (no degree apprenticeship route)",
+          "level": "SCQF 9–10"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "Social Services and Healthcare",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "University",
+          "name": "Degree at a Welsh or other UK university (no degree apprenticeship in Wales)",
+          "level": "Level 6"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "University",
+          "name": "Degree at a Northern Ireland or other UK university",
+          "level": "Level 6"
+        }
+      ]
+    },
+    "6135": {
+      "Scotland": [
+        {
+          "type": "Modern Apprenticeship",
+          "name": "Social Services and Healthcare",
+          "level": "SCQF 6–7"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "Social Services and Healthcare",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "Apprenticeship",
+          "name": "Apprenticeship via Apprenticeships Wales",
+          "level": "Level 2–3"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Apprenticeship",
+          "name": "ApprenticeshipsNI",
+          "level": "Level 2–3"
+        }
+      ]
+    },
+    "2313": {
+      "Scotland": [
+        {
+          "type": "University",
+          "name": "Degree, then a PGDE and a probation year",
+          "level": "SCQF 9–11"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "University",
+          "name": "Degree at a Welsh or other UK university (no degree apprenticeship in Wales)",
+          "level": "Level 6"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "University",
+          "name": "Degree at a Northern Ireland or other UK university",
+          "level": "Level 6"
+        }
+      ]
+    },
+    "2314": {
+      "Scotland": [
+        {
+          "type": "University",
+          "name": "Degree, then a PGDE and a probation year",
+          "level": "SCQF 9–11"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "University",
+          "name": "Degree at a Welsh or other UK university (no degree apprenticeship in Wales)",
+          "level": "Level 6"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "University",
+          "name": "Degree at a Northern Ireland or other UK university",
+          "level": "Level 6"
+        }
+      ]
+    },
+    "2461": {
+      "Scotland": [
+        {
+          "type": "University",
+          "name": "Social work degree (BA)",
+          "level": "SCQF 10"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "Social Services: Children and Young People",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "University",
+          "name": "Degree at a Welsh or other UK university (no degree apprenticeship in Wales)",
+          "level": "Level 6"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "University",
+          "name": "Degree at a Northern Ireland or other UK university",
+          "level": "Level 6"
+        }
+      ]
+    },
+    "2225": {
+      "Scotland": [
+        {
+          "type": "University",
+          "name": "Degree at a Scottish university",
+          "level": "SCQF 9–11"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "University",
+          "name": "Degree at a Welsh or other UK university (no degree apprenticeship in Wales)",
+          "level": "Level 6"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "University",
+          "name": "Degree at a Northern Ireland or other UK university",
+          "level": "Level 6"
+        }
+      ]
+    },
+    "2421": {
+      "Scotland": [
+        {
+          "type": "Modern Apprenticeship",
+          "name": "Accounting",
+          "level": "SCQF 6–8"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "Accountancy",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "Apprenticeship",
+          "name": "Apprenticeship via Apprenticeships Wales",
+          "level": "Level 2–3"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Higher Level Apprenticeship",
+          "name": "Higher Level Apprenticeship (NI)",
+          "level": "Level 4–6"
+        }
+      ]
+    },
+    "2412": {
+      "Scotland": [
+        {
+          "type": "University",
+          "name": "LLB, then the Diploma in Professional Legal Practice",
+          "level": "SCQF 10–11"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "University",
+          "name": "Degree at a Welsh or other UK university (no degree apprenticeship in Wales)",
+          "level": "Level 6"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "University",
+          "name": "Degree at a Northern Ireland or other UK university",
+          "level": "Level 6"
+        }
+      ]
+    },
+    "2451": {
+      "Scotland": [
+        {
+          "type": "University",
+          "name": "Degree at a Scottish university",
+          "level": "SCQF 9–11"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "University",
+          "name": "Degree at a Welsh or other UK university (no degree apprenticeship in Wales)",
+          "level": "Level 6"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "University",
+          "name": "Degree at a Northern Ireland or other UK university",
+          "level": "Level 6"
+        }
+      ]
+    },
+    "3421": {
+      "Scotland": [
+        {
+          "type": "Modern Apprenticeship",
+          "name": "Creative and Digital Media",
+          "level": "SCQF 6"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "Creative and Digital Media",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "Apprenticeship",
+          "name": "Apprenticeship via Apprenticeships Wales",
+          "level": "Level 2–3"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Apprenticeship",
+          "name": "ApprenticeshipsNI",
+          "level": "Level 2–3"
+        }
+      ]
+    },
+    "2152": {
+      "Scotland": [
+        {
+          "type": "Modern Apprenticeship",
+          "name": "Life Sciences and Related Science Industries",
+          "level": "SCQF 6–7"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "Scientific Technologies",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "University",
+          "name": "Degree at a Welsh or other UK university (no degree apprenticeship in Wales)",
+          "level": "Level 6"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Higher Level Apprenticeship",
+          "name": "Higher Level Apprenticeship (NI)",
+          "level": "Level 4–6"
+        }
+      ]
+    },
+    "2113": {
+      "Scotland": [
+        {
+          "type": "Modern Apprenticeship",
+          "name": "Life Sciences and Related Science Industries",
+          "level": "SCQF 6–7"
+        },
+        {
+          "type": "Foundation Apprenticeship",
+          "name": "Scientific Technologies",
+          "level": "SCQF 6, in S5–S6"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "University",
+          "name": "Degree at a Welsh or other UK university (no degree apprenticeship in Wales)",
+          "level": "Level 6"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Higher Level Apprenticeship",
+          "name": "Higher Level Apprenticeship (NI)",
+          "level": "Level 4–6"
+        }
+      ]
+    },
+    "5434": {
+      "Scotland": [
+        {
+          "type": "Modern Apprenticeship",
+          "name": "Hospitality",
+          "level": "SCQF 5–7"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "Apprenticeship",
+          "name": "Apprenticeship via Apprenticeships Wales",
+          "level": "Level 2–3"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "Apprenticeship",
+          "name": "ApprenticeshipsNI",
+          "level": "Level 2–3"
+        }
+      ]
+    },
+    "2240": {
+      "Scotland": [
+        {
+          "type": "University",
+          "name": "Degree at a Scottish university",
+          "level": "SCQF 9–11"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "University",
+          "name": "Degree at a Welsh or other UK university (no degree apprenticeship in Wales)",
+          "level": "Level 6"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "University",
+          "name": "Degree at a Northern Ireland or other UK university",
+          "level": "Level 6"
+        }
+      ]
+    },
+    "3312": {
+      "Scotland": [
+        {
+          "type": "Direct entry",
+          "name": "Police Scotland probationer training",
+          "level": "Scottish Police College"
+        }
+      ],
+      "Wales": [
+        {
+          "type": "University",
+          "name": "Degree at a Welsh or other UK university (no degree apprenticeship in Wales)",
+          "level": "Level 6"
+        }
+      ],
+      "Northern Ireland": [
+        {
+          "type": "University",
+          "name": "Degree at a Northern Ireland or other UK university",
+          "level": "Level 6"
+        }
+      ]
+    }
+  }
+}

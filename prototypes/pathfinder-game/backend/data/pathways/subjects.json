@@ -1,0 +1,1479 @@
+{
+  "_note": "Degree subjects linked to careers, with example providers. DEMO / CURATED: institutions are examples of places known for the subject, not a ranking and not a guarantee the exact course exists. Course titles differ between universities (for example 'Finance' may be 'Banking and Finance'). Always confirm the course, entry requirements and fees on UCAS and Discover Uni. A person must check every row before real use.",
+  "subjects": {
+    "Finance": {
+      "about": "How money, markets and companies work: valuing assets, managing risk and funding growth.",
+      "builds": [
+        "Valuation and financial modelling",
+        "Quantitative reasoning",
+        "Commercial awareness"
+      ],
+      "best_if": "You like numbers applied to real decisions, and want the most direct route into investment, banking or corporate finance.",
+      "search": "finance",
+      "universities": [
+        {
+          "name": "University of Strathclyde",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Stirling",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Glasgow",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Warwick",
+          "nation": "England"
+        },
+        {
+          "name": "London School of Economics",
+          "nation": "England"
+        },
+        {
+          "name": "Bayes Business School (City St George's)",
+          "nation": "England"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        },
+        {
+          "name": "Queen's University Belfast",
+          "nation": "Northern Ireland"
+        }
+      ]
+    },
+    "Economics": {
+      "about": "How people, firms and governments make choices, and what that means for prices, jobs and growth.",
+      "builds": [
+        "Statistics and data analysis",
+        "Structured argument",
+        "Policy and market thinking"
+      ],
+      "best_if": "You like big questions backed by evidence, and want options in finance, consulting, data or public policy.",
+      "search": "economics",
+      "universities": [
+        {
+          "name": "University of Glasgow",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Edinburgh",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of St Andrews",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Strathclyde",
+          "nation": "Scotland"
+        },
+        {
+          "name": "London School of Economics",
+          "nation": "England"
+        },
+        {
+          "name": "University of Warwick",
+          "nation": "England"
+        },
+        {
+          "name": "University of Manchester",
+          "nation": "England"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        },
+        {
+          "name": "Queen's University Belfast",
+          "nation": "Northern Ireland"
+        }
+      ]
+    },
+    "Business and management": {
+      "about": "How organisations are run: strategy, people, operations, marketing and finance in one degree.",
+      "builds": [
+        "Teamwork on group projects",
+        "Presenting and persuading",
+        "Understanding how a whole business fits together"
+      ],
+      "best_if": "You want breadth and keeping options open across finance, marketing, consulting and project work.",
+      "search": "business and management",
+      "universities": [
+        {
+          "name": "University of Strathclyde",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Glasgow",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Edinburgh",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of St Andrews",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Bath",
+          "nation": "England"
+        },
+        {
+          "name": "Lancaster University",
+          "nation": "England"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        }
+      ]
+    },
+    "Accounting and finance": {
+      "about": "Recording, auditing and analysing a company's money, with the finance behind it. Often leads to professional accounting exams.",
+      "builds": [
+        "Financial reporting and tax",
+        "Attention to detail",
+        "Professional accountancy exemptions"
+      ],
+      "best_if": "You want a clear route to chartered accountancy or finance, and like accuracy and rules.",
+      "search": "accounting and finance",
+      "universities": [
+        {
+          "name": "University of Glasgow",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Strathclyde",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Stirling",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Edinburgh",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Heriot-Watt University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Manchester",
+          "nation": "England"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        }
+      ]
+    },
+    "Mathematics": {
+      "about": "Pure and applied maths: proof, modelling, probability and algorithms.",
+      "builds": [
+        "Rigorous problem solving",
+        "Programming for maths",
+        "Explaining abstract ideas"
+      ],
+      "best_if": "You enjoy maths for its own sake and want to keep doors open to data, finance, tech and research.",
+      "search": "mathematics",
+      "universities": [
+        {
+          "name": "University of Edinburgh",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Glasgow",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of St Andrews",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Strathclyde",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Warwick",
+          "nation": "England"
+        },
+        {
+          "name": "Imperial College London",
+          "nation": "England"
+        },
+        {
+          "name": "University of Bristol",
+          "nation": "England"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        },
+        {
+          "name": "Queen's University Belfast",
+          "nation": "Northern Ireland"
+        }
+      ]
+    },
+    "Statistics": {
+      "about": "Collecting, modelling and interpreting data to find out what is really going on.",
+      "builds": [
+        "Statistical modelling",
+        "Programming in R or Python",
+        "Communicating uncertainty"
+      ],
+      "best_if": "You like finding patterns in data and want a direct route into data science, health or research.",
+      "search": "statistics",
+      "universities": [
+        {
+          "name": "University of Glasgow",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Strathclyde",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Edinburgh",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Warwick",
+          "nation": "England"
+        },
+        {
+          "name": "London School of Economics",
+          "nation": "England"
+        },
+        {
+          "name": "Lancaster University",
+          "nation": "England"
+        }
+      ]
+    },
+    "Computer science": {
+      "about": "How computers work and how to build software: algorithms, systems, data and increasingly AI.",
+      "builds": [
+        "Programming in several languages",
+        "Designing and testing software",
+        "Working in a team on larger projects"
+      ],
+      "best_if": "You like building things with code. It also keeps data, AI, cyber and finance tech open.",
+      "search": "computer science",
+      "universities": [
+        {
+          "name": "University of Glasgow",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Edinburgh",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Strathclyde",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of St Andrews",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Imperial College London",
+          "nation": "England"
+        },
+        {
+          "name": "University of Manchester",
+          "nation": "England"
+        },
+        {
+          "name": "University of Bristol",
+          "nation": "England"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        },
+        {
+          "name": "Queen's University Belfast",
+          "nation": "Northern Ireland"
+        }
+      ]
+    },
+    "Software engineering": {
+      "about": "Building reliable software in teams: requirements, design, testing and maintenance.",
+      "builds": [
+        "Professional development practice",
+        "Testing and version control",
+        "Delivering projects with others"
+      ],
+      "best_if": "You want to be a developer and prefer a degree built around real projects.",
+      "search": "software engineering",
+      "universities": [
+        {
+          "name": "Heriot-Watt University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Edinburgh Napier University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Southampton",
+          "nation": "England"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        },
+        {
+          "name": "Queen's University Belfast",
+          "nation": "Northern Ireland"
+        }
+      ]
+    },
+    "Cyber security": {
+      "about": "Defending systems and data: networks, cryptography, ethical hacking and digital forensics.",
+      "builds": [
+        "Ethical hacking and penetration testing",
+        "Networks and operating systems",
+        "Incident response"
+      ],
+      "best_if": "You like puzzles and finding weaknesses, and want a specialist route into security.",
+      "search": "cyber security",
+      "universities": [
+        {
+          "name": "Abertay University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Edinburgh Napier University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Glasgow Caledonian University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Royal Holloway, University of London",
+          "nation": "England"
+        },
+        {
+          "name": "Lancaster University",
+          "nation": "England"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        }
+      ]
+    },
+    "Information technology": {
+      "about": "Practical computing: hardware, networks, support and systems, often at college first.",
+      "builds": [
+        "Troubleshooting",
+        "Networking basics",
+        "Customer-facing support"
+      ],
+      "best_if": "You want to start working sooner and can move on to a degree later if you choose.",
+      "search": "information technology HNC",
+      "universities": [
+        {
+          "name": "City of Glasgow College",
+          "nation": "Scotland",
+          "kind": "college"
+        },
+        {
+          "name": "Edinburgh College",
+          "nation": "Scotland",
+          "kind": "college"
+        },
+        {
+          "name": "Forth Valley College",
+          "nation": "Scotland",
+          "kind": "college"
+        },
+        {
+          "name": "Dundee and Angus College",
+          "nation": "Scotland",
+          "kind": "college"
+        }
+      ]
+    },
+    "Mechanical engineering": {
+      "about": "Designing machines and systems: forces, materials, energy, manufacturing and control.",
+      "builds": [
+        "Engineering design and CAD",
+        "Maths and physics applied to real problems",
+        "Team design projects"
+      ],
+      "best_if": "You like how things work and want chartered engineer status later (look for accredited courses).",
+      "search": "mechanical engineering",
+      "universities": [
+        {
+          "name": "University of Strathclyde",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Glasgow",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Edinburgh",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Heriot-Watt University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Imperial College London",
+          "nation": "England"
+        },
+        {
+          "name": "University of Bristol",
+          "nation": "England"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        },
+        {
+          "name": "Queen's University Belfast",
+          "nation": "Northern Ireland"
+        }
+      ]
+    },
+    "Civil engineering": {
+      "about": "Planning and building infrastructure: structures, water, transport and geotechnics.",
+      "builds": [
+        "Structural and hydraulic analysis",
+        "Site and project management",
+        "Sustainability in design"
+      ],
+      "best_if": "You want to shape the built environment and aim for chartered status (look for accredited courses).",
+      "search": "civil engineering",
+      "universities": [
+        {
+          "name": "University of Strathclyde",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Glasgow",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Edinburgh",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Heriot-Watt University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Imperial College London",
+          "nation": "England"
+        },
+        {
+          "name": "University of Bristol",
+          "nation": "England"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        },
+        {
+          "name": "Queen's University Belfast",
+          "nation": "Northern Ireland"
+        }
+      ]
+    },
+    "Electrical and electronic engineering": {
+      "about": "Power, electronics, control and communications: from the national grid to chips.",
+      "builds": [
+        "Circuit and power systems design",
+        "Embedded programming",
+        "Lab and project work"
+      ],
+      "best_if": "You like electronics and energy, and want to work on renewables, grids or devices.",
+      "search": "electrical and electronic engineering",
+      "universities": [
+        {
+          "name": "University of Strathclyde",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Glasgow",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Edinburgh",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Heriot-Watt University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Imperial College London",
+          "nation": "England"
+        },
+        {
+          "name": "University of Southampton",
+          "nation": "England"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        },
+        {
+          "name": "Queen's University Belfast",
+          "nation": "Northern Ireland"
+        }
+      ]
+    },
+    "Adult nursing": {
+      "about": "Caring for adults with physical illness in hospitals and the community, with about half the course on placement.",
+      "builds": [
+        "Clinical skills on real wards",
+        "Communicating with patients and families",
+        "Working under pressure in a team"
+      ],
+      "best_if": "You want a hands-on, people-first career and a registration that is recognised across the UK.",
+      "search": "nursing adult",
+      "universities": [
+        {
+          "name": "Glasgow Caledonian University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Edinburgh Napier University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Robert Gordon University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Stirling",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Manchester",
+          "nation": "England"
+        },
+        {
+          "name": "University of Southampton",
+          "nation": "England"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        },
+        {
+          "name": "Ulster University",
+          "nation": "Northern Ireland"
+        }
+      ]
+    },
+    "Mental health nursing": {
+      "about": "Supporting people with mental illness and their recovery, with about half the course on placement.",
+      "builds": [
+        "Therapeutic communication",
+        "Risk assessment",
+        "Resilience and self-care"
+      ],
+      "best_if": "You are patient, a good listener and drawn to mental health.",
+      "search": "nursing mental health",
+      "universities": [
+        {
+          "name": "Glasgow Caledonian University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Edinburgh Napier University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Robert Gordon University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Stirling",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Manchester",
+          "nation": "England"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        },
+        {
+          "name": "Ulster University",
+          "nation": "Northern Ireland"
+        }
+      ]
+    },
+    "Physiotherapy": {
+      "about": "Helping people recover movement and manage pain, through exercise, hands-on therapy and education.",
+      "builds": [
+        "Anatomy and movement analysis",
+        "Hands-on treatment",
+        "Motivating patients"
+      ],
+      "best_if": "You like science and sport, and want a hands-on health career.",
+      "search": "physiotherapy",
+      "universities": [
+        {
+          "name": "Glasgow Caledonian University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Robert Gordon University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Queen Margaret University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        },
+        {
+          "name": "Ulster University",
+          "nation": "Northern Ireland"
+        },
+        {
+          "name": "University of Manchester",
+          "nation": "England"
+        }
+      ]
+    },
+    "Occupational therapy": {
+      "about": "Helping people with illness or disability do the everyday things that matter to them.",
+      "builds": [
+        "Assessing daily living",
+        "Creative problem solving",
+        "Working with families and carers"
+      ],
+      "best_if": "You are practical and creative, and enjoy helping people become independent.",
+      "search": "occupational therapy",
+      "universities": [
+        {
+          "name": "Glasgow Caledonian University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Robert Gordon University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Queen Margaret University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        },
+        {
+          "name": "Ulster University",
+          "nation": "Northern Ireland"
+        },
+        {
+          "name": "Sheffield Hallam University",
+          "nation": "England"
+        }
+      ]
+    },
+    "Speech and language therapy": {
+      "about": "Helping people with speech, language, communication and swallowing difficulties.",
+      "builds": [
+        "Linguistics and phonetics",
+        "Assessment and therapy planning",
+        "Patience and clear explanation"
+      ],
+      "best_if": "You love language and want to help children and adults communicate.",
+      "search": "speech and language therapy",
+      "universities": [
+        {
+          "name": "Queen Margaret University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Ulster University",
+          "nation": "Northern Ireland"
+        },
+        {
+          "name": "Cardiff Metropolitan University",
+          "nation": "Wales"
+        },
+        {
+          "name": "University of Manchester",
+          "nation": "England"
+        }
+      ]
+    },
+    "Paramedic science": {
+      "about": "Emergency and urgent care: assessing and treating people at the scene and on the way to hospital.",
+      "builds": [
+        "Emergency clinical skills",
+        "Quick decisions under pressure",
+        "Calm communication"
+      ],
+      "best_if": "You stay calm in a crisis and want a fast-moving, outdoors-and-indoors job.",
+      "search": "paramedic science",
+      "universities": [
+        {
+          "name": "Glasgow Caledonian University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Swansea University",
+          "nation": "Wales"
+        },
+        {
+          "name": "Ulster University",
+          "nation": "Northern Ireland"
+        },
+        {
+          "name": "Coventry University",
+          "nation": "England"
+        },
+        {
+          "name": "University of Hertfordshire",
+          "nation": "England"
+        }
+      ]
+    },
+    "Pharmacy": {
+      "about": "Medicines science and practice: how drugs work, how to use them safely, and how to advise patients.",
+      "builds": [
+        "Pharmacology and chemistry",
+        "Accuracy",
+        "Advising patients"
+      ],
+      "best_if": "You like chemistry and biology and want a job that blends science with talking to people.",
+      "search": "pharmacy MPharm",
+      "universities": [
+        {
+          "name": "University of Strathclyde",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Robert Gordon University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        },
+        {
+          "name": "Queen's University Belfast",
+          "nation": "Northern Ireland"
+        },
+        {
+          "name": "University of Manchester",
+          "nation": "England"
+        },
+        {
+          "name": "UCL",
+          "nation": "England"
+        }
+      ]
+    },
+    "Diagnostic radiography": {
+      "about": "Using X-ray, CT, MRI and ultrasound to help diagnose illness and injury.",
+      "builds": [
+        "Imaging technology",
+        "Radiation safety",
+        "Reassuring patients"
+      ],
+      "best_if": "You like physics and technology, and want a patient-facing health role.",
+      "search": "diagnostic radiography",
+      "universities": [
+        {
+          "name": "Glasgow Caledonian University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Robert Gordon University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        },
+        {
+          "name": "Ulster University",
+          "nation": "Northern Ireland"
+        },
+        {
+          "name": "University of Liverpool",
+          "nation": "England"
+        },
+        {
+          "name": "Sheffield Hallam University",
+          "nation": "England"
+        }
+      ]
+    },
+    "Teacher training (secondary)": {
+      "about": "A postgraduate course (PGDE in Scotland, PGCE elsewhere) after a degree in your teaching subject.",
+      "builds": [
+        "Classroom management",
+        "Planning and explaining lessons",
+        "Working with young people"
+      ],
+      "best_if": "You have, or are working towards, a degree in a subject schools need such as maths, science or computing.",
+      "search": "PGDE secondary",
+      "universities": [
+        {
+          "name": "University of Glasgow",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Strathclyde",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Edinburgh",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Aberdeen",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Manchester",
+          "nation": "England"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        }
+      ]
+    },
+    "Primary education": {
+      "about": "A degree, or a degree followed by a postgraduate qualification, to teach children aged 4 to 11 across all subjects.",
+      "builds": [
+        "Child development",
+        "Teaching early reading and maths",
+        "Creative lesson planning"
+      ],
+      "best_if": "You enjoy working with children and explaining things simply.",
+      "search": "primary education",
+      "universities": [
+        {
+          "name": "University of Strathclyde",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Glasgow",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Edinburgh",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Dundee",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Stirling",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Cardiff Metropolitan University",
+          "nation": "Wales"
+        },
+        {
+          "name": "University of Manchester",
+          "nation": "England"
+        }
+      ]
+    },
+    "Social work": {
+      "about": "Supporting children, families and adults through hard times and keeping people safe. Practice placements are built in.",
+      "builds": [
+        "Safeguarding and law",
+        "Building trust",
+        "Writing clear assessments"
+      ],
+      "best_if": "You are resilient, fair-minded and want to make a difference in people's lives.",
+      "search": "social work",
+      "universities": [
+        {
+          "name": "University of Glasgow",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Strathclyde",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Dundee",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Stirling",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        },
+        {
+          "name": "Ulster University",
+          "nation": "Northern Ireland"
+        },
+        {
+          "name": "University of Manchester",
+          "nation": "England"
+        }
+      ]
+    },
+    "Psychology": {
+      "about": "The science of mind and behaviour. For clinical psychology you need a BPS-accredited degree, then a doctorate.",
+      "builds": [
+        "Research methods and statistics",
+        "Critical reading",
+        "Interviewing and assessment"
+      ],
+      "best_if": "You are curious about people and prepared for a long route if you want to be a clinical psychologist.",
+      "search": "psychology",
+      "universities": [
+        {
+          "name": "University of Glasgow",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Edinburgh",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of St Andrews",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Stirling",
+          "nation": "Scotland"
+        },
+        {
+          "name": "UCL",
+          "nation": "England"
+        },
+        {
+          "name": "University of Bristol",
+          "nation": "England"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        },
+        {
+          "name": "Queen's University Belfast",
+          "nation": "Northern Ireland"
+        }
+      ]
+    },
+    "Law": {
+      "about": "How the legal system works. In Scotland an LLB is followed by a diploma and traineeship; in England you can also qualify through a solicitor apprenticeship.",
+      "builds": [
+        "Legal research and writing",
+        "Argument and advocacy",
+        "Attention to detail"
+      ],
+      "best_if": "You like reading closely, building arguments and debating.",
+      "search": "law LLB",
+      "universities": [
+        {
+          "name": "University of Glasgow",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Edinburgh",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Strathclyde",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Aberdeen",
+          "nation": "Scotland"
+        },
+        {
+          "name": "UCL",
+          "nation": "England"
+        },
+        {
+          "name": "London School of Economics",
+          "nation": "England"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        },
+        {
+          "name": "Queen's University Belfast",
+          "nation": "Northern Ireland"
+        }
+      ]
+    },
+    "Architecture": {
+      "about": "Designing buildings and places. Professional registration takes about seven years including practice.",
+      "builds": [
+        "Design and drawing",
+        "3D modelling",
+        "Presenting to critics"
+      ],
+      "best_if": "You are creative and technical, and ready for a long training with a portfolio.",
+      "search": "architecture",
+      "universities": [
+        {
+          "name": "University of Strathclyde",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Edinburgh",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Glasgow School of Art (Mackintosh)",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Robert Gordon University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        },
+        {
+          "name": "University of Sheffield",
+          "nation": "England"
+        },
+        {
+          "name": "University of Bath",
+          "nation": "England"
+        }
+      ]
+    },
+    "Graphic design": {
+      "about": "Visual communication: typography, branding, layout, illustration and digital design.",
+      "builds": [
+        "A portfolio of real projects",
+        "Design software",
+        "Taking and giving feedback"
+      ],
+      "best_if": "You are creative and happy to be judged on your portfolio more than your grades.",
+      "search": "graphic design",
+      "universities": [
+        {
+          "name": "Glasgow School of Art",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Edinburgh (Edinburgh College of Art)",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Dundee (Duncan of Jordanstone)",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Robert Gordon University (Gray's)",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Cardiff Metropolitan University",
+          "nation": "Wales"
+        },
+        {
+          "name": "University of Brighton",
+          "nation": "England"
+        }
+      ]
+    },
+    "Quantity surveying": {
+      "about": "Managing the costs and contracts of building projects. Look for RICS-accredited courses.",
+      "builds": [
+        "Cost estimating",
+        "Contracts and negotiation",
+        "Reading drawings"
+      ],
+      "best_if": "You like maths, building projects and being the person who keeps them on budget.",
+      "search": "quantity surveying",
+      "universities": [
+        {
+          "name": "Heriot-Watt University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Glasgow Caledonian University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Robert Gordon University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        },
+        {
+          "name": "Ulster University",
+          "nation": "Northern Ireland"
+        },
+        {
+          "name": "University of Reading",
+          "nation": "England"
+        }
+      ]
+    },
+    "Environmental science": {
+      "about": "How natural systems work and how humans affect them: land, water, air, climate and ecosystems.",
+      "builds": [
+        "Fieldwork and sampling",
+        "Data analysis and GIS",
+        "Writing for policy audiences"
+      ],
+      "best_if": "You care about climate and nature and enjoy both outdoors work and data.",
+      "search": "environmental science",
+      "universities": [
+        {
+          "name": "University of Edinburgh",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Glasgow",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Aberdeen",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Stirling",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Lancaster University",
+          "nation": "England"
+        },
+        {
+          "name": "University of Exeter",
+          "nation": "England"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        }
+      ]
+    },
+    "Hospitality and culinary arts": {
+      "about": "Cooking, kitchen management and running hospitality businesses, from college courses to degrees.",
+      "builds": [
+        "Professional cooking skills",
+        "Food safety and costing",
+        "Leading a kitchen team"
+      ],
+      "best_if": "You want to learn by doing, with the option to add business skills later.",
+      "search": "hospitality culinary",
+      "universities": [
+        {
+          "name": "City of Glasgow College",
+          "nation": "Scotland",
+          "kind": "college"
+        },
+        {
+          "name": "Edinburgh College",
+          "nation": "Scotland",
+          "kind": "college"
+        },
+        {
+          "name": "Edinburgh Napier University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Glasgow Caledonian University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Cardiff Metropolitan University",
+          "nation": "Wales"
+        },
+        {
+          "name": "University of Surrey",
+          "nation": "England"
+        }
+      ]
+    },
+    "Biomedical sciences": {
+      "about": "The biology of health and disease, with lab work. Look for IBMS-accredited courses to work in NHS labs.",
+      "builds": [
+        "Laboratory techniques",
+        "Experimental design",
+        "Scientific writing"
+      ],
+      "best_if": "You like biology and lab work and want a route into health science, research or industry.",
+      "search": "biomedical sciences",
+      "universities": [
+        {
+          "name": "University of Glasgow",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Edinburgh",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Strathclyde",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Dundee",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Aberdeen",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        },
+        {
+          "name": "Queen's University Belfast",
+          "nation": "Northern Ireland"
+        },
+        {
+          "name": "University of Manchester",
+          "nation": "England"
+        }
+      ]
+    },
+    "Veterinary medicine": {
+      "about": "A five-to-six-year degree to treat animals. Entry is very competitive and expects animal work experience.",
+      "builds": [
+        "Animal anatomy and disease",
+        "Surgery and diagnosis",
+        "Talking with owners"
+      ],
+      "best_if": "You are set on working with animals and ready for years of study and a lot of work experience.",
+      "search": "veterinary medicine",
+      "universities": [
+        {
+          "name": "University of Glasgow",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Edinburgh (Royal (Dick) School)",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Liverpool",
+          "nation": "England"
+        },
+        {
+          "name": "University of Bristol",
+          "nation": "England"
+        },
+        {
+          "name": "University of Nottingham",
+          "nation": "England"
+        },
+        {
+          "name": "Royal Veterinary College",
+          "nation": "England"
+        }
+      ]
+    },
+    "Professional policing": {
+      "about": "A policing degree that can be done before joining a force. It is not required everywhere: check each force.",
+      "builds": [
+        "Law and procedure",
+        "De-escalation and communication",
+        "Evidence-based policing"
+      ],
+      "best_if": "You want the option of a degree first; in Scotland, Police Scotland sets its own entry requirements, so check them.",
+      "search": "policing",
+      "universities": [
+        {
+          "name": "University of Portsmouth",
+          "nation": "England"
+        },
+        {
+          "name": "Northumbria University",
+          "nation": "England"
+        },
+        {
+          "name": "Keele University",
+          "nation": "England"
+        },
+        {
+          "name": "Canterbury Christ Church University",
+          "nation": "England"
+        }
+      ]
+    },
+    "Marketing": {
+      "about": "Understanding customers and getting products noticed: research, branding, digital and content.",
+      "builds": [
+        "Campaign planning",
+        "Analytics and social media",
+        "Writing for an audience"
+      ],
+      "best_if": "You are creative and analytical and want to work with brands.",
+      "search": "marketing",
+      "universities": [
+        {
+          "name": "University of Strathclyde",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Stirling",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Edinburgh Napier University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Glasgow Caledonian University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        },
+        {
+          "name": "Lancaster University",
+          "nation": "England"
+        }
+      ]
+    },
+    "Project management": {
+      "about": "Planning and delivering projects: scope, schedule, cost, risk and people.",
+      "builds": [
+        "Planning and scheduling tools",
+        "Risk management",
+        "Leading and communicating"
+      ],
+      "best_if": "You like organising people and keeping complicated things on track.",
+      "search": "project management",
+      "universities": [
+        {
+          "name": "Heriot-Watt University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Glasgow Caledonian University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Robert Gordon University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Edinburgh Napier University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Coventry University",
+          "nation": "England"
+        }
+      ]
+    },
+    "Construction management": {
+      "about": "Running building projects: people, safety, programme and cost. Look for CIOB-accredited courses.",
+      "builds": [
+        "Site and health-and-safety management",
+        "Programming and costs",
+        "Leading contractors"
+      ],
+      "best_if": "You want to be out on projects and be responsible for getting them built.",
+      "search": "construction management",
+      "universities": [
+        {
+          "name": "Heriot-Watt University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Glasgow Caledonian University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Robert Gordon University",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        },
+        {
+          "name": "Ulster University",
+          "nation": "Northern Ireland"
+        },
+        {
+          "name": "University of Reading",
+          "nation": "England"
+        }
+      ]
+    },
+    "Physics": {
+      "about": "How the universe works at every scale: forces, energy, waves, matter and, increasingly, quantum systems.",
+      "builds": [
+        "Mathematical modelling",
+        "Lab and experimental skills",
+        "Programming for science"
+      ],
+      "best_if": "You like understanding why things work, and want options across engineering, data, teaching and research.",
+      "search": "physics",
+      "universities": [
+        {
+          "name": "University of Edinburgh",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Glasgow",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of St Andrews",
+          "nation": "Scotland"
+        },
+        {
+          "name": "University of Strathclyde",
+          "nation": "Scotland"
+        },
+        {
+          "name": "Imperial College London",
+          "nation": "England"
+        },
+        {
+          "name": "University of Bristol",
+          "nation": "England"
+        },
+        {
+          "name": "Cardiff University",
+          "nation": "Wales"
+        },
+        {
+          "name": "Queen's University Belfast",
+          "nation": "Northern Ireland"
+        }
+      ]
+    }
+  }
+}

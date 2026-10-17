@@ -1,0 +1,83 @@
+{
+  "_note": "Trend check: hot specialisms, and the broader degrees that lead to them while keeping other doors open. CURATED DEMO: 'heat' is a qualitative note, not a measurement. Real job-advert demand data (for example Lightcast) is not connected yet. The 'doors' for each broader degree ARE computed from our own careers data.",
+  "specialisms": [
+    {
+      "id": "quantum",
+      "name": "Quantum technologies",
+      "heat": "Very hot now",
+      "buzz": "Large public and private investment, and a lot of headlines.",
+      "reality": "Most jobs today are in research labs and a small number of specialist firms, and many roles want a Masters or PhD.",
+      "specialist": {"name": "Quantum technologies degree", "level": "Mostly Masters or PhD; few undergraduate courses", "doors": "Narrow: research roles and a handful of specialist employers."},
+      "safer": [
+        {"subject": "Physics", "why": "The science under quantum hardware."},
+        {"subject": "Mathematics", "why": "Quantum computing is applied linear algebra and probability."},
+        {"subject": "Computer science", "why": "Quantum software and algorithms."}
+      ],
+      "fade": "If the trend cools, Maths or Physics still lead to data, finance, engineering, software and teaching.",
+      "how": ["Study Maths, Physics or Computer science.", "Choose quantum modules or a final-year project.", "Join the physics or computing society and any quantum reading group.", "Add a specialist Masters or PhD only once you're sure."],
+      "related": ["2134", "2123", "2425"]
+    },
+    {
+      "id": "ai",
+      "name": "Artificial intelligence",
+      "heat": "Very hot now",
+      "buzz": "Every industry is talking about it, and AI-specific courses have multiplied.",
+      "reality": "Employers still hire mostly for strong maths, programming and data skills that AI sits on top of, and the tools change fast.",
+      "specialist": {"name": "Artificial intelligence degree", "level": "Undergraduate and Masters courses exist; many are new", "doors": "Narrower than the broad degrees underneath it."},
+      "safer": [
+        {"subject": "Computer science", "why": "The core of AI engineering."},
+        {"subject": "Mathematics", "why": "The theory behind machine learning."},
+        {"subject": "Statistics", "why": "Data, uncertainty and testing, which AI work depends on."}
+      ],
+      "fade": "If AI hype settles, Computer science, Maths and Statistics still lead to software, data, finance and research.",
+      "how": ["Study Computer science, Maths or Statistics.", "Take machine-learning modules and build projects with real data.", "Enter Kaggle competitions and hackathons.", "Specialise with a Masters if research appeals."],
+      "related": ["2134", "2425", "2135"]
+    },
+    {
+      "id": "cyber",
+      "name": "Cyber security",
+      "heat": "Hot, steady demand",
+      "buzz": "Skills shortages are widely reported and employers actively recruit.",
+      "reality": "A specialist degree is respected, but a general computing degree plus security practice opens just as many security roles and more besides.",
+      "specialist": {"name": "Cyber security degree", "level": "Undergraduate and Masters", "doors": "Narrower than Computer science."},
+      "safer": [
+        {"subject": "Computer science", "why": "Security builds on networks, systems and programming."},
+        {"subject": "Mathematics", "why": "Cryptography is applied maths."}
+      ],
+      "fade": "If security hiring cools, Computer science still leads to software, data and IT roles.",
+      "how": ["Study Computer science.", "Join the cyber or ethical-hacking society and a capture-the-flag team.", "Choose security modules and a security final-year project.", "Apply for CyberFirst schemes and security internships."],
+      "related": ["2135", "2134", "3132"]
+    },
+    {
+      "id": "clean-energy",
+      "name": "Clean energy and hydrogen",
+      "heat": "Hot, policy-driven",
+      "buzz": "Net-zero targets are driving investment and jobs, especially in Scotland and the North.",
+      "reality": "Demand depends on government policy and investment cycles, which can shift.",
+      "specialist": {"name": "Renewable energy engineering degree", "level": "Undergraduate and Masters", "doors": "Narrower than the broad engineering degrees."},
+      "safer": [
+        {"subject": "Electrical and electronic engineering", "why": "Grids, power electronics and storage."},
+        {"subject": "Mechanical engineering", "why": "Turbines, heat and fluids."},
+        {"subject": "Physics", "why": "Energy systems and materials."}
+      ],
+      "fade": "If energy policy shifts, these engineering and physics degrees still lead to manufacturing, defence, transport and research.",
+      "how": ["Study Electrical or Mechanical engineering, or Physics.", "Pick energy-systems modules and a related project.", "Join an engineering society and a Formula Student or similar team.", "Look for placements with energy firms."],
+      "related": ["2123", "2122", "5241"]
+    },
+    {
+      "id": "biotech",
+      "name": "Biotechnology and synthetic biology",
+      "heat": "Warm and growing",
+      "buzz": "New therapies and lab-grown materials get plenty of attention.",
+      "reality": "Many roles need a Masters or PhD, and funding for start-ups is cyclical.",
+      "specialist": {"name": "Biotechnology degree", "level": "Undergraduate and Masters", "doors": "Narrower than the broad science degrees."},
+      "safer": [
+        {"subject": "Biomedical sciences", "why": "The core biology of health and disease."},
+        {"subject": "Mathematics", "why": "Computational biology and statistics are in demand."}
+      ],
+      "fade": "If biotech funding cools, a biomedical science degree still leads to NHS and hospital labs, pharma and research.",
+      "how": ["Study Biomedical sciences.", "Join the science society and enter iGEM if your university has a team.", "Get a lab placement or summer project.", "Add a specialist Masters if the field still appeals."],
+      "related": ["2113", "2152", "2251"]
+    }
+  ]
+}

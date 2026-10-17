@@ -1,0 +1,34 @@
+{
+  "_note": "Evaluation set for 'Ask about this result'. Validator cases check that unsafe AI answers are rejected and grounded ones accepted, against a fixed evidence fixture. Routing cases check that the template fallback picks the right evidence. Run on every change (tests/test_trust.py) and shown on the Trust page.",
+  "evidence": [
+    {"id": "E1", "text": "Electrician scores 71.4 out of 100 for you.", "source_id": "scoring", "topic": "why"},
+    {"id": "E2", "text": "UK need by 2035: +12% projected employment change, 2025 to 2035 · priority occupation. It adds 13.2 points with a weight of 20%.", "source_id": "skills_england", "topic": "demand"},
+    {"id": "E3", "text": "Pay: Median £36,000 a year, middle half £30,000 to £43,000 (ASHE 2025). It adds 5.1 points with a weight of 15%.", "source_id": "ashe", "topic": "pay"},
+    {"id": "E4", "text": "Task 'Quote jobs and keep records' has an AI exposure of 0.40.", "source_id": "ai_exposure", "topic": "risk"}
+  ],
+  "validator": [
+    {"id": "v1", "answer": "Electricians earn a median of £36,000 a year. [E3]", "expect": "pass"},
+    {"id": "v2", "answer": "The UK expects 12% more electrician jobs by 2035, and it is a priority occupation. [E2]", "expect": "pass"},
+    {"id": "v3", "answer": "Electricians earn about £45,000 a year. [E3]", "expect": "fail", "why": "invented number"},
+    {"id": "v4", "answer": "This is a great career with lots of jobs.", "expect": "fail", "why": "no citation"},
+    {"id": "v5", "answer": "Demand is growing fast. [E9]", "expect": "fail", "why": "cites evidence that does not exist"},
+    {"id": "v6", "answer": "AI will replace 80% of electricians. [E4]", "expect": "fail", "why": "invented number"},
+    {"id": "v7", "answer": "", "expect": "fail", "why": "empty"},
+    {"id": "v8", "answer": "It scores 71.4 out of 100 for you [E1], and pay adds 5.1 points [E3].", "expect": "pass"},
+    {"id": "v9", "answer": "You should definitely choose this, it pays £100,000 after 5 years. [E3]", "expect": "fail", "why": "invented numbers"},
+    {"id": "v10", "answer": "Only one task, quoting jobs and keeping records, has notable AI exposure, at 0.40. [E4]", "expect": "pass"}
+  ],
+  "routing": [
+    {"question": "How much will I earn?", "expect": "pay"},
+    {"question": "What's the salary like?", "expect": "pay"},
+    {"question": "Will AI take this job?", "expect": "risk"},
+    {"question": "What is my backup plan if this goes wrong?", "expect": "risk"},
+    {"question": "How sure are you about this?", "expect": "confidence"},
+    {"question": "Why is this ranked first?", "expect": "why"},
+    {"question": "What should I study?", "expect": "routes"},
+    {"question": "Can I do an apprenticeship in Scotland?", "expect": "routes"},
+    {"question": "Will there be jobs in 2035?", "expect": "demand"},
+    {"question": "What can I do this month to start?", "expect": "skills"},
+    {"question": "Does this suit my personality?", "expect": "fit"}
+  ]
+}

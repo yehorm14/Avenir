@@ -1,0 +1,1905 @@
+{
+  "_note": "Skills, societies, competitions and alumni advice per group of careers. CURATED / DEMO: society types exist at most universities but names differ; competitions change every year. Check each students' union and organiser website, and have a careers adviser review before real use.",
+  "families": {
+    "finance": {
+      "socs": [
+        "2422",
+        "2421"
+      ],
+      "degree_role": "flexible",
+      "degree_note": "Many finance employers take graduates from any degree, so Finance, Economics, Business or Maths all work. What gets you hired is evidence of skills: modelling, market knowledge and a record of results. Accountancy has apprenticeship routes that skip a degree.",
+      "hard": [
+        {
+          "skill": "Spreadsheet modelling",
+          "how": "Build a three-statement model and a DCF valuation for a listed company in Excel. Take a free course, then redo it for a second company without the course.",
+          "proof": "A model you can walk an interviewer through, on GitHub or as a PDF."
+        },
+        {
+          "skill": "Accounting and valuation basics",
+          "how": "Learn to read an annual report: income statement, balance sheet, cash flow. Practise on three companies you know.",
+          "proof": "A one-page summary of a company's accounts in your own words."
+        },
+        {
+          "skill": "Data skills (SQL and Python)",
+          "how": "Use Python or SQL to pull and analyse market data. Start with one question, such as 'which sector held up best in a downturn?'.",
+          "proof": "A short notebook that answers one question with a chart."
+        },
+        {
+          "skill": "Market knowledge",
+          "how": "Follow markets daily with a free news source. Keep a simple log of what moved and why, and a paper portfolio to test your ideas.",
+          "proof": "A dated log or paper portfolio with your reasoning."
+        }
+      ],
+      "soft": [
+        "commercial",
+        "communication",
+        "teamwork",
+        "resilience"
+      ],
+      "societies": [
+        {
+          "name": "Investment or finance society",
+          "what": "Weekly talks, stock-pitch practice and often a student-managed fund.",
+          "builds": [
+            "Market knowledge",
+            "Pitching",
+            "Networking"
+          ]
+        },
+        {
+          "name": "Economics society",
+          "what": "Guest speakers, debates and a way into research projects.",
+          "builds": [
+            "Argument",
+            "Commercial awareness"
+          ]
+        },
+        {
+          "name": "Consulting or entrepreneurs society",
+          "what": "Case practice, workshops and start-up projects.",
+          "builds": [
+            "Structured thinking",
+            "Initiative",
+            "Teamwork"
+          ]
+        },
+        {
+          "name": "Diversity-in-finance networks (for example women in finance)",
+          "what": "Mentoring, employer events and CV workshops.",
+          "builds": [
+            "Mentors",
+            "Confidence",
+            "Employer contacts"
+          ]
+        }
+      ],
+      "competitions": [
+        {
+          "name": "CFA Institute Research Challenge",
+          "what": "Teams research and pitch a real listed company to industry judges."
+        },
+        {
+          "name": "Bloomberg Trading Challenge",
+          "what": "Simulated trading with a real market data platform."
+        },
+        {
+          "name": "Stock-pitch and case competitions",
+          "what": "Run by investment and consulting societies and by banks. Look for them in first year."
+        }
+      ],
+      "who": [
+        "Graduates now working as analysts, associates or accountants",
+        "Someone who moved from another degree into finance",
+        "Someone at a smaller firm, not only the famous ones"
+      ],
+      "questions": [
+        "How did you get your first interview, and what stood out on your CV?",
+        "Which skill did you wish you had built earlier?"
+      ],
+      "experience": "spring weeks, summer internships and insight days",
+      "experience_detail": "Many large firms run spring weeks for first-years and summer internships after second year. Applications open early in the autumn, so start in September.",
+      "final": "graduate scheme and internship conversions",
+      "apprentice": {
+        "summary": "Accountancy and finance apprenticeships let you earn while qualifying, with no degree fees. Investment roles are mostly degree-led, but several firms hire school leavers.",
+        "employers": [
+          "Accountancy firms",
+          "Banks and building societies",
+          "Asset managers (school-leaver programmes)"
+        ]
+      },
+      "field": "finance and investment"
+    },
+    "business": {
+      "socs": [
+        "2440",
+        "3556"
+      ],
+      "degree_role": "flexible",
+      "degree_note": "Employers care more about your track record leading projects and winning customers than about which degree you took. Business degrees give breadth; apprenticeships give a salary and experience from day one.",
+      "hard": [
+        {
+          "skill": "Project planning tools",
+          "how": "Plan a real event or project in a tool like a Gantt chart or Kanban board, and keep a risk log.",
+          "proof": "The plan, and what changed from it."
+        },
+        {
+          "skill": "Spreadsheets and budgeting",
+          "how": "Manage a real budget for a society or event. Track forecast against actual.",
+          "proof": "A budget with variances explained."
+        },
+        {
+          "skill": "Data and reporting",
+          "how": "Learn one dashboard tool and report on a small dataset, such as event sign-ups or sales.",
+          "proof": "A dashboard or report you built."
+        },
+        {
+          "skill": "Sales and negotiation basics",
+          "how": "Raise sponsorship for a society, or work a customer-facing weekend job and track what closes deals.",
+          "proof": "Sponsorship raised or a sales result."
+        }
+      ],
+      "soft": [
+        "leadership",
+        "communication",
+        "organisation",
+        "resilience"
+      ],
+      "societies": [
+        {
+          "name": "Entrepreneurs society",
+          "what": "Pitch nights, mentoring and start-up weekends.",
+          "builds": [
+            "Initiative",
+            "Pitching"
+          ]
+        },
+        {
+          "name": "Enactus or social-enterprise society",
+          "what": "Teams run real projects for communities and compete nationally.",
+          "builds": [
+            "Project leadership",
+            "Teamwork"
+          ]
+        },
+        {
+          "name": "Consulting society",
+          "what": "Case workshops and employer events.",
+          "builds": [
+            "Structured thinking",
+            "Presenting"
+          ]
+        },
+        {
+          "name": "Any society where you hold a committee role",
+          "what": "Treasurer, events or sponsorship secretary are the best CV roles.",
+          "builds": [
+            "Budgets",
+            "Leadership"
+          ]
+        }
+      ],
+      "competitions": [
+        {
+          "name": "Enactus national competitions",
+          "what": "Present a community project to business leaders."
+        },
+        {
+          "name": "Hult Prize on-campus rounds",
+          "what": "A student start-up competition focused on social impact."
+        },
+        {
+          "name": "Consulting case competitions",
+          "what": "Run by societies and by firms, often with prizes and interviews."
+        }
+      ],
+      "who": [
+        "A project manager or account manager 3 to 5 years in",
+        "Someone who started as an apprentice",
+        "Someone who moved between industries"
+      ],
+      "questions": [
+        "What project taught you the most, and why?",
+        "How did you get your first real responsibility?"
+      ],
+      "experience": "internships, placement years and part-time work",
+      "experience_detail": "A placement year or a customer-facing job counts as much as a big-name internship. Show what you were responsible for.",
+      "final": "graduate programmes and entry-level roles",
+      "apprentice": {
+        "summary": "Project management and business apprenticeships (Level 4 to degree level) pay a salary and build a record. Sales apprenticeships are common.",
+        "employers": [
+          "Large employers with business apprenticeship programmes",
+          "Local councils and the NHS",
+          "Consultancies and technology firms"
+        ]
+      },
+      "field": "business and project management"
+    },
+    "marketing": {
+      "socs": [
+        "3554"
+      ],
+      "degree_role": "flexible",
+      "degree_note": "Marketing is a portfolio career: a record of campaigns and results counts more than the degree title.",
+      "hard": [
+        {
+          "skill": "Social and content campaigns",
+          "how": "Run the social media for a society or local charity for a term and track what works.",
+          "proof": "A before-and-after of followers or sign-ups."
+        },
+        {
+          "skill": "Analytics",
+          "how": "Use free analytics tools to read results and make one change at a time.",
+          "proof": "A short write-up of a test and its result."
+        },
+        {
+          "skill": "Copywriting",
+          "how": "Write for the student paper or a blog every week, and edit ruthlessly.",
+          "proof": "A portfolio of published pieces."
+        },
+        {
+          "skill": "Design basics",
+          "how": "Learn a free design tool and make a brand kit for a club.",
+          "proof": "A brand kit or poster set."
+        }
+      ],
+      "soft": [
+        "communication",
+        "initiative",
+        "teamwork",
+        "digital"
+      ],
+      "societies": [
+        {
+          "name": "Marketing or advertising society",
+          "what": "Agency visits, workshops and live briefs.",
+          "builds": [
+            "Campaign thinking",
+            "Employer contacts"
+          ]
+        },
+        {
+          "name": "Student media (newspaper, radio, TV)",
+          "what": "Real audiences and deadlines.",
+          "builds": [
+            "Writing",
+            "Video",
+            "Reliability"
+          ]
+        },
+        {
+          "name": "Entrepreneurs society",
+          "what": "Test a product with real customers.",
+          "builds": [
+            "Customer insight",
+            "Pitching"
+          ]
+        }
+      ],
+      "competitions": [
+        {
+          "name": "D&AD New Blood Awards",
+          "what": "Student briefs from real brands, judged by industry creatives."
+        },
+        {
+          "name": "Society and employer case competitions",
+          "what": "Pitch a campaign to a brand's marketing team."
+        }
+      ],
+      "who": [
+        "A marketing executive 2 to 5 years in",
+        "Someone who works agency-side and someone client-side"
+      ],
+      "questions": [
+        "What did you put in your portfolio at the start?",
+        "Which tools do you use every day?"
+      ],
+      "experience": "internships and freelance work",
+      "experience_detail": "Offer to run social media for a local business or club. Small real campaigns beat unpaid-looking certificates.",
+      "final": "graduate roles and agency junior positions",
+      "apprentice": {
+        "summary": "Marketing apprenticeships (Level 3 to Level 4) combine paid work with study, common at agencies and large employers.",
+        "employers": [
+          "Agencies",
+          "Retailers and brands",
+          "Charities"
+        ]
+      },
+      "field": "marketing"
+    },
+    "digital": {
+      "socs": [
+        "2134",
+        "2135",
+        "2425"
+      ],
+      "degree_role": "flexible",
+      "degree_note": "In software, data and security, a portfolio of working projects matters as much as a degree. Plenty of developers come through apprenticeships or self-teaching, and many employers say so. A degree still helps for research-heavy roles, visas and some graduate schemes.",
+      "hard": [
+        {
+          "skill": "Programming in depth",
+          "how": "Pick one language, such as Python, and build three real projects of increasing size. Learn Git and write tests.",
+          "proof": "A public repository with a clear README and commits over time."
+        },
+        {
+          "skill": "Data and databases",
+          "how": "Learn SQL and basic statistics. Analyse one open dataset end to end.",
+          "proof": "A notebook with a chart and a conclusion."
+        },
+        {
+          "skill": "Security and systems basics",
+          "how": "Learn how networks, operating systems and the web work. Practise on safe, legal training platforms.",
+          "proof": "Write-ups of challenges you completed."
+        },
+        {
+          "skill": "Working with AI tools",
+          "how": "Use an AI coding assistant on a real project, and keep a log of where it was wrong and how you checked it.",
+          "proof": "A project note on what you verified yourself."
+        }
+      ],
+      "soft": [
+        "problem_solving",
+        "teamwork",
+        "communication",
+        "digital"
+      ],
+      "societies": [
+        {
+          "name": "Computing or software society",
+          "what": "Workshops, hack nights and employer talks.",
+          "builds": [
+            "Peer learning",
+            "Projects"
+          ]
+        },
+        {
+          "name": "Hackathon or game-jam society",
+          "what": "Build something in a weekend with a team.",
+          "builds": [
+            "Shipping fast",
+            "Teamwork"
+          ]
+        },
+        {
+          "name": "Cyber or ethical-hacking society",
+          "what": "Capture-the-flag teams and security talks.",
+          "builds": [
+            "Security practice",
+            "Competition experience"
+          ]
+        },
+        {
+          "name": "Women in tech or similar networks",
+          "what": "Mentoring and employer events.",
+          "builds": [
+            "Mentors",
+            "Confidence"
+          ]
+        }
+      ],
+      "competitions": [
+        {
+          "name": "Hackathons (for example through Major League Hacking)",
+          "what": "A weekend to build and demo a project."
+        },
+        {
+          "name": "Kaggle competitions",
+          "what": "Real data problems with public leaderboards, for data work."
+        },
+        {
+          "name": "Advent of Code",
+          "what": "A daily puzzle each December, good for coding habits."
+        },
+        {
+          "name": "Cyber Security Challenge UK",
+          "what": "National competitions and a pathway into security careers."
+        }
+      ],
+      "who": [
+        "A developer or analyst 2 to 5 years in",
+        "Someone who did an apprenticeship",
+        "Someone who changed career into tech"
+      ],
+      "questions": [
+        "What would you put in a portfolio today?",
+        "How did you decide what to learn next?"
+      ],
+      "experience": "placement years, internships and open-source contributions",
+      "experience_detail": "A year in industry, a summer internship or a real open-source contribution all count. Apply early, as many deadlines are in autumn.",
+      "final": "graduate roles and junior positions",
+      "apprentice": {
+        "summary": "Software developer, cyber and data apprenticeships (Level 4 to degree level) pay a salary, and many employers rank apprentices and graduates equally.",
+        "employers": [
+          "Banks and insurers",
+          "Government and public sector",
+          "Technology firms and consultancies"
+        ]
+      },
+      "field": "technology"
+    },
+    "it_support": {
+      "socs": [
+        "3132"
+      ],
+      "degree_role": "optional",
+      "degree_note": "IT support is one of the clearest skills-first careers: certificates, hands-on experience and a good attitude get you hired. A degree can come later.",
+      "hard": [
+        {
+          "skill": "Hardware and operating systems",
+          "how": "Rebuild an old PC, install different operating systems, and fix problems for family and friends.",
+          "proof": "A short log of faults you fixed."
+        },
+        {
+          "skill": "Networking basics",
+          "how": "Set up a home or lab network, and learn IP addressing and wifi security.",
+          "proof": "A diagram of a network you built."
+        },
+        {
+          "skill": "Entry certification",
+          "how": "Work towards an entry-level certificate such as CompTIA A+ or Network+.",
+          "proof": "The certificate."
+        },
+        {
+          "skill": "Clear support writing",
+          "how": "Write step-by-step fixes that a non-expert can follow.",
+          "proof": "A set of how-to guides."
+        }
+      ],
+      "soft": [
+        "communication",
+        "empathy",
+        "organisation",
+        "problem_solving"
+      ],
+      "societies": [
+        {
+          "name": "Computing society or IT club",
+          "what": "Peer help, repairs and talks.",
+          "builds": [
+            "Practice",
+            "Contacts"
+          ]
+        },
+        {
+          "name": "Volunteer tech help (for example helping older people online)",
+          "what": "Real users and real problems.",
+          "builds": [
+            "Patience",
+            "Explaining"
+          ]
+        }
+      ],
+      "competitions": [
+        {
+          "name": "WorldSkills UK IT competitions",
+          "what": "National skills competitions for apprentices and students."
+        },
+        {
+          "name": "Cyber Security Challenge UK",
+          "what": "A way into security from support roles."
+        }
+      ],
+      "who": [
+        "A service desk or support engineer 1 to 3 years in",
+        "Someone who moved up into networks or security"
+      ],
+      "questions": [
+        "Which certificate or experience mattered most?",
+        "What did you learn on the job that you didn't expect?"
+      ],
+      "experience": "help-desk jobs and volunteering",
+      "experience_detail": "A part-time help-desk or school IT job gives you real tickets to talk about.",
+      "final": "first support role or apprenticeship",
+      "apprentice": {
+        "summary": "IT support and infrastructure technician apprenticeships (Level 3) are the standard route, and many people go on to degree-level study later.",
+        "employers": [
+          "Local councils and the NHS",
+          "Managed service providers",
+          "Universities and colleges"
+        ]
+      },
+      "field": "IT support"
+    },
+    "engineering": {
+      "socs": [
+        "2122",
+        "2123"
+      ],
+      "degree_role": "preferred",
+      "degree_note": "Chartered engineer status usually needs an accredited degree, which you can also reach through a degree apprenticeship. Employers still hire for what you've built, so project work matters.",
+      "hard": [
+        {
+          "skill": "CAD and design",
+          "how": "Learn a CAD package and model a real part you can print or build.",
+          "proof": "A design with drawings and photos of the result."
+        },
+        {
+          "skill": "Programming for engineers",
+          "how": "Use Python or MATLAB for simulation and data. Write short tools for lab data.",
+          "proof": "A script or notebook that solves a design problem."
+        },
+        {
+          "skill": "Practical building skills",
+          "how": "Take workshop and lab modules seriously; build something that fails and fix it.",
+          "proof": "A prototype you built and tested."
+        },
+        {
+          "skill": "Reading and writing technical reports",
+          "how": "Write every lab and project report as if a manager will read it.",
+          "proof": "A report with a clear recommendation."
+        }
+      ],
+      "soft": [
+        "teamwork",
+        "problem_solving",
+        "communication",
+        "leadership"
+      ],
+      "societies": [
+        {
+          "name": "Formula Student or a project team",
+          "what": "A team designs, builds and races a car, an aircraft or a robot.",
+          "builds": [
+            "Real engineering",
+            "Teamwork",
+            "Project management"
+          ]
+        },
+        {
+          "name": "Engineering or professional-body student chapter (IMechE, IET)",
+          "what": "Industry visits and talks, plus a route to chartership.",
+          "builds": [
+            "Industry contacts",
+            "Professional standards"
+          ]
+        },
+        {
+          "name": "Engineers Without Borders",
+          "what": "Design projects for communities.",
+          "builds": [
+            "Design for real users",
+            "Sustainability"
+          ]
+        },
+        {
+          "name": "Robotics or electronics society",
+          "what": "Hands-on builds and competitions.",
+          "builds": [
+            "Prototyping",
+            "Debugging"
+          ]
+        }
+      ],
+      "competitions": [
+        {
+          "name": "Formula Student",
+          "what": "Design, build and race a single-seat car against universities across the world."
+        },
+        {
+          "name": "Shell Eco-marathon",
+          "what": "Design vehicles for maximum efficiency."
+        },
+        {
+          "name": "Engineers Without Borders design challenges",
+          "what": "Open-ended design briefs with social impact."
+        }
+      ],
+      "who": [
+        "A graduate engineer 2 to 5 years in",
+        "Someone who did a degree apprenticeship",
+        "A chartered engineer"
+      ],
+      "questions": [
+        "Which project did you talk about in interviews?",
+        "What does a typical week of design and testing look like?"
+      ],
+      "experience": "industrial placements and summer internships",
+      "experience_detail": "An industrial placement year is common and often leads to a graduate job. Apply in autumn.",
+      "final": "graduate schemes and chartership planning",
+      "apprentice": {
+        "summary": "Engineering technician (Level 3) and degree apprenticeships (Level 6) pay a salary and lead to chartered status.",
+        "employers": [
+          "Manufacturers",
+          "Energy and utilities companies",
+          "Defence and aerospace firms"
+        ]
+      },
+      "field": "engineering"
+    },
+    "built_env": {
+      "socs": [
+        "2121",
+        "2453",
+        "1122"
+      ],
+      "degree_role": "preferred",
+      "degree_note": "Professional bodies (ICE, RICS, CIOB) usually expect an accredited degree or degree apprenticeship. You can also work up from a trade, and site experience is valued everywhere.",
+      "hard": [
+        {
+          "skill": "Reading drawings and specifications",
+          "how": "Learn to read plans, sections and specifications. Visit a site and compare drawings to the real thing.",
+          "proof": "Annotated drawings from a site visit."
+        },
+        {
+          "skill": "Estimating and costing",
+          "how": "Cost a small project, such as a shed or an extension, line by line.",
+          "proof": "A bill of quantities you built."
+        },
+        {
+          "skill": "Project software",
+          "how": "Learn a scheduling tool and basic BIM or CAD viewing.",
+          "proof": "A programme for a small build."
+        },
+        {
+          "skill": "Health and safety",
+          "how": "Complete an entry-level site safety card course.",
+          "proof": "The card or certificate."
+        }
+      ],
+      "soft": [
+        "teamwork",
+        "leadership",
+        "communication",
+        "organisation"
+      ],
+      "societies": [
+        {
+          "name": "Civil or construction society",
+          "what": "Site visits and employer talks.",
+          "builds": [
+            "Contacts",
+            "Site awareness"
+          ]
+        },
+        {
+          "name": "Professional-body student chapter (ICE, RICS, CIOB)",
+          "what": "Talks, mentoring and a path to chartership.",
+          "builds": [
+            "Professional standards",
+            "Mentors"
+          ]
+        },
+        {
+          "name": "Engineers Without Borders or sustainability society",
+          "what": "Design projects for communities.",
+          "builds": [
+            "Design thinking",
+            "Sustainability"
+          ]
+        }
+      ],
+      "competitions": [
+        {
+          "name": "Professional-body student competitions (ICE, RICS, CIOB)",
+          "what": "Technical papers and design challenges, with industry judges."
+        },
+        {
+          "name": "Bridge-building and structures challenges",
+          "what": "Run by engineering societies and departments."
+        },
+        {
+          "name": "SkillBuild or WorldSkills UK (construction)",
+          "what": "National competitions for trades and technicians."
+        }
+      ],
+      "who": [
+        "A site engineer or surveyor 2 to 5 years in",
+        "Someone who started as an apprentice",
+        "A chartered professional"
+      ],
+      "questions": [
+        "What does your day look like on a live project?",
+        "How did you get your first site role?"
+      ],
+      "experience": "site placements and summer work",
+      "experience_detail": "Site experience is gold. Get a summer job or placement with a contractor early.",
+      "final": "graduate schemes and chartership route",
+      "apprentice": {
+        "summary": "Degree apprenticeships in surveying, civil engineering and construction management pay a salary and lead to chartered status.",
+        "employers": [
+          "Main contractors",
+          "Consultancies",
+          "Local authorities and housing associations"
+        ]
+      },
+      "field": "construction and the built environment"
+    },
+    "trades": {
+      "socs": [
+        "5241",
+        "5314",
+        "5316",
+        "5313",
+        "5231"
+      ],
+      "degree_role": "optional",
+      "degree_note": "These careers are learnt on the job through apprenticeships and college. No degree is needed, and good tradespeople earn well and are in short supply. Many go on to run their own business.",
+      "hard": [
+        {
+          "skill": "Core trade skills",
+          "how": "Complete your college and workplace training, and get as much practice as you can outside work.",
+          "proof": "A portfolio of photos of finished work."
+        },
+        {
+          "skill": "Reading drawings and measuring",
+          "how": "Practise reading plans and taking accurate measurements.",
+          "proof": "A set of annotated plans."
+        },
+        {
+          "skill": "Health and safety",
+          "how": "Keep your safety cards and qualifications current.",
+          "proof": "Your safety card and certificates."
+        },
+        {
+          "skill": "Quoting and running jobs",
+          "how": "Learn to price work and write a simple quote. This is how you eventually run a business.",
+          "proof": "A sample quote and invoice."
+        }
+      ],
+      "soft": [
+        "organisation",
+        "communication",
+        "problem_solving",
+        "initiative"
+      ],
+      "societies": [
+        {
+          "name": "Trade association or professional body for apprentices",
+          "what": "Training days, networking and often a competition.",
+          "builds": [
+            "Contacts",
+            "Standards"
+          ]
+        },
+        {
+          "name": "College skills clubs",
+          "what": "Extra practice and competition entries.",
+          "builds": [
+            "Skills",
+            "Confidence"
+          ]
+        }
+      ],
+      "competitions": [
+        {
+          "name": "WorldSkills UK",
+          "what": "National skills competitions across many trades."
+        },
+        {
+          "name": "SkillBuild",
+          "what": "A construction skills competition for apprentices and college students."
+        },
+        {
+          "name": "SkillELEC",
+          "what": "A national electrical installation competition."
+        }
+      ],
+      "who": [
+        "A qualified tradesperson 3 to 8 years in",
+        "A business owner in your trade",
+        "A recent apprentice"
+      ],
+      "questions": [
+        "How did you find your apprenticeship employer?",
+        "What did you wish you'd learnt about running jobs sooner?"
+      ],
+      "experience": "work experience, weekend jobs and shadowing",
+      "experience_detail": "A week shadowing a local firm is often how apprentices get noticed.",
+      "final": "apprenticeship application",
+      "apprentice": {
+        "summary": "Apprenticeships are the main route and pay a wage while you train. Competition for the best employers is high, so apply early with proof of interest.",
+        "employers": [
+          "Local firms",
+          "Housebuilders and contractors",
+          "Energy and service companies"
+        ]
+      },
+      "field": "the skilled trades"
+    },
+    "health": {
+      "socs": [
+        "2232",
+        "2235",
+        "2221",
+        "2222",
+        "2223",
+        "2255",
+        "2254",
+        "2251"
+      ],
+      "degree_role": "required",
+      "degree_note": "These professions are regulated, so an approved degree (or degree apprenticeship) is required. Placements are built into the course, so 'experience' means getting ready for them and showing you care.",
+      "hard": [
+        {
+          "skill": "First aid and basic clinical skills",
+          "how": "Complete a recognised first-aid course and keep it up to date.",
+          "proof": "Your certificate."
+        },
+        {
+          "skill": "Anatomy and physiology foundations",
+          "how": "Revise core biology and learn the body systems you will meet in year 1.",
+          "proof": "Notes and practice questions."
+        },
+        {
+          "skill": "Patient communication",
+          "how": "Practise explaining things simply and checking someone understood.",
+          "proof": "Feedback from people you supported."
+        },
+        {
+          "skill": "Evidence and record keeping",
+          "how": "Learn to write accurate, clear notes and read a research paper.",
+          "proof": "A short critical summary of a paper."
+        }
+      ],
+      "soft": [
+        "empathy",
+        "resilience",
+        "teamwork",
+        "communication"
+      ],
+      "societies": [
+        {
+          "name": "Healthcare or professional-subject society",
+          "what": "Placement tips, speakers and peer support.",
+          "builds": [
+            "Peer support",
+            "Professional awareness"
+          ]
+        },
+        {
+          "name": "Volunteering society and student volunteering",
+          "what": "Care homes, befriending and community health.",
+          "builds": [
+            "Empathy",
+            "Experience"
+          ]
+        },
+        {
+          "name": "First aid society (St John Ambulance, British Red Cross)",
+          "what": "Training and event cover.",
+          "builds": [
+            "Skills",
+            "Calm under pressure"
+          ]
+        },
+        {
+          "name": "Nightline or student listening services",
+          "what": "Trained peer support for other students.",
+          "builds": [
+            "Listening",
+            "Boundaries"
+          ]
+        }
+      ],
+      "competitions": [
+        {
+          "name": "Research and quality-improvement poster prizes",
+          "what": "Run by universities, NHS boards and professional bodies."
+        },
+        {
+          "name": "NHS Hack Day and health innovation challenges",
+          "what": "Teams build solutions to real health problems."
+        },
+        {
+          "name": "Saltire Awards or Duke of Edinburgh's Award (volunteering)",
+          "what": "Recognised volunteering awards."
+        }
+      ],
+      "who": [
+        "A newly qualified professional",
+        "Someone 5 to 10 years in who has specialised",
+        "Someone who changed specialty"
+      ],
+      "questions": [
+        "What surprised you most on placement?",
+        "How do you look after yourself in a demanding job?"
+      ],
+      "experience": "paid or volunteer care work and placements",
+      "experience_detail": "Admissions teams look for evidence of caring work and reflection on it, not just hours.",
+      "final": "application, interview and first post",
+      "apprentice": {
+        "summary": "Degree apprenticeships exist in nursing, physiotherapy, occupational therapy and others in England, paid by an NHS employer. Scotland's equivalent is mainly the university route plus foundation apprenticeships in school.",
+        "employers": [
+          "NHS trusts and boards",
+          "Social care providers",
+          "Hospices and charities"
+        ]
+      },
+      "field": "healthcare"
+    },
+    "care": {
+      "socs": [
+        "6135"
+      ],
+      "degree_role": "optional",
+      "degree_note": "Care work needs kindness, reliability and training on the job. There are clear steps up to senior care, nursing and social work, and a degree can come later if you want it.",
+      "hard": [
+        {
+          "skill": "First aid",
+          "how": "Take a recognised first-aid course.",
+          "proof": "Your certificate."
+        },
+        {
+          "skill": "Safe moving and handling",
+          "how": "Learn safe moving and handling in training or from an employer.",
+          "proof": "Training record."
+        },
+        {
+          "skill": "Safeguarding awareness",
+          "how": "Complete a free safeguarding course.",
+          "proof": "Your certificate."
+        },
+        {
+          "skill": "Clear record keeping",
+          "how": "Practise writing short, factual notes.",
+          "proof": "A sample note (no real names)."
+        }
+      ],
+      "soft": [
+        "empathy",
+        "resilience",
+        "communication",
+        "organisation"
+      ],
+      "societies": [
+        {
+          "name": "Volunteering with a care home, befriending scheme or charity",
+          "what": "Regular time with people who benefit from company.",
+          "builds": [
+            "Empathy",
+            "Reliability"
+          ]
+        },
+        {
+          "name": "Youth carers or community groups",
+          "what": "Peer support and training.",
+          "builds": [
+            "Confidence",
+            "Understanding"
+          ]
+        }
+      ],
+      "competitions": [
+        {
+          "name": "Saltire Awards (Scotland) or Duke of Edinburgh's Award",
+          "what": "Recognised awards for volunteering hours."
+        },
+        {
+          "name": "Care sector awards for apprentices and new staff",
+          "what": "Local and national awards run by care employers and bodies."
+        }
+      ],
+      "who": [
+        "A care worker or team leader",
+        "A registered manager",
+        "Someone who moved from care to nursing or social work"
+      ],
+      "questions": [
+        "What is the best and hardest part of the job?",
+        "How did you progress to a senior role?"
+      ],
+      "experience": "volunteering and part-time care jobs",
+      "experience_detail": "A few months of regular volunteering makes your application stand out.",
+      "final": "first care role or apprenticeship",
+      "apprentice": {
+        "summary": "Adult care apprenticeships (Level 2 to 3) and Scottish Modern Apprenticeships are the main route.",
+        "employers": [
+          "Care homes and home-care agencies",
+          "Councils",
+          "NHS and charities"
+        ]
+      },
+      "field": "social care"
+    },
+    "teaching": {
+      "socs": [
+        "2313",
+        "2314"
+      ],
+      "degree_role": "required",
+      "degree_note": "Teaching requires a degree plus a teaching qualification. For secondary, your degree subject matters; maths, sciences and computing are in demand.",
+      "hard": [
+        {
+          "skill": "Deep subject knowledge",
+          "how": "Go beyond the syllabus in your subject, and practise explaining it to someone younger.",
+          "proof": "A set of explanations or tutorials you wrote."
+        },
+        {
+          "skill": "Planning a lesson",
+          "how": "Plan and run a short session for a club or younger pupils.",
+          "proof": "A lesson plan and feedback."
+        },
+        {
+          "skill": "Working with young people",
+          "how": "Volunteer in a school, youth club or uniformed group.",
+          "proof": "A reference from the organiser."
+        },
+        {
+          "skill": "Digital teaching tools",
+          "how": "Learn the tools teachers use and how to use AI helpers carefully.",
+          "proof": "A resource you made."
+        }
+      ],
+      "soft": [
+        "communication",
+        "leadership",
+        "empathy",
+        "organisation"
+      ],
+      "societies": [
+        {
+          "name": "Education society or schools outreach",
+          "what": "Tutoring and workshops in local schools.",
+          "builds": [
+            "Teaching practice",
+            "Contacts"
+          ]
+        },
+        {
+          "name": "Subject society in your degree subject",
+          "what": "Deepens knowledge and gives a platform to present.",
+          "builds": [
+            "Expertise",
+            "Presenting"
+          ]
+        },
+        {
+          "name": "Student tutoring or mentoring programmes",
+          "what": "Regular one-to-one work with pupils.",
+          "builds": [
+            "Patience",
+            "Explaining"
+          ]
+        }
+      ],
+      "competitions": [
+        {
+          "name": "Schools outreach and science-communication events",
+          "what": "Run workshops for younger pupils."
+        },
+        {
+          "name": "Tutoring and mentoring awards",
+          "what": "Offered by universities and charities."
+        }
+      ],
+      "who": [
+        "A newly qualified teacher",
+        "A teacher 5+ years in",
+        "Someone who moved into teaching from another field"
+      ],
+      "questions": [
+        "What did you do before training that helped?",
+        "What is a typical week really like?"
+      ],
+      "experience": "school volunteering and classroom observation",
+      "experience_detail": "Teacher training applications expect recent time in a classroom. Arrange it early.",
+      "final": "PGDE or PGCE application and probation year",
+      "apprentice": {
+        "summary": "Teaching apprenticeships exist in England (teacher degree apprenticeship), and teaching-assistant apprenticeships are a good first step.",
+        "employers": [
+          "Schools and academies",
+          "Councils"
+        ]
+      },
+      "field": "teaching"
+    },
+    "social_work": {
+      "socs": [
+        "2461"
+      ],
+      "degree_role": "required",
+      "degree_note": "Social work is a regulated profession, and you need an approved degree (or an approved postgraduate or apprenticeship route). Real contact with people is a big part of admissions.",
+      "hard": [
+        {
+          "skill": "Safeguarding and law basics",
+          "how": "Take a free safeguarding course and read about child and adult protection law.",
+          "proof": "Certificates and notes."
+        },
+        {
+          "skill": "Writing clear records",
+          "how": "Practise factual, balanced writing.",
+          "proof": "A short anonymised report."
+        },
+        {
+          "skill": "Interviewing and listening",
+          "how": "Learn active listening and practise on a helpline or befriending scheme.",
+          "proof": "Training record."
+        },
+        {
+          "skill": "Understanding services",
+          "how": "Learn how local councils, health and charities fit together.",
+          "proof": "A one-page map of local services."
+        }
+      ],
+      "soft": [
+        "empathy",
+        "resilience",
+        "communication",
+        "organisation"
+      ],
+      "societies": [
+        {
+          "name": "Social work or social policy society",
+          "what": "Speakers, placements advice and peer support.",
+          "builds": [
+            "Contacts",
+            "Understanding"
+          ]
+        },
+        {
+          "name": "Volunteering society",
+          "what": "Befriending, food banks and youth work.",
+          "builds": [
+            "Experience",
+            "Empathy"
+          ]
+        },
+        {
+          "name": "Nightline or listening services",
+          "what": "Trained peer support.",
+          "builds": [
+            "Listening",
+            "Boundaries"
+          ]
+        }
+      ],
+      "competitions": [
+        {
+          "name": "Saltire Awards or Duke of Edinburgh's Award",
+          "what": "Recognised volunteering awards."
+        },
+        {
+          "name": "Student volunteer of the year awards",
+          "what": "Run by universities and charities."
+        }
+      ],
+      "who": [
+        "A newly qualified social worker",
+        "A team manager",
+        "Someone who moved from youth work or care"
+      ],
+      "questions": [
+        "How do you keep perspective in hard cases?",
+        "What did your placements teach you?"
+      ],
+      "experience": "volunteering, youth work and care work",
+      "experience_detail": "Admissions look for sustained work with people in difficult circumstances.",
+      "final": "application, interview and registration",
+      "apprentice": {
+        "summary": "A social worker degree apprenticeship exists in England; in Scotland the usual route is a university degree.",
+        "employers": [
+          "Local councils and health boards",
+          "Charities"
+        ]
+      },
+      "field": "social work"
+    },
+    "psychology": {
+      "socs": [
+        "2225"
+      ],
+      "degree_role": "required",
+      "degree_note": "Clinical psychology needs an accredited psychology degree, then relevant experience, then a competitive doctorate. It is a long route, and many people use assistant psychologist or support work to build experience.",
+      "hard": [
+        {
+          "skill": "Research methods and statistics",
+          "how": "Take the methods modules seriously and learn R or SPSS.",
+          "proof": "A research project report."
+        },
+        {
+          "skill": "Critical reading",
+          "how": "Read and summarise papers weekly.",
+          "proof": "Summaries of 10 papers."
+        },
+        {
+          "skill": "Interviewing and assessment basics",
+          "how": "Practise structured interviewing in training or volunteering.",
+          "proof": "Training record."
+        },
+        {
+          "skill": "Clinical-adjacent experience",
+          "how": "Work in mental health support, care or education while studying.",
+          "proof": "A reference and a reflection."
+        }
+      ],
+      "soft": [
+        "empathy",
+        "resilience",
+        "communication",
+        "organisation"
+      ],
+      "societies": [
+        {
+          "name": "Psychology society",
+          "what": "Speakers, research participation and peer mentoring.",
+          "builds": [
+            "Contacts",
+            "Research exposure"
+          ]
+        },
+        {
+          "name": "Mental health or wellbeing society",
+          "what": "Campaigns and peer support.",
+          "builds": [
+            "Listening",
+            "Awareness"
+          ]
+        },
+        {
+          "name": "Nightline or listening services",
+          "what": "Trained peer support.",
+          "builds": [
+            "Listening",
+            "Boundaries"
+          ]
+        }
+      ],
+      "competitions": [
+        {
+          "name": "Undergraduate research conferences and poster prizes",
+          "what": "Show your project to other students and academics."
+        },
+        {
+          "name": "Departmental dissertation prizes",
+          "what": "Awarded for the best final-year projects."
+        }
+      ],
+      "who": [
+        "An assistant psychologist",
+        "A trainee or qualified clinical psychologist",
+        "Someone who chose a different psychology route"
+      ],
+      "questions": [
+        "How did you get your first relevant experience?",
+        "What would you tell someone starting an undergraduate degree?"
+      ],
+      "experience": "support work, research assistant roles and volunteering",
+      "experience_detail": "Experience in mental health or care settings is essential before applying for the doctorate.",
+      "final": "assistant psychologist roles and doctorate applications",
+      "apprentice": {
+        "summary": "There is no apprenticeship route into clinical psychology, though psychological wellbeing practitioner roles offer a related route.",
+        "employers": [
+          "NHS",
+          "Charities"
+        ]
+      },
+      "field": "psychology"
+    },
+    "law": {
+      "socs": [
+        "2412"
+      ],
+      "degree_role": "preferred",
+      "degree_note": "A law degree is the common route, but in England you can also qualify as a solicitor through a degree in another subject plus exams, or through a solicitor apprenticeship. In Scotland you need an LLB or a conversion, then a diploma and a traineeship.",
+      "hard": [
+        {
+          "skill": "Legal research and writing",
+          "how": "Practise finding and summarising cases and writing clear legal arguments.",
+          "proof": "A short case note or legal opinion."
+        },
+        {
+          "skill": "Advocacy",
+          "how": "Do mooting and debating from first year.",
+          "proof": "Competition results or tapes."
+        },
+        {
+          "skill": "Commercial awareness",
+          "how": "Follow business and legal news.",
+          "proof": "A short note on a legal development."
+        },
+        {
+          "skill": "Precision and proofreading",
+          "how": "Edit your own work harshly.",
+          "proof": "Clean written work."
+        }
+      ],
+      "soft": [
+        "communication",
+        "resilience",
+        "commercial",
+        "organisation"
+      ],
+      "societies": [
+        {
+          "name": "Law society",
+          "what": "Employer events, workshops and application help.",
+          "builds": [
+            "Contacts",
+            "Application skills"
+          ]
+        },
+        {
+          "name": "Mooting or debating society",
+          "what": "Regular practice in arguing a case.",
+          "builds": [
+            "Advocacy",
+            "Confidence"
+          ]
+        },
+        {
+          "name": "Law clinic or pro bono society",
+          "what": "Supervised legal help for real people.",
+          "builds": [
+            "Client contact",
+            "Ethics"
+          ]
+        }
+      ],
+      "competitions": [
+        {
+          "name": "National mooting competitions",
+          "what": "Teams argue a legal case in front of judges."
+        },
+        {
+          "name": "Negotiation and client-interviewing competitions",
+          "what": "Practise real lawyer skills."
+        },
+        {
+          "name": "Inter-university debating championships",
+          "what": "Fast, structured argument."
+        }
+      ],
+      "who": [
+        "A trainee solicitor or paralegal",
+        "A lawyer 5+ years in",
+        "Someone from a different degree who converted"
+      ],
+      "questions": [
+        "How did you choose your area of law?",
+        "How did you get your training contract?"
+      ],
+      "experience": "legal work experience, vacation schemes and pro bono work",
+      "experience_detail": "Vacation schemes and paralegal roles are common stepping stones. Applications open early.",
+      "final": "training contract, traineeship or apprenticeship",
+      "apprentice": {
+        "summary": "In England, the solicitor apprenticeship (Level 7) lets you qualify while working, with no university fees.",
+        "employers": [
+          "Law firms",
+          "Legal teams in companies and councils"
+        ]
+      },
+      "field": "law"
+    },
+    "architecture": {
+      "socs": [
+        "2451"
+      ],
+      "degree_role": "required",
+      "degree_note": "To use the title 'architect' you must complete the accredited stages (Part 1, Part 2 and Part 3) with practical experience. Admissions rely on a creative portfolio as well as grades.",
+      "hard": [
+        {
+          "skill": "Portfolio",
+          "how": "Build a portfolio of sketches, models and photographs, and refine it each term.",
+          "proof": "A digital portfolio."
+        },
+        {
+          "skill": "Drawing and model making",
+          "how": "Sketch buildings and make physical models weekly.",
+          "proof": "Sketchbooks and models."
+        },
+        {
+          "skill": "3D design software",
+          "how": "Learn a CAD or 3D modelling tool and render a small project.",
+          "proof": "A rendered design."
+        },
+        {
+          "skill": "Presenting and critique",
+          "how": "Present your work and take feedback.",
+          "proof": "A recorded or written crit."
+        }
+      ],
+      "soft": [
+        "communication",
+        "resilience",
+        "teamwork",
+        "organisation"
+      ],
+      "societies": [
+        {
+          "name": "Architecture society",
+          "what": "Studio crits, trips and portfolio help.",
+          "builds": [
+            "Feedback",
+            "Contacts"
+          ]
+        },
+        {
+          "name": "Design-build or community projects",
+          "what": "Build real structures.",
+          "builds": [
+            "Making",
+            "Teamwork"
+          ]
+        },
+        {
+          "name": "Professional-body student groups (RIBA, RIAS)",
+          "what": "Talks and mentoring.",
+          "builds": [
+            "Professional route",
+            "Mentors"
+          ]
+        }
+      ],
+      "competitions": [
+        {
+          "name": "RIBA President's Medals",
+          "what": "A major student design award."
+        },
+        {
+          "name": "Student design competitions run by professional bodies",
+          "what": "Open design briefs with judges."
+        }
+      ],
+      "who": [
+        "A Part 1 or Part 2 assistant",
+        "A registered architect",
+        "Someone who moved into a related design role"
+      ],
+      "questions": [
+        "What did you put in your first portfolio?",
+        "How did you manage the long route?"
+      ],
+      "experience": "practice placements and summer work",
+      "experience_detail": "A year in practice between Part 1 and Part 2 is the norm.",
+      "final": "Part 1 to Part 3 and registration",
+      "apprentice": {
+        "summary": "Architect degree apprenticeships (Level 7) exist in England and let you earn while qualifying.",
+        "employers": [
+          "Architecture practices",
+          "Councils and developers"
+        ]
+      },
+      "field": "architecture"
+    },
+    "design": {
+      "socs": [
+        "3421"
+      ],
+      "degree_role": "flexible",
+      "degree_note": "Design hiring is portfolio-first. Degrees give time, feedback and contacts, but many designers come through apprenticeships or self-built portfolios.",
+      "hard": [
+        {
+          "skill": "Design software",
+          "how": "Learn a professional design tool and a free one, and complete a real brief with each.",
+          "proof": "Two finished pieces."
+        },
+        {
+          "skill": "Typography and layout",
+          "how": "Redesign a poster or page in three ways and explain your choices.",
+          "proof": "A before-and-after set."
+        },
+        {
+          "skill": "Portfolio and case studies",
+          "how": "Write short case studies of each project: problem, process, result.",
+          "proof": "An online portfolio."
+        },
+        {
+          "skill": "Briefs and deadlines",
+          "how": "Take real client work, even small.",
+          "proof": "A client testimonial."
+        }
+      ],
+      "soft": [
+        "communication",
+        "initiative",
+        "resilience",
+        "digital"
+      ],
+      "societies": [
+        {
+          "name": "Design or illustration society",
+          "what": "Live briefs and peer feedback.",
+          "builds": [
+            "Feedback",
+            "Briefs"
+          ]
+        },
+        {
+          "name": "Student magazine or media",
+          "what": "Real publications and deadlines.",
+          "builds": [
+            "Layout",
+            "Reliability"
+          ]
+        },
+        {
+          "name": "Any society that needs design",
+          "what": "Offer to design their posters and branding.",
+          "builds": [
+            "Portfolio",
+            "Contacts"
+          ]
+        }
+      ],
+      "competitions": [
+        {
+          "name": "D&AD New Blood Awards",
+          "what": "Student briefs from real brands."
+        },
+        {
+          "name": "YCN Student Awards",
+          "what": "Creative briefs from industry."
+        },
+        {
+          "name": "Creative Conscience Awards",
+          "what": "Design for social and environmental impact."
+        }
+      ],
+      "who": [
+        "A junior designer",
+        "A designer 5+ years in",
+        "A freelancer"
+      ],
+      "questions": [
+        "How did you first get paid design work?",
+        "What do hiring managers look at in a portfolio?"
+      ],
+      "experience": "freelance work and internships",
+      "experience_detail": "Small paid jobs, even for local businesses, matter more than certificates.",
+      "final": "junior designer roles and freelance work",
+      "apprentice": {
+        "summary": "Creative and digital design apprenticeships (Level 3 to 4) exist at agencies and in-house teams.",
+        "employers": [
+          "Agencies",
+          "Brands and retailers",
+          "Media companies"
+        ]
+      },
+      "field": "design"
+    },
+    "science": {
+      "socs": [
+        "2152",
+        "2113"
+      ],
+      "degree_role": "preferred",
+      "degree_note": "A relevant science degree is the usual route, and for NHS laboratory work you need an accredited degree. Practical lab and field experience, plus data skills, make you stand out.",
+      "hard": [
+        {
+          "skill": "Lab or field technique",
+          "how": "Take every practical session seriously, and ask for a summer lab or fieldwork role.",
+          "proof": "A methods write-up or field log."
+        },
+        {
+          "skill": "Data analysis",
+          "how": "Learn R or Python, and analyse a real dataset.",
+          "proof": "A notebook with a clear result."
+        },
+        {
+          "skill": "Scientific writing",
+          "how": "Write reports and short summaries for non-experts.",
+          "proof": "A report or blog post."
+        },
+        {
+          "skill": "GIS and sampling (environment) or quality control (biomedical)",
+          "how": "Learn the specialist tool for your area.",
+          "proof": "A project using it."
+        }
+      ],
+      "soft": [
+        "problem_solving",
+        "communication",
+        "teamwork",
+        "organisation"
+      ],
+      "societies": [
+        {
+          "name": "Subject society (biomedical, environmental, chemistry)",
+          "what": "Speakers and employer visits.",
+          "builds": [
+            "Contacts",
+            "Awareness"
+          ]
+        },
+        {
+          "name": "Conservation or sustainability society",
+          "what": "Practical volunteering and campaigns.",
+          "builds": [
+            "Fieldwork",
+            "Campaigning"
+          ]
+        },
+        {
+          "name": "Science communication or outreach society",
+          "what": "Explain science to the public and schools.",
+          "builds": [
+            "Communication",
+            "Confidence"
+          ]
+        }
+      ],
+      "competitions": [
+        {
+          "name": "iGEM (synthetic biology)",
+          "what": "Team-based lab projects with an international jamboree."
+        },
+        {
+          "name": "Biotechnology YES",
+          "what": "A team business challenge for life-science students."
+        },
+        {
+          "name": "FameLab and science-communication contests",
+          "what": "Explain a topic in three minutes."
+        }
+      ],
+      "who": [
+        "A research assistant or technician",
+        "A scientist in industry",
+        "Someone who moved from research to policy"
+      ],
+      "questions": [
+        "How did you choose between research and industry?",
+        "Which skills did you use most day to day?"
+      ],
+      "experience": "lab placements, field work and summer projects",
+      "experience_detail": "Summer research projects and placements often decide first jobs.",
+      "final": "graduate roles, technician roles or a Masters or PhD",
+      "apprentice": {
+        "summary": "Laboratory scientist and science technician apprenticeships (Level 3 to 6) exist in industry and the NHS.",
+        "employers": [
+          "NHS labs",
+          "Pharmaceutical and biotech firms",
+          "Environmental consultancies"
+        ]
+      },
+      "field": "science"
+    },
+    "chef": {
+      "socs": [
+        "5434"
+      ],
+      "degree_role": "optional",
+      "degree_note": "Cooking is learnt in kitchens. Apprenticeships, college and time spent in good kitchens matter most. A degree is mainly useful if you want to move into management or running a business.",
+      "hard": [
+        {
+          "skill": "Core cooking techniques",
+          "how": "Practise knife skills, sauces and baking every week, and cook for others.",
+          "proof": "A photo portfolio of dishes."
+        },
+        {
+          "skill": "Food safety",
+          "how": "Gain a food hygiene certificate.",
+          "proof": "The certificate."
+        },
+        {
+          "skill": "Costing and menus",
+          "how": "Plan a menu and cost every dish.",
+          "proof": "A costed menu."
+        },
+        {
+          "skill": "Working fast and clean",
+          "how": "Work in a busy kitchen on weekends.",
+          "proof": "A reference from a head chef."
+        }
+      ],
+      "soft": [
+        "resilience",
+        "teamwork",
+        "organisation",
+        "leadership"
+      ],
+      "societies": [
+        {
+          "name": "Catering or cookery club",
+          "what": "Cook for events and compete.",
+          "builds": [
+            "Volume cooking",
+            "Teamwork"
+          ]
+        },
+        {
+          "name": "Student-run food enterprise",
+          "what": "Run a pop-up or stall.",
+          "builds": [
+            "Costing",
+            "Customers"
+          ]
+        }
+      ],
+      "competitions": [
+        {
+          "name": "WorldSkills UK (cookery and restaurant service)",
+          "what": "National skills competition."
+        },
+        {
+          "name": "Salon Culinaire and Craft Guild of Chefs competitions",
+          "what": "Industry competitions for student and junior chefs."
+        }
+      ],
+      "who": [
+        "A chef de partie",
+        "A head chef",
+        "A chef who runs their own business"
+      ],
+      "questions": [
+        "What does your first year in a professional kitchen involve?",
+        "How did you decide where to work?"
+      ],
+      "experience": "kitchen jobs, stages and work experience",
+      "experience_detail": "A few weekend shifts in a busy kitchen tell you quickly if this is for you.",
+      "final": "commis chef apprenticeship or first kitchen job",
+      "apprentice": {
+        "summary": "Commis chef and chef de partie apprenticeships (Level 2 to 3) pay a wage while you train.",
+        "employers": [
+          "Restaurants and hotels",
+          "Hospitals and schools",
+          "Contract caterers"
+        ]
+      },
+      "field": "cooking and hospitality"
+    },
+    "vet": {
+      "socs": [
+        "2240"
+      ],
+      "degree_role": "required",
+      "degree_note": "Becoming a vet requires an accredited veterinary degree, and admission is highly competitive. Practical work with animals is expected well before you apply.",
+      "hard": [
+        {
+          "skill": "Animal handling experience",
+          "how": "Arrange work at a vet practice, farm, kennel or rescue centre.",
+          "proof": "A log with references."
+        },
+        {
+          "skill": "Biology and chemistry strength",
+          "how": "Aim for top grades in sciences, and read beyond the syllabus.",
+          "proof": "Strong results and reading notes."
+        },
+        {
+          "skill": "Communication with owners",
+          "how": "Take customer-facing jobs, and practise explaining.",
+          "proof": "A reference."
+        },
+        {
+          "skill": "Resilience for hard cases",
+          "how": "Reflect on difficult experiences and how you coped.",
+          "proof": "A reflective statement."
+        }
+      ],
+      "soft": [
+        "empathy",
+        "resilience",
+        "communication",
+        "organisation"
+      ],
+      "societies": [
+        {
+          "name": "Veterinary or animal society",
+          "what": "Case days, placement help and peer support.",
+          "builds": [
+            "Contacts",
+            "Placements"
+          ]
+        },
+        {
+          "name": "Wildlife or conservation volunteering",
+          "what": "Practical animal work.",
+          "builds": [
+            "Experience",
+            "Teamwork"
+          ]
+        }
+      ],
+      "competitions": [
+        {
+          "name": "Case presentation and research poster prizes",
+          "what": "Run by vet schools and professional bodies."
+        },
+        {
+          "name": "Duke of Edinburgh's Award (animal volunteering)",
+          "what": "Recognised, structured volunteering."
+        }
+      ],
+      "who": [
+        "A newly qualified vet",
+        "A farm or small animal vet 5+ years in",
+        "A veterinary nurse who progressed"
+      ],
+      "questions": [
+        "What did your application show about you?",
+        "How do you handle the emotional side of the job?"
+      ],
+      "experience": "extended animal work experience (essential)",
+      "experience_detail": "Vet schools expect several weeks across different animal types before you apply.",
+      "final": "application and extramural studies",
+      "apprentice": {
+        "summary": "Veterinary nursing apprenticeships (Level 3) are a route into the profession, though not to qualifying as a vet.",
+        "employers": [
+          "Vet practices",
+          "Animal charities"
+        ]
+      },
+      "field": "veterinary work"
+    },
+    "police": {
+      "socs": [
+        "3312"
+      ],
+      "degree_role": "optional",
+      "degree_note": "Entry routes vary by force and nation: some offer degree-level entry, apprenticeships or direct entry. Check each force's current requirements: Police Scotland sets its own.",
+      "hard": [
+        {
+          "skill": "Fitness",
+          "how": "Train for the force's fitness test.",
+          "proof": "A tracked fitness log."
+        },
+        {
+          "skill": "Communication and de-escalation",
+          "how": "Do customer-facing or youth work where you calm tense situations.",
+          "proof": "A reference."
+        },
+        {
+          "skill": "Law and procedure basics",
+          "how": "Read about criminal law and policing powers.",
+          "proof": "Notes or a short course."
+        },
+        {
+          "skill": "Report writing",
+          "how": "Practise clear, factual writing.",
+          "proof": "A sample report."
+        }
+      ],
+      "soft": [
+        "communication",
+        "resilience",
+        "teamwork",
+        "empathy"
+      ],
+      "societies": [
+        {
+          "name": "Volunteer Police Cadets or Special Constabulary",
+          "what": "Structured training and real community work.",
+          "builds": [
+            "Experience",
+            "Confidence"
+          ]
+        },
+        {
+          "name": "Criminology, law or debating society",
+          "what": "Context and discussion.",
+          "builds": [
+            "Understanding",
+            "Argument"
+          ]
+        },
+        {
+          "name": "Sports clubs and uniformed organisations",
+          "what": "Teamwork and discipline.",
+          "builds": [
+            "Fitness",
+            "Teamwork"
+          ]
+        }
+      ],
+      "competitions": [
+        {
+          "name": "Mock trial and moot competitions",
+          "what": "Learn how evidence and cases are handled."
+        },
+        {
+          "name": "Duke of Edinburgh's Award",
+          "what": "A recognised award for service and challenge."
+        }
+      ],
+      "who": [
+        "A recently joined officer",
+        "A detective or specialist officer",
+        "Someone who joined after another career"
+      ],
+      "questions": [
+        "What did your selection process involve?",
+        "What is the hardest part of the job?"
+      ],
+      "experience": "cadets, volunteering and community work",
+      "experience_detail": "Volunteering shows commitment and gives you experience for the application.",
+      "final": "application, assessment centre and training",
+      "apprentice": {
+        "summary": "Police constable degree apprenticeships and entry programmes exist in England and Wales. Scotland and Northern Ireland have their own routes.",
+        "employers": [
+          "Police forces",
+          "Special Constabulary"
+        ]
+      },
+      "field": "policing"
+    }
+  }
+}

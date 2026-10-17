@@ -1,0 +1,716 @@
+{
+  "_note": "Curated core list. One row per SOC 2020 unit group. Numbers live in the per-source snapshots, not here. DEMO SNAPSHOT: SOC mappings and every figure must be checked by a person against the linked source before real use.",
+  "occupations": [
+    {
+      "soc": "2134",
+      "title": "Software developer",
+      "soc_title": "Programmers and software development professionals",
+      "summary": "Designs, writes and tests the software behind apps, websites and systems.",
+      "study_level": "Degree or Level 6 apprenticeship",
+      "subjects": [
+        "Maths",
+        "Computing",
+        "Physics"
+      ],
+      "skills": [
+        "Coding",
+        "Spreadsheets or data",
+        "Building or making things"
+      ],
+      "first_step": "Finish one small project on a free platform (for example a CS50 or freeCodeCamp exercise) and put it on GitHub."
+    },
+    {
+      "soc": "2135",
+      "title": "Cyber security specialist",
+      "soc_title": "Cyber security professionals",
+      "summary": "Protects organisations from hacking, fraud and data loss, and investigates attacks.",
+      "study_level": "Degree or Level 4–6 apprenticeship",
+      "subjects": [
+        "Computing",
+        "Maths",
+        "Physics"
+      ],
+      "skills": [
+        "Coding",
+        "Spreadsheets or data"
+      ],
+      "first_step": "Sign up for CyberFirst or a free capture-the-flag challenge for school pupils."
+    },
+    {
+      "soc": "2425",
+      "title": "Data scientist or statistician",
+      "soc_title": "Actuaries, economists and statisticians",
+      "summary": "Turns large sets of data into findings that help organisations decide.",
+      "study_level": "Degree, often with a Masters",
+      "subjects": [
+        "Maths",
+        "Computing",
+        "Business or Economics",
+        "Geography"
+      ],
+      "skills": [
+        "Spreadsheets or data",
+        "Coding"
+      ],
+      "first_step": "Pick an open dataset (for example from the Office for National Statistics) and make three charts that answer one question."
+    },
+    {
+      "soc": "3132",
+      "title": "IT support technician",
+      "soc_title": "IT user support technicians",
+      "summary": "Keeps computers, networks and accounts working, and helps people fix problems.",
+      "study_level": "Level 3 apprenticeship or college course",
+      "subjects": [
+        "Computing",
+        "Maths"
+      ],
+      "skills": [
+        "Fixing things",
+        "Customer service job",
+        "Coding"
+      ],
+      "first_step": "Offer to help your school's IT team for one lunchtime a week, and note what problems come up."
+    },
+    {
+      "soc": "2122",
+      "title": "Mechanical engineer",
+      "soc_title": "Mechanical engineers",
+      "summary": "Designs and improves machines, from engines to medical devices to wind turbines.",
+      "study_level": "Degree (BEng or MEng) or degree apprenticeship",
+      "subjects": [
+        "Maths",
+        "Physics",
+        "Engineering or Design and Technology"
+      ],
+      "skills": [
+        "Building or making things",
+        "Fixing things"
+      ],
+      "first_step": "Join or start an Arkwright, F1 in Schools or similar engineering challenge."
+    },
+    {
+      "soc": "2121",
+      "title": "Civil engineer",
+      "soc_title": "Civil engineers",
+      "summary": "Plans and builds roads, bridges, flood defences and water systems.",
+      "study_level": "Degree (BEng or MEng) or degree apprenticeship",
+      "subjects": [
+        "Maths",
+        "Physics",
+        "Geography",
+        "Engineering or Design and Technology"
+      ],
+      "skills": [
+        "Building or making things",
+        "Spreadsheets or data"
+      ],
+      "first_step": "Ask a local construction or engineering firm about a work-experience day."
+    },
+    {
+      "soc": "2123",
+      "title": "Electrical engineer",
+      "soc_title": "Electrical engineers",
+      "summary": "Designs power systems, from the national grid to electric vehicles and renewables.",
+      "study_level": "Degree (BEng or MEng) or degree apprenticeship",
+      "subjects": [
+        "Maths",
+        "Physics",
+        "Engineering or Design and Technology"
+      ],
+      "skills": [
+        "Building or making things",
+        "Fixing things",
+        "Coding"
+      ],
+      "first_step": "Build a simple circuit project with a starter kit and write down what you learned."
+    },
+    {
+      "soc": "5241",
+      "title": "Electrician",
+      "soc_title": "Electricians and electrical fitters",
+      "summary": "Installs and repairs wiring, solar panels, EV chargers and building electrics.",
+      "study_level": "Level 3 apprenticeship",
+      "subjects": [
+        "Maths",
+        "Physics",
+        "Engineering or Design and Technology"
+      ],
+      "skills": [
+        "Fixing things",
+        "Building or making things"
+      ],
+      "first_step": "Look up apprenticeship open days at your nearest college and book one."
+    },
+    {
+      "soc": "5314",
+      "title": "Plumber and heating engineer",
+      "soc_title": "Plumbers and heating and ventilating installers and repairers",
+      "summary": "Fits and maintains water, heating and heat-pump systems in homes and buildings.",
+      "study_level": "Level 2–3 apprenticeship",
+      "subjects": [
+        "Maths",
+        "Physics",
+        "Engineering or Design and Technology"
+      ],
+      "skills": [
+        "Fixing things",
+        "Building or making things",
+        "Customer service job"
+      ],
+      "first_step": "Ask a local heating installer if you can shadow them for a day."
+    },
+    {
+      "soc": "5316",
+      "title": "Carpenter and joiner",
+      "soc_title": "Carpenters and joiners",
+      "summary": "Makes and fits wooden structures, from roof frames to staircases and furniture.",
+      "study_level": "Level 2–3 apprenticeship",
+      "subjects": [
+        "Engineering or Design and Technology",
+        "Maths",
+        "Art and Design"
+      ],
+      "skills": [
+        "Building or making things",
+        "Fixing things"
+      ],
+      "first_step": "Make one finished piece in your school workshop and photograph each stage."
+    },
+    {
+      "soc": "5313",
+      "title": "Bricklayer",
+      "soc_title": "Bricklayers",
+      "summary": "Builds and repairs walls, homes and other structures with brick and block.",
+      "study_level": "Level 2 apprenticeship",
+      "subjects": [
+        "Maths",
+        "Engineering or Design and Technology"
+      ],
+      "skills": [
+        "Building or making things"
+      ],
+      "first_step": "Find a 'have a go' construction taster session at a local college."
+    },
+    {
+      "soc": "5231",
+      "title": "Vehicle technician",
+      "soc_title": "Vehicle technicians, mechanics and electricians",
+      "summary": "Diagnoses and repairs cars and vans, including electric and hybrid vehicles.",
+      "study_level": "Level 3 apprenticeship",
+      "subjects": [
+        "Engineering or Design and Technology",
+        "Physics",
+        "Maths"
+      ],
+      "skills": [
+        "Fixing things",
+        "Building or making things"
+      ],
+      "first_step": "Ask a local garage about a Saturday job or a week of work experience."
+    },
+    {
+      "soc": "2232",
+      "title": "Community nurse",
+      "soc_title": "Registered community nurses",
+      "summary": "Cares for patients in their homes and in the community, often with long-term conditions.",
+      "study_level": "Nursing degree or nursing degree apprenticeship",
+      "subjects": [
+        "Biology",
+        "Chemistry",
+        "Health and Social Care",
+        "English"
+      ],
+      "skills": [
+        "Caring for someone",
+        "Volunteering",
+        "First aid"
+      ],
+      "first_step": "Volunteer with a local care home, hospice or the NHS volunteer responders."
+    },
+    {
+      "soc": "2235",
+      "title": "Mental health nurse",
+      "soc_title": "Registered mental health nurses",
+      "summary": "Supports people with mental illness to recover and manage their health.",
+      "study_level": "Nursing degree or nursing degree apprenticeship",
+      "subjects": [
+        "Biology",
+        "Psychology",
+        "Health and Social Care",
+        "English"
+      ],
+      "skills": [
+        "Caring for someone",
+        "Volunteering"
+      ],
+      "first_step": "Complete a free online mental health awareness course and volunteer with a youth or peer-support group."
+    },
+    {
+      "soc": "2221",
+      "title": "Physiotherapist",
+      "soc_title": "Physiotherapists",
+      "summary": "Helps people recover movement after injury, illness or surgery.",
+      "study_level": "Degree (BSc) or degree apprenticeship",
+      "subjects": [
+        "Biology",
+        "PE",
+        "Chemistry",
+        "Physics"
+      ],
+      "skills": [
+        "Sport coaching",
+        "Caring for someone",
+        "First aid"
+      ],
+      "first_step": "Ask a local physiotherapy clinic or sports club physio if you can shadow them."
+    },
+    {
+      "soc": "2222",
+      "title": "Occupational therapist",
+      "soc_title": "Occupational therapists",
+      "summary": "Helps people with illness or disability do everyday tasks and live independently.",
+      "study_level": "Degree (BSc) or degree apprenticeship",
+      "subjects": [
+        "Biology",
+        "Psychology",
+        "Health and Social Care",
+        "Art and Design"
+      ],
+      "skills": [
+        "Caring for someone",
+        "Volunteering"
+      ],
+      "first_step": "Read the Royal College of Occupational Therapists careers pages and email one local OT team."
+    },
+    {
+      "soc": "2223",
+      "title": "Speech and language therapist",
+      "soc_title": "Speech and language therapists",
+      "summary": "Helps children and adults with communication, speech and swallowing difficulties.",
+      "study_level": "Degree (BSc) or degree apprenticeship",
+      "subjects": [
+        "English",
+        "Biology",
+        "Psychology",
+        "Modern Languages"
+      ],
+      "skills": [
+        "Volunteering",
+        "Languages",
+        "Caring for someone"
+      ],
+      "first_step": "Volunteer with a reading or homework club for younger children."
+    },
+    {
+      "soc": "2255",
+      "title": "Paramedic",
+      "soc_title": "Paramedics",
+      "summary": "Responds to emergencies and treats patients at the scene and on the way to hospital.",
+      "study_level": "Degree (BSc) or degree apprenticeship",
+      "subjects": [
+        "Biology",
+        "Chemistry",
+        "PE"
+      ],
+      "skills": [
+        "First aid",
+        "Team leader or captain",
+        "Caring for someone"
+      ],
+      "first_step": "Join St John Ambulance or British Red Cross youth first-aid training."
+    },
+    {
+      "soc": "2251",
+      "title": "Pharmacist",
+      "soc_title": "Pharmacists",
+      "summary": "Makes sure medicines are safe and right for each patient, and advises on health.",
+      "study_level": "Master of Pharmacy (4 years) plus a training year",
+      "subjects": [
+        "Chemistry",
+        "Biology",
+        "Maths"
+      ],
+      "skills": [
+        "Lab or science club",
+        "Customer service job"
+      ],
+      "first_step": "Ask your local pharmacy about a week of work experience."
+    },
+    {
+      "soc": "2254",
+      "title": "Radiographer",
+      "soc_title": "Medical radiographers",
+      "summary": "Uses X-ray, MRI and other imaging to diagnose, or radiation to treat cancer.",
+      "study_level": "Degree (BSc) or degree apprenticeship",
+      "subjects": [
+        "Physics",
+        "Biology",
+        "Maths"
+      ],
+      "skills": [
+        "Caring for someone",
+        "Lab or science club"
+      ],
+      "first_step": "Look up a hospital radiography open day and ask to visit the imaging department."
+    },
+    {
+      "soc": "6135",
+      "title": "Care worker",
+      "soc_title": "Care workers and home carers",
+      "summary": "Supports older and disabled people with daily living at home or in care homes.",
+      "study_level": "No formal entry requirement; Level 2–3 qualifications on the job",
+      "subjects": [
+        "Health and Social Care",
+        "English"
+      ],
+      "skills": [
+        "Caring for someone",
+        "Volunteering",
+        "First aid"
+      ],
+      "first_step": "Volunteer a few hours a week at a care home or with a befriending charity."
+    },
+    {
+      "soc": "2313",
+      "title": "Secondary school teacher",
+      "soc_title": "Secondary education teaching professionals",
+      "summary": "Teaches a subject to pupils aged 11 to 18 and supports their progress.",
+      "study_level": "Degree plus a teaching qualification (PGDE or PGCE)",
+      "subjects": [
+        "Maths",
+        "Physics",
+        "Chemistry",
+        "Computing",
+        "English",
+        "Modern Languages"
+      ],
+      "skills": [
+        "Sport coaching",
+        "Public speaking or debating",
+        "Volunteering"
+      ],
+      "first_step": "Offer to help as a paired-reading or maths mentor for younger pupils."
+    },
+    {
+      "soc": "2314",
+      "title": "Primary school teacher",
+      "soc_title": "Primary education teaching professionals",
+      "summary": "Teaches children aged 4 to 11 across all subjects.",
+      "study_level": "Degree plus a teaching qualification",
+      "subjects": [
+        "English",
+        "Maths",
+        "Art and Design",
+        "Music"
+      ],
+      "skills": [
+        "Volunteering",
+        "Sport coaching",
+        "Caring for someone"
+      ],
+      "first_step": "Ask a local primary school or Brownies/Cubs group if you can help out."
+    },
+    {
+      "soc": "2461",
+      "title": "Social worker",
+      "soc_title": "Social workers",
+      "summary": "Supports children, families and adults through difficult times and keeps them safe.",
+      "study_level": "Social work degree or degree apprenticeship",
+      "subjects": [
+        "Psychology",
+        "Politics or Modern Studies",
+        "English",
+        "Health and Social Care"
+      ],
+      "skills": [
+        "Volunteering",
+        "Caring for someone"
+      ],
+      "first_step": "Volunteer with a youth club, food bank or young carers' service."
+    },
+    {
+      "soc": "2225",
+      "title": "Clinical psychologist",
+      "soc_title": "Clinical psychologists",
+      "summary": "Assesses and treats people with mental and emotional difficulties using talking therapies.",
+      "study_level": "Psychology degree, then a doctorate (usually 6+ years in total)",
+      "subjects": [
+        "Psychology",
+        "Biology",
+        "Maths",
+        "English"
+      ],
+      "skills": [
+        "Volunteering",
+        "Writing"
+      ],
+      "first_step": "Read one accessible psychology book and volunteer for a listening or peer-support service."
+    },
+    {
+      "soc": "2421",
+      "title": "Accountant",
+      "soc_title": "Chartered and certified accountants",
+      "summary": "Manages money, tax and financial records for businesses and people.",
+      "study_level": "Degree or Level 4–7 apprenticeship",
+      "subjects": [
+        "Maths",
+        "Business or Economics"
+      ],
+      "skills": [
+        "Spreadsheets or data",
+        "Customer service job"
+      ],
+      "first_step": "Apply for a school-leaver insight day with an accountancy firm (many run them online)."
+    },
+    {
+      "soc": "2412",
+      "title": "Solicitor",
+      "soc_title": "Solicitors and lawyers",
+      "summary": "Advises clients on the law and represents them in deals and disputes.",
+      "study_level": "Law degree (LLB in Scotland) or solicitor apprenticeship in England",
+      "subjects": [
+        "English",
+        "History",
+        "Politics or Modern Studies",
+        "Modern Languages"
+      ],
+      "skills": [
+        "Public speaking or debating",
+        "Writing"
+      ],
+      "first_step": "Join your school debating club or a mock trial competition."
+    },
+    {
+      "soc": "2451",
+      "title": "Architect",
+      "soc_title": "Architects",
+      "summary": "Designs buildings and spaces that are safe, useful and good to be in.",
+      "study_level": "Degree plus professional training (about 7 years)",
+      "subjects": [
+        "Art and Design",
+        "Maths",
+        "Physics",
+        "Engineering or Design and Technology"
+      ],
+      "skills": [
+        "Drawing or design",
+        "Building or making things"
+      ],
+      "first_step": "Start a sketchbook of buildings you like and why, and book an architecture open day."
+    },
+    {
+      "soc": "3421",
+      "title": "Graphic and multimedia designer",
+      "soc_title": "Graphic and multimedia designers",
+      "summary": "Creates visual designs for brands, websites, games and print.",
+      "study_level": "College course, degree or Level 3–4 apprenticeship",
+      "subjects": [
+        "Art and Design",
+        "Computing",
+        "English"
+      ],
+      "skills": [
+        "Drawing or design",
+        "Coding"
+      ],
+      "first_step": "Design three posters for a real school event and add them to an online portfolio."
+    },
+    {
+      "soc": "2453",
+      "title": "Quantity surveyor",
+      "soc_title": "Quantity surveyors",
+      "summary": "Manages the costs and contracts of building projects from start to finish.",
+      "study_level": "Degree or degree apprenticeship",
+      "subjects": [
+        "Maths",
+        "Business or Economics",
+        "Geography"
+      ],
+      "skills": [
+        "Spreadsheets or data",
+        "Team leader or captain"
+      ],
+      "first_step": "Look up the RICS careers site and ask a local construction firm about a site visit."
+    },
+    {
+      "soc": "2152",
+      "title": "Environmental scientist",
+      "soc_title": "Environment professionals",
+      "summary": "Studies and protects air, water, land and wildlife, and advises on climate and pollution.",
+      "study_level": "Degree, often with a Masters",
+      "subjects": [
+        "Geography",
+        "Biology",
+        "Chemistry"
+      ],
+      "skills": [
+        "Lab or science club",
+        "Spreadsheets or data",
+        "Volunteering"
+      ],
+      "first_step": "Join a local conservation volunteering day or a citizen-science survey."
+    },
+    {
+      "soc": "5434",
+      "title": "Chef",
+      "soc_title": "Chefs",
+      "summary": "Plans menus and cooks food in restaurants, hotels, schools and hospitals.",
+      "study_level": "College course or Level 2–3 apprenticeship",
+      "subjects": [
+        "Food or Hospitality",
+        "Art and Design",
+        "Business or Economics"
+      ],
+      "skills": [
+        "Customer service job",
+        "Team leader or captain",
+        "Building or making things"
+      ],
+      "first_step": "Get a weekend kitchen job or volunteer to cook for a community event."
+    },
+    {
+      "soc": "2113",
+      "title": "Biomedical scientist",
+      "soc_title": "Biochemists and biomedical scientists",
+      "summary": "Tests samples in laboratories to help diagnose and treat disease.",
+      "study_level": "Accredited degree (BSc) or degree apprenticeship",
+      "subjects": [
+        "Biology",
+        "Chemistry",
+        "Maths"
+      ],
+      "skills": [
+        "Lab or science club",
+        "Spreadsheets or data"
+      ],
+      "first_step": "Enter a school science competition or join a science club project."
+    },
+    {
+      "soc": "2240",
+      "title": "Vet",
+      "soc_title": "Veterinarians",
+      "summary": "Diagnoses and treats illness and injury in pets, farm animals and wildlife.",
+      "study_level": "Veterinary degree (5 to 6 years)",
+      "subjects": [
+        "Biology",
+        "Chemistry",
+        "Maths",
+        "Physics"
+      ],
+      "skills": [
+        "Working with animals",
+        "Lab or science club"
+      ],
+      "first_step": "Arrange work experience at a vet practice, farm or animal shelter (vet schools expect it)."
+    },
+    {
+      "soc": "3312",
+      "title": "Police officer",
+      "soc_title": "Police officers (sergeant and below)",
+      "summary": "Keeps communities safe, responds to incidents and investigates crime.",
+      "study_level": "Degree, degree apprenticeship or direct entry (varies by force)",
+      "subjects": [
+        "Politics or Modern Studies",
+        "Psychology",
+        "PE",
+        "English"
+      ],
+      "skills": [
+        "Team leader or captain",
+        "First aid",
+        "Public speaking or debating"
+      ],
+      "first_step": "Join your local Police Cadets or Volunteer Police Cadets group."
+    },
+    {
+      "soc": "2422",
+      "title": "Investment analyst",
+      "soc_title": "Finance and investment analysts and advisers",
+      "summary": "Researches companies and markets, and advises on where money should be invested and at what risk.",
+      "study_level": "Degree or Level 4–6 apprenticeship",
+      "subjects": [
+        "Maths",
+        "Business or Economics",
+        "Computing"
+      ],
+      "skills": [
+        "Spreadsheets or data",
+        "Public speaking or debating"
+      ],
+      "first_step": "Follow three listed companies for a month in a spreadsheet and write one paragraph on what moved each price."
+    },
+    {
+      "soc": "2440",
+      "title": "Project manager",
+      "soc_title": "Business and financial project management professionals",
+      "summary": "Plans and leads projects so they finish on time and on budget, from IT systems to new offices.",
+      "study_level": "Degree or Level 4–6 apprenticeship",
+      "subjects": [
+        "Business or Economics",
+        "Maths",
+        "English"
+      ],
+      "skills": [
+        "Team leader or captain",
+        "Spreadsheets or data",
+        "Customer service job"
+      ],
+      "first_step": "Run one real project end to end, like a school event or fundraiser, and keep a simple plan, budget and risk list."
+    },
+    {
+      "soc": "3556",
+      "title": "Sales and business development manager",
+      "soc_title": "Sales accounts and business development managers",
+      "summary": "Finds new customers, builds relationships with them and wins deals for a business.",
+      "study_level": "No fixed route; Level 4–6 apprenticeship or degree common",
+      "subjects": [
+        "Business or Economics",
+        "English",
+        "Modern Languages"
+      ],
+      "skills": [
+        "Customer service job",
+        "Public speaking or debating",
+        "Team leader or captain"
+      ],
+      "first_step": "Get a weekend sales or customer-facing job and note which conversations led to a sale."
+    },
+    {
+      "soc": "3554",
+      "title": "Marketing executive",
+      "soc_title": "Advertising and marketing associate professionals",
+      "summary": "Plans campaigns that get products and causes noticed, online and off.",
+      "study_level": "Degree or Level 3–4 apprenticeship",
+      "subjects": [
+        "English",
+        "Business or Economics",
+        "Art and Design"
+      ],
+      "skills": [
+        "Writing",
+        "Drawing or design",
+        "Public speaking or debating"
+      ],
+      "first_step": "Run the social media for a school club or local charity for a month and track what gets the most response."
+    },
+    {
+      "soc": "1122",
+      "title": "Construction manager",
+      "soc_title": "Production managers and directors in construction",
+      "summary": "Runs building projects on site: people, safety, schedule and cost.",
+      "study_level": "Degree or degree apprenticeship, or up from a trade",
+      "subjects": [
+        "Maths",
+        "Engineering or Design and Technology",
+        "Business or Economics",
+        "Geography"
+      ],
+      "skills": [
+        "Team leader or captain",
+        "Building or making things",
+        "Spreadsheets or data"
+      ],
+      "first_step": "Ask a local builder or housing developer if you can shadow a site manager for a day."
+    }
+  ]
+}

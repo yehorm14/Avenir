@@ -1,0 +1,162 @@
+{
+  "_note": "30 activity statements, 5 for each of the six interest types, answered on a 5-point scale. The same shape as the O*NET Interest Profiler short form (30 items), written by the team. For production, swap in the official items (O*NET content, CC BY 4.0).",
+  "scale": [
+    "Strongly dislike",
+    "Dislike",
+    "Not sure",
+    "Like",
+    "Strongly like"
+  ],
+  "items": [
+    {
+      "id": "q01",
+      "type": "R",
+      "text": "Fix a broken bike or appliance"
+    },
+    {
+      "id": "q02",
+      "type": "I",
+      "text": "Run an experiment to test an idea"
+    },
+    {
+      "id": "q03",
+      "type": "A",
+      "text": "Design a poster or logo"
+    },
+    {
+      "id": "q04",
+      "type": "S",
+      "text": "Help someone through a hard time"
+    },
+    {
+      "id": "q05",
+      "type": "E",
+      "text": "Persuade people to back your plan"
+    },
+    {
+      "id": "q06",
+      "type": "C",
+      "text": "Keep accurate records of money or stock"
+    },
+    {
+      "id": "q07",
+      "type": "R",
+      "text": "Build something with wood or metal"
+    },
+    {
+      "id": "q08",
+      "type": "I",
+      "text": "Work out why a disease spreads"
+    },
+    {
+      "id": "q09",
+      "type": "A",
+      "text": "Write a short story or song"
+    },
+    {
+      "id": "q10",
+      "type": "S",
+      "text": "Teach a younger pupil a new skill"
+    },
+    {
+      "id": "q11",
+      "type": "E",
+      "text": "Start your own small business"
+    },
+    {
+      "id": "q12",
+      "type": "C",
+      "text": "Check a document carefully for mistakes"
+    },
+    {
+      "id": "q13",
+      "type": "R",
+      "text": "Work outdoors with your hands"
+    },
+    {
+      "id": "q14",
+      "type": "I",
+      "text": "Solve a hard maths or logic puzzle"
+    },
+    {
+      "id": "q15",
+      "type": "A",
+      "text": "Act or perform in front of an audience"
+    },
+    {
+      "id": "q16",
+      "type": "S",
+      "text": "Look after someone who is unwell"
+    },
+    {
+      "id": "q17",
+      "type": "E",
+      "text": "Lead a team towards a goal"
+    },
+    {
+      "id": "q18",
+      "type": "C",
+      "text": "Fill in a spreadsheet with data"
+    },
+    {
+      "id": "q19",
+      "type": "R",
+      "text": "Look after animals or plants"
+    },
+    {
+      "id": "q20",
+      "type": "I",
+      "text": "Write code to analyse data"
+    },
+    {
+      "id": "q21",
+      "type": "A",
+      "text": "Design the inside of a room or building"
+    },
+    {
+      "id": "q22",
+      "type": "S",
+      "text": "Coach a sports team"
+    },
+    {
+      "id": "q23",
+      "type": "E",
+      "text": "Sell a product or idea to customers"
+    },
+    {
+      "id": "q24",
+      "type": "C",
+      "text": "Plan a budget and stick to it"
+    },
+    {
+      "id": "q25",
+      "type": "R",
+      "text": "Install solar panels on a roof"
+    },
+    {
+      "id": "q26",
+      "type": "I",
+      "text": "Study climate or environmental data"
+    },
+    {
+      "id": "q27",
+      "type": "A",
+      "text": "Come up with ideas for a video game"
+    },
+    {
+      "id": "q28",
+      "type": "S",
+      "text": "Give first aid to someone who is hurt"
+    },
+    {
+      "id": "q29",
+      "type": "E",
+      "text": "Manage a project and make the big calls"
+    },
+    {
+      "id": "q30",
+      "type": "C",
+      "text": "Book appointments and manage a calendar"
+    }
+  ]
+}

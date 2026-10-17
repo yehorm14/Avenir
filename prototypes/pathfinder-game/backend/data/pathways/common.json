@@ -1,0 +1,141 @@
+{
+  "_note": "Shared building blocks for the path planner. CURATED / DEMO: check links and wording before real use.",
+  "degree_roles": {
+    "required": {
+      "label": "A degree is required",
+      "tone": "blue"
+    },
+    "preferred": {
+      "label": "A degree is the usual route",
+      "tone": "blue"
+    },
+    "flexible": {
+      "label": "A degree helps, but skills matter more",
+      "tone": "green"
+    },
+    "optional": {
+      "label": "A degree is optional",
+      "tone": "green"
+    }
+  },
+  "soft_skills": {
+    "communication": {
+      "label": "Communicating clearly",
+      "how": "Present in seminars, give a talk to a society, and write one clear page a week. Ask for feedback each time.",
+      "proof": "A recorded presentation or a society talk you gave."
+    },
+    "teamwork": {
+      "label": "Teamwork",
+      "how": "Choose group projects and committee roles. Be the person who finishes the boring bit and helps the quietest voice be heard.",
+      "proof": "A group project outcome you can describe in numbers: what the team delivered and your part."
+    },
+    "leadership": {
+      "label": "Leadership",
+      "how": "Run something small: a society event, a study group, a fundraiser. Move from helper to organiser by year 2.",
+      "proof": "An event or project you led, with how many people took part."
+    },
+    "resilience": {
+      "label": "Resilience",
+      "how": "Enter competitions you might lose, apply for roles you might not get, and note what you changed each time.",
+      "proof": "A 'tried, failed, changed, then succeeded' story."
+    },
+    "commercial": {
+      "label": "Commercial awareness",
+      "how": "Read one business or industry news source daily. Join a society that discusses real companies. Ask: who pays, who gains, what could go wrong?",
+      "proof": "A one-page opinion on a real company or sector, written for a society or LinkedIn."
+    },
+    "problem_solving": {
+      "label": "Problem solving",
+      "how": "Take on open-ended projects, not only problem sets. Write down your reasoning, not just the answer.",
+      "proof": "A project where you found the problem yourself and explain how you solved it."
+    },
+    "empathy": {
+      "label": "Empathy and listening",
+      "how": "Volunteer with real people: befriending, helplines, mentoring. Practise summarising what someone said before you answer.",
+      "proof": "Regular volunteering hours, and what you learned from the people you supported."
+    },
+    "initiative": {
+      "label": "Initiative",
+      "how": "Start something that did not exist: a club, a small business, a blog, a tool. Small and real beats big and imagined.",
+      "proof": "A link to something you built or started, and who used it."
+    },
+    "organisation": {
+      "label": "Organisation and reliability",
+      "how": "Keep a weekly plan, hit deadlines, and take a role (treasurer, secretary) where others rely on you.",
+      "proof": "A role where you managed money, bookings or deadlines for a group."
+    },
+    "digital": {
+      "label": "Digital fluency",
+      "how": "Learn the tools of your field and one AI assistant well, and learn to check what it tells you. Keep notes on what it got wrong.",
+      "proof": "A project showing you used modern tools, with what you checked and corrected."
+    }
+  },
+  "alumni": {
+    "why": "People two to ten years ahead of you are the best source of honest information: what the job is really like, what they would do differently, and what got them hired. Most are glad to help if you ask well.",
+    "find": [
+      "Use your university's alumni network or careers service mentoring scheme if it has one.",
+      "On LinkedIn, open your university's page, choose Alumni, and filter by what they studied, where they work and what they do.",
+      "Ask your tutors, society committee and older students who they know, and ask for introductions.",
+      "Look for alumni who spoke at society events, or who are listed as mentors on your students' union or careers pages."
+    ],
+    "tips": [
+      "Ask for 15 minutes, not a job.",
+      "Do five minutes of homework on them first, and mention one specific thing.",
+      "Prepare three questions, send a short thank-you the same day, and tell them what you did with their advice.",
+      "Aim for a mix: someone recent, someone mid-career, and someone who changed direction."
+    ],
+    "template": "Hello {their_name},\n\nI'm thinking about studying {degree} at {uni}, and I'm interested in a career in {field}. I saw that you studied there and now work in this area, and I'd really value 15 minutes of your time to hear how you got there.\n\nI'd love to ask: {question}\n\nThank you for considering it, and no problem at all if you're too busy.\n\nBest wishes,\n[Your name]",
+    "questions": [
+      "What does a normal week really look like in your job?",
+      "What did you do at university that mattered most when you were hired?",
+      "What would you do differently if you were starting again?"
+    ],
+    "template_apprenticeship": "Hello {their_name},\n\nI'm thinking about an apprenticeship route into {field}. I saw that you work in this area, and I'd really value 15 minutes of your time to hear how you got started.\n\nI'd love to ask: {question}\n\nThank you for considering it, and no problem at all if you're too busy.\n\nBest wishes,\n[Your name]"
+  },
+  "finders": {
+    "England": {
+      "name": "Find an apprenticeship (GOV.UK)",
+      "url": "https://www.gov.uk/apply-apprenticeship"
+    },
+    "Scotland": {
+      "name": "Apprenticeships.scot",
+      "url": "https://www.apprenticeships.scot/"
+    },
+    "Wales": {
+      "name": "Apprenticeships Wales",
+      "url": "https://www.gov.wales/apprenticeships"
+    },
+    "Northern Ireland": {
+      "name": "ApprenticeshipsNI (nidirect)",
+      "url": "https://www.nidirect.gov.uk/"
+    }
+  },
+  "tools": {
+    "ucas": {
+      "name": "UCAS course search",
+      "url": "https://www.ucas.com/"
+    },
+    "discover_uni": {
+      "name": "Discover Uni",
+      "url": "https://discoveruni.gov.uk/"
+    }
+  },
+  "funding": {
+    "England": {
+      "name": "Student Finance England (GOV.UK)",
+      "url": "https://www.gov.uk/student-finance"
+    },
+    "Scotland": {
+      "name": "Student Awards Agency Scotland (SAAS)",
+      "url": "https://www.saas.gov.uk/"
+    },
+    "Wales": {
+      "name": "Student Finance Wales",
+      "url": "https://www.studentfinancewales.co.uk/"
+    },
+    "Northern Ireland": {
+      "name": "Student Finance NI",
+      "url": "https://www.studentfinanceni.co.uk/"
+    }
+  }
+}

@@ -1,0 +1,567 @@
+{
+  "source_id": "ai_exposure",
+  "edition": "ILO Working Paper 140 (2025), demo snapshot",
+  "_note": "Task-level generative-AI exposure scores (0 = not exposed, 1 = fully exposed), in the style of the ILO refined global index. Occupation exposure = mean of its task scores. Mapped ISCO-08 to SOC 2020. Exposure is a contested estimate: it measures what AI could touch, not jobs lost. DEMO VALUES: illustrative tasks and scores, to be replaced with the published task file.",
+  "occupations": {
+    "2134": [
+      {
+        "task": "Write and review code",
+        "score": 0.62
+      },
+      {
+        "task": "Write technical documentation",
+        "score": 0.7
+      },
+      {
+        "task": "Work out what users need with clients",
+        "score": 0.28
+      }
+    ],
+    "2135": [
+      {
+        "task": "Monitor systems for threats",
+        "score": 0.5
+      },
+      {
+        "task": "Write incident reports",
+        "score": 0.66
+      },
+      {
+        "task": "Respond to live attacks and advise leaders",
+        "score": 0.26
+      }
+    ],
+    "2425": [
+      {
+        "task": "Clean and analyse data",
+        "score": 0.64
+      },
+      {
+        "task": "Build statistical models",
+        "score": 0.52
+      },
+      {
+        "task": "Explain findings to decision makers",
+        "score": 0.3
+      }
+    ],
+    "3132": [
+      {
+        "task": "Answer user tickets",
+        "score": 0.6
+      },
+      {
+        "task": "Set up and repair hardware",
+        "score": 0.12
+      },
+      {
+        "task": "Keep records of faults",
+        "score": 0.58
+      }
+    ],
+    "2122": [
+      {
+        "task": "Design parts with CAD",
+        "score": 0.38
+      },
+      {
+        "task": "Test prototypes",
+        "score": 0.14
+      },
+      {
+        "task": "Write specifications and reports",
+        "score": 0.56
+      }
+    ],
+    "2121": [
+      {
+        "task": "Design structures and calculate loads",
+        "score": 0.36
+      },
+      {
+        "task": "Inspect sites",
+        "score": 0.1
+      },
+      {
+        "task": "Prepare plans and bids",
+        "score": 0.52
+      }
+    ],
+    "2123": [
+      {
+        "task": "Design electrical systems",
+        "score": 0.36
+      },
+      {
+        "task": "Commission and test equipment",
+        "score": 0.12
+      },
+      {
+        "task": "Write technical reports",
+        "score": 0.56
+      }
+    ],
+    "5241": [
+      {
+        "task": "Install wiring and equipment",
+        "score": 0.04
+      },
+      {
+        "task": "Test and certify installations",
+        "score": 0.12
+      },
+      {
+        "task": "Quote jobs and keep records",
+        "score": 0.4
+      }
+    ],
+    "5314": [
+      {
+        "task": "Fit pipework and heating systems",
+        "score": 0.04
+      },
+      {
+        "task": "Diagnose faults",
+        "score": 0.14
+      },
+      {
+        "task": "Advise customers and quote",
+        "score": 0.32
+      }
+    ],
+    "5316": [
+      {
+        "task": "Cut and fit timber",
+        "score": 0.03
+      },
+      {
+        "task": "Read drawings and measure",
+        "score": 0.16
+      },
+      {
+        "task": "Estimate materials",
+        "score": 0.34
+      }
+    ],
+    "5313": [
+      {
+        "task": "Lay brick and block",
+        "score": 0.02
+      },
+      {
+        "task": "Set out walls from plans",
+        "score": 0.12
+      },
+      {
+        "task": "Estimate materials",
+        "score": 0.34
+      }
+    ],
+    "5231": [
+      {
+        "task": "Repair engines and systems",
+        "score": 0.05
+      },
+      {
+        "task": "Run diagnostic software",
+        "score": 0.3
+      },
+      {
+        "task": "Explain repairs to customers",
+        "score": 0.22
+      }
+    ],
+    "2232": [
+      {
+        "task": "Assess and treat patients",
+        "score": 0.12
+      },
+      {
+        "task": "Write care plans and notes",
+        "score": 0.5
+      },
+      {
+        "task": "Support families",
+        "score": 0.1
+      }
+    ],
+    "2235": [
+      {
+        "task": "Build therapeutic relationships",
+        "score": 0.08
+      },
+      {
+        "task": "Assess risk",
+        "score": 0.2
+      },
+      {
+        "task": "Write care records",
+        "score": 0.5
+      }
+    ],
+    "2221": [
+      {
+        "task": "Treat patients hands-on",
+        "score": 0.04
+      },
+      {
+        "task": "Plan exercise programmes",
+        "score": 0.34
+      },
+      {
+        "task": "Write clinical notes",
+        "score": 0.5
+      }
+    ],
+    "2222": [
+      {
+        "task": "Assess daily living needs",
+        "score": 0.14
+      },
+      {
+        "task": "Adapt homes and equipment",
+        "score": 0.1
+      },
+      {
+        "task": "Write reports",
+        "score": 0.52
+      }
+    ],
+    "2223": [
+      {
+        "task": "Run therapy sessions",
+        "score": 0.1
+      },
+      {
+        "task": "Assess communication",
+        "score": 0.24
+      },
+      {
+        "task": "Write reports for schools",
+        "score": 0.54
+      }
+    ],
+    "2255": [
+      {
+        "task": "Treat patients in emergencies",
+        "score": 0.03
+      },
+      {
+        "task": "Make triage decisions",
+        "score": 0.18
+      },
+      {
+        "task": "Record patient care",
+        "score": 0.44
+      }
+    ],
+    "2251": [
+      {
+        "task": "Check prescriptions",
+        "score": 0.46
+      },
+      {
+        "task": "Advise patients on medicines",
+        "score": 0.28
+      },
+      {
+        "task": "Manage stock and records",
+        "score": 0.5
+      }
+    ],
+    "2254": [
+      {
+        "task": "Position patients and run scans",
+        "score": 0.08
+      },
+      {
+        "task": "Check image quality",
+        "score": 0.42
+      },
+      {
+        "task": "Keep radiation records",
+        "score": 0.46
+      }
+    ],
+    "6135": [
+      {
+        "task": "Provide personal care",
+        "score": 0.02
+      },
+      {
+        "task": "Support daily activities",
+        "score": 0.04
+      },
+      {
+        "task": "Record care given",
+        "score": 0.4
+      }
+    ],
+    "2313": [
+      {
+        "task": "Teach lessons",
+        "score": 0.18
+      },
+      {
+        "task": "Plan lessons and resources",
+        "score": 0.54
+      },
+      {
+        "task": "Mark work and give feedback",
+        "score": 0.5
+      }
+    ],
+    "2314": [
+      {
+        "task": "Teach and care for young children",
+        "score": 0.08
+      },
+      {
+        "task": "Plan lessons",
+        "score": 0.5
+      },
+      {
+        "task": "Talk with parents",
+        "score": 0.14
+      }
+    ],
+    "2461": [
+      {
+        "task": "Visit and support families",
+        "score": 0.06
+      },
+      {
+        "task": "Assess risk and need",
+        "score": 0.22
+      },
+      {
+        "task": "Write case reports",
+        "score": 0.56
+      }
+    ],
+    "2225": [
+      {
+        "task": "Deliver talking therapies",
+        "score": 0.1
+      },
+      {
+        "task": "Run psychological assessments",
+        "score": 0.36
+      },
+      {
+        "task": "Write formulations and reports",
+        "score": 0.54
+      }
+    ],
+    "2421": [
+      {
+        "task": "Prepare accounts",
+        "score": 0.72
+      },
+      {
+        "task": "Check tax and compliance",
+        "score": 0.62
+      },
+      {
+        "task": "Advise business owners",
+        "score": 0.34
+      }
+    ],
+    "2412": [
+      {
+        "task": "Draft contracts and documents",
+        "score": 0.7
+      },
+      {
+        "task": "Research case law",
+        "score": 0.66
+      },
+      {
+        "task": "Advise and negotiate for clients",
+        "score": 0.3
+      }
+    ],
+    "2451": [
+      {
+        "task": "Develop design concepts",
+        "score": 0.36
+      },
+      {
+        "task": "Produce drawings and models",
+        "score": 0.46
+      },
+      {
+        "task": "Visit sites and meet clients",
+        "score": 0.12
+      }
+    ],
+    "3421": [
+      {
+        "task": "Create visual designs",
+        "score": 0.6
+      },
+      {
+        "task": "Edit images and layouts",
+        "score": 0.66
+      },
+      {
+        "task": "Meet clients to agree briefs",
+        "score": 0.26
+      }
+    ],
+    "2453": [
+      {
+        "task": "Estimate project costs",
+        "score": 0.52
+      },
+      {
+        "task": "Manage contracts",
+        "score": 0.48
+      },
+      {
+        "task": "Visit sites to value work",
+        "score": 0.1
+      }
+    ],
+    "2152": [
+      {
+        "task": "Collect field samples",
+        "score": 0.06
+      },
+      {
+        "task": "Analyse environmental data",
+        "score": 0.5
+      },
+      {
+        "task": "Write impact reports",
+        "score": 0.58
+      }
+    ],
+    "5434": [
+      {
+        "task": "Cook and plate food",
+        "score": 0.02
+      },
+      {
+        "task": "Run a kitchen team",
+        "score": 0.1
+      },
+      {
+        "task": "Plan menus and costs",
+        "score": 0.4
+      }
+    ],
+    "2113": [
+      {
+        "task": "Run laboratory tests",
+        "score": 0.16
+      },
+      {
+        "task": "Check and interpret results",
+        "score": 0.44
+      },
+      {
+        "task": "Record and report findings",
+        "score": 0.54
+      }
+    ],
+    "2240": [
+      {
+        "task": "Examine and treat animals",
+        "score": 0.04
+      },
+      {
+        "task": "Perform surgery",
+        "score": 0.02
+      },
+      {
+        "task": "Keep records and advise owners",
+        "score": 0.38
+      }
+    ],
+    "3312": [
+      {
+        "task": "Patrol and respond to incidents",
+        "score": 0.03
+      },
+      {
+        "task": "Interview witnesses",
+        "score": 0.14
+      },
+      {
+        "task": "Write statements and case files",
+        "score": 0.52
+      }
+    ],
+    "2422": [
+      {
+        "task": "Build financial models",
+        "score": 0.58
+      },
+      {
+        "task": "Write research reports",
+        "score": 0.7
+      },
+      {
+        "task": "Meet clients and explain risk",
+        "score": 0.28
+      }
+    ],
+    "2440": [
+      {
+        "task": "Plan schedules and budgets",
+        "score": 0.5
+      },
+      {
+        "task": "Write status reports",
+        "score": 0.68
+      },
+      {
+        "task": "Lead meetings and resolve issues",
+        "score": 0.24
+      }
+    ],
+    "3556": [
+      {
+        "task": "Prospect and pitch to clients",
+        "score": 0.4
+      },
+      {
+        "task": "Write proposals and emails",
+        "score": 0.66
+      },
+      {
+        "task": "Negotiate deals face to face",
+        "score": 0.2
+      }
+    ],
+    "3554": [
+      {
+        "task": "Write campaign copy",
+        "score": 0.74
+      },
+      {
+        "task": "Analyse campaign results",
+        "score": 0.6
+      },
+      {
+        "task": "Run events and partnerships",
+        "score": 0.2
+      }
+    ],
+    "1122": [
+      {
+        "task": "Run sites and manage subcontractors",
+        "score": 0.1
+      },
+      {
+        "task": "Plan programmes and costs",
+        "score": 0.44
+      },
+      {
+        "task": "Inspect quality and safety",
+        "score": 0.12
+      }
+    ]
+  }
+}

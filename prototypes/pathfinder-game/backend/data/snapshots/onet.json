@@ -1,0 +1,487 @@
+{
+  "source_id": "onet",
+  "edition": "O*NET 30.0 (demo snapshot)",
+  "_note": "Interest profiles on the O*NET 1-7 scale, order R I A S E C. Mapped from SOC 2020 to the closest O*NET-SOC 2019 occupation. DEMO VALUES: approximate, must be replaced with the published O*NET Interests file and each crosswalk row checked by a person.",
+  "occupations": {
+    "2134": {
+      "onet_code": "15-1252.00",
+      "onet_title": "Software Developers",
+      "riasec": [
+        2.0,
+        6.0,
+        3.7,
+        2.0,
+        3.3,
+        4.7
+      ]
+    },
+    "2135": {
+      "onet_code": "15-1212.00",
+      "onet_title": "Information Security Analysts",
+      "riasec": [
+        2.3,
+        6.3,
+        2.0,
+        2.3,
+        3.7,
+        5.3
+      ]
+    },
+    "2425": {
+      "onet_code": "15-2051.00",
+      "onet_title": "Data Scientists",
+      "riasec": [
+        1.7,
+        6.7,
+        2.3,
+        2.0,
+        3.3,
+        5.7
+      ]
+    },
+    "3132": {
+      "onet_code": "15-1232.00",
+      "onet_title": "Computer User Support Specialists",
+      "riasec": [
+        4.3,
+        4.7,
+        1.7,
+        3.7,
+        2.7,
+        5.0
+      ]
+    },
+    "2122": {
+      "onet_code": "17-2141.00",
+      "onet_title": "Mechanical Engineers",
+      "riasec": [
+        5.7,
+        6.0,
+        3.0,
+        2.0,
+        3.0,
+        4.0
+      ]
+    },
+    "2121": {
+      "onet_code": "17-2051.00",
+      "onet_title": "Civil Engineers",
+      "riasec": [
+        5.3,
+        5.7,
+        2.7,
+        2.3,
+        3.7,
+        4.7
+      ]
+    },
+    "2123": {
+      "onet_code": "17-2071.00",
+      "onet_title": "Electrical Engineers",
+      "riasec": [
+        5.7,
+        6.0,
+        2.3,
+        2.0,
+        3.0,
+        4.3
+      ]
+    },
+    "5241": {
+      "onet_code": "47-2111.00",
+      "onet_title": "Electricians",
+      "riasec": [
+        7.0,
+        4.0,
+        1.7,
+        2.3,
+        2.7,
+        4.0
+      ]
+    },
+    "5314": {
+      "onet_code": "47-2152.00",
+      "onet_title": "Plumbers, Pipefitters, and Steamfitters",
+      "riasec": [
+        7.0,
+        3.3,
+        1.7,
+        2.7,
+        3.0,
+        3.7
+      ]
+    },
+    "5316": {
+      "onet_code": "47-2031.00",
+      "onet_title": "Carpenters",
+      "riasec": [
+        7.0,
+        2.7,
+        3.3,
+        2.0,
+        2.7,
+        3.3
+      ]
+    },
+    "5313": {
+      "onet_code": "47-2021.00",
+      "onet_title": "Brickmasons and Blockmasons",
+      "riasec": [
+        7.0,
+        2.0,
+        2.3,
+        1.7,
+        2.3,
+        3.3
+      ]
+    },
+    "5231": {
+      "onet_code": "49-3023.00",
+      "onet_title": "Automotive Service Technicians and Mechanics",
+      "riasec": [
+        6.7,
+        4.3,
+        1.7,
+        2.3,
+        2.3,
+        4.0
+      ]
+    },
+    "2232": {
+      "onet_code": "29-1141.00",
+      "onet_title": "Registered Nurses",
+      "riasec": [
+        3.7,
+        4.3,
+        2.0,
+        6.7,
+        2.7,
+        4.0
+      ]
+    },
+    "2235": {
+      "onet_code": "29-1141.02",
+      "onet_title": "Advanced Practice Psychiatric Nurses",
+      "riasec": [
+        2.7,
+        4.0,
+        2.3,
+        7.0,
+        2.7,
+        3.7
+      ]
+    },
+    "2221": {
+      "onet_code": "29-1123.00",
+      "onet_title": "Physical Therapists",
+      "riasec": [
+        4.7,
+        5.0,
+        2.0,
+        6.7,
+        3.0,
+        3.3
+      ]
+    },
+    "2222": {
+      "onet_code": "29-1122.00",
+      "onet_title": "Occupational Therapists",
+      "riasec": [
+        3.3,
+        4.7,
+        3.3,
+        7.0,
+        2.7,
+        3.3
+      ]
+    },
+    "2223": {
+      "onet_code": "29-1127.00",
+      "onet_title": "Speech-Language Pathologists",
+      "riasec": [
+        1.7,
+        5.0,
+        3.7,
+        7.0,
+        2.3,
+        3.3
+      ]
+    },
+    "2255": {
+      "onet_code": "29-2043.00",
+      "onet_title": "Paramedics",
+      "riasec": [
+        5.3,
+        4.3,
+        1.7,
+        6.3,
+        3.3,
+        3.7
+      ]
+    },
+    "2251": {
+      "onet_code": "29-1051.00",
+      "onet_title": "Pharmacists",
+      "riasec": [
+        2.3,
+        6.0,
+        1.7,
+        5.0,
+        3.0,
+        5.7
+      ]
+    },
+    "2254": {
+      "onet_code": "29-2034.00",
+      "onet_title": "Radiologic Technologists and Technicians",
+      "riasec": [
+        5.0,
+        5.3,
+        1.7,
+        5.7,
+        2.3,
+        4.7
+      ]
+    },
+    "6135": {
+      "onet_code": "31-1122.00",
+      "onet_title": "Personal Care Aides",
+      "riasec": [
+        3.0,
+        1.7,
+        2.0,
+        7.0,
+        2.0,
+        3.0
+      ]
+    },
+    "2313": {
+      "onet_code": "25-2031.00",
+      "onet_title": "Secondary School Teachers",
+      "riasec": [
+        2.0,
+        3.7,
+        4.3,
+        6.7,
+        4.0,
+        3.3
+      ]
+    },
+    "2314": {
+      "onet_code": "25-2021.00",
+      "onet_title": "Elementary School Teachers",
+      "riasec": [
+        2.0,
+        2.7,
+        4.7,
+        7.0,
+        3.3,
+        3.3
+      ]
+    },
+    "2461": {
+      "onet_code": "21-1021.00",
+      "onet_title": "Child, Family, and School Social Workers",
+      "riasec": [
+        1.3,
+        3.3,
+        2.3,
+        7.0,
+        3.3,
+        3.7
+      ]
+    },
+    "2225": {
+      "onet_code": "19-3033.00",
+      "onet_title": "Clinical and Counseling Psychologists",
+      "riasec": [
+        1.3,
+        6.3,
+        3.3,
+        6.7,
+        2.7,
+        3.3
+      ]
+    },
+    "2421": {
+      "onet_code": "13-2011.00",
+      "onet_title": "Accountants and Auditors",
+      "riasec": [
+        1.3,
+        3.7,
+        1.3,
+        2.7,
+        4.7,
+        7.0
+      ]
+    },
+    "2412": {
+      "onet_code": "23-1011.00",
+      "onet_title": "Lawyers",
+      "riasec": [
+        1.0,
+        4.3,
+        2.7,
+        4.0,
+        6.7,
+        5.3
+      ]
+    },
+    "2451": {
+      "onet_code": "17-1011.00",
+      "onet_title": "Architects, Except Landscape and Naval",
+      "riasec": [
+        4.0,
+        5.3,
+        6.7,
+        2.3,
+        4.0,
+        3.3
+      ]
+    },
+    "3421": {
+      "onet_code": "27-1024.00",
+      "onet_title": "Graphic Designers",
+      "riasec": [
+        2.3,
+        2.7,
+        7.0,
+        2.0,
+        3.7,
+        3.0
+      ]
+    },
+    "2453": {
+      "onet_code": "13-1051.00",
+      "onet_title": "Cost Estimators",
+      "riasec": [
+        3.3,
+        4.3,
+        1.7,
+        2.3,
+        5.0,
+        6.3
+      ]
+    },
+    "2152": {
+      "onet_code": "19-2041.00",
+      "onet_title": "Environmental Scientists and Specialists",
+      "riasec": [
+        4.3,
+        6.7,
+        2.3,
+        3.3,
+        3.0,
+        4.0
+      ]
+    },
+    "5434": {
+      "onet_code": "35-1011.00",
+      "onet_title": "Chefs and Head Cooks",
+      "riasec": [
+        5.3,
+        1.7,
+        4.7,
+        2.3,
+        4.0,
+        3.3
+      ]
+    },
+    "2113": {
+      "onet_code": "29-2011.00",
+      "onet_title": "Clinical Laboratory Technologists and Technicians",
+      "riasec": [
+        3.7,
+        7.0,
+        1.7,
+        2.7,
+        2.3,
+        5.0
+      ]
+    },
+    "2240": {
+      "onet_code": "29-1131.00",
+      "onet_title": "Veterinarians",
+      "riasec": [
+        5.0,
+        6.3,
+        1.3,
+        4.3,
+        3.3,
+        3.7
+      ]
+    },
+    "3312": {
+      "onet_code": "33-3051.01",
+      "onet_title": "Police Patrol Officers",
+      "riasec": [
+        4.7,
+        3.7,
+        1.7,
+        5.3,
+        5.0,
+        4.3
+      ]
+    },
+    "2422": {
+      "onet_code": "13-2051.00",
+      "onet_title": "Financial and Investment Analysts",
+      "riasec": [
+        1.3,
+        5.7,
+        1.7,
+        2.3,
+        5.7,
+        6.0
+      ]
+    },
+    "2440": {
+      "onet_code": "13-1082.00",
+      "onet_title": "Project Management Specialists",
+      "riasec": [
+        2.3,
+        4.0,
+        2.7,
+        4.0,
+        6.3,
+        5.7
+      ]
+    },
+    "3556": {
+      "onet_code": "11-2022.00",
+      "onet_title": "Sales Managers",
+      "riasec": [
+        1.7,
+        3.0,
+        2.7,
+        4.0,
+        7.0,
+        4.3
+      ]
+    },
+    "3554": {
+      "onet_code": "13-1161.00",
+      "onet_title": "Market Research Analysts and Marketing Specialists",
+      "riasec": [
+        1.3,
+        4.0,
+        5.3,
+        3.7,
+        6.3,
+        4.0
+      ]
+    },
+    "1122": {
+      "onet_code": "11-9021.00",
+      "onet_title": "Construction Managers",
+      "riasec": [
+        5.0,
+        4.0,
+        2.0,
+        3.3,
+        6.3,
+        5.0
+      ]
+    }
+  }
+}

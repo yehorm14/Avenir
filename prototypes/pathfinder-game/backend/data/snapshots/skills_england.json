@@ -1,0 +1,207 @@
+{
+  "source_id": "skills_england",
+  "edition": "2026",
+  "_note": "Projected change in employment 2025-2035 (%) and whether the occupation is named as a priority in the annual skills report or a sector assessment. DEMO VALUES: illustrative, to be extracted from the report tables (AI-assisted, person-checked). null means no figure published for this occupation.",
+  "occupations": {
+    "2134": {
+      "growth_2035_pct": 14,
+      "priority": true,
+      "sector": "Digital and technologies"
+    },
+    "2135": {
+      "growth_2035_pct": 18,
+      "priority": true,
+      "sector": "Digital and technologies"
+    },
+    "2425": {
+      "growth_2035_pct": 16,
+      "priority": true,
+      "sector": "Digital and technologies"
+    },
+    "3132": {
+      "growth_2035_pct": 6,
+      "priority": false,
+      "sector": "Digital and technologies"
+    },
+    "2122": {
+      "growth_2035_pct": 9,
+      "priority": true,
+      "sector": "Advanced manufacturing"
+    },
+    "2121": {
+      "growth_2035_pct": 11,
+      "priority": true,
+      "sector": "Construction"
+    },
+    "2123": {
+      "growth_2035_pct": 13,
+      "priority": true,
+      "sector": "Clean energy"
+    },
+    "5241": {
+      "growth_2035_pct": 12,
+      "priority": true,
+      "sector": "Clean energy"
+    },
+    "5314": {
+      "growth_2035_pct": 10,
+      "priority": true,
+      "sector": "Construction"
+    },
+    "5316": {
+      "growth_2035_pct": 5,
+      "priority": true,
+      "sector": "Construction"
+    },
+    "5313": {
+      "growth_2035_pct": 4,
+      "priority": true,
+      "sector": "Construction"
+    },
+    "5231": {
+      "growth_2035_pct": 7,
+      "priority": false,
+      "sector": "Advanced manufacturing"
+    },
+    "2232": {
+      "growth_2035_pct": 15,
+      "priority": true,
+      "sector": "Health and social care"
+    },
+    "2235": {
+      "growth_2035_pct": 17,
+      "priority": true,
+      "sector": "Health and social care"
+    },
+    "2221": {
+      "growth_2035_pct": 13,
+      "priority": true,
+      "sector": "Health and social care"
+    },
+    "2222": {
+      "growth_2035_pct": 14,
+      "priority": true,
+      "sector": "Health and social care"
+    },
+    "2223": {
+      "growth_2035_pct": 12,
+      "priority": true,
+      "sector": "Health and social care"
+    },
+    "2255": {
+      "growth_2035_pct": 12,
+      "priority": false,
+      "sector": "Health and social care"
+    },
+    "2251": {
+      "growth_2035_pct": 8,
+      "priority": false,
+      "sector": "Health and social care"
+    },
+    "2254": {
+      "growth_2035_pct": 14,
+      "priority": true,
+      "sector": "Health and social care"
+    },
+    "6135": {
+      "growth_2035_pct": 19,
+      "priority": true,
+      "sector": "Health and social care"
+    },
+    "2313": {
+      "growth_2035_pct": 3,
+      "priority": false,
+      "sector": "Education"
+    },
+    "2314": {
+      "growth_2035_pct": -2,
+      "priority": false,
+      "sector": "Education"
+    },
+    "2461": {
+      "growth_2035_pct": 9,
+      "priority": false,
+      "sector": "Health and social care"
+    },
+    "2225": {
+      "growth_2035_pct": 11,
+      "priority": false,
+      "sector": "Health and social care"
+    },
+    "2421": {
+      "growth_2035_pct": 2,
+      "priority": false,
+      "sector": "Professional and business services"
+    },
+    "2412": {
+      "growth_2035_pct": 1,
+      "priority": false,
+      "sector": "Professional and business services"
+    },
+    "2451": {
+      "growth_2035_pct": 4,
+      "priority": false,
+      "sector": "Construction"
+    },
+    "3421": {
+      "growth_2035_pct": 3,
+      "priority": false,
+      "sector": "Creative industries"
+    },
+    "2453": {
+      "growth_2035_pct": 8,
+      "priority": true,
+      "sector": "Construction"
+    },
+    "2152": {
+      "growth_2035_pct": null,
+      "priority": false,
+      "sector": "Clean energy"
+    },
+    "5434": {
+      "growth_2035_pct": 3,
+      "priority": false,
+      "sector": "Hospitality"
+    },
+    "2113": {
+      "growth_2035_pct": 10,
+      "priority": false,
+      "sector": "Life sciences"
+    },
+    "2240": {
+      "growth_2035_pct": 9,
+      "priority": false,
+      "sector": "Life sciences"
+    },
+    "3312": {
+      "growth_2035_pct": 5,
+      "priority": false,
+      "sector": "Public services"
+    },
+    "2422": {
+      "growth_2035_pct": 7,
+      "priority": false,
+      "sector": "Financial services"
+    },
+    "2440": {
+      "growth_2035_pct": 10,
+      "priority": false,
+      "sector": "Professional and business services"
+    },
+    "3556": {
+      "growth_2035_pct": 6,
+      "priority": false,
+      "sector": "Professional and business services"
+    },
+    "3554": {
+      "growth_2035_pct": 5,
+      "priority": false,
+      "sector": "Creative industries"
+    },
+    "1122": {
+      "growth_2035_pct": 9,
+      "priority": true,
+      "sector": "Construction"
+    }
+  }
+}
