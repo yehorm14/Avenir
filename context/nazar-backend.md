@@ -85,8 +85,10 @@ reviewer, checked by the orchestrator. One commit per task.
 - Repo: `ruff format --check` fails on several files (mostly contract files); not in `make check`.
 
 ## Blocked on
-- Nothing in code. #4 and #8 are merged; #9 is rebased on main and ready (it also carries the decision NaN fix).
-- `docker compose up` not run: Docker isn't installed on Nazar's Mac (pip-install simulation passed).
+- Nothing in code. #4 and #8 are merged; #9 contains all of main and is ready for Yehor to merge (it also carries the decision NaN fix).
+- Test fixtures are pinned to `snapshots/ml/mock`; only `test_freeze` reads the real data.
+- Backtest questions answered on #9: keep the `balanced` group null (the pick rule needs exposure, which has no history); frontend filters null groups; Arsenii documents `other`.
+- `docker compose up` checked 17 Oct with no `.env` (Colima): builds, starts, `/health` ok, Amira flow ok.
 - Freeze test fails until real `snapshots/catalogue.json` and `routes.json` land (Yehor, Sun 08:00).
 
 ## For Arsenii (also)
