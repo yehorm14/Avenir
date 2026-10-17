@@ -76,3 +76,26 @@ def test_method_not_allowed_is_envelope_405(data):
     r = TestClient(create_app(data=data)).delete("/api/v1/tags")
     assert r.status_code == 405
     assert r.json()["ok"] is False
+
+
+def test_unhandled_error_keeps_cors_header(data):
+    # the browser drops a response without CORS headers, so the frontend would see a network error
+    app = create_app(data=data)
+
+    @app.get("/boom")
+    def boom():
+        raise RuntimeError("secret detail")
+
+    r = TestClient(app, raise_server_exceptions=False).get("/boom", headers={"Origin": "http://localhost:5173"})
+    assert r.status_code == 500
+    assert r.headers["access-control-allow-origin"] == "http://localhost:5173"
+    assert r.json()["error"]["code"] == "INTERNAL"
+    assert r.headers["x-request-id"] == r.json()["meta"]["request_id"]
+
+
+def test_malformed_json_points_at_body(data):
+    r = TestClient(create_app(data=data)).post(
+        "/api/v1/recommendations", content=b"{bad", headers={"content-type": "application/json"}
+    )
+    assert r.status_code == 422
+    assert r.json()["error"]["details"][0]["field"] == "body"

@@ -49,6 +49,16 @@ def create_app(
     app.state.writer = writer if writer is not None else d_writer
     app.state.suggester = suggester if suggester is not None else d_suggester
 
+    # Registered before CORS so it sits inside it: a crash still gets CORS headers and the
+    # browser can read the INTERNAL envelope (Starlette's own 500 handler runs outside CORS).
+    @app.middleware("http")
+    async def _catch_all(request: Request, call_next):
+        try:
+            return await call_next(request)
+        except Exception as exc:
+            log.error("Unhandled error on %s", request.url.path, exc_info=exc)
+            return fail(ErrorCode.INTERNAL, "Something went wrong")
+
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
@@ -59,7 +69,13 @@ def create_app(
 
     @app.exception_handler(RequestValidationError)
     async def _validation(request: Request, exc: RequestValidationError):
-        details = [ErrorDetail(field=".".join(map(str, e["loc"])), issue=e["msg"]) for e in exc.errors()]
+        details = [
+            ErrorDetail(
+                field="body" if e["type"] == "json_invalid" else ".".join(map(str, e["loc"])),
+                issue=e["msg"],
+            )
+            for e in exc.errors()
+        ]
         return fail(ErrorCode.VALIDATION_ERROR, "Invalid request", details)
 
     @app.exception_handler(StarletteHTTPException)
