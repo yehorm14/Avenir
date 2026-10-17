@@ -1,6 +1,6 @@
 # API contract (v1, draft)
 
-**Owner:** Yehor. Status: **draft, adopted from spec section 7**. Freeze target: Sat 20:30.
+**Owner:** Yehor. Status: **frozen v1, Sat 17 Oct 20:50**. The code in `packages/contracts/avenir_contracts/` is the source of truth; this page summarises it.
 Change it only by PR with "needs a contract change" ticked. Backend generates the OpenAPI
 schema from these models; the frontend generates its client from that schema.
 
@@ -15,7 +15,7 @@ schema from these models; the frontend generates its client from that schema.
     "as_of": "2026-10-18",
     "request_id": "7f3c...",
     "sources": [
-      { "name": "ashe", "status": "live | snapshot | missing", "as_of": "2025", "region": "UK" }
+      { "name": "ashe", "status": "live | snapshot | mock | missing", "as_of": "2025", "region": "UK" }
     ]
   }
 }
@@ -42,14 +42,16 @@ Serving a snapshot is **not** an error: `200`, `ok: true`, that source's `status
 | `POST /api/v1/recommendations` | profile, first_idea (SOC or text) | three `Pick`s, `Hedge`, comparison vs first idea, explanation, sources |
 | `GET /api/v1/careers/{soc}` | | full `Career` with provenance |
 | `GET /api/v1/careers/{soc}/hedge` | | `Hedge` |
+| `GET /api/v1/backtest/years` | | `int[]` available years |
 | `GET /api/v1/backtest?year=2015` | year 2010 to 2019 | `BacktestYear` |
 | `GET /api/v1/routes/{soc}?nation=scotland` | nation: england, scotland, wales, ni | `Route[]` |
-| `GET /api/v1/sources` | | name, licence, version, retrieved, status, coverage |
+| `GET /api/v1/sources` | | `SourceStatus[]` |
+| `POST /api/v1/demo/live` | `{enabled: bool}` | `{live: bool}`: pull the plug on live ads |
 
 ## Models
 
 **Metric** (every number):
-`{ value, low, high, source, year, region, granularity: "occupation"|"group"|"estimate", n, confidence: "high"|"medium"|"low" }`.
+`{ value, low, high, unit, source, year, region, granularity: "occupation"|"group"|"estimate", n, confidence: "high"|"medium"|"low", note }`. Units per metric: `METRIC_UNITS` in `models.py`.
 A missing metric is `{ value: null, ..., confidence: "low" }` and the UI shows "missing".
 
 **Career**
@@ -63,17 +65,19 @@ metrics {
 }                       # each a Metric
 ```
 
-**Profile**: `interests[], tags_confirmed[], free_text, qualifications[], location, automation_worry`
+**ProfileIn**: `interests[], free_text, qualifications[{subject, level, grade}], nation, location, automation_worry`. **ProfileOut**: `suggested_tags[], tag_source, interests[]`.
 
-**Pick**: `tier: "ambitious"|"safe"|"balanced", career: Career, components {fit, return, market_risk, disruption_risk, risk}, vs_first_idea {component: delta}, trade_off: str`
+**RecommendationOut**: `first_idea: Career|null, first_idea_components, picks: Pick[0..3], hedge: Hedge|null, roadmap: Roadmap|null, explanation {text, ai_written, cited_numbers[]}`
 
-**Hedge**: `soc2020, title, shared_skills[], skill_overlap, risk_delta`
+**Pick**: `tier: "ambitious"|"safe"|"balanced", career: Career, components {fit, expected_return, market_risk, disruption_risk, risk} (each {score 0-100 or null, confidence}), vs_first_idea {component: delta}, reasons: str[]`
+
+**Hedge**: `for_soc, career: Career, shared_skills[], skill_overlap, risk_delta`
 
 **BacktestYear**: `year, tiers [{tier, occupations[], median_pay_growth_5y, share_employment_decline, worst_case}], caveats[]`
 
-**Route**: `nation, kind: "degree"|"graduate_apprenticeship"|"apprenticeship"|"college", name, entry_requirements, url, source`
+**Route**: `soc2020, nation, kind: "degree"|"graduate_apprenticeship"|"apprenticeship"|"college", name, provider, entry_requirements, url, source, verified_by`
 
-**Roadmap**: `steps [{order, title, detail, route?}]` (three steps), `first_step_this_month`
+**Roadmap**: `soc2020, steps [{order, title, detail, route?}]` (three steps), `this_month`
 
 ## Validation
 All inputs schema-validated with Pydantic, unknown fields rejected, lists capped,

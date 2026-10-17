@@ -4,6 +4,8 @@ Hand-made tables that are committed. Every row needs `verified_by` (a team membe
 initials) before the ETL will load it; empty `verified_by` fails the load.
 
 - `occupations.csv`: the 20 demo occupations (candidate list from the spec, team to confirm).
+  List columns use `|`. `interest_tags` and `entry_subjects` must use the vocab in
+  `packages/contracts/avenir_contracts/vocab.py`.
   Codes are deliberately empty: fill SOC 2020 from the ONS coding index, ISCO-08 via
   SOC 2010 (see `data/manifest.yaml`), ESCO from the ESCO download. Never guess a code.
   `mapping_quality`: `one_to_one` or `many_to_many` (many-to-many lowers confidence).

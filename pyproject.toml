@@ -1,0 +1,31 @@
+[project]
+name = "avenir"
+version = "0.1.0"
+description = "Avenir: a portfolio manager for your future (GUTS Hackathon 2026)"
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic>=2.7",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "requests>=2.32",
+    "pyyaml>=6.0",
+    "pandas>=2.2",
+    "openpyxl>=3.1",
+    "xlrd>=2.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "httpx>=0.27", "ruff>=0.6", "pre-commit>=3.7"]
+
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["packages/contracts", "packages/decision", "packages/adapters", "packages/etl", "services/api"]
+include = ["avenir_*"]
+
+[tool.pytest.ini_options]
+testpaths = ["packages/contracts/tests", "packages/decision/tests", "packages/etl/tests", "services/api/tests"]
+pythonpath = ["packages/contracts", "packages/decision", "packages/adapters", "packages/etl", "services/api"]
+addopts = "-q"

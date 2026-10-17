@@ -1,4 +1,4 @@
-# Every raw input Pathfinder uses. Raw files live in data/raw/ (gitignored).
+# Every raw input Avenir uses. Raw files live in data/raw/ (gitignored).
 # Run `make data-check` after downloading: it checks each `path` exists and records
 # checksums in data/manifest.lock.json (commit the lock file, never the data).
 #

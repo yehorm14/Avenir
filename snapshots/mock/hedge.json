@@ -1,0 +1,586 @@
+{
+ "generated_at": "2026-10-17",
+ "source": "MOCK",
+ "related": {
+  "0001": [
+   {
+    "soc2020": "0016",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.6
+   },
+   {
+    "soc2020": "0003",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.43
+   },
+   {
+    "soc2020": "0011",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.42
+   }
+  ],
+  "0002": [
+   {
+    "soc2020": "0012",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.27
+   },
+   {
+    "soc2020": "0016",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.25
+   },
+   {
+    "soc2020": "0007",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.25
+   }
+  ],
+  "0003": [
+   {
+    "soc2020": "0015",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.43
+   },
+   {
+    "soc2020": "0005",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.66
+   },
+   {
+    "soc2020": "0008",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.39
+   }
+  ],
+  "0004": [
+   {
+    "soc2020": "0015",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.62
+   },
+   {
+    "soc2020": "0003",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.32
+   },
+   {
+    "soc2020": "0002",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.52
+   }
+  ],
+  "0005": [
+   {
+    "soc2020": "0016",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.42
+   },
+   {
+    "soc2020": "0008",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.74
+   },
+   {
+    "soc2020": "0012",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.22
+   }
+  ],
+  "0006": [
+   {
+    "soc2020": "0015",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.22
+   },
+   {
+    "soc2020": "0009",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.22
+   },
+   {
+    "soc2020": "0014",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.24
+   }
+  ],
+  "0007": [
+   {
+    "soc2020": "0002",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.65
+   },
+   {
+    "soc2020": "0010",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.74
+   },
+   {
+    "soc2020": "0008",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.4
+   }
+  ],
+  "0008": [
+   {
+    "soc2020": "0010",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.36
+   },
+   {
+    "soc2020": "0012",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.63
+   },
+   {
+    "soc2020": "0002",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.39
+   }
+  ],
+  "0009": [
+   {
+    "soc2020": "0010",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.63
+   },
+   {
+    "soc2020": "0011",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.56
+   },
+   {
+    "soc2020": "0001",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.68
+   }
+  ],
+  "0010": [
+   {
+    "soc2020": "0003",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.26
+   },
+   {
+    "soc2020": "0001",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.63
+   },
+   {
+    "soc2020": "0008",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.48
+   }
+  ],
+  "0011": [
+   {
+    "soc2020": "0014",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.69
+   },
+   {
+    "soc2020": "0009",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.28
+   },
+   {
+    "soc2020": "0015",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.5
+   }
+  ],
+  "0012": [
+   {
+    "soc2020": "0001",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.56
+   },
+   {
+    "soc2020": "0010",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.4
+   },
+   {
+    "soc2020": "0005",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.39
+   }
+  ],
+  "0013": [
+   {
+    "soc2020": "0012",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.32
+   },
+   {
+    "soc2020": "0003",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.65
+   },
+   {
+    "soc2020": "0018",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.35
+   }
+  ],
+  "0014": [
+   {
+    "soc2020": "0003",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.53
+   },
+   {
+    "soc2020": "0002",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.4
+   },
+   {
+    "soc2020": "0017",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.79
+   }
+  ],
+  "0015": [
+   {
+    "soc2020": "0004",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.57
+   },
+   {
+    "soc2020": "0003",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.33
+   },
+   {
+    "soc2020": "0009",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.45
+   }
+  ],
+  "0016": [
+   {
+    "soc2020": "0015",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.28
+   },
+   {
+    "soc2020": "0006",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.48
+   },
+   {
+    "soc2020": "0008",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.73
+   }
+  ],
+  "0017": [
+   {
+    "soc2020": "0008",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.67
+   },
+   {
+    "soc2020": "0019",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.38
+   },
+   {
+    "soc2020": "0004",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.37
+   }
+  ],
+  "0018": [
+   {
+    "soc2020": "0009",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.64
+   },
+   {
+    "soc2020": "0012",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.32
+   },
+   {
+    "soc2020": "0020",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.35
+   }
+  ],
+  "0019": [
+   {
+    "soc2020": "0008",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.37
+   },
+   {
+    "soc2020": "0020",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.74
+   },
+   {
+    "soc2020": "0005",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.31
+   }
+  ],
+  "0020": [
+   {
+    "soc2020": "0003",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.8
+   },
+   {
+    "soc2020": "0013",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.5
+   },
+   {
+    "soc2020": "0009",
+    "shared_skills": [
+     "mock skill 0",
+     "mock skill 1",
+     "mock skill 2"
+    ],
+    "skill_overlap": 0.34
+   }
+  ]
+ }
+}

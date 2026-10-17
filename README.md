@@ -1,6 +1,6 @@
-# Pathfinder
+# Avenir
 
-**A portfolio manager for your future.** For a UK school leaver, Pathfinder finds careers that
+**A portfolio manager for your future.** For a UK school leaver, Avenir finds careers that
 fit, shows their return and risk with real UK data, says how sure it is, offers a hedge career,
 maps the route in, and publishes how its own past ratings held up.
 
@@ -13,7 +13,7 @@ GUTS Hackathon 2026, Aladdin by BlackRock challenge: "One app. One clear decisio
 | Path | What |
 | --- | --- |
 | `AGENTS.md` | Rules for every AI agent and contributor |
-| `docs/superpowers/specs/2026-10-18-pathfinder-design.md` | Full design (product, demo, data, decision layer, ML, risks) |
+| `docs/superpowers/specs/2026-10-18-avenir-design.md` | Full design (product, demo, data, decision layer, ML, risks) |
 | `docs/contracts.md` | API contract (envelope, endpoints, models) |
 | `docs/data-sources.md` | What data to fetch and how; what was checked |
 | `data/manifest.yaml` | Every raw input with URL, method, licence |

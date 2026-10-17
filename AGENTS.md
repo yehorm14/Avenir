@@ -1,17 +1,17 @@
-# AGENTS.md: rules for every AI agent working on Pathfinder
+# AGENTS.md: rules for every AI agent working on Avenir
 
 Read this whole file before you write anything. It applies to every coding agent
 (Claude, Codex, Copilot, Cursor, Gemini, any other) and to humans pasting agent output.
 If this file and a task prompt disagree, this file wins; ask in your PR.
 
-The full design is in `docs/superpowers/specs/2026-10-18-pathfinder-design.md`.
+The full design is in `docs/superpowers/specs/2026-10-18-avenir-design.md`.
 The API contract is in `docs/contracts.md`. Data sources are in `docs/data-sources.md`.
 
 ---
 
 ## 1. What we are building
 
-**Pathfinder** (GUTS Hackathon 2026, Aladdin by BlackRock challenge: "One app. One clear decision.")
+**Avenir** (GUTS Hackathon 2026, Aladdin by BlackRock challenge: "One app. One clear decision.")
 is a portfolio manager for your future. For a UK school leaver it finds careers that fit,
 shows their return and risk with real UK data, says how sure it is, gives a hedge career,
 maps the path in, and publishes how its own past ratings held up (the backtest).
@@ -38,7 +38,8 @@ Deadline: code freeze **Sunday 18 Oct, 11:30**. A working end-to-end demo beats 
    metric as missing, lower the confidence, and let the UI say "missing".
 4. **Never invent data values, codes or URLs.** If you could not check something, write
    `(verify)` next to it and list it in your PR description.
-5. **Only adapters touch files or the network.** One folder per source in
+5. **Only adapters touch files or the network** (the one exception: the API reads `snapshots/`
+   at start-up through `avenir_contracts.load_snapshots`). One folder per source in
    `packages/adapters/<source>/`, each with a committed snapshot fixture. Live calls:
    3 s timeout, 1 retry, then the snapshot with `meta.sources[].status = "snapshot"`.
    The demo must run from `docker compose up` with **no API keys present**.
@@ -64,13 +65,13 @@ Deadline: code freeze **Sunday 18 Oct, 11:30**. A working end-to-end demo beats 
 
 | Slice | Folder | Owner |
 | --- | --- | --- |
+| Contract (models, envelope, snapshot formats, ports) | `packages/contracts/`, `docs/contracts.md` | Yehor |
+| Data ETL and live adapters | `packages/adapters/`, `packages/etl/`, `scripts/fetch/`, `data/` | Yehor |
+| Decision engine and API | `packages/decision/`, `services/api/`, `docker-compose.yml`, `docs/openapi.json` | Nazar |
 | ML and training (M1 to M6, backtest) | `packages/ml/` | Arsenii |
-| Data ETL (`careers.json`, curated routes) | `packages/adapters/`, `scripts/fetch/`, `data/manifest.yaml` | TBD |
-| Backend API | `services/api/` | TBD |
-| Decision logic | `packages/decision/` | TBD |
 | Frontend and glue | `apps/web/`, README, diagram, pitch | TBD |
-| Contract | `docs/contracts.md` | Yehor |
 
+Backend split and timeline: `docs/backend-split.md`. Plans: `docs/superpowers/plans/`.
 Humans fill in TBD. Agents do not change this table.
 
 ## 4. Stack
@@ -80,7 +81,8 @@ Humans fill in TBD. Agents do not change this table.
 - ML: PyTorch (laptop `torch-cuda` env or the cluster), sentence-transformers, scikit-learn.
 - Data: JSON artefacts loaded at start, no database. `careers.json` plus
   `backtest.json`, `hedge.json`, `demand.json`, `exposure.json`, `matcher_eval.json` in `snapshots/`.
-- Run: `docker compose up` or `make run`. `make test` runs everything.
+- Install: `pip install -e ".[dev]"`. Run: `docker compose up` or `make run`. Test: `pytest`.
+- Mock data: `python -m avenir_contracts.mock` writes `snapshots/mock/` (source `MOCK`, SOC `00NN`).
 
 ## 5. How to work
 

@@ -1,7 +1,13 @@
-line-length = 110
+line-length = 130
 target-version = "py312"
+extend-exclude = ["snapshots", "data"]
+
 [lint]
 select = ["E", "F", "I", "B", "UP"]
+ignore = ["UP046"]
 
 [lint.isort]
-known-first-party = ["_common"]
+known-first-party = ["_common", "avenir_contracts", "avenir_decision", "avenir_adapters", "avenir_etl", "avenir_api"]
+
+[lint.per-file-ignores]
+"__init__.py" = ["F401"]

@@ -1,10 +1,10 @@
-# Pathfinder design spec
+# Avenir design spec
 
 *18 Oct 2026. Source of truth for every slice. ML and training owned by Arsenii. Items marked "verify" were written from memory; `docs/data-sources.md` records what has since been checked.*
 
 ## 1. The product in one page
 
-**One line:** Pathfinder is a portfolio manager for your future: it finds careers that fit you, shows their return and risk with real UK data, says how sure it is, gives you a hedge, maps the path in, and publishes how its own ratings held up in the past.
+**One line:** Avenir is a portfolio manager for your future: it finds careers that fit you, shows their return and risk with real UK data, says how sure it is, gives you a hedge, maps the path in, and publishes how its own ratings held up in the past.
 
 **Named user:** Amira, 17, S6 at a Glasgow school. Good at maths and art, thinking "computer science or architecture?", worried AI will hit the jobs she likes. No careers adviser has shown her anything outside what her parents and TikTok know.
 
@@ -14,7 +14,7 @@
 
 **Investment framing (the hook for this room):**
 
-| Investing | Pathfinder |
+| Investing | Avenir |
 | --- | --- |
 | Suitability | Fit: the matcher's score between her profile and the occupation, plus "head start" (what she already has) |
 | Expected return | Pay now, early-career pay, pay ceiling, real growth over ten years (ONS ASHE) |
@@ -84,7 +84,7 @@ Explicitly cut from the demo: the what-if simulator (the slider is the only what
 Run on the laptop GPU (`torch-cuda` env) or the cluster; artefacts ship as tables and small models; nothing licensed is involved, so all artefacts can live in the repo. Priority order by demo value.
 
 **M5 first: the backtest (the track record).** CPU, tonight.
-- For each year Y in 2010 to 2019: build the Pathfinder signal for all SOC 4-digit occupations using only data available at Y: pay (ASHE Y), ten-year growth to Y, demand trend (employment Y−4 to Y), pay spread. Assign tiers. Then measure pay growth and employment growth Y to Y+5.
+- For each year Y in 2010 to 2019: build the Avenir signal for all SOC 4-digit occupations using only data available at Y: pay (ASHE Y), ten-year growth to Y, demand trend (employment Y−4 to Y), pay spread. Assign tiers. Then measure pay growth and employment growth Y to Y+5.
 - Report per tier: median pay growth, share with employment decline, worst case. Produce `backtest.json` for the "pick a past year" button.
 - Bridge SOC 2010 to SOC 2020 with the ONS crosswalk (verify); where a code splits or merges, mark the occupation's confidence low.
 - Exposure can't be backtested before 2022 without look-ahead. Separate, labelled "early evidence": since 2022, did high-exposure occupations (today's ILO score) show weaker ad growth (Adzuna) or employment growth (APS) than low-exposure ones? Three years, indicative only.

@@ -14,7 +14,7 @@ from urllib3.util.retry import Retry
 
 REPO = Path(__file__).resolve().parents[2]
 RAW = REPO / "data" / "raw"
-USER_AGENT = "Pathfinder-GUTS-Hackathon/0.1 (student project; data fetch)"
+USER_AGENT = "Avenir-GUTS-Hackathon/0.1 (student project; data fetch)"
 
 
 def session(timeout_retries: int = 3) -> requests.Session:
