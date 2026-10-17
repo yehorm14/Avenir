@@ -1,9 +1,32 @@
 # ML slice contracts (Pathfinder)
 
 Owner: Arsenii (`z1nare`). Code in `packages/ml/`, artefacts in `snapshots/ml/`.
-Version 1.0, proposed 17 Oct 2026. For Yehor to fold into `docs/contracts.md` (only the integrator edits that file).
+Version 1.1, 17-18 Oct 2026 (1.0 was PR #9). For Yehor to fold into `docs/contracts.md` (only the integrator edits that file).
 
-**Build against `snapshots/ml/mock/` now.** Every file there has its final shape. When a real artefact is ready it lands in `snapshots/ml/` under the same name, with the same shape and real values. Nothing in your code should change.
+**Real artefacts (preliminary) are now in `snapshots/ml/` for all 412 occupations;** `snapshots/ml/mock/` holds the 20 demo careers in the same shapes. `ML()` reads the real files and falls back to the mocks per file. Only `fit.json` is still a placeholder.
+
+### Changes in v1.1 (all backward compatible: additions only)
+
+| Change | What to do |
+| --- | --- |
+| New metric `young_worker_share` (2016 share of workers aged 16-24, includes self-employed) | Optional card line; ignore it if you don't show it |
+| New flags `category_level`, `bridged_soc2000`, `sources_disagree` | All three are `MUST_MENTION`; `FLAG_TEXT` has the sentences |
+| `exposure_uk` now has values: the DfE score as a percentile rank (0-1) | Cross-check only; don't show it as a second headline number |
+| `resilience_tech_slump` is now real, from job-advert categories (`category_level`) | Show the category name from `extra.adverts_category` |
+| `resilience_2008` is now real: the worse of jobs and real pay, April 2008 to April 2009 | `extra` has both parts and which one is the headline |
+| Hedge items gain `evidence` (`title` or `estimate`) | Show "estimate" when it says so |
+| `history.json` now starts in 2007 (pay only before 2011) | Job counts start in 2011 |
+| `crises.json` entries may have `baseline_real_pay_median` | Optional |
+| Every file has `schema_version: "1.1"` | |
+
+### Additions after v1.1 (still additive; same schema version)
+
+| Change | What to do |
+| --- | --- |
+| `fit.json` is now real: affinities from the embedding model (`method` says which), plus an `evaluation` block (split, n, chance level, per-method hit@1, hit@3, MRR with 95% CIs, paired deltas) | Nothing required. The `status` stays `preliminary` until the team's held-out labels are scored once |
+| `ML.status()` artefacts gain `origin` (`real` or `mock`), and `mode` is now decided by origin (see section 5) | Use `origin` for per-artefact badges |
+| Support file `snapshots/ml/career_texts.json` (demo careers' ESCO texts) | Input for the matcher service; not a card artefact |
+| **Optional matcher service** (`packages/ml/pathfinder_ml/service.py`): `POST /match {"text", "top_k"}` returns the top careers by embedding similarity plus the keyword tags, in the same envelope; `GET /health`; 503 with `error.code = "matcher_unavailable"` when the model isn't loaded | Backend: call it if `/health` is 200, otherwise use `ML.match_tags` + `ML.fit_scores`. That fallback is the pull-the-plug demo for the matcher |
 
 ## 1. How to consume it
 
@@ -68,6 +91,9 @@ Every number shown to a user is a Metric. Nothing is shown without its source, y
 | `imputed_parent` | Filled from the parent occupation group | yes | "estimated" tag |
 | `pending_source` | Source not loaded yet | no | "not available yet" |
 | `mock` | Placeholder value | yes | "sample data" label |
+| `category_level` | Measured for a broad job-advert category, not the exact occupation (v1.1) | yes | Name the category |
+| `bridged_soc2000` | Value estimated from SOC 2000 data (before 2011) through two crosswalks (v1.1) | yes | Dashed line or marker |
+| `sources_disagree` | Two independent research estimates disagree; the range is wider (v1.1) | yes | "Sources disagree" note |
 
 ### 2.4 Confidence rules
 
@@ -96,7 +122,7 @@ All files have `schema_version` (semantic version), `status` (file-level, 2.2) a
 
 ```json
 {
-  "schema_version": "1.0", "status": "preliminary", "generated_at": "...",
+  "schema_version": "1.1", "status": "preliminary", "generated_at": "...",
   "price_base": "CPIH, April 2025 prices",
   "demo_set": ["2134", "3544", "..."],
   "occupations": [
@@ -121,38 +147,39 @@ All files have `schema_version` (semantic version), `status` (file-level, 2.2) a
 | `jobs` | thousand jobs | Full-time employee jobs, latest year | null | ASHE |
 | `demand_trend` | fraction/year | Robust (Theil-Sen) trend in jobs, 2021 to 2025 | 90% interval | ASHE |
 | `demand_trend_2011_19` | fraction/year | Same, previous code era, 2011 to 2019 | 90% interval | ASHE, bridged |
-| `exposure` | score 0-1 | GenAI exposure, weighted mean over mapped ISCO codes | weighted mean ± within-group spread | ILO WP140 (2025) |
-| `exposure_uk` | score 0-1 | UK cross-check by SOC 2020 | null | DfE 2023 (pending) |
-| `resilience_covid` | fraction | Change in all-employee jobs 2019 to 2020, minus the all-occupation median | null | ASHE, bridged |
+| `exposure` | score 0-1 | GenAI exposure, weighted mean over mapped ISCO codes | weighted mean ± within-group spread, widened when DfE disagrees (`sources_disagree`) | ILO WP140 (2025) |
+| `exposure_uk` | score 0-1 | DfE LLM exposure as a percentile rank among UK occupations (1 = most exposed); cross-check only | null | DfE 2023, bridged |
+| `resilience_covid` | fraction | Change in all-employee jobs 2019 to 2020, minus the all-occupation median. Occupation's own figure only with at least 50,000 jobs, else its 3-digit group (`imputed_parent`) | null | ASHE, bridged; `extra` has the advert-category cross-check |
 | `resilience_cost_of_living` | fraction | Real pay change 2021 to 2023, minus the all-occupation median | null | ASHE + CPIH |
-| `resilience_tech_slump` | fraction | Change in online job adverts 2022 to 2024 vs all occupations | null | ONS online job adverts (pending) |
-| `resilience_2008` | fraction | Jobs change 2008 to 2010 vs all occupations | null | ASHE 2007-2011, SOC 2000 (pending) |
+| `resilience_tech_slump` | fraction | Change in online job adverts from the first half of 2022 to 2024 for the occupation's advert category, minus the all-adverts change (`category_level`) | null | ONS online job adverts (Adzuna) |
+| `resilience_2008` | fraction | The worse of (a) all-employee jobs change and (b) real full-time pay change, April 2008 to April 2009, each minus the all-occupation median; measured in SOC 2000 and carried over | null | ASHE 2008-2009, SOC 2000, bridged twice; `extra` has both parts |
+| `young_worker_share` | fraction | Share of people in the job aged 16-24 in 2016, including self-employed | null | ONS APS 2016 (ad hoc 006998), bridged |
 
 Resilience values are relative to the typical occupation: +0.10 means 10 points better than the median occupation in that crisis.
 
 ### 4.2 `history.json`: yearly series for the charts and the LLM
 
 ```json
-{ "schema_version": "1.0", "status": "preliminary", "generated_at": "...",
+{ "schema_version": "1.1", "status": "preliminary", "generated_at": "...",
   "occupations": { "2134": [ {"year": 2011, "pay_median": 40250, "pay_median_real": 53604, "jobs_k": 129.0, "flags": ["bridged_soc2010"]} ] } }
 ```
 
-One point per year 2011 to 2025. `pay_median_real` is in 2025 prices. Values can be null. **Job counts carry `recoded_2021` from 2021 on: draw them as two separate segments.**
+One point per year 2007 to 2025 (v1.1). `pay_median_real` is in 2025 prices. Values can be null. Before 2011 only pay is given (`jobs_k` null; flags `bridged_soc2000` and `bridged_soc2010`). **Job counts carry `recoded_2021` from 2021 on: draw them as two separate segments.**
 
 ### 4.3 `hedges.json`: related occupations by shared skills
 
 ```json
-{ "schema_version": "1.0", "status": "mock", "method": "esco_skill_jaccard", "generated_at": "...",
+{ "schema_version": "1.1", "status": "preliminary", "method": "esco_skill_jaccard", "generated_at": "...",
   "occupations": { "2134": [ {"soc2020": "2135", "title": "...", "similarity": 0.62,
-      "shared_skills": ["..."], "why": "...", "status": "mock"} ] } }
+      "shared_skills": ["..."], "evidence": "title", "why": "...", "status": "preliminary"} ] } }
 ```
 
-Up to 5 candidates per occupation, sorted by `similarity` (0 to 1). The decision layer picks the hedge (highest similarity among candidates with lower risk); this file doesn't decide.
+Up to 5 candidates per occupation, sorted by `similarity` (0 to 1), all at the same ONS skill level as the occupation (never a step down). Each has `evidence`: `title` when the occupation links to ESCO through at least 3 job titles, `estimate` when it relies on the ISCO fallback (v1.1). The decision layer picks the hedge (highest similarity among candidates with lower risk); this file doesn't decide.
 
 ### 4.4 `fit.json`: interest tags and their affinity to occupations
 
 ```json
-{ "schema_version": "1.0", "status": "mock", "method": "hand_mock", "generated_at": "...",
+{ "schema_version": "1.1", "status": "mock", "method": "hand_mock", "generated_at": "...",
   "tags": [ {"id": "maths", "label": "Maths and numbers", "keywords": ["maths", "algebra", "..."]} ],
   "affinity": { "maths": { "2433": 0.9, "2134": 0.6 } } }
 ```
@@ -162,7 +189,7 @@ Up to 5 candidates per occupation, sorted by `similarity` (0 to 1). The decision
 ### 4.5 `backtest.json`: the track record ("pick a past year")
 
 ```json
-{ "schema_version": "1.0", "status": "preliminary", "generated_at": "...",
+{ "schema_version": "1.1", "status": "preliminary", "generated_at": "...",
   "method": "...", "caveats": ["..."],
   "windows": [ {
       "base_year": 2013, "outcome_year": 2018, "horizon": 5, "coding": "SOC 2010 native",
@@ -180,12 +207,12 @@ Groups are `ambitious`, `safe`, `balanced` and `all` (the baseline). A group can
 ### 4.6 `crises.json`: crisis definitions and baselines
 
 ```json
-{ "schema_version": "1.0", "status": "preliminary", "generated_at": "...",
+{ "schema_version": "1.1", "status": "preliminary", "generated_at": "...",
   "crises": [ {"key": "covid", "label": "COVID-19", "window": "2019-2020",
                "measure": "...", "baseline_median": 0.0, "status": "preliminary", "flags": ["covid_year"]} ] }
 ```
 
-Keys: `covid`, `cost_of_living`, `tech_slump`, `gfc_2008`. Per-occupation values live in `occupations.json` as `resilience_<key>`.
+Keys: `covid`, `cost_of_living`, `tech_slump`, `gfc_2008`. Per-occupation values live in `occupations.json` as `resilience_<key>`. `gfc_2008` also has `baseline_real_pay_median` (v1.1).
 
 ### 4.7 `sources.json`: provenance registry
 
@@ -194,7 +221,7 @@ Keys: `covid`, `cost_of_living`, `tech_slump`, `gfc_2008`. Per-occupation values
 ### 4.8 `eval.json`: how we checked
 
 ```json
-{ "schema_version": "1.0", "status": "preliminary", "generated_at": "...",
+{ "schema_version": "1.1", "status": "preliminary", "generated_at": "...",
   "checks": { "bridge_seam": {"status": "preliminary", "date": "2026-10-17", "summary": "...", "metrics": {}} } }
 ```
 
@@ -205,7 +232,7 @@ Check keys: `bridge_seam`, `backtest_probe`, `matcher`, `exposure_agreement`, `h
 | Method | Returns | Errors and edge cases |
 | --- | --- | --- |
 | `ML(data_dir=None)` | loader | `data_dir` defaults to env `PATHFINDER_ML_DIR`, then `snapshots/ml`; falls back per file to `snapshots/ml/mock` |
-| `status()` | `{"mode": "real" or "mock" or "mixed", "artefacts": {name: {"status", "path"}}}` | never raises |
+| `status()` | `{"mode": "real" or "mock" or "mixed", "artefacts": {name: {"status", "origin", "path"}}}`; `origin` is `real` (loaded from the data dir) or `mock` (fell back). `mode` is `real` only when every file came from the data dir with status final or preliminary, `mock` when every file fell back, else `mixed` | never raises |
 | `occupations(demo_only=False)` | list of occupation dicts (4.1) | |
 | `occupation(soc2020)` | dict or None | None for an unknown code (backend returns 404 in the envelope) |
 | `history(soc2020)` | list of yearly points (4.2) | empty list if unknown |

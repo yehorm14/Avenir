@@ -25,7 +25,10 @@ FIXED = ["title", "soc_code", "jobs_k", "median", "median_change", "mean", "mean
 
 
 def soc_version(year: int) -> int:
-    return 2020 if year >= 2021 else 2010
+    """ASHE coding by year: SOC 2000 to 2010, SOC 2010 for 2011-2020, SOC 2020 from 2021."""
+    if year >= 2021:
+        return 2020
+    return 2010 if year >= 2011 else 2000
 
 
 def to_num(series: pd.Series) -> pd.Series:
@@ -45,7 +48,7 @@ def read_sheet(path: Path, sheet: str) -> pd.DataFrame:
     body = raw.iloc[header_row + 1:].copy()
     body.columns = cols[: body.shape[1]]
     body["soc_code"] = body["soc_code"].astype(str).str.replace(r"\.0$", "", regex=True).str.strip()
-    body = body[body["soc_code"].str.fullmatch(r"\d{4}")]
+    body = body[body["soc_code"].str.fullmatch(r"\d{2,4}")]
     body["title"] = body["title"].astype(str).str.strip()
     for col in body.columns:
         if col not in ("title", "soc_code"):
@@ -81,7 +84,12 @@ def main() -> None:
     ashe_dir, out_dir = Path(sys.argv[1]), Path(sys.argv[2])
     out_dir.mkdir(parents=True, exist_ok=True)
     frames = [parse_year(f) for f in sorted(ashe_dir.iterdir()) if f.is_dir()]
-    df = pd.concat(frames, ignore_index=True)
+    every = pd.concat(frames, ignore_index=True)
+    # Unit groups (4-digit) keep the original file; ONS's own 2- and 3-digit group rows
+    # go to a separate file for the fallback chain (parent-group estimates).
+    level = every["soc_code"].str.len()
+    df = every[level == 4].reset_index(drop=True)
+    every[level < 4].assign(level=level[level < 4]).to_parquet(out_dir / "ashe_groups.parquet", index=False)
     df.to_parquet(out_dir / "ashe_long.parquet", index=False)
     df.to_csv(out_dir / "ashe_long.csv", index=False)
     ft = df[df["sheet"] == "Full-Time"]

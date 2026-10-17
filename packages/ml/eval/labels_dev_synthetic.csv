@@ -1,0 +1,31 @@
+profile_id,written_by,profile_text,best_soc_1,best_soc_2,best_soc_3,note
+dev-01,claude-synthetic,"I spend most evenings drawing, mostly buildings and street scenes. I'm decent at maths and I like the idea of designing places people actually use.",2451,2452,3120,development only
+dev-02,claude-synthetic,"Honestly I just like taking things apart and putting them back together. Fixed my mum's washing machine last month. Not really into sitting at a desk.",5241,3113,2123,development only
+dev-03,claude-synthetic,"I've made a couple of small games in Python and I like puzzles. Maths is fine. I'd want a job where I build stuff on a computer.",2134,2135,3544,development only
+dev-04,claude-synthetic,"I like helping people and I'm good at biology. Hospitals don't scare me. I'd rather use machines than do surgery.",2254,,,development only
+dev-05,claude-synthetic,"Spreadsheets are weirdly satisfying to me. I like finding patterns in numbers and explaining what they mean.",3544,2433,2421,development only
+dev-06,claude-synthetic,"I want to earn well and I'm good at maths and economics. I follow the stock market a bit for fun.",2422,2433,2421,development only
+dev-07,claude-synthetic,"I like explaining things to younger kids at my club and I'm good at maths. I'd like a job with holidays and a clear routine.",2313,,,development only
+dev-08,claude-synthetic,"Art and design are my thing. Posters, logos, editing videos for my friends' channels. Don't love maths.",2142,2141,,development only
+dev-09,claude-synthetic,"I'm into how electricity and circuits work. Built a solar charger for a school project. Like both hands-on work and theory.",2123,5241,3113,development only
+dev-10,claude-synthetic,"I like big construction projects, bridges, roads, that kind of thing. Physics and maths are my best subjects.",2121,2453,3113,development only
+dev-11,claude-synthetic,"I like hacking challenges online, capture-the-flag stuff, and reading about data breaches.",2135,2134,2133,development only
+dev-12,claude-synthetic,"I'm organised, like money and numbers, and my parents want me to get a safe professional job.",2421,2422,2454,development only
+dev-13,claude-synthetic,"I enjoy making websites look nice and work smoothly. A bit of code, a bit of design.",2141,2142,2134,development only
+dev-14,claude-synthetic,"No idea really. I like gaming and football. I'm okay at maths and I don't want to be broke.",2134,3544,3113,development only
+dev-15,claude-synthetic,"I like maps, measuring things and being outdoors some of the time, not stuck inside all day.",2454,2453,2121,development only
+dev-16,claude-synthetic,"I like working out what a business needs and talking to people about systems, more than writing the code myself.",2133,2134,3544,development only
+dev-17,claude-synthetic,"Property interests me: valuing houses, how land gets used, what a building is worth.",2454,2453,2452,development only
+dev-18,claude-synthetic,"I like technical drawing and CAD at school, precise work, but I don't think I want five years of uni.",3120,2452,3113,development only
+dev-19,claude-synthetic,"Statistics and probability are the only bits of maths I actually enjoy. I like predicting things.",2433,3544,2422,development only
+dev-20,claude-synthetic,"I'm practical, don't like exams, and want to earn while I train. Happy on building sites.",5241,3113,3120,development only
+dev-21,claude-synthetic,"I'm good at maths and art and I can't decide between them.",2451,2142,2141,development only
+dev-22,claude-synthetic,"I like planning how cities should grow and arguing about transport and housing.",2452,2451,2121,development only
+dev-23,claude-synthetic,"I love science, especially physics, and I want to work in a hospital but not as a doctor or nurse.",2254,,,development only
+dev-24,claude-synthetic,"I want to work with data about people, surveys, what makes them tick, and present it clearly.",3544,2433,2133,development only
+dev-25,claude-synthetic,"I enjoy costing things out, estimating how much a project will take, and negotiating.",2453,2421,2454,development only
+dev-26,claude-synthetic,"Cars, engines, machines, anything mechanical. I like understanding how they work and testing them.",3113,2123,5241,development only
+dev-27,claude-synthetic,"I'd like to teach, probably science or maths, and I'm patient with people.",2313,,,development only
+dev-28,claude-synthetic,"I like animation and 3D modelling, I've done a few short clips in Blender.",2142,2141,,development only
+dev-29,claude-synthetic,"I like protecting things and finding weaknesses in systems. Also good at logic.",2135,2134,2133,development only
+dev-30,claude-synthetic,"I want a job that uses maths every day but also has some creativity, maybe designing structures.",2121,2451,2433,development only

@@ -1,0 +1,1054 @@
+{
+ "2134": {
+  "soc2020": "2134",
+  "title": "Programmers and software development professionals",
+  "short_title": "Software developer",
+  "chunks": [
+   {
+    "label": "software analyst",
+    "text": "software analyst. Software analysts elicit and prioritise user requirements, produce and document software specifications, test their application, and review them during software development. They act as the interface between the software users and the software development team."
+   },
+   {
+    "label": "mobile application developer",
+    "text": "mobile application developer. Mobile application developers implement applications software for mobile devices, based on the designs provided, using general or specific development tools for device operating systems."
+   },
+   {
+    "label": "artificial intelligence engineer",
+    "text": "artificial intelligence engineer. Artificial intelligence engineer apply methods of artificial intelligence in engineering, robotics and computer science to design programs which simulate intelligence including thinking models, cognitive and knowledge-based systems, problem solving, and decision making. They also integrate structured knowledge into computer systems (ontologies, knowledge bases) in order to solve complex problems normally requiring a high level of human expertise or artificial intelligence methods."
+   },
+   {
+    "label": "user interface developer",
+    "text": "user interface developer. User interface developers implement, code, document and maintain the interface of a software system by using front-end development technologies."
+   },
+   {
+    "label": "database developer",
+    "text": "database developer. Database developers program, implement and coordinate changes to computer databases based on their expertise of database management systems."
+   },
+   {
+    "label": "web developer",
+    "text": "web developer. Web developers develop, implement and document web-accessible software based on the designs provided. They align the client's web presence with its business strategy, troubleshoot software problems and issues and look for ways to improve the application."
+   },
+   {
+    "label": "software architect",
+    "text": "software architect. Software architects create the technical design and the functional model of a software system, based on functional specifications. They also design the architecture of the system or different modules and components related to the business' or customer requirements, technical platform, computer language or development environment."
+   },
+   {
+    "label": "data analyst",
+    "text": "data analyst. Data analysts import, inspect, clean, transform, validate, model, or interpret collections of data with regard to the business goals of the company. They ensure that the data sources and repositories provide consistent and reliable data. Data analysts use different algorithms and IT tools as demanded by the situation and the current data. They might prepare reports in the form of visualisations such as graphs, charts, and dashboards."
+   },
+   {
+    "label": "e-learning developer",
+    "text": "e-learning developer. E-learning developers design and develop simpler forms of digital learning content including reference materials, slides, assessments, screen-casts, interview videos and podcasts. They write and provide content for a computer based learning application."
+   },
+   {
+    "label": "software developer",
+    "text": "software developer. Software developers implement or program all kinds of software systems based on specifications and designs by using programming languages, tools, and platforms."
+   },
+   {
+    "label": "application engineer",
+    "text": "application engineer. Application engineers deal with the technical requirements, management, and design for the development of various engineering applications, such as systems, new product designs, or the improvements of processes. They are responsible for the implementation of a design or process improvement, they offer technical support for products, answer questions about the technical functionality and assist the sales team."
+   }
+  ],
+  "skills": [
+   "use an application-specific interface",
+   "develop software prototype",
+   "analyse software specifications",
+   "integrated development environment software",
+   "use software design patterns",
+   "use software libraries",
+   "computer programming",
+   "create flowchart diagram",
+   "tools for software configuration management",
+   "define technical requirements",
+   "collect customer feedback on applications",
+   "identify customer requirements",
+   "web services",
+   "ICT debugging tools",
+   "debug software"
+  ],
+  "evidence": "title"
+ },
+ "3544": {
+  "soc2020": "3544",
+  "title": "Data analysts",
+  "short_title": "Data analyst",
+  "chunks": [
+   {
+    "label": "logistics analyst",
+    "text": "logistics analyst. Logistics analysts streamline product manufacturing, transportation, storage and distribution. They assess production and supply chain problems to determine economically efficient solutions. They assists company managers in decision-making processes and direct programs designed to provide subcontractors, managers and customers with logistic technology."
+   },
+   {
+    "label": "data analyst",
+    "text": "data analyst. Data analysts import, inspect, clean, transform, validate, model, or interpret collections of data with regard to the business goals of the company. They ensure that the data sources and repositories provide consistent and reliable data. Data analysts use different algorithms and IT tools as demanded by the situation and the current data. They might prepare reports in the form of visualisations such as graphs, charts, and dashboards."
+   },
+   {
+    "label": "actuarial assistant",
+    "text": "actuarial assistant. Actuarial assistants perform statistical data research in order to set premium rates and insurance policies. They review the possibility of accidents, injuries and property damage by using statistical formulas and models."
+   },
+   {
+    "label": "statistical assistant",
+    "text": "statistical assistant. Statistical assistants collect data and use statistical formulas to execute statistical studies and create reports. They create charts, graphs and surveys."
+   }
+  ],
+  "skills": [
+   "statistics",
+   "apply statistical analysis techniques",
+   "statistical analysis system software",
+   "digital data processing",
+   "theory of constraints",
+   "green logistics",
+   "maintain logistics databases",
+   "perform system analysis",
+   "use methods of logistical data analysis",
+   "create freight rate databases",
+   "review distribution management procedures",
+   "manage logistics pricing systems",
+   "liaise with logistics management teams",
+   "execute analytical mathematical calculations",
+   "manage third-party logistics providers"
+  ],
+  "evidence": "estimate"
+ },
+ "2133": {
+  "soc2020": "2133",
+  "title": "IT business analysts, architects and systems designers",
+  "short_title": "IT business analyst or systems designer",
+  "chunks": [
+   {
+    "label": "data engineer",
+    "text": "data engineer. Data engineers develop the architecture needed to process, manage, and store large amounts of data which will be used by data scientists for analysis. They design the infrastructure and maintain data pipelines and warehouses to leverage data for strategic advantage."
+   },
+   {
+    "label": "data scientist",
+    "text": "data scientist. Data scientists find and interpret rich data sources, manage large amounts of data, merge data sources, ensure consistency of data-sets, and create visualisations to aid in understanding data. They build mathematical models using data, present and communicate data insights and findings to specialists and scientists in their team and if required, to a non-expert audience, and recommend ways to apply the data."
+   },
+   {
+    "label": "enterprise architect",
+    "text": "enterprise architect. Enterprise architects balance technological opportunities with business requirements. They also maintain a holistic view of the organisation's strategy, processes, information and ICT assets and link the business mission, strategy and processes to the ICT strategy."
+   },
+   {
+    "label": "cloud architect",
+    "text": "cloud architect. Cloud architects are responsible for converting the technical features of a project into the architecture to lead to the final product. To develop technical cloud strategy, they have in-depth knowledge of the architectural principles and services, assisting with cloud migration efforts, review workload architectures, and provide guidance on how to address high-risk issues. They typically perform in a pre-sales capacity and are often asked to deliver proof-of-concept projects, topical workshops, and lead implementation projects. They team up with DevOps engineers to build the appropriate technologies."
+   },
+   {
+    "label": "cloud engineer",
+    "text": "cloud engineer. Cloud engineers are responsible for the design, planning, management and maintenance of cloud-based systems. They develop and implement cloud-applications, handle the migration of existing on-premise applications to the cloud, and debug cloud stacks."
+   },
+   {
+    "label": "business analyst",
+    "text": "business analyst. Business analysts research and understand the strategic position of businesses and companies in relation to their markets and their stakeholders. They analyse and present their views on how the company, from many perspectives, can improve its strategic position and internal corporate structure. They assess needs for change, communication methods, technology, IT tools, new standards and certifications."
+   },
+   {
+    "label": "architect",
+    "text": "architect. Architects investigate, design, and oversee the construction and development of buildings, urban spaces, infrastructure projects, and social spaces. They design in accordance with the surroundings and regulations applicable in specific geographic areas, taking into account factors that include function, aesthetics, costs, and public health and safety. They are aware of social contexts and environmental factors, which include the relationships between people and buildings, and buildings and the environment. They engage in multidisciplinary projects aimed at developing the social fabric of a geographic area and advancing in social urbanism projects."
+   },
+   {
+    "label": "database designer",
+    "text": "database designer. Database designers specify the database's logical structure, processes, and information flows. They design data models and databases to serve data acquisition."
+   },
+   {
+    "label": "telecommunications analyst",
+    "text": "telecommunications analyst. Telecommunications analysts review, analyse and evaluate an organisation's telecommunications needs and systems. They provide training on the telecommunications system features and functionalities."
+   },
+   {
+    "label": "computer scientist",
+    "text": "computer scientist. Computer scientists conduct research in computer and information science, directed toward greater knowledge and understanding of fundamental aspects of ICT phenomena. They write research reports and proposals. Computer scientists also invent and design new approaches to computing technology, find innovative uses for existing technology and studies and solve complex problems in computing."
+   },
+   {
+    "label": "ICT system analyst",
+    "text": "ICT system analyst. ICT system analysts specify the system needs to meet the end user requirements. They analyse system functions in order to define their goals or purposes and to discover operations and procedures for accomplishing them most efficiently. They also design new IT solutions to improve business efficiency and productivity, produce outline designs and estimate costs of new systems, specify the operations the system will perform, and the way data will be viewed by the end user. They present the design to the users and work closely with the users to implement the solution."
+   },
+   {
+    "label": "ICT system architect",
+    "text": "ICT system architect. ICT system architects design architecture, components, modules, interfaces, and data for a multi-components system to meet specified requirements."
+   }
+  ],
+  "skills": [
+   "systems development life-cycle",
+   "systems theory",
+   "define technical requirements",
+   "design information system",
+   "database development tools",
+   "use an application-specific interface",
+   "assess ICT knowledge",
+   "apply ICT systems theory",
+   "manage system testing",
+   "create data models",
+   "analyse business requirements",
+   "manage database",
+   "online analytical processing",
+   "business process modelling",
+   "use markup languages"
+  ],
+  "evidence": "title"
+ },
+ "2135": {
+  "soc2020": "2135",
+  "title": "Cyber security professionals",
+  "short_title": "Cyber security professional",
+  "chunks": [
+   {
+    "label": "ethical hacker",
+    "text": "ethical hacker. Ethical hackers perform security vulnerability assessments and penetration tests in accordance with industry-accepted methods and protocols. They analyse systems for potential vulnerabilities that may result from improper system configuration, hardware or software flaws, or operational weaknesses."
+   },
+   {
+    "label": "security manager",
+    "text": "security manager. Security managers ensure security for people, such as customers and employees, and company’s assets either fixed, movable, machines, vehicles, and real state. They ensure safety and security by enforcing security policies, keeping track of different events, implementing security protocols, creating emergency response procedures, conducting security evaluations, and supervising security staff members."
+   },
+   {
+    "label": "cyber incident responder",
+    "text": "cyber incident responder. Cyber incident responders monitor and assess cybersecurity state systems, analysing, evaluating, and mitigating the impact of cybersecurity incidents. Moreover, they identify malicious actors and cyber incidents root causes. According to the organisation’s Incident Response Plan, they restore systems and process functionalities to an operational state, collecting evidence and documenting actions taken."
+   },
+   {
+    "label": "chief ICT security officer",
+    "text": "chief ICT security officer. Chief ICT security officers protect company and employee information against unauthorized access. They also define the Information System security policy, manage security deployment across all Information Systems and ensure the provision of information availability."
+   },
+   {
+    "label": "cybersecurity risk manager",
+    "text": "cybersecurity risk manager. Cybersecurity risk managers identify, analyse, assess, estimate and mitigate cybersecurity-related risks of ICT infrastructures such as systems or services. They manage these aspects by planning risk analysis, applying, reporting, assessing, communicating, and treating them. They establish a risk management strategy for the organisation and ensure that risks remain at an acceptable level for the organisation by selecting mitigation actions and controls."
+   }
+  ],
+  "skills": [
+   "ethical hacking principles",
+   "engage with stakeholders",
+   "communicate with stakeholders",
+   "security engineering",
+   "ICT safety",
+   "cyber attack counter-measures",
+   "ICT security standards",
+   "ICT network security risks",
+   "attack vectors",
+   "cyber security",
+   "risk management",
+   "establish an Information Security Management System",
+   "manage system security",
+   "information security strategy",
+   "implement ICT risk management"
+  ],
+  "evidence": "title"
+ },
+ "2141": {
+  "soc2020": "2141",
+  "title": "Web design professionals",
+  "short_title": "Web designer",
+  "chunks": [
+   {
+    "label": "web designer",
+    "text": "web designer. Web designers are in charge of creating the visual elements, layout and other aspects such as the easiness of use of a website. They follow the different phases of a website creation from the design to the implementation until it goes live. They work side by side with front-end developers to design user interfaces that met the needs of customers and are also appealing. They are responsible of developing mock-ups and of confirming the technical feasibility of the product. They can use and put together various types of elements for the website including graphics, animations, text, videos and photos. They are in contact with clients and stakeholders of the company to ensure that the design of the website meets their needs."
+   },
+   {
+    "label": "desktop publisher",
+    "text": "desktop publisher. Desktop publishers are responsible for the layout of publications. They use computer software to arrange texts, photographs and other materials in a pleasing and readable finished product."
+   },
+   {
+    "label": "user interface designer",
+    "text": "user interface designer. User interface designers are in charge of designing user interfaces for applications and systems. They perform layout, graphics and dialogues design activities as well as adaptation activities."
+   },
+   {
+    "label": "user experience analyst",
+    "text": "user experience analyst. User experience analysts assess client interaction and experience and analyse users' behaviours, attitudes, and emotions about the usage of a particular product, system or service. They make proposals for the improvement of the interface and usability of products, systems or services. In doing so, they take into consideration the practical, experiential, affective, meaningful and valuable aspects of human–computer interaction and product ownership, as well as the person's perceptions of system aspects such as utility, ease of use and efficiency, and user experience dynamics."
+   },
+   {
+    "label": "digital media designer",
+    "text": "digital media designer. Digital media designers create and edit graphics, animations, sound, text and video to assist in the creation of integrated multimedia products. They may perform activities related to the web, social networks, augmented reality and virtual reality but exclude the production of music using physical instruments and complex software sound synthesis tools. Digital media designers may program and build websites, mobile applications and other multimedia products."
+   }
+  ],
+  "skills": [
+   "create website wireframe",
+   "use markup languages",
+   "web programming",
+   "WebCMS",
+   "JavaScript Framework",
+   "compose description for web elements",
+   "implement front-end website design",
+   "establish customer rapport",
+   "interactive media",
+   "collaborate with designers",
+   "JavaScript",
+   "manage online content",
+   "design graphics",
+   "graphics editor software",
+   "task algorithmisation"
+  ],
+  "evidence": "title"
+ },
+ "2142": {
+  "soc2020": "2142",
+  "title": "Graphic and multimedia designers",
+  "short_title": "Graphic and multimedia designer",
+  "chunks": [
+   {
+    "label": "stop-motion animator",
+    "text": "stop-motion animator. Stop-motion animators create animations by using puppets or clay models."
+   },
+   {
+    "label": "animator",
+    "text": "animator. Animators use software to create animations, these are rapidly sequenced together images to create an illusion of movement."
+   },
+   {
+    "label": "3D animator",
+    "text": "3D animator. 3D animators are in charge of animating 3D models of objects, virtual environments, layouts, characters and 3D virtual animated agents."
+   },
+   {
+    "label": "graphic designer",
+    "text": "graphic designer. Graphic designers create text and images to communicate ideas. They make visual concepts by hand or using computer software, intended for publishing in paper or online media such as advertisements, websites, and magazines."
+   },
+   {
+    "label": "3D modeller",
+    "text": "3D modeller. 3D modellers design 3D models of objects, virtual environments, layouts, characters, and 3D virtual animated agents."
+   },
+   {
+    "label": "digital artist",
+    "text": "digital artist. Digital artists create art which applies digital technology as an essential part of the creative process. Digital art is usually created using computers or more specialised digital equipment. It may be enjoyed using the same instruments, shared over the internet, or presented using more traditional media."
+   },
+   {
+    "label": "special effects artist",
+    "text": "special effects artist. Special effects artists create illusions for movies, videos and computer games. They use computer software."
+   }
+  ],
+  "skills": [
+   "computer graphics",
+   "develop animations",
+   "design graphics",
+   "follow a brief",
+   "create moving images",
+   "adapt to type of media",
+   "motion graphics",
+   "finish project within budget",
+   "study media sources",
+   "provide multimedia content",
+   "graphic design",
+   "computer equipment",
+   "follow work schedule",
+   "analyse a script",
+   "create 3D environments"
+  ],
+  "evidence": "title"
+ },
+ "2451": {
+  "soc2020": "2451",
+  "title": "Architects",
+  "short_title": "Architect",
+  "chunks": [
+   {
+    "label": "landscape architect",
+    "text": "landscape architect. Landscape architects plan and design the construction of gardens and natural spaces. They determine the specifications and distribution of the space. Moreover, landscape architects research and analyse the potential of the landscape at all stages, scales and contexts of the development process, combining, an understanding of the natural space with a sense of aesthetics in order to create a harmonious space."
+   },
+   {
+    "label": "architect",
+    "text": "architect. Architects investigate, design, and oversee the construction and development of buildings, urban spaces, infrastructure projects, and social spaces. They design in accordance with the surroundings and regulations applicable in specific geographic areas, taking into account factors that include function, aesthetics, costs, and public health and safety. They are aware of social contexts and environmental factors, which include the relationships between people and buildings, and buildings and the environment. They engage in multidisciplinary projects aimed at developing the social fabric of a geographic area and advancing in social urbanism projects."
+   },
+   {
+    "label": "landscape designer",
+    "text": "landscape designer. Landscape designers design and create outdoor public areas, landmarks, structures, parks, gardens and private gardens to achieve environmental, social-behavioral, or aesthetic outcomes."
+   },
+   {
+    "label": "interior architect",
+    "text": "interior architect. Interior architects create plans of the interior of a home, building or other structure. They determine the specifications and distribution of the space. Interior architects combine an understanding of space with a sense for aesthetics in order to create a harmonious interior design. They draw architectural drawings using computer-aided equipment and software, or using conventional methods like paper and pen."
+   }
+  ],
+  "skills": [
+   "develop architectural plans",
+   "integrate measures in architectural designs",
+   "architecture regulations",
+   "satisfy aesthetic requirements",
+   "architectural theory",
+   "design building retrofitting solutions",
+   "architectural design",
+   "meet building regulations",
+   "aesthetics",
+   "integrated design",
+   "draw blueprints",
+   "ensure infrastructure accessibility",
+   "promote sustainable interior design",
+   "advise clients on interior design options",
+   "design principles"
+  ],
+  "evidence": "title"
+ },
+ "2452": {
+  "soc2020": "2452",
+  "title": "Chartered architectural technologists, planning officers and consultants",
+  "short_title": "Architectural technologist or planner",
+  "chunks": [
+   {
+    "label": "land planner",
+    "text": "land planner. Land planners visit sites in order to create projects and plans for land usage and development. They collect and analyse data about the land. Land planners provide advice on the efficiency and safety of development plans."
+   },
+   {
+    "label": "architect",
+    "text": "architect. Architects investigate, design, and oversee the construction and development of buildings, urban spaces, infrastructure projects, and social spaces. They design in accordance with the surroundings and regulations applicable in specific geographic areas, taking into account factors that include function, aesthetics, costs, and public health and safety. They are aware of social contexts and environmental factors, which include the relationships between people and buildings, and buildings and the environment. They engage in multidisciplinary projects aimed at developing the social fabric of a geographic area and advancing in social urbanism projects."
+   },
+   {
+    "label": "mobility services manager",
+    "text": "mobility services manager. Mobility services managers are responsible for the strategic development and implementation of programs that promote sustainable and interconnected mobility options, reduce mobility costs and meet the transportation needs of customers, employees and the community as a whole such as bike sharing, e-scooter sharing, carsharing and ride hailing and parking management. They establish and manage partnerships with sustainable transport providers and ICT companies and develop business models in order to influence the demand of the market and promote the concept of mobility as a service in urban areas."
+   },
+   {
+    "label": "smart city consultant",
+    "text": "smart city consultant. Smart city consultants advise on sustainability solutions for the implementation of smart city initiatives. They execute environmental projects based on smart services, advanced technology, and digital transformation in urban areas. In addition, Smart city consultants develop business plans to attract investment resources, identify challenges and sustainable business opportunities, as well as synergies between public and private stakeholders or clients."
+   },
+   {
+    "label": "transport planner",
+    "text": "transport planner. Transport planners develop and implement policies in order to improve transport systems, taking into account the social, environmental and economic factors. They collect and analyse traffic data using statistical modelling tools."
+   },
+   {
+    "label": "urban planner",
+    "text": "urban planner. Urban planners create development plans for towns, urban areas, cities, and regions. They research the needs of the community or the region (economic, social, transport) and evaluate other parameters such as sustainability in order to present solid programs aimed at the improvement of the site."
+   }
+  ],
+  "skills": [
+   "urban planning",
+   "zoning codes",
+   "urban planning law",
+   "environmental policy",
+   "architecture regulations",
+   "execute feasibility study",
+   "advise on use of land",
+   "meet building regulations",
+   "provide technical expertise",
+   "green building practices",
+   "advise on architectural matters",
+   "sustainable building design",
+   "envelope systems for buildings",
+   "design buildings",
+   "evaluate integrated design of buildings"
+  ],
+  "evidence": "estimate"
+ },
+ "3120": {
+  "soc2020": "3120",
+  "title": "CAD, drawing and architectural technicians",
+  "short_title": "CAD and architectural technician",
+  "chunks": [
+   {
+    "label": "3D printing technician",
+    "text": "3D printing technician. 3D printing technicians assist in the designing and programming of products, ranging from prosthetic products to 3D miniatures. They may also provide 3D printing maintenance, check 3D renders for customers and run 3D printing tests. 3D printing technicians can also repair, maintain and clean 3D printers."
+   },
+   {
+    "label": "cartographer",
+    "text": "cartographer. Cartographers create maps by combining various scientific informations depending of the purpose of the map (e.g. topographic, urban, or political maps). They combine the interpretation of mathematical notes and measurements with the aesthetics and visual depiction of the site for developing the maps. They may also work on developing and improving geographic information systems and may perform scientific research within cartography."
+   },
+   {
+    "label": "computer-aided design operator",
+    "text": "computer-aided design operator. Computer-aided design operators use computer hardware and software in order to add the technical dimensions to computer aided design drawings. Computer-aided design operators ensure all additional aspects of the created images of products are accurate and realistic. They also calculate the amount of materials needed to manufacture the products. Later the finalised digital design is processed by computer-aided manufacturing machines that produce the finished product."
+   }
+  ],
+  "skills": [
+   "PHP",
+   "trigonometry",
+   "AJAX",
+   "Haskell",
+   "Erlang",
+   "SAS language",
+   "Ruby (computer programming)",
+   "Common Lisp",
+   "Lisp",
+   "Visual Basic",
+   "geometry",
+   "Prolog (computer programming)",
+   "OpenEdge Advanced Business Language",
+   "Perl",
+   "Smalltalk (computer programming)"
+  ],
+  "evidence": "title"
+ },
+ "2121": {
+  "soc2020": "2121",
+  "title": "Civil engineers",
+  "short_title": "Civil engineer",
+  "chunks": [
+   {
+    "label": "construction engineer",
+    "text": "construction engineer. Construction engineers interpret building designs and add technical specifications to construction projects. They integrate engineering principles into the designs to ensure that structures are safe and resistant. They work together with architects and engineers to transform design ideas into executable plans."
+   },
+   {
+    "label": "drilling engineer",
+    "text": "drilling engineer. Drilling engineers develop and supervise the drilling of gas and oil wells. They assist in the designing, testing and creation of wells and are employed on land or offshore platforms. Drilling engineers work with other mining professionals and oversee the drilling progress and safety of the site."
+   },
+   {
+    "label": "pipeline engineer",
+    "text": "pipeline engineer. Pipeline engineers design and develop the engineering aspects for the construction of pipeline infrastructures in various kinds of sites (e.g. inland, maritime). They envision and create the specifications for pumping systems and for the general transport of goods through pipelines."
+   },
+   {
+    "label": "petroleum engineer",
+    "text": "petroleum engineer. Petroleum engineers evaluate gas and oil fields. They design and develop methods for extracting oil and gas from underneath the earth's surface. They maximise the recovery of hydrocarbon at a minimum cost, pursuing minimal impact on the environment."
+   },
+   {
+    "label": "drainage engineer",
+    "text": "drainage engineer. Drainage engineers design and construct drainage systems for sewers and storm water systems. They evaluate the options to design drainage systems that meet the requirements while ensuring compliance with legislation and environmental standards and policies. Drainage engineers choose the most optimal drainage system to prevent floods, control irrigation and direct sewage away from water sources."
+   },
+   {
+    "label": "civil engineer",
+    "text": "civil engineer. Civil engineers design, plan, and develop technical and engineering specifications for infrastructure and construction projects. They apply engineering knowledge in a vast array of projects, from the construction of infrastructure for transportation, housing projects, and luxury buildings, to the construction of natural sites. They design plans that seek to optimise materials and integrate specifications and resource allocation within the time constraints."
+   },
+   {
+    "label": "water engineer",
+    "text": "water engineer. Water engineers research and develop methods for the provision of clean water, water treatment and flood damage prevention and reaction. They research water needs in a location and develop methods for meeting those needs, such as designing and developing projects for managing water resources such as treatment plants, pipelines, pump systems, irrigation or draining systems and other water supply systems. Water engineers also ensure proper installation of these systems on construction sites. Water engineers also maintain, repair and build structures that control water resources, such as bridges, canals and dams."
+   },
+   {
+    "label": "transport engineer",
+    "text": "transport engineer. Transport engineers design and set the engineering specifications for the construction and development of roadways and transport infrastructure. They apply engineering concepts and knowledge for developing sustainable and efficient modes of transportation ranging from roads to canals, railways, and airports."
+   }
+  ],
+  "skills": [
+   "technical drawings",
+   "construction methods",
+   "engineering principles",
+   "oversee construction project",
+   "create designs for pipeline engineering",
+   "integrated design",
+   "approve engineering design",
+   "consider the impact of material characteristics on pipeline flows",
+   "flood remediation equipment",
+   "use technical drawing software",
+   "adjust engineering designs",
+   "types of pipelines",
+   "integrate measures in architectural designs",
+   "engineering processes",
+   "ensure compliance with safety legislation"
+  ],
+  "evidence": "title"
+ },
+ "2123": {
+  "soc2020": "2123",
+  "title": "Electrical engineers",
+  "short_title": "Electrical engineer",
+  "chunks": [
+   {
+    "label": "equipment engineer",
+    "text": "equipment engineer. Equipment engineers design and maintain the machinery and equipment in manufacturing facilities. They design machinery that adjusts to the manufacturing requirements and processes. Moreover, they envision the maintenance of the machines and equipment for uninterrupted functioning."
+   },
+   {
+    "label": "design engineer",
+    "text": "design engineer. Design engineers develop new conceptual and detailed designs. They create the look for these concepts or products and the systems used to make them. Design engineers work with engineers and marketers to enhance the functioning and efficiency of existing devices."
+   },
+   {
+    "label": "electrical engineer",
+    "text": "electrical engineer. Electrical engineers design and develop electrical systems, electrical equipment, components, motors, and equipment with the feature of energy transmission. They engage in large scale projects such as the design and maintenance of power stations, and the distribution of power to smaller applications such as household appliances."
+   }
+  ],
+  "skills": [
+   "electrical instrumentation engineering",
+   "perform energy simulations",
+   "maintain electrical engines",
+   "model electromagnetic products",
+   "perform smart grid feasibility study",
+   "design smart grids",
+   "design circuit boards",
+   "assemble electromechanical systems",
+   "define technical requirements",
+   "electric motors",
+   "electric drives",
+   "electrical equipment components",
+   "automotive engineering",
+   "design electromechanical systems",
+   "artificial lighting systems"
+  ],
+  "evidence": "title"
+ },
+ "3113": {
+  "soc2020": "3113",
+  "title": "Engineering technicians",
+  "short_title": "Engineering technician",
+  "chunks": [
+   {
+    "label": "marine engineering technician",
+    "text": "marine engineering technician. Marine engineering technicians carry out technical functions to help marine engineers with the design, development, manufacturing and testing processes, installation and maintenance of all types of boats from pleasure crafts to naval vessels, including submarines. They also conduct experiments, collect and analyse data and report their findings."
+   },
+   {
+    "label": "aerospace engineering technician",
+    "text": "aerospace engineering technician. Aerospace engineering technicians work with aerospace engineers to operate, maintain and test equipment used on aircraft and spacecraft. They review blueprints and instructions to determine test specifications and procedures. They use software to make sure that parts of a spacecraft or aircraft are functioning properly. They record test procedures and results, and make recommendations for changes."
+   },
+   {
+    "label": "chemical engineering technician",
+    "text": "chemical engineering technician. Chemical engineering technicians transform raw materials in order to develop and test chemical products. They also work on improving chemical plant operations and processes."
+   },
+   {
+    "label": "automotive engineering technician",
+    "text": "automotive engineering technician. Automotive engineering technicians work with automotive engineers to operate, repair, maintain and test equipment used in motor vehicles. In some environments, such as an airport they are responsible for keeping equipment and vehicles serviceable. They review blueprints and designs to determine test specifications and procedures. Automotive engineering technicians use software to make sure that parts of a motor vehicle are functioning properly. They record test procedures and results, and make recommendations for changes."
+   },
+   {
+    "label": "manufacturing engineer",
+    "text": "manufacturing engineer. Manufacturing engineers design manufacturing processes for different kinds of production processes. They integrate those specificities and constraints posed by the industry or the product being produced with general and wide-spread manufacturing engineering principles into the design and planification of manufacturing processes."
+   },
+   {
+    "label": "instrument technician",
+    "text": "instrument technician. Instrument technicians assist and support musicians before, during and after the performance to ensure the instruments and the connected equipment, the backline, are setup properly. They maintain, check, tune and repair instruments and assist with quick changes."
+   },
+   {
+    "label": "radiographer",
+    "text": "radiographer. Radiographers use a range of technologies to examine, treat and care for patients. They work in the fields of Medical Imaging, Radiotherapy and Nuclear Medicine and apply ionising radiation, ultrasound, magnetic resonance imaging and radioactive sources."
+   },
+   {
+    "label": "commissioning engineer",
+    "text": "commissioning engineer. Commissioning engineers supervise the final stages of a project when systems are installed and tested. They inspect the correct functioning of the equipment, facilities and plants to make sure they meet the requirements and specifications. They perform the necessary verifications and give approval to finalise the project."
+   },
+   {
+    "label": "contract engineer",
+    "text": "contract engineer. Contract engineers combine technical knowledge of contracts and legal matters with understanding of engineering specifications and principles. They ensure that both parts are aligned in the development of a project and foresee the compliance of all the engineering specifications and matters as defined in contracts."
+   },
+   {
+    "label": "engineering assistant",
+    "text": "engineering assistant. Engineering assistants ensure the administration and monitoring of technical and engineering files for projects, assignments, and quality matters. They assist engineers with their experiments, participate in site visits, and administer the collection of information."
+   },
+   {
+    "label": "electrical engineering technician",
+    "text": "electrical engineering technician. Electrical engineering technicians work together with electrical engineers in electrical engineering reasearch. They perform technical tasks and aid in the designing, testing, manufacturing and operation of electrical devices and facilities."
+   },
+   {
+    "label": "mechanical engineering technician",
+    "text": "mechanical engineering technician. Mechanical engineering technicians provide technical support to mechanical engineers in producing and manufacturing mechanical machinery. They help make designs and adjustments, and perform tests. They also develop layouts and drawings, collate and interpret data and write reports."
+   }
+  ],
+  "skills": [
+   "engineering processes",
+   "liaise with engineers",
+   "engineering principles",
+   "healthcare data systems",
+   "interact with healthcare suppliers",
+   "interpret requests for imaging examinations",
+   "develop new imaging techniques",
+   "adjust engineering designs",
+   "conduct radiotherapy computer planning",
+   "evidence-based radiography practice",
+   "analyse X-ray imagery",
+   "maintain imaging equipment",
+   "apply radiological health sciences",
+   "determine imaging techniques to be performed",
+   "medical contrast agents"
+  ],
+  "evidence": "title"
+ },
+ "2453": {
+  "soc2020": "2453",
+  "title": "Quantity surveyors",
+  "short_title": "Quantity surveyor",
+  "chunks": [
+   {
+    "label": "quantity surveyor",
+    "text": "quantity surveyor. Quantity surveyors have under their helm complete management of the cost involved in building and construction projects from the inception of the project until the delivery. They strive for an efficient use of the resources whilst keeping an eye on quality, quality standards, and client's requirements."
+   },
+   {
+    "label": "dismantling engineer",
+    "text": "dismantling engineer. Dismantling engineers research and plan the optimal way to dismantle industrial equipment, machinery and buildings that reached the end-of-life phase. They analyse the required work and schedule the various operations. They give team leaders instructions and supervise their work."
+   },
+   {
+    "label": "biomedical engineer",
+    "text": "biomedical engineer. Biomedical engineers combine knowledge of engineering principles and biological findings for the development of medical treatments, medicaments, and general healthcare purposes. They can develop solutions ranging from the improvement of the components in conventional medicaments up to implants developments, and tissue treatment."
+   },
+   {
+    "label": "dependability engineer",
+    "text": "dependability engineer. Dependability engineers ensure the reliability, availability and maintainability (RAM) of a production process or a system. They focus on improving the capability to function without interruption and operate when needed, and on increasing the easiness of repairing, replacing or upgrading the product."
+   },
+   {
+    "label": "renewable energy engineer",
+    "text": "renewable energy engineer. Renewable energy engineers research alternative sources of energy in order to design systems for renewable energy production. They strive to optimise energy production from renewable sources, and reduce production expenses and environmental strain. They design systems which focus on energy sustainability and efficiency."
+   },
+   {
+    "label": "component engineer",
+    "text": "component engineer. Component engineers design and envision the engineering development of different small parts composing a bigger project, machine, or process. They ensure that parts are not conflicting from an engineering perspective."
+   },
+   {
+    "label": "energy systems engineer",
+    "text": "energy systems engineer. Energy systems engineers supervise the energy conversion and distribution processes. They analyse the energy supply and consumption efficiency developing new ways to improve the existing processes, taking into account both the technical and the financial aspects. They also study the environmental impact of energy usage and combine the production of renewable energy in the current power systems."
+   },
+   {
+    "label": "innovation engineer",
+    "text": "innovation engineer. Innovation engineers participate in the planning, organisation and execution of innovation product projects. They design and develop new products and prototypes involving technologies, optimisation and automation processes that drive innovative growth within an organisation. Innovation engineers identify potential development areas, patent opportunities, innovation trends and the needs of customers."
+   },
+   {
+    "label": "quality engineer",
+    "text": "quality engineer. Quality engineers define quality standards for the creation of products or services. They check to make sure the products and services are in compliance with the quality standards and they coordinate quality improvements."
+   },
+   {
+    "label": "wood technology engineer",
+    "text": "wood technology engineer. Wood technology engineers develop materials and components made of wood, construct production facilities and control and monitor the production. They also examine products and materials and advise customers."
+   },
+   {
+    "label": "research engineer",
+    "text": "research engineer. Research engineers combine research skills and knowledge of engineering principles to assist in the development or design of new products and technology. They also improve existing technical processes, machines and systems and create new, innovative technologies. The duties of research engineers depend on the branch of engineering and the industry in which they work. Research engineers generally work in an office or laboratory, analysing processes and conducting experiments."
+   },
+   {
+    "label": "solar energy engineer",
+    "text": "solar energy engineer. Solar energy engineers design systems which generate electrical energy from sunlight, such as photovoltaic systems. They design and construct systems which optimise the energy output from solar power, and the sustainability of the production process of solar systems."
+   }
+  ],
+  "skills": [
+   "engineering principles",
+   "engineering processes",
+   "approve engineering design",
+   "adjust engineering designs",
+   "perform scientific research",
+   "technical drawings",
+   "manage engineering project",
+   "use technical drawing software",
+   "renewable energy",
+   "interpret technical requirements",
+   "analyse test data",
+   "safety engineering",
+   "project management",
+   "develop test procedures",
+   "perform project management"
+  ],
+  "evidence": "estimate"
+ },
+ "2454": {
+  "soc2020": "2454",
+  "title": "Chartered surveyors",
+  "short_title": "Chartered surveyor",
+  "chunks": [
+   {
+    "label": "hydrographic surveyor",
+    "text": "hydrographic surveyor. Hydrographic surveyors measure and map, by means of specialised equipment, marine environments. They collect scientific data in order to study the underwater topography and morphology of bodies of water."
+   },
+   {
+    "label": "land surveyor",
+    "text": "land surveyor. Land surveyors determine, by means of specialised equipment, the distances and positions of points at the surface of sites for construction purposes. They use measurements of the specific aspects of construction sites, such as electricity, distance measurements, and metal structure volumes to create architectural drawings and develop construction projects."
+   },
+   {
+    "label": "mine surveyor",
+    "text": "mine surveyor. Mine surveyors prepare and maintain mining plans in line with statutory and management requirements. They keep records of the physical progress of mining operations and of ore or mineral production."
+   },
+   {
+    "label": "cadastral technician",
+    "text": "cadastral technician. Cadastral technicians design and create maps and blue-prints, converting new measurement results into the real estate cadastre of a community. They define and indicate the property boundaries and ownerships, land use, and create city and district maps using measurement equipment and specialised software."
+   },
+   {
+    "label": "geographic information systems specialist",
+    "text": "geographic information systems specialist. Geographic information systems specialists use specialised computer systems, engineering measures, and geological concepts to process land, geographic, and geospatial information into visually detailed digital maps and geomodels of a reservoir. They convert technical information like soil density and properties into digital representations to be used by engineers, governments and interested stakeholders."
+   },
+   {
+    "label": "cartographer",
+    "text": "cartographer. Cartographers create maps by combining various scientific informations depending of the purpose of the map (e.g. topographic, urban, or political maps). They combine the interpretation of mathematical notes and measurements with the aesthetics and visual depiction of the site for developing the maps. They may also work on developing and improving geographic information systems and may perform scientific research within cartography."
+   }
+  ],
+  "skills": [
+   "perform surveying calculations",
+   "cartography",
+   "geomatics",
+   "document survey operations",
+   "compare survey computations",
+   "surveying methods",
+   "topography",
+   "operate surveying instruments",
+   "surveying",
+   "record survey data",
+   "collect mapping data",
+   "geodesy",
+   "adjust surveying equipment",
+   "prepare surveying report",
+   "mathematics"
+  ],
+  "evidence": "estimate"
+ },
+ "2433": {
+  "soc2020": "2433",
+  "title": "Actuaries, economists and statisticians",
+  "short_title": "Actuary, economist or statistician",
+  "chunks": [
+   {
+    "label": "actuarial consultant",
+    "text": "actuarial consultant. Actuarial consultants analyse, manage and provide guidance on financial impact of risks. They can work in fields related to insurance, pension, investment, banking, healthcare etc. Actuarial consultants apply technical and statistical models and theories to give strategic, commercial, and financial advice."
+   },
+   {
+    "label": "actuarial assistant",
+    "text": "actuarial assistant. Actuarial assistants perform statistical data research in order to set premium rates and insurance policies. They review the possibility of accidents, injuries and property damage by using statistical formulas and models."
+   },
+   {
+    "label": "data scientist",
+    "text": "data scientist. Data scientists find and interpret rich data sources, manage large amounts of data, merge data sources, ensure consistency of data-sets, and create visualisations to aid in understanding data. They build mathematical models using data, present and communicate data insights and findings to specialists and scientists in their team and if required, to a non-expert audience, and recommend ways to apply the data."
+   },
+   {
+    "label": "economic adviser",
+    "text": "economic adviser. Economic advisers research economic developments and advise on economic problems. They forecast trends and behaviour in economics, and advise on finance, trade, fiscal and other related matters. They advise companies and organisations on techniques to gain economic profit."
+   },
+   {
+    "label": "mathematician",
+    "text": "mathematician. Mathematicians study and deepen existing mathematical theories in order to expand the knowledge and find new paradigms within the field. They can apply this knowledge to challenges presented in engineering and scientific projects in order to assure that measurements, quantities, and mathematic laws prove their viability."
+   },
+   {
+    "label": "economist",
+    "text": "economist. Economists perform research and develop theories in the field of economics, whether for microeconomic or macroeconomic analysis. They study trends, analyse statistical data, and to some extent work with economic mathematical models in order to advise companies, governments, and related institutions. They advise on product feasibility, trend forecasts, emerging markets, tax policies, and consumer trends."
+   },
+   {
+    "label": "statistician",
+    "text": "statistician. Statisticians collect, tabulate, and, most importantly, analyse quantitative information coming from a varied array of fields. They interpret and analyse statistical studies on fields such as health, demographics, finance, business, etc. and advise based on patterns and drawn analysis."
+   },
+   {
+    "label": "statistical assistant",
+    "text": "statistical assistant. Statistical assistants collect data and use statistical formulas to execute statistical studies and create reports. They create charts, graphs and surveys."
+   },
+   {
+    "label": "demographer",
+    "text": "demographer. Demographers study a variety of parameters related with population. They develop, based on their observations, statistical analyses on the evolutions and changes of births, elderly, marriage and divorce, employment, mortality, immigration and related matters."
+   },
+   {
+    "label": "bioinformatics scientist",
+    "text": "bioinformatics scientist. Bioinformatics scientists analyse biological processes using computer programmes. They maintain or construct databases containing biological information. Bioinformatics scientists gather and analyse biological data and may also assist scientists in various fields, including in biotechnology and pharmaceutics. They perform scientific research and statistical analyses, and report on their findings. Bioinformatics scientists may also collect DNA samples, discover data patterns and conduct genetic research."
+   },
+   {
+    "label": "economic development coordinator",
+    "text": "economic development coordinator. Economic development coordinators outline and implement policies for the improvement of a community's, government's or institution's economic growth and stability. They research economic trends and coordinate cooperation between institutions working in economic development. They analyse potential economic risks and conflicts and develop plans to resolve them. Economic development coordinators advise on the economic sustainability of institutions and economic growth."
+   }
+  ],
+  "skills": [
+   "statistics",
+   "apply statistical analysis techniques",
+   "quantitative analysis",
+   "empirical analysis",
+   "conduct quantitative research",
+   "manage findable accessible interoperable and reusable data",
+   "increase the impact of science on policy and society",
+   "apply for research funding",
+   "integrate gender dimension in research",
+   "evaluate research activities",
+   "manage intellectual property rights",
+   "apply research ethics and scientific integrity principles in research activities",
+   "publish academic research",
+   "promote the transfer of knowledge",
+   "develop professional network with researchers and scientists"
+  ],
+  "evidence": "title"
+ },
+ "2422": {
+  "soc2020": "2422",
+  "title": "Finance and investment analysts and advisers",
+  "short_title": "Finance and investment analyst",
+  "chunks": [
+   {
+    "label": "credit analyst",
+    "text": "credit analyst. Credit analysts investigate credit applications from customers and evaluate if the applications comply with regulations and guidelines of the financial loan-granting institution. On the basis of credit analyses they advise financial institutions whether customers are loan worthy. They perform tasks such as collecting data on the loan applicant, aquire additional information from other departments or institutions and indicating what sort of agreements the financial institution should reach with the credit applicant. Credit analysts also follow up on the development of the credit portfolio of clients."
+   },
+   {
+    "label": "financial planner",
+    "text": "financial planner. Financial planners assist people dealing with various personal financial issues. They are specialised in financial planning, such as retirement planning, investment planning, risk management and insurance planning, and tax planning. They advise a strategy tailored to the client's needs. They ensure the accuracy of bank and other financial records while maintaining a customer-orientated approach and following ethical standards."
+   },
+   {
+    "label": "investment adviser",
+    "text": "investment adviser. Investment advisers are professionals who offer transparent advice by recommending suitable solutions on financial matters to their clients. They advise on investing pension or free funds in securities such as stocks, bonds, mutual funds and exchange-traded funds to customers. Investment advisers serve individuals, households, families and owners of small companies."
+   },
+   {
+    "label": "venture capitalist",
+    "text": "venture capitalist. Venture capitalists invest in young or small start-up companies by providing private funding. They research potential markets and particular product opportunities to help business owners develop or expand a business. They provide business advice, technical expertise, and network contacts based on their experience and activities. They do not assume executive managerial positions within the company, but have a say in its strategic direction."
+   },
+   {
+    "label": "financial analyst",
+    "text": "financial analyst. Financial analysts conduct economic research and elicit valuable analyses on financial matters such as profitability, liquidity, solvency, and asset management. They provide recommendations on financial matters for decision-making processes. Financial analysts work in both the public and the private sector."
+   },
+   {
+    "label": "credit risk analyst",
+    "text": "credit risk analyst. Credit risk analysts manage individual credit risk and care for fraud prevention, business deal analysis, legal documents analysis and recommendations on the level of the risk."
+   },
+   {
+    "label": "investment analyst",
+    "text": "investment analyst. Investment analysts undertake research to make informed recommendations to fund managers. They research investments globally but depending on the nature and field of their employer they can specialise in fields like retail, infrastructure, energy, banking and financial services. They focus on financial and economical information such as the political and economic developments that can impact financial markets, the financial performance of the target companies and use the interpretation of data from different sources to understand how it affects investment decision making."
+   },
+   {
+    "label": "accounting analyst",
+    "text": "accounting analyst. Accounting analysts evaluate the financial statements of clients, usually companies, which include the income sheet, the balance sheet, the statement of cash flows and additional notes to other financial statements. They interpret and implement new accounting systems and accounting procedures and will analyse and determine if the proposed systems conform to accounting regulations and meet user information requirements."
+   }
+  ],
+  "skills": [
+   "provide support in financial calculation",
+   "interpret financial statements",
+   "modern portfolio theory",
+   "review investment portfolios",
+   "obtain financial information",
+   "economics",
+   "funding methods",
+   "asset management",
+   "financial markets",
+   "fundamental analysis",
+   "synthesise financial information",
+   "analyse the credit history of potential customers",
+   "assess risks of clients' assets",
+   "advise on financial matters",
+   "analyse financial risk"
+  ],
+  "evidence": "title"
+ },
+ "2421": {
+  "soc2020": "2421",
+  "title": "Chartered and certified accountants",
+  "short_title": "Accountant",
+  "chunks": [
+   {
+    "label": "financial controller",
+    "text": "financial controller. Financial controllers handle all tasks related to the budgeting and accounting aspects of a company or organisation. They implement and ensure compliance with internal financial and accounting procedures, and prepare documentation for external audits. They collect information related to financial statements such as assets, liabilities, equity, and cash flow in order to assess the company's financial position to prepare annual budgets and forecasts."
+   },
+   {
+    "label": "accountant",
+    "text": "accountant. Accountants review and analyse financial statements, budgets, financial reports, and business plans in order to check for irregularities resulting from error or fraud, and provide their clients with financial advice in matters such as financial forecasting and risk analysis. They may audit financial data, resolve insolvency cases, prepare tax returns and provide other tax-related advice in reference to current legislation."
+   },
+   {
+    "label": "financial auditor",
+    "text": "financial auditor. Financial auditors collect and examine financial data for clients, organisations and companies. They ensure the financial data is properly maintained and free of material misstatements due to error or fraud, that it adds up, and functions legally and effectively. They review lending and credit policies or numbers in databases and documents, evaluate, consult and assist the source of the transaction if necessary. They use their review of the client's financial governance as assurance to give testimony to the shareholders, stakeholders and board of directors of the organisation or company that all is up to par."
+   },
+   {
+    "label": "audit supervisor",
+    "text": "audit supervisor. Audit supervisors oversee audit staff, planning and reporting, and review the audit staff's automated audit work papers to ensure compliance with the company's methodology. They prepare reports, evaluate general auditing and operating practices, and communicate findings to the superior management."
+   }
+  ],
+  "skills": [
+   "accounting department processes",
+   "financial department processes",
+   "interpret financial statements",
+   "ensure compliance with accounting conventions",
+   "explain accounting records",
+   "prepare financial statements",
+   "check accounting records",
+   "follow the statutory obligations",
+   "accounting entries",
+   "tax legislation",
+   "financial statements",
+   "analyse financial performance of a company",
+   "accounting techniques",
+   "perform balance sheet operations",
+   "draft accounting procedures"
+  ],
+  "evidence": "title"
+ },
+ "2254": {
+  "soc2020": "2254",
+  "title": "Medical radiographers",
+  "short_title": "Medical radiographer",
+  "chunks": [
+   {
+    "label": "radiographer",
+    "text": "radiographer. Radiographers use a range of technologies to examine, treat and care for patients. They work in the fields of Medical Imaging, Radiotherapy and Nuclear Medicine and apply ionising radiation, ultrasound, magnetic resonance imaging and radioactive sources."
+   },
+   {
+    "label": "diagnostic radiographer",
+    "text": "diagnostic radiographer. Diagnostic radiographers plan, prepare and perform diagnostic imaging examinations and post processing, with a wide range of equipment and techniques using X-rays, strong magnetic fields or Magnetic Resonance Imaging (MRI) and high frequency sound (Ultrasound)."
+   },
+   {
+    "label": "radiation therapist",
+    "text": "radiation therapist. Radiation therapists are responsible for the accurate delivery of radiotherapy to cancer patients and, as part of the multidisciplinary team, for elements of treatment preparation and patient care. This encompasses the safe and accurate delivery of the radiation dose prescribed and the clinical care and support of the patient throughout the treatment preparation, treatment delivery and immediate post treatment phases."
+   }
+  ],
+  "skills": [
+   "medical contrast agents",
+   "radiobiology",
+   "medical oncology",
+   "provide psychological support to patients",
+   "prepare patients for imaging procedures",
+   "post-process medical images",
+   "radiation physics in healthcare",
+   "apply radiation protection procedures",
+   "conduct cancer screening tests",
+   "conduct radiotherapy computer planning",
+   "pharmaceutical products",
+   "adhere to organisational code of ethics",
+   "ensure compliance with radiation protection regulations",
+   "radiation protection",
+   "medical terminology"
+  ],
+  "evidence": "title"
+ },
+ "5241": {
+  "soc2020": "5241",
+  "title": "Electricians and electrical fitters",
+  "short_title": "Electrician",
+  "chunks": [
+   {
+    "label": "electrician",
+    "text": "electrician. Electricians fit and repair electrical circuits and wiring systems. They also install and maintain electrical equipment and machinery. This work can be performed indoors as well as outdoors, in nearly every type of facility."
+   },
+   {
+    "label": "installation engineer",
+    "text": "installation engineer. Installation engineers oversee and manage the installing of structures, which take often many years to design and construct. They ensure safety, avoid risks and they aim to the optimalisation of costs. Installation engineers also create constructive designs of systems and perform installation system testing. They determine the material needed for the construction of these systems and the costs, and use CAD software to design these systems."
+   },
+   {
+    "label": "electrical mechanic",
+    "text": "electrical mechanic. Electrical mechanics install, repair and maintain mechanical and electrical components of machinery, tools and equipment. They test electrical parts to ensure efficiency and make improvements accordingly."
+   },
+   {
+    "label": "domestic electrician",
+    "text": "domestic electrician. Domestic electricians install and maintain electrical infrastructures and domestic machinery in homes and other residential buildings. They perform inspections and repair defective parts to ensure efficiency."
+   },
+   {
+    "label": "electrical engineer",
+    "text": "electrical engineer. Electrical engineers design and develop electrical systems, electrical equipment, components, motors, and equipment with the feature of energy transmission. They engage in large scale projects such as the design and maintenance of power stations, and the distribution of power to smaller applications such as household appliances."
+   },
+   {
+    "label": "electric meter technician",
+    "text": "electric meter technician. Electric meter technicians install and maintain electric meter systems in facilities or buildings. They install the equipment in accordance with regulations and repair faults and other problems. They test the equipment and advise on the use and care."
+   }
+  ],
+  "skills": [
+   "inspect electrical supplies",
+   "electricity",
+   "install electrical and electronic equipment",
+   "splice cable",
+   "smart grids systems",
+   "electrical testing methods",
+   "electrical wiring plans",
+   "assemble electromechanical systems",
+   "install electricity sockets",
+   "electrical equipment regulations",
+   "use precision tools",
+   "electricity principles",
+   "install electric switches",
+   "electrical instrumentation engineering",
+   "perform energy simulations"
+  ],
+  "evidence": "title"
+ },
+ "2313": {
+  "soc2020": "2313",
+  "title": "Secondary education teaching professionals",
+  "short_title": "Secondary school teacher",
+  "chunks": [
+   {
+    "label": "dance teacher",
+    "text": "dance teacher. Dance teachers instruct students in a recreational context in the various dance genres and forms, such as ballet, jazz, tap, ballroom, hip-hop, latin, folk dance etc. They provide students with a notion of dance history and repertoire, but mainly focus on a practice-based approach in their courses, in which they assist students in experimenting with and mastering different dance and dramatic expression styles and techniques and encourage them to develop their own style. They cast, choreograph and produce performances, and coordinate the technical production and the set, props and costume usage on stage."
+   },
+   {
+    "label": "deputy head teacher",
+    "text": "deputy head teacher. Deputy head teachers support the management duties of their school's principals and are part of the school's administrative staff. They update the head teacher on the daily operations and developments of the school. They implement and follow up on school guidelines, policies and curriculum activities introduced by the specific head teacher. They enforce school board protocol, supervise students and maintain discipline."
+   },
+   {
+    "label": "tutor",
+    "text": "tutor. Tutors provide personalised education to the children of employers or to adults, in addition to the main education system. They help students improve their knowledge and competence of a specific subject, at their own pace. Tutors will teach their students study techniques and strategies in order to ensure their academic development and will assess the student's progress throughout the tutoring sessions."
+   },
+   {
+    "label": "secondary school teacher",
+    "text": "secondary school teacher. Secondary school teachers provide education to students, commonly children and young adults, in a secondary school setting. They are usually specialist subject teachers, who instruct in their own field of study. They prepare lesson plans and materials, monitor the students' progress, assist individually when necessary and evaluate their knowledge and performance through assignments, tests and examinations."
+   },
+   {
+    "label": "drama teacher",
+    "text": "drama teacher. Drama teachers instruct students in a recreational context in the various theatrical genres and dramatic expression forms, such as comedy, tragedy, prose, poetry, improvisation, monologues, dialogues etc. They provide students with a notion of theatre history and repertoire, but mainly focus on a practice-based approach in their courses, in which they assist students in experimenting with and mastering different dramatic expression styles and techniques and encourage them to develop their own style. They cast, direct and produce plays and other performances, and coordinate the technical production and the set, props and costume usage on stage."
+   },
+   {
+    "label": "music teacher",
+    "text": "music teacher. Music teachers instruct students in various musical genres and expression forms, such as classical, jazz, folk, pop, blues, rock, electronic etc. in a recreational context. They provide students with an overview of music history and repertoire, but primarily utilise a practice-based approach in their courses. In these courses, they assist students to experiment with different styles and techniques, in the musical instrument of their choice while encouraging them to develop their own style. They cast, direct, and produce musical performances, and coordinate the technical production."
+   },
+   {
+    "label": "religious education teacher at secondary school",
+    "text": "religious education teacher at secondary school. Religious education teachers at secondary schools provide education to students, commonly children and young adults, in a secondary school setting. They are usually subject teachers, specialised and instructing in their own field of study, religion. They prepare lesson plans and materials, monitor the students' progress, assist individually when necessary, and evaluate the students' knowledge and performance on the subject of religion through assignments, tests and examinations."
+   },
+   {
+    "label": "physical education teacher secondary school",
+    "text": "physical education teacher secondary school. Physical education teachers at secondary schools provide education to students, commonly children and young adults, in a secondary school setting. They are usually subject teachers, specialised and instructing in their own field of study, physical education . They prepare lesson plans and materials, monitor the students’ progress, assist individually when necessary, and evaluate the students’ knowledge and performance on the subject of physical education through practical, usually physical, tests and examinations."
+   }
+  ],
+  "skills": [
+   "provide learning support",
+   "post-secondary school procedures",
+   "secondary school procedures",
+   "adapt teaching to student's capabilities",
+   "assist students in their learning",
+   "monitor student's behaviour",
+   "maintain students' discipline",
+   "manage student relationships",
+   "learning difficulties",
+   "demonstrate when teaching",
+   "guarantee students' safety",
+   "monitor educational developments",
+   "assign homework",
+   "instructional strategies",
+   "cooperate with education professionals"
+  ],
+  "evidence": "title"
+ }
+}

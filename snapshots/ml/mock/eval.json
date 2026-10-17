@@ -1,65 +1,217 @@
 {
-  "schema_version": "1.0",
-  "generated_at": "2026-10-17T19:38:01+00:00",
-  "status": "preliminary",
-  "checks": {
-    "bridge_seam": {
-      "status": "preliminary",
-      "date": "2026-10-17",
-      "summary": "Bridged 2020 vs native 2021: pay lines up, job counts do not.",
-      "metrics": {
-        "median": {
-          "n": 360,
-          "median_ratio": 0.993,
-          "iqr": [
-            0.95,
-            1.034
-          ],
-          "share_outside_0.8_1.25": 0.036
-        },
-        "jobs_k": {
-          "n": 272,
-          "median_ratio": 1.074,
-          "iqr": [
-            0.916,
-            1.248
-          ],
-          "share_outside_0.8_1.25": 0.382
-        }
-      }
+ "schema_version": "1.1",
+ "generated_at": "2026-10-17T20:26:08+00:00",
+ "status": "preliminary",
+ "checks": {
+  "bridge_seam": {
+   "status": "preliminary",
+   "date": "2026-10-17",
+   "summary": "Bridged vs native values at both code changes: pay lines up, job counts do not.",
+   "metrics": {
+    "2020_2021": {
+     "pay": {
+      "n": 360,
+      "median_ratio": 0.993,
+      "iqr": [
+       0.95,
+       1.034
+      ],
+      "share_outside_0.8_1.25": 0.036
+     },
+     "jobs": {
+      "n": 272,
+      "median_ratio": 1.074,
+      "iqr": [
+       0.916,
+       1.248
+      ],
+      "share_outside_0.8_1.25": 0.382
+     }
     },
-    "backtest_probe": {
-      "status": "preliminary",
-      "date": "2026-10-17",
-      "summary": "Spearman correlations in the two native windows.",
-      "metrics": {
-        "2013": {
-          "pay_level_vs_later_real_pay_growth": -0.245,
-          "prior_jobs_growth_vs_later_jobs_growth": 0.149
-        },
-        "2014": {
-          "pay_level_vs_later_real_pay_growth": -0.39,
-          "prior_jobs_growth_vs_later_jobs_growth": 0.147
-        }
-      }
-    },
-    "matcher": {
-      "status": "pending",
-      "date": null,
-      "summary": "Keyword vs zero-shot vs fine-tuned on held-out human labels (needs ESCO and labels).",
-      "metrics": {}
-    },
-    "exposure_agreement": {
-      "status": "pending",
-      "date": null,
-      "summary": "ILO vs DfE vs in-house task labels.",
-      "metrics": {}
-    },
-    "hedge_sanity": {
-      "status": "pending",
-      "date": null,
-      "summary": "ESCO skill overlap vs O*NET related occupations.",
-      "metrics": {}
+    "2010_2011_all_employees": {
+     "pay": {
+      "n": 319,
+      "median_ratio": 1.004,
+      "iqr": [
+       0.958,
+       1.053
+      ],
+      "share_outside_0.8_1.25": 0.063
+     },
+     "jobs": {
+      "n": 313,
+      "median_ratio": 0.929,
+      "iqr": [
+       0.739,
+       1.162
+      ],
+      "share_outside_0.8_1.25": 0.486
+     }
     }
+   }
+  },
+  "backtest_probe": {
+   "status": "preliminary",
+   "date": "2026-10-17",
+   "summary": "Spearman correlations in the two native windows.",
+   "metrics": {
+    "2013": {
+     "pay_level_vs_later_real_pay_growth": -0.245,
+     "prior_jobs_growth_vs_later_jobs_growth": 0.149
+    },
+    "2014": {
+     "pay_level_vs_later_real_pay_growth": -0.39,
+     "prior_jobs_growth_vs_later_jobs_growth": 0.147
+    }
+   }
+  },
+  "exposure_agreement": {
+   "status": "preliminary",
+   "date": "2026-10-17",
+   "summary": "ILO (weighted) vs DfE LLM exposure, rank correlation across occupations.",
+   "metrics": {
+    "spearman": 0.777,
+    "n": 409,
+    "demo_disagreements_over_30_points": [
+     {
+      "soc2020": "2142",
+      "ilo_percentile": 0.854,
+      "dfe_percentile": 0.484
+     },
+     {
+      "soc2020": "2454",
+      "ilo_percentile": 0.782,
+      "dfe_percentile": 0.455
+     }
+    ]
+   }
+  },
+  "hedge_sanity": {
+   "status": "preliminary",
+   "date": "2026-10-17",
+   "summary": "Share of top-3 hedges that O*NET (US) also lists as related, vs two baselines.",
+   "metrics": {
+    "n": 233,
+    "hit_at_3": 0.821,
+    "baseline_random_same_level": 0.275,
+    "baseline_same_3_digit_group": 0.762,
+    "demo_hit_at_3": 0.833,
+    "demo_zero_hits": [
+     "2135"
+    ]
+   }
+  },
+  "matcher": {
+   "status": "preliminary",
+   "date": "2026-10-17",
+   "summary": "Matcher methods on the dev split (n=30, 20 careers, chance hit@3 0.362). Shipped: embed_tags.",
+   "metrics": {
+    "methods": {
+     "keyword_tags": {
+      "n": 30,
+      "hit_at_1": 0.7,
+      "hit_at_3": 0.9,
+      "hit_at_3_ci95": [
+       0.767,
+       1.0
+      ],
+      "mrr": 0.806,
+      "chance_hit_at_3": 0.362
+     },
+     "bm25": {
+      "n": 30,
+      "hit_at_1": 0.467,
+      "hit_at_3": 0.7,
+      "hit_at_3_ci95": [
+       0.533,
+       0.867
+      ],
+      "mrr": 0.617,
+      "chance_hit_at_3": 0.362
+     },
+     "embed": {
+      "n": 30,
+      "hit_at_1": 0.767,
+      "hit_at_3": 0.9,
+      "hit_at_3_ci95": [
+       0.8,
+       1.0
+      ],
+      "mrr": 0.847,
+      "chance_hit_at_3": 0.362
+     },
+     "embed_tags": {
+      "n": 30,
+      "hit_at_1": 0.5,
+      "hit_at_3": 0.9,
+      "hit_at_3_ci95": [
+       0.767,
+       1.0
+      ],
+      "mrr": 0.693,
+      "chance_hit_at_3": 0.362
+     },
+     "embed_ft": {
+      "n": 30,
+      "hit_at_1": 0.7,
+      "hit_at_3": 0.933,
+      "hit_at_3_ci95": [
+       0.833,
+       1.0
+      ],
+      "mrr": 0.819,
+      "chance_hit_at_3": 0.362
+     },
+     "embed_ft_tags": {
+      "n": 30,
+      "hit_at_1": 0.467,
+      "hit_at_3": 0.867,
+      "hit_at_3_ci95": [
+       0.733,
+       0.967
+      ],
+      "mrr": 0.661,
+      "chance_hit_at_3": 0.362
+     }
+    },
+    "paired_vs_bm25": {
+     "keyword_tags": {
+      "delta_hit_at_3": 0.2,
+      "ci95": [
+       0.0,
+       0.4
+      ]
+     },
+     "embed": {
+      "delta_hit_at_3": 0.2,
+      "ci95": [
+       0.067,
+       0.367
+      ]
+     },
+     "embed_tags": {
+      "delta_hit_at_3": 0.2,
+      "ci95": [
+       0.033,
+       0.367
+      ]
+     },
+     "embed_ft": {
+      "delta_hit_at_3": 0.233,
+      "ci95": [
+       0.1,
+       0.4
+      ]
+     },
+     "embed_ft_tags": {
+      "delta_hit_at_3": 0.167,
+      "ci95": [
+       -0.033,
+       0.367
+      ]
+     }
+    }
+   }
   }
+ }
 }
