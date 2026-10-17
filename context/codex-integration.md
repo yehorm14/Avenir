@@ -30,6 +30,12 @@ Report cross-slice breakages without modifying the owning slices.
 - Latest report with live-adapters: `integration-report-2159.md`. All five available
   default branches merged with no conflicts. Baseline 276 passed; ML v1.1 overlay
   and freeze each 287 passed, 1 failed; lint clean. Adapter and ETL tests pass.
+- Latest requested expanded run: `integration-report-2202.md`, including
+  frontend-handoff and contract fix `0ed4785`. All six branches merge cleanly.
+  Baseline 287 passed, 1 failed; overlay/freeze each 299 passed, 1 failed; lint clean.
+  The history test now passes. The remaining failing ID is
+  `packages/contracts/tests/test_examples.py::test_committed_pack_is_not_stale`
+  in all three modes; no failure is unique to v1.1. The runtime ML probe still passes.
 - Both probes read 412 ML occupations, expose 20 demo careers through `load_data()`,
   preserve all 5,768 joined metric flags and all 280 loaded demo metric flags.
   No JSON file exceeds 5 MB. These counts are observations from overlay `03fb482`.
@@ -38,8 +44,10 @@ Report cross-slice breakages without modifying the owning slices.
 
 ## Blocked on
 - No harness implementation blocker.
-- Yehor owns `packages/contracts/tests/test_contracts.py::test_everything_else_loads`:
-  it asserts history starts in 2011; ML v1.1 history starts in 2007. Do not fix it here.
+- Yehor owns the stale frontend handoff pack test. The handoff was generated from
+  main and its status notes regeneration after contract v1.1; generated examples
+  also depend on selected ML evidence. Report the mismatch; do not regenerate or
+  modify files in that slice. The earlier history-start failure is fixed in `0ed4785`.
 - No Arsenii branch was available in the latest recorded run; the overlay is still
   needed for v1.1. Live-adapters and contract-v1.1 were both included successfully.
 - Repository-wide gitleaks reports two pre-existing `generic-api-key` findings in
@@ -66,4 +74,7 @@ Use `C:/dev/Avenir/.venv/Scripts/python.exe` from `C:/dev/Avenir-wt/codex-harnes
 Run `python -m pytest scripts/integration -q` explicitly: root pytest's configured
 test paths do not include this development tooling. Run the harness with
 `--overlay-ml 03fb482` until Arsenii branches appear, then run without the overlay.
+Claude requested frontend-handoff in addition to the five script defaults. Fetch
+refs first, then use `--branches` containing those five, every `origin/arsenii/*`
+ref, and `origin/yehor/frontend-handoff`. Keep the source defaults unchanged.
 Read `claude-status.md` before each step. Never edit another slice or send messages.
