@@ -13,7 +13,8 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
-from fastapi import FastAPI, HTTPException, Path as ApiPath
+from fastapi import FastAPI, HTTPException
+from fastapi import Path as ApiPath
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -25,7 +26,8 @@ from app.data import get_store  # noqa: E402
 from app.path import build_plan  # noqa: E402
 from pathfinder_ml import FLAG_TEXT, ML, MUST_MENTION  # noqa: E402
 
-from .catalogue import detail as catalogue_detail, summaries as catalogue_summaries  # noqa: E402
+from .catalogue import detail as catalogue_detail  # noqa: E402
+from .catalogue import summaries as catalogue_summaries  # noqa: E402
 from .discovery import DiscoveryRequest, discover  # noqa: E402
 from .ranking import rank_careers  # noqa: E402
 

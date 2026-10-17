@@ -6,8 +6,15 @@ import path from 'node:path';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const web = path.join(root, 'apps/web');
 const python = process.env.AVENIR_PYTHON || path.join(root, '.venv', process.platform === 'win32' ? 'Scripts/python.exe' : 'bin/python');
-if (!existsSync(python) || !existsSync(path.join(web, 'node_modules/vite'))) {
-  console.error('Install the app first: see apps/web/README.md. Python 3.12+ is required.');
+const production = process.argv.includes('--production') || process.argv.includes('--preview');
+const port = process.env.AVENIR_PORT || '4175';
+const host = process.env.AVENIR_HOST || '127.0.0.1';
+if (!existsSync(python) || (!production && !existsSync(path.join(web, 'node_modules/vite')))) {
+  console.error('Install the app first: see apps/web/README.md. Python 3.12+ and Node 20+ are required.');
+  process.exit(1);
+}
+if (production && !existsSync(path.join(web, 'dist/index.html'))) {
+  console.error('Build the frontend first: npm --prefix apps/web run build');
   process.exit(1);
 }
 const children = [];
@@ -19,13 +26,16 @@ function stop(code = 0) {
   process.exitCode = code;
 }
 for (const signal of ['SIGINT', 'SIGTERM']) process.on(signal, () => stop());
-for (const [command, args] of [
-  [python, ['-m', 'uvicorn', 'api.main:app', '--host', '127.0.0.1', '--port', '8015']],
-  [process.platform === 'win32' ? 'npm.cmd' : 'npm', ['run', process.argv.includes('--preview') ? 'preview' : 'dev']],
-]) {
+const processes = production
+  ? [[python, ['-m', 'uvicorn', 'api.application:app', '--host', host, '--port', port]]]
+  : [
+      [python, ['-m', 'uvicorn', 'api.application:app', '--host', '127.0.0.1', '--port', '8015']],
+      [process.platform === 'win32' ? 'npm.cmd' : 'npm', ['run', 'dev']],
+    ];
+for (const [command, args] of processes) {
   const child = spawn(command, args, { cwd: web, stdio: 'inherit', shell: process.platform === 'win32' });
   children.push(child);
   child.on('error', error => { console.error(error.message); stop(1); });
   child.on('exit', code => { if (!closing) stop(code || 0); });
 }
-console.log('Aventier: http://127.0.0.1:4175 (API: http://127.0.0.1:8015). Ctrl+C stops both.');
+console.log(`Aventier: http://${host}:${production ? port : '4175'} (same-origin APIs). Ctrl+C stops the app.`);

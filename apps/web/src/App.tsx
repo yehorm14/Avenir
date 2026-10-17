@@ -8,6 +8,7 @@ import { allOpportunities, getCareerContent } from "./content";
 import { buildPlanDocument } from "./planDocument";
 import MyPlan from "./MyPlan";
 import Guides from "./Guides";
+import DecisionReview from "./DecisionReview";
 import Landing from "./Landing";
 import Jobs from "./Jobs";
 import Discovery, { type DiscoveryResult } from "./Discovery";
@@ -719,19 +720,32 @@ export default function App() {
               ))}
             {page === "overview" &&
               (primary ? (
-                <MyPlan
-                  careers={selected}
-                  prefs={prefs}
-                  update={update}
-                  go={go}
-                  onExport={exportPlan}
-                  onReset={() => {
-                    setPrefs(structuredClone(initial));
-                    setMatches([]);
-                    go("discover");
-                    setToast("Saved plan cleared from this browser.");
-                  }}
-                />
+                <>
+                  <MyPlan
+                    careers={selected}
+                    prefs={prefs}
+                    update={update}
+                    go={go}
+                    onExport={exportPlan}
+                    onReset={() => {
+                      setPrefs(structuredClone(initial));
+                      setMatches([]);
+                      go("discover");
+                      setToast("Saved plan cleared from this browser.");
+                    }}
+                  />
+                  <DecisionReview
+                    tags={
+                      prefs.discovery?.tags ?? tagsFromAnswers(prefs.answers)
+                    }
+                    firstIdea={primary.title}
+                    nation={prefs.nation}
+                    onInspect={(soc) => {
+                      const career = careers.find((c) => c.soc === soc);
+                      if (career) setInspect(career);
+                    }}
+                  />
+                </>
               ) : prefs.completed ? (
                 <NeedChoices go={go} />
               ) : (

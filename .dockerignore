@@ -5,9 +5,13 @@
 .env
 .env.*
 data/raw
-snapshots
 **/__pycache__
 **/*.egg-info
 .pytest_cache
 .ruff_cache
 node_modules
+**/node_modules
+**/dist
+apps/web/artifacts
+packages/ml/models
+packages/ml/runs

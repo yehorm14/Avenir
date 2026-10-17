@@ -31,13 +31,18 @@ export async function api<T>(
     headers: body ? { "Content-Type": "application/json" } : undefined,
     ...(body ? { method: "POST", body: JSON.stringify(body) } : {}),
   });
-  if (!r.ok) {
-    const err = await r.json().catch(() => null);
+  const result = await r.json().catch(() => null);
+  if (!r.ok || result?.ok === false) {
+    const err = result;
     throw new Error(
-      typeof err?.detail === "string"
-        ? err.detail
-        : "We couldn't load that. Try again in a moment.",
+      typeof err?.error?.message === "string"
+        ? err.error.message
+        : typeof err?.detail === "string"
+          ? err.detail
+          : "We couldn't load that. Try again in a moment.",
     );
   }
-  return r.json();
+  return result && typeof result.ok === "boolean" && "data" in result
+    ? result.data
+    : result;
 }
