@@ -9,10 +9,12 @@ Everything below is backed by a file in this folder, `docs/contracts.md`, `AGENT
 - **What the app shows:** Amira, 17, picks her interests and types a first career idea. Avenir shows three
   career cards (Ambitious, Safe, Balanced) compared with her first idea, a hedge career, a "how did our past ratings hold up"
   backtest, a roadmap into the career, and a badge on every number saying where it came from.
-- **The API is not up yet.** Develop against the JSON in [`examples/`](examples/). They are real payloads built
-  from the data the backend loads today (partly sample data: those values have `source: "MOCK"` and `status: "mock"`).
-- **Types:** generate them now from [`schemas/`](schemas/) (for example with `json-schema-to-typescript`).
-  Once Nazar publishes `docs/openapi.json`, generate from that instead and drop `schemas/`.
+- **The API is on `main`.** Run it (section 8) and develop against it. The JSON in [`examples/`](examples/) are offline
+  fixtures of the same shapes. Today part of the data is sample data: those values have `source: "MOCK"` and `status: "mock"`.
+- **Types:** `docs/openapi.json` is published. Generate from it:
+  `npx openapi-typescript@7.4.4 docs/openapi.json -o src/api.d.ts`. This output passes `tsc --strict`. `data` and `error`
+  are optional in the generated types and `ok` is a plain boolean, so the client must check `ok` before it reads `data`.
+  [`schemas/`](schemas/) stays only as a secondary, offline reference.
 - **The example files are regenerated** whenever data changes (section 8). Never edit them by hand.
 
 ## 2. Envelope and errors
@@ -45,7 +47,8 @@ Serving a snapshot or sample data is **not** an error: you get 200 and that sour
 Two notes from `docs/contracts.md`:
 
 - Error envelopes may have an empty `meta.sources` (`[]`). Do not rely on it being filled when `ok` is `false`.
-- A malformed SOC (not four digits) is `VALIDATION_ERROR` (422). A well-formed SOC that is unknown is `NOT_FOUND` (404).
+- A malformed SOC (for example `abc` or `245`) is `VALIDATION_ERROR` (422). A well-formed SOC that is unknown (for example
+  `9999`) is `NOT_FOUND` (404).
 
 ## 3. Endpoints
 
@@ -54,12 +57,12 @@ Two notes from `docs/contracts.md`:
 | Method and path | Returns | Example file |
 | --- | --- | --- |
 | `GET /health` | status, `ml_mode` (real, mock, mixed, missing), sources | comes with the API |
-| `GET /api/v1/tags` | `Tag[]`: the interest checklist | `examples/tags.json` |
+| `GET /api/v1/tags` | `Tag[]`: the interest checklist. Sample list today (`ml_fit` is `mock`) | `examples/tags.json` |
 | `GET /api/v1/careers` | `Career[]`: the 20 demo careers | `examples/careers.json` lists their `soc2020` and `title`; one full `Career` is `examples/career_2451.json` |
 | `GET /api/v1/careers/{soc}` | `Career` | `examples/career_2451.json`, wrapped: `examples/envelope_career_2451.json` |
 | `GET /api/v1/careers/{soc}/history` | `HistoryPoint[]` | `examples/history_2451.json` |
-| `GET /api/v1/careers/{soc}/hedge` | `Hedge` or null | comes with the API (the related roles it is built from: `examples/hedge_candidates_2451.json`) |
-| `GET /api/v1/routes/{soc}?nation=scotland` | `Route[]` | `examples/routes_2451.json` |
+| `GET /api/v1/careers/{soc}/hedge` | `Hedge` or null (null for 4 of 20 careers today) | comes with the API (the related roles it is built from: `examples/hedge_candidates_2451.json`) |
+| `GET /api/v1/routes/{soc}?nation=scotland` | `Route[]` (`[]` for other nations today) | `examples/routes_2451.json` |
 | `GET /api/v1/crises` | `Crisis[]` | `examples/crises.json` |
 | `GET /api/v1/backtest/years` | `int[]` base years | `examples/backtest_years.json` |
 | `GET /api/v1/backtest?year=2013` | `BacktestOut {window, caveats, status}` | `examples/backtest_2013.json` (the first year in `backtest_years.json`) |
@@ -70,6 +73,14 @@ Two notes from `docs/contracts.md`:
 
 `first_idea` is a SOC code or free text such as `"architect"` (see `schemas/RecommendationRequest.json`).
 The `examples/` files hold the `data` part only unless the name starts with `envelope_` or `error_`.
+
+**Empty lists and null.** Handle these as "nothing to show". The UI shows a plain message, never an error.
+
+- `GET /routes/{soc}` returns `[]` when there are no routes for that nation. Today only `scotland` has routes.
+- `GET /careers/{soc}/hedge` returns `data: null` for some careers (4 of 20 today). The API sends no text for this; the UI
+  shows its own plain message, e.g. "No safer related career found".
+- Today hedges are sample data (`status: "mock"`, source `ml_hedges`) and `evidence` is `null`. Both become real with Arsenii's
+  Sunday PR.
 
 ## 4. Metric and how to render it
 
@@ -146,7 +157,12 @@ next to the source name. Examples: `examples/sources.json` (`statuses`) and the 
 `examples/envelope_career_2451.json`.
 
 For the demo, `POST /api/v1/demo/live` with `{"enabled": false}` forces snapshot data. Live job adverts (`ads_now`) are
-overlaid onto careers, so this switch changes that number and its badge. Build the "pull the plug" button on it.
+overlaid onto careers. Build the "pull the plug" button on this call.
+
+Today `ads_now` and the `adzuna` entry in `meta.sources` are `mock` (a sample number from the sample catalogue). They become
+`missing` once the real catalogue is built on Sunday, unless someone has Adzuna keys. So today `/demo/live` changes nothing
+visible: the call returns `{live}` and the page must not break. What the button should switch off (Adzuna, the LLM, the
+matcher) is still an open decision (plan, section 7).
 
 ## 6. ML contract v1.1 (Arsenii): what changes for the UI
 
@@ -156,12 +172,12 @@ v1.0 flags until then; the three new flags are in the table in section 4.
 
 | Item | What to do |
 | --- | --- |
-| **History** (`HistoryPoint[]`) | One point per year, 2007 to 2025. Any value can be `null`. 2007 to 2010 have pay but `jobs_k` is `null` (flags `bridged_soc2000`, `bridged_soc2010`); job counts start in 2011. Draw only the lines that have data |
+| **History** (`HistoryPoint[]`) | Today it runs 2011 to 2025. With v1.1 it runs 2007 to 2025: 2007 to 2010 have pay but `jobs_k` is `null` (flags `bridged_soc2000`, `bridged_soc2010`); job counts start in 2011. Any value can be `null`. Some careers have gaps (for example 2016 is missing for 3 of 20 today). Draw only the points that are present. Never interpolate and never assume one point per year |
 | **Hedge `evidence`** | `title` (linked to ESCO through at least 3 job titles) or `estimate` (ISCO fallback). Show an "estimate" badge when it is `estimate`. In `schemas/HedgeCandidate.json` and `schemas/Hedge.json` |
-| **`resilience_tech_slump`** | Now real data, measured for a broad job-advert category. The `category_level` flag is must-mention: name the category from `extra.adverts_category` |
+| **`resilience_tech_slump`** | `pending` (value `null`) today. Real with v1.1, measured for a broad job-advert category. The `category_level` flag is must-mention: name the category from `extra.adverts_category` |
 | **`exposure`** | When the `sources_disagree` flag is present (two independent research estimates disagree), show its sentence and the wider range. There is no separate field |
 | **`exposure_uk`** | The DfE score as a percentile rank among UK occupations, 0 to 1, where 1 is the most exposed. A cross-check only: never show it as a second headline number. It is `pending` in today's `career_2451.json` |
-| **`resilience_2008`** | Now real: the worse of the jobs change and the real pay change, April 2008 to April 2009. `extra` has both parts and says which one is the headline |
+| **`resilience_2008`** | `pending` (value `null`) today. Real with v1.1: the worse of the jobs change and the real pay change, April 2008 to April 2009. `extra` has both parts and says which one is the headline |
 | **`young_worker_share`** | New optional metric (a fraction): the share of workers aged 16 to 24 in 2016, including the self-employed (ONS APS 2016). A card line if you want it; ignore it otherwise. A new key in `Career.metrics`: an absent key means missing (it is listed in `vocab.ML_METRICS`) |
 | **`crises[].baseline_real_pay_median`** | Optional on a crisis (the 2008 one has it). In `schemas/Crisis.json` |
 
@@ -176,9 +192,14 @@ Screens, from the project rules (`AGENTS.md`). The ones marked **never cut** sta
    **"Did you mean...?"**: when `first_idea` is `null` and `first_idea_candidates` is not empty, her typed first idea matched
    several careers equally. Show the candidates (`soc2020`, `title`) as a list to choose from, then send the chosen SOC code
    as `first_idea` in a new request. Do not draw the comparison until she has chosen.
+   **No match**: when `first_idea` is `null` and `first_idea_candidates` is empty, we could not match what she typed. This is
+   different from "Did you mean...?". The response still has three picks. Show the free choice: let her retype, with a plain message such as
+   "We could not find that job, try another word". It is not an error.
 2. **The hedge** (never cut): a related career next to the top pick, with `risk_delta` (negative means safer) (`Hedge`).
 3. **Backtest button** (never cut): pick a past year, see how earlier ratings held up. Show bad results as they are.
-4. **Roadmap** (never cut): three steps and a "this month" action (`Roadmap`).
+4. **Roadmap** (never cut): three steps and a "this month" action (`Roadmap`). Step 1 is worded by nation: Scotland "Take
+   Higher <subjects>", England "Take A-level <subjects>", Wales and Northern Ireland "Take <subjects> at A-level or equivalent".
+   Outside Scotland, step 2 has route `null` and the detail "Routes for this nation are missing from our data." Show that text.
 5. **Provenance badges** (never cut): section 4.
 6. **Pull the plug** (never cut): section 5.
 
@@ -188,8 +209,7 @@ Also: the automation-worry slider (`automation_worry`, 0 to 1, in `ProfileIn`).
 
 | When | What |
 | --- | --- |
-| Now | Sample data and these examples. Schemas for every model |
-| Sunday 01:00 | Nazar's API running on sample data, and `docs/openapi.json`. Point the frontend at it |
+| Now | The API on `main` (sample and preliminary data), `docs/openapi.json`, these examples and the schemas |
 | Sunday 08:00 to 10:00 | Real ML data (Arsenii v1.1) and the real career catalogue and routes. Values change, shapes should not |
 | Sunday 11:30 | Code freeze |
 
@@ -200,6 +220,16 @@ python -m avenir_contracts.examples
 ```
 
 Run it from the repo root with the project installed (`pip install -e ".[dev]"`). It rewrites `schemas/` and `examples/`.
+
+**Run the API** from `main`, from the repo root:
+
+```
+pip install -e ".[dev]"
+uvicorn avenir_api.app:app --port 8000
+```
+
+CORS allows `http://localhost:5173` and `http://127.0.0.1:5173`. Recommendations take about 10 ms locally, and the ad overlays
+run in parallel.
 
 ## 9. Who to ask
 

@@ -32,7 +32,7 @@ CATALOGUE_HINTS: dict[str, tuple[list[str], list[str]]] = {
     "3120": (["cad technician", "draughtsperson"], ["maths", "graphic_communication"]),
     "2121": (["civil engineering"], ["maths", "physics"]),
     "2123": (["power engineer"], ["maths", "physics"]),
-    "3113": (["technician"], ["maths", "physics"]),
+    "3113": ([], ["maths", "physics"]),
     "2453": (["qs"], ["maths"]),
     "2454": (["surveyor", "land surveyor"], ["maths", "geography"]),
     "2433": (["actuary", "economist", "statistician"], ["maths"]),

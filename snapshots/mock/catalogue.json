@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-17T19:54:42+00:00",
+ "generated_at": "2026-10-17T23:09:11+00:00",
  "status": "mock",
  "entries": [
   {
@@ -916,9 +916,7 @@
   {
    "soc2020": "3113",
    "title": "Engineering technician",
-   "aliases": [
-    "technician"
-   ],
+   "aliases": [],
    "description": "MOCK description of Engineering technician.",
    "entry_subjects": [
     "maths",
