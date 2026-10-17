@@ -138,7 +138,7 @@ sources:
   - id: ashe_2007_2010
     name: ONS ASHE Table 14, 2007 to 2010 (SOC 2000 coding), earlier editions of ashe_t14
     how: browser
-    url: https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/occupation4digitsoc2010ashetable14   # same ONS page as ashe_t14
+    url: https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/occupation4digitsoc2010ashetable14   # (verify) 2007-2010 editions are SOC 2000 coded; may be a different ONS page
     instructions: >
       The same ONS page as ashe_t14 holds the 2007 to 2010 editions (SOC 2000 codes). Keep only
       Table 14.7a (annual gross pay) and 14.7b (sampling error, CV). Employees only. Bridged to
