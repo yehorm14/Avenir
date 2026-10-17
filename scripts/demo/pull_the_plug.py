@@ -128,6 +128,7 @@ class Run:
         self.mock_names: set[str] = set()
         self.total_ms = 0.0
         self.ads_states: list[str] = []
+        self.ads_by_soc: dict[str, str] = {}
         self.statuses_before: dict[str, str] = {}
         self.ads_after: str | None = None
 
@@ -165,7 +166,11 @@ class Run:
     # 1
     def health(self) -> bool:
         self.section("1. Health")
-        status, body = self.client.get(HEALTH)  # RequestException is handled by the caller (exit 2)
+        t0 = time.perf_counter()
+        try:
+            status, body = self.client.get(HEALTH)  # RequestException is handled by the caller (exit 2)
+        finally:
+            self.total_ms += (time.perf_counter() - t0) * 1000
         data = (body or {}).get("data") if isinstance(body, dict) else None
         data = data if isinstance(data, dict) else {}
         for problem in envelope_problems(body):
@@ -184,7 +189,8 @@ class Run:
         statuses = [s for s in (data or {}).get("statuses") or [] if isinstance(s, dict)] if isinstance(data, dict) else []
         if status != 200 or not statuses:
             self.say(f"  sources: no statuses returned (HTTP {status})")
-            self.warns.append("GET /api/v1/sources returned no statuses")
+            if status is not None:  # a network error was already recorded as a FAIL by call()
+                self.fails.append(f"sources: HTTP {status}" if status != 200 else "sources: no statuses returned")
             return {}
         rows = [[str(s.get("name")), str(s.get("status")), str(s.get("quality") or "-"), str(s.get("as_of") or "-")]
                 for s in statuses]
@@ -205,9 +211,14 @@ class Run:
         data = (body or {}).get("data") if isinstance(body, dict) else None
         if status != 200 or not isinstance(data, list):
             self.say(f"  careers: no list returned (HTTP {status})")
-            self.warns.append("GET /api/v1/careers returned no list")
+            if status is not None:
+                self.fails.append(f"careers: HTTP {status}" if status != 200 else "careers: response is not a list")
             return {}
         socs = [str(c.get("soc2020")) for c in data if isinstance(c, dict) and c.get("soc2020")]
+        if not socs:
+            self.say("  careers: the list is empty")
+            self.fails.append("careers: empty list (the API has no data)")
+            return {}
         self.say(f"  careers list: {len(socs)} careers, {ms:.0f} ms")
         titles = {str(c.get("soc2020")): str(c.get("title")) for c in data if isinstance(c, dict)}
         rows: list[list[str]] = []
@@ -216,12 +227,15 @@ class Run:
             st, card, ms = self.call("GET", f"{CAREERS}/{soc}")
             if st != 200:
                 rows.append([soc, titles.get(soc, "?"), "-", f"error HTTP {st}", f"{ms:.0f}"])
+                if st is not None:  # a network error was already recorded as a FAIL by call()
+                    self.fails.append(f"career card {soc}: HTTP {st}")
                 continue
             card_data = card.get("data") if isinstance(card, dict) else None
             title = str((card_data or {}).get("title") or titles.get(soc, "?")) if isinstance(card_data, dict) else "?"
             state, value = ads_state(card)
             cards[soc] = (state, value)
             self.ads_states.append(state)
+            self.ads_by_soc[soc] = state
             rows.append([soc, title, fmt_value(value), state, f"{ms:.0f}"])
         if rows:
             self.say(*table(["soc", "title", "ads_now", "ads status", "ms"], rows))
@@ -243,9 +257,13 @@ class Run:
             self.say(f"  recommendations: {NOT_YET}")
             return
         data = (body or {}).get("data") if isinstance(body, dict) else None
+        if st is None:  # network error, already recorded as a FAIL by call()
+            return
         if st != 200 or not isinstance(data, dict):
-            self.say(f"  recommendations: error HTTP {st}")
-            self.warns.append(f"recommendations returned HTTP {st}")
+            message = ((body or {}).get("error") or {}).get("message") if isinstance(body, dict) else None
+            line = f"recommendations: HTTP {st}" + (f": {message}" if message else "")
+            self.say(f"  {line}")
+            (self.fails if st >= 500 else self.warns).append(line)  # 5xx breaks Amira's main flow
             return
         self.say(f"  recommendations: HTTP 200, {ms:.0f} ms")
         for p in data.get("picks") or []:
@@ -310,10 +328,13 @@ class Run:
         else:
             self.passes.append("no mock status")
         states = set(self.ads_states)
-        if "missing" in states:
+        missing = [soc for soc, st in self.ads_by_soc.items() if st == "missing"]
+        if missing and len(missing) == len(self.ads_by_soc):
             self.warns.append(NO_SNAPSHOT)
-        elif states:
-            self.passes.append("ads status: " + ", ".join(sorted(states)))
+        elif missing:
+            self.warns.append(f"ads missing for {len(missing)} of {len(self.ads_by_soc)} careers: " + ", ".join(missing))
+        if states - {"missing"}:
+            self.passes.append("ads status: " + ", ".join(sorted(states - {"missing"})))
         if self.ads_after is not None:
             if self.ads_after == "live":
                 self.fails.append("ads still live after the plug was pulled")
@@ -348,7 +369,7 @@ def run(client: Client, args: argparse.Namespace, out: Callable[[str], Any]) -> 
 
 def parse(argv: list[str] | None) -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Avenir pull-the-plug rehearsal against a running API.")
-    p.add_argument("--base-url", default="http://localhost:8000")
+    p.add_argument("--base-url", default="http://127.0.0.1:8000")
     p.add_argument("--warm-only", action="store_true", help="stop after warming the cache")
     p.add_argument("--no-toggle", action="store_true", help="do not pull the plug")
     p.add_argument("--timeout", type=float, default=5.0, help="seconds per request")

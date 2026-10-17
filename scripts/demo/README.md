@@ -16,8 +16,8 @@ Flags: `--base-url URL`, `--warm-only` (stop after warming the cache), `--no-tog
 
 Exit codes: `0` ok (warnings allowed), `1` a FAIL line, `2` API not reachable.
 
-On Windows, `localhost` can add about 2 s to every call (it tries IPv6 first while uvicorn listens on IPv4). If the
-timings look slow, use `--base-url http://127.0.0.1:8000`.
+The default is `http://127.0.0.1:8000`, not `localhost`: on Windows `localhost` adds about 2 s to every call (it
+tries IPv6 first while uvicorn listens on IPv4). For another host or port use `--base-url http://HOST:PORT`.
 
 ## Run it once about 5 minutes before the pitch
 
