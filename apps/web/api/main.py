@@ -25,6 +25,7 @@ from app.data import get_store  # noqa: E402
 from app.path import build_plan  # noqa: E402
 from pathfinder_ml import FLAG_TEXT, ML, MUST_MENTION  # noqa: E402
 
+from .discovery import DiscoveryRequest, discover  # noqa: E402
 from .ranking import rank_careers  # noqa: E402
 
 app = FastAPI(title="Avenir app API", version="1.0.0")
@@ -204,6 +205,14 @@ def matches(request: MatchRequest) -> dict:
         ),
         "fit_status": fit["status"],
     }
+
+
+@app.post("/api/discovery")
+def discovery(request: DiscoveryRequest) -> dict:
+    try:
+        return discover(request, _careers(), ml().match_tags(request.answers.text(), top_k=16), ml()._load("fit"))
+    except ValueError as error:
+        raise HTTPException(422, str(error)) from error
 
 
 @app.get("/api/path/{soc}")
