@@ -1,0 +1,412 @@
+{
+  "data": {
+    "aliases": [
+      "architecture",
+      "Architect"
+    ],
+    "description": "MOCK description of Architect.",
+    "entry_subjects": [
+      "maths",
+      "art",
+      "physics"
+    ],
+    "isco08": [
+      {
+        "code": "2161",
+        "share": 0.7
+      },
+      {
+        "code": "2162",
+        "share": 0.3
+      }
+    ],
+    "metrics": {
+      "ads_now": {
+        "as_of": "2025",
+        "confidence": "low",
+        "extra": {},
+        "flags": [
+          "mock"
+        ],
+        "granularity": "occupation",
+        "high": null,
+        "low": null,
+        "note": "Sample data, not a real figure.",
+        "region": "UK",
+        "source": "MOCK",
+        "status": "mock",
+        "unit": "count",
+        "value": 3271.9
+      },
+      "demand_trend": {
+        "as_of": "2021-2025",
+        "confidence": "medium",
+        "extra": {},
+        "flags": [
+          "employees_only",
+          "provisional"
+        ],
+        "granularity": "occupation",
+        "high": 0.0,
+        "low": -0.1115,
+        "note": "Robust (Theil-Sen) yearly trend in full-time employee jobs since the 2021 code change; range is a 90% interval.",
+        "region": "UK",
+        "source": "ons_ashe_t14",
+        "status": "preliminary",
+        "unit": "fraction/year",
+        "value": -0.0243
+      },
+      "demand_trend_2011_19": {
+        "as_of": "2011-2019",
+        "confidence": "high",
+        "extra": {},
+        "flags": [
+          "bridged_soc2010",
+          "employees_only",
+          "provisional"
+        ],
+        "granularity": "occupation",
+        "high": 0.0507,
+        "low": 0.016,
+        "note": "Robust yearly trend in full-time employee jobs in the previous code era, bridged to today's code; range is a 90% interval.",
+        "region": "UK",
+        "source": "ons_ashe_t14",
+        "status": "preliminary",
+        "unit": "fraction/year",
+        "value": 0.0383
+      },
+      "exposure": {
+        "as_of": "2025",
+        "confidence": "high",
+        "extra": {
+          "dominant_isco": "2161",
+          "gradient": "Minimal Exposure",
+          "n_isco": 2
+        },
+        "flags": [
+          "multi_isco"
+        ],
+        "granularity": "occupation",
+        "high": 0.37,
+        "low": 0.37,
+        "note": "Generative-AI exposure of the occupation's tasks (ILO), averaged over the international codes its job titles map to; range shows their spread.",
+        "region": "UK",
+        "source": "ilo_wp140",
+        "status": "preliminary",
+        "unit": "score 0-1",
+        "value": 0.37
+      },
+      "exposure_uk": {
+        "as_of": "2023",
+        "confidence": "low",
+        "extra": {},
+        "flags": [
+          "pending_source"
+        ],
+        "granularity": "occupation",
+        "high": null,
+        "low": null,
+        "note": "UK cross-check of AI exposure by SOC 2020 (DfE). Not loaded yet.",
+        "region": "UK",
+        "source": "dfe_ai_uk_2023",
+        "status": "pending",
+        "unit": "score 0-1",
+        "value": null
+      },
+      "jobs": {
+        "as_of": "2025",
+        "confidence": "medium",
+        "extra": {},
+        "flags": [
+          "employees_only",
+          "provisional"
+        ],
+        "granularity": "occupation",
+        "high": null,
+        "low": null,
+        "note": "Full-time employee jobs (ASHE estimate).",
+        "region": "UK",
+        "source": "ons_ashe_t14",
+        "status": "preliminary",
+        "unit": "thousand jobs",
+        "value": 30.0
+      },
+      "pay_median": {
+        "as_of": "2025",
+        "confidence": "medium",
+        "extra": {},
+        "flags": [
+          "employees_only",
+          "provisional"
+        ],
+        "granularity": "occupation",
+        "high": 55262.0,
+        "low": 37342.0,
+        "note": "Median gross annual pay, full-time employees; range is the 25th to 75th percentile.",
+        "region": "UK",
+        "source": "ons_ashe_t14",
+        "status": "preliminary",
+        "unit": "GBP/year",
+        "value": 47143.0
+      },
+      "pay_p10": {
+        "as_of": "2025",
+        "confidence": "medium",
+        "extra": {},
+        "flags": [
+          "employees_only",
+          "provisional"
+        ],
+        "granularity": "occupation",
+        "high": null,
+        "low": null,
+        "note": "10th percentile of gross annual pay, full-time employees.",
+        "region": "UK",
+        "source": "ons_ashe_t14",
+        "status": "preliminary",
+        "unit": "GBP/year",
+        "value": 32728.0
+      },
+      "pay_p90": {
+        "as_of": "2025",
+        "confidence": "low",
+        "extra": {},
+        "flags": [
+          "employees_only",
+          "provisional",
+          "suppressed"
+        ],
+        "granularity": "occupation",
+        "high": null,
+        "low": null,
+        "note": "90th percentile of gross annual pay, full-time employees (a ceiling).",
+        "region": "UK",
+        "source": "ons_ashe_t14",
+        "status": "preliminary",
+        "unit": "GBP/year",
+        "value": null
+      },
+      "real_pay_change_10y": {
+        "as_of": "2015-2025",
+        "confidence": "medium",
+        "extra": {},
+        "flags": [
+          "bridged_soc2010",
+          "employees_only",
+          "provisional"
+        ],
+        "granularity": "occupation",
+        "high": null,
+        "low": null,
+        "note": "Real change in median full-time pay, 2015 to 2025, in April 2025 prices (CPIH).",
+        "region": "UK",
+        "source": "ons_ashe_t14",
+        "status": "preliminary",
+        "unit": "fraction",
+        "value": -0.1082
+      },
+      "resilience_2008": {
+        "as_of": "2008-2010",
+        "confidence": "low",
+        "extra": {},
+        "flags": [
+          "pending_source"
+        ],
+        "granularity": "occupation",
+        "high": null,
+        "low": null,
+        "note": "Jobs change 2008 to 2010 vs all occupations (needs ASHE 2007-2011, SOC 2000). Not loaded yet.",
+        "region": "UK",
+        "source": "ons_ashe_t14",
+        "status": "pending",
+        "unit": "fraction",
+        "value": null
+      },
+      "resilience_cost_of_living": {
+        "as_of": "2021-2023",
+        "confidence": "medium",
+        "extra": {},
+        "flags": [
+          "employees_only"
+        ],
+        "granularity": "occupation",
+        "high": null,
+        "low": null,
+        "note": "Real pay change from 2021 to 2023 compared with the typical occupation (+0.05 = 5 points better).",
+        "region": "UK",
+        "source": "ons_ashe_t14",
+        "status": "preliminary",
+        "unit": "fraction",
+        "value": -0.0164
+      },
+      "resilience_covid": {
+        "as_of": "2019-2020",
+        "confidence": "medium",
+        "extra": {},
+        "flags": [
+          "bridged_soc2010",
+          "covid_year",
+          "employees_only"
+        ],
+        "granularity": "occupation",
+        "high": null,
+        "low": null,
+        "note": "Change in all-employee jobs from 2019 to 2020 compared with the typical occupation (+0.10 = 10 points better).",
+        "region": "UK",
+        "source": "ons_ashe_t14",
+        "status": "preliminary",
+        "unit": "fraction",
+        "value": 0.0571
+      },
+      "resilience_tech_slump": {
+        "as_of": "2022-2024",
+        "confidence": "low",
+        "extra": {},
+        "flags": [
+          "pending_source"
+        ],
+        "granularity": "occupation",
+        "high": null,
+        "low": null,
+        "note": "Change in online job adverts 2022 to 2024 vs all occupations. Not loaded yet.",
+        "region": "UK",
+        "source": "ons_online_job_adverts",
+        "status": "pending",
+        "unit": "fraction",
+        "value": null
+      },
+      "shortage": {
+        "as_of": "2025",
+        "confidence": "low",
+        "extra": {},
+        "flags": [
+          "mock"
+        ],
+        "granularity": "occupation",
+        "high": null,
+        "low": null,
+        "note": "Sample data, not a real figure.",
+        "region": "UK",
+        "source": "MOCK",
+        "status": "mock",
+        "unit": "flag",
+        "value": 1.0
+      },
+      "stress": {
+        "as_of": "2025",
+        "confidence": "low",
+        "extra": {},
+        "flags": [
+          "mock"
+        ],
+        "granularity": "major_group",
+        "high": null,
+        "low": null,
+        "note": "Sample data, not a real figure.",
+        "region": "UK",
+        "source": "MOCK",
+        "status": "mock",
+        "unit": "rate per 100k",
+        "value": 1424.4
+      },
+      "wellbeing": {
+        "as_of": "2025",
+        "confidence": "low",
+        "extra": {},
+        "flags": [
+          "mock"
+        ],
+        "granularity": "major_group",
+        "high": null,
+        "low": null,
+        "note": "Sample data, not a real figure.",
+        "region": "UK",
+        "source": "MOCK",
+        "status": "mock",
+        "unit": "score 0-10",
+        "value": 6.9
+      }
+    },
+    "official_title": "Architects",
+    "soc2020": "2451",
+    "title": "Architect"
+  },
+  "error": null,
+  "meta": {
+    "as_of": "2026-10-17T19:54:42+00:00",
+    "request_id": "example",
+    "sources": [
+      {
+        "as_of": null,
+        "name": "ml_occupations",
+        "quality": "preliminary",
+        "region": "UK",
+        "status": "snapshot"
+      },
+      {
+        "as_of": null,
+        "name": "ml_history",
+        "quality": "preliminary",
+        "region": "UK",
+        "status": "snapshot"
+      },
+      {
+        "as_of": null,
+        "name": "ml_hedges",
+        "quality": null,
+        "region": "UK",
+        "status": "mock"
+      },
+      {
+        "as_of": null,
+        "name": "ml_fit",
+        "quality": null,
+        "region": "UK",
+        "status": "mock"
+      },
+      {
+        "as_of": null,
+        "name": "ml_backtest",
+        "quality": "preliminary",
+        "region": "UK",
+        "status": "snapshot"
+      },
+      {
+        "as_of": null,
+        "name": "ml_crises",
+        "quality": "preliminary",
+        "region": "UK",
+        "status": "snapshot"
+      },
+      {
+        "as_of": null,
+        "name": "ml_sources",
+        "quality": "preliminary",
+        "region": "UK",
+        "status": "snapshot"
+      },
+      {
+        "as_of": null,
+        "name": "ml_eval",
+        "quality": "preliminary",
+        "region": "UK",
+        "status": "snapshot"
+      },
+      {
+        "as_of": "2026-10-17T19:54:42+00:00",
+        "name": "catalogue",
+        "quality": null,
+        "region": "UK",
+        "status": "mock"
+      },
+      {
+        "as_of": "2026-10-17T19:54:42+00:00",
+        "name": "routes",
+        "quality": null,
+        "region": "UK",
+        "status": "mock"
+      }
+    ]
+  },
+  "ok": true
+}

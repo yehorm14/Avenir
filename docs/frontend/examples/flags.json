@@ -1,0 +1,46 @@
+{
+  "bridged_soc2010": {
+    "must_mention": true,
+    "text": "Figures before 2021 are estimated from the older SOC 2010 occupation codes using the ONS crosswalk."
+  },
+  "covid_year": {
+    "must_mention": true,
+    "text": "2020 figures are affected by the pandemic: low survey response and furlough."
+  },
+  "cv_high": {
+    "must_mention": false,
+    "text": "This estimate has a sampling error of 10 to 20 percent; treat it with caution."
+  },
+  "employees_only": {
+    "must_mention": true,
+    "text": "Covers employees only; self-employed and freelance workers are not included."
+  },
+  "imputed_parent": {
+    "must_mention": true,
+    "text": "No direct figure exists; this is estimated from the wider occupation group."
+  },
+  "mock": {
+    "must_mention": true,
+    "text": "This is sample data, not a real figure."
+  },
+  "multi_isco": {
+    "must_mention": false,
+    "text": "This occupation spans several international job codes; the score is their weighted average and the range shows how much they differ."
+  },
+  "pending_source": {
+    "must_mention": false,
+    "text": "The data source for this figure has not been loaded yet."
+  },
+  "provisional": {
+    "must_mention": false,
+    "text": "This year's figure is an ONS provisional estimate and may be revised."
+  },
+  "recoded_2021": {
+    "must_mention": true,
+    "text": "Occupation codes changed in 2021, so job counts before and after 2021 are not directly comparable."
+  },
+  "suppressed": {
+    "must_mention": false,
+    "text": "ONS withheld this estimate because it was too unreliable."
+  }
+}

@@ -1,0 +1,292 @@
+{
+  "$defs": {
+    "Career": {
+      "additionalProperties": false,
+      "properties": {
+        "aliases": {
+          "description": "other names, for matching a typed first idea",
+          "items": {
+            "type": "string"
+          },
+          "title": "Aliases",
+          "type": "array"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "entry_subjects": {
+          "items": {
+            "enum": [
+              "maths",
+              "english",
+              "physics",
+              "chemistry",
+              "biology",
+              "computing",
+              "art",
+              "design_technology",
+              "graphic_communication",
+              "geography",
+              "business",
+              "music"
+            ],
+            "type": "string"
+          },
+          "title": "Entry Subjects",
+          "type": "array"
+        },
+        "isco08": {
+          "items": {
+            "$ref": "#/$defs/IscoShare"
+          },
+          "title": "Isco08",
+          "type": "array"
+        },
+        "metrics": {
+          "additionalProperties": {
+            "$ref": "#/$defs/Metric"
+          },
+          "description": "keys: vocab.ML_METRICS + vocab.CATALOGUE_METRICS; an absent key means missing",
+          "title": "Metrics",
+          "type": "object"
+        },
+        "official_title": {
+          "description": "ONS SOC 2020 unit group title",
+          "title": "Official Title",
+          "type": "string"
+        },
+        "soc2020": {
+          "pattern": "^\\d{4}$",
+          "title": "Soc2020",
+          "type": "string"
+        },
+        "title": {
+          "description": "friendly title: catalogue title, else ML short_title",
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "soc2020",
+        "title",
+        "official_title",
+        "metrics"
+      ],
+      "title": "Career",
+      "type": "object"
+    },
+    "IscoShare": {
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "share": {
+          "title": "Share",
+          "type": "number"
+        }
+      },
+      "required": [
+        "code",
+        "share"
+      ],
+      "title": "IscoShare",
+      "type": "object"
+    },
+    "Metric": {
+      "properties": {
+        "as_of": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "As Of"
+        },
+        "confidence": {
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "extra": {
+          "additionalProperties": true,
+          "title": "Extra",
+          "type": "object"
+        },
+        "flags": {
+          "description": "vocabulary in packages/ml/CONTRACTS.md 2.3",
+          "items": {
+            "type": "string"
+          },
+          "title": "Flags",
+          "type": "array"
+        },
+        "granularity": {
+          "default": "occupation",
+          "description": "occupation | parent_group | major_group | estimate",
+          "title": "Granularity",
+          "type": "string"
+        },
+        "high": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "High"
+        },
+        "low": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Low"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        },
+        "region": {
+          "default": "UK",
+          "title": "Region",
+          "type": "string"
+        },
+        "source": {
+          "description": "key in sources.json / data/manifest.yaml, or MOCK",
+          "minLength": 1,
+          "title": "Source",
+          "type": "string"
+        },
+        "status": {
+          "default": "final",
+          "enum": [
+            "final",
+            "preliminary",
+            "mock",
+            "pending"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "value",
+        "unit",
+        "source",
+        "confidence"
+      ],
+      "title": "Metric",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "career": {
+      "$ref": "#/$defs/Career"
+    },
+    "for_soc": {
+      "title": "For Soc",
+      "type": "string"
+    },
+    "risk_delta": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "hedge risk minus top-pick risk; negative = safer",
+      "title": "Risk Delta"
+    },
+    "shared_skills": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Shared Skills",
+      "type": "array"
+    },
+    "similarity": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Similarity",
+      "type": "number"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "why": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Why"
+    }
+  },
+  "required": [
+    "for_soc",
+    "career",
+    "similarity",
+    "shared_skills",
+    "why",
+    "risk_delta",
+    "status"
+  ],
+  "title": "Hedge",
+  "type": "object"
+}

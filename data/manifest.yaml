@@ -2,7 +2,8 @@
 # Run `make data-check` after downloading: it checks each `path` exists and records
 # checksums in data/manifest.lock.json (commit the lock file, never the data).
 #
-# how: script = scripts/fetch/<script>; browser = manual download, then rsync to the cluster
+# how: script = scripts/fetch/<script>; browser = manual download, then rsync to the cluster;
+# manual = a table people copy by hand from public pages into a committed file (data/curated/)
 # Fill `licence_checked_by` with your initials once you have read the licence on download.
 
 sources:
@@ -133,3 +134,17 @@ sources:
     licence: Adzuna API terms, show "Jobs by Adzuna"
     licence_checked_by: ""
     used_by: [ads_now, nowcast, pull-the-plug demo]
+
+  - id: routes_curated
+    name: Routes into each demo career by nation (degree, graduate apprenticeship, apprenticeship, college)
+    how: manual
+    instructions: >
+      A person copies each route from its real page into data/curated/routes.csv, with the
+      page URL in `url`, the site name in `source` and their initials in `verified_by`.
+      Scotland first (apprenticeships.scot, Graduate Apprenticeships, university course
+      pages); England from Find an Apprenticeship if time. Never write a route from memory.
+    path: data/curated/routes.csv
+    coverage: Scotland first; England if time
+    licence: (verify) per source page
+    licence_checked_by: ""
+    used_by: [roadmap routes]

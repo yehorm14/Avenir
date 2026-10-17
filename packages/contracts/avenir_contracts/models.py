@@ -1,4 +1,4 @@
-"""API models. ML pass-through shapes mirror packages/ml/CONTRACTS.md v1.0 (Arsenii); the rest is ours.
+"""API models. ML pass-through shapes mirror packages/ml/CONTRACTS.md v1.1 (Arsenii); the rest is ours.
 
 STRICT models are request/response models we own. LOOSE models mirror ML artefacts and ignore
 unknown keys, because ML minor versions may add fields (CONTRACTS.md section 7).
@@ -67,6 +67,7 @@ class Crisis(BaseModel):
     window: str
     measure: str
     baseline_median: float | None = None
+    baseline_real_pay_median: float | None = None
     status: MetricStatus | str = "preliminary"
     flags: list[str] = Field(default_factory=list)
 
@@ -144,6 +145,7 @@ class HedgeCandidate(BaseModel):
     similarity: float = Field(ge=0, le=1)
     shared_skills: list[str] = Field(default_factory=list)
     why: str | None = None
+    evidence: str | None = Field(default=None, description="title | estimate (ML v1.1)")
     status: MetricStatus | str = "mock"
 
 
@@ -154,6 +156,7 @@ class Hedge(BaseModel):
     similarity: float = Field(ge=0, le=1)
     shared_skills: list[str]
     why: str | None
+    evidence: str | None = Field(default=None, description="title | estimate; show 'estimate' as a badge")
     risk_delta: float | None = Field(description="hedge risk minus top-pick risk; negative = safer")
     status: str
 

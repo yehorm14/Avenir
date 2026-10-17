@@ -1,0 +1,4 @@
+soc2020,nation,kind,name,provider,entry_requirements,url,source,verified_by
+2451,scotland,degree,TEST degree route,TEST,TEST entry requirements (test data),https://example.org/test,TEST source page (test data),test
+2451,england,degree,TEST degree route,TEST,TEST entry requirements (test data),https://example.org/test,TEST source page (test data),test
+2134,scotland,graduate_apprenticeship,TEST graduate apprenticeship route,,"TEST entry requirements, with a comma (test data)",https://example.org/test,TEST source page (test data),test

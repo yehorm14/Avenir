@@ -1,0 +1,130 @@
+{
+  "$defs": {
+    "ProfileIn": {
+      "additionalProperties": false,
+      "properties": {
+        "automation_worry": {
+          "default": 0.5,
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Automation Worry",
+          "type": "number"
+        },
+        "free_text": {
+          "default": "",
+          "maxLength": 300,
+          "title": "Free Text",
+          "type": "string"
+        },
+        "interests": {
+          "description": "tag ids from GET /api/v1/tags",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 16,
+          "title": "Interests",
+          "type": "array"
+        },
+        "location": {
+          "default": "Glasgow",
+          "maxLength": 60,
+          "title": "Location",
+          "type": "string"
+        },
+        "nation": {
+          "default": "scotland",
+          "enum": [
+            "scotland",
+            "england",
+            "wales",
+            "northern_ireland"
+          ],
+          "title": "Nation",
+          "type": "string"
+        },
+        "qualifications": {
+          "items": {
+            "$ref": "#/$defs/Qualification"
+          },
+          "maxItems": 20,
+          "title": "Qualifications",
+          "type": "array"
+        }
+      },
+      "title": "ProfileIn",
+      "type": "object"
+    },
+    "Qualification": {
+      "additionalProperties": false,
+      "properties": {
+        "grade": {
+          "anyOf": [
+            {
+              "maxLength": 3,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Grade"
+        },
+        "level": {
+          "enum": [
+            "national5",
+            "higher",
+            "advanced_higher",
+            "gcse",
+            "a_level"
+          ],
+          "title": "Level",
+          "type": "string"
+        },
+        "subject": {
+          "enum": [
+            "maths",
+            "english",
+            "physics",
+            "chemistry",
+            "biology",
+            "computing",
+            "art",
+            "design_technology",
+            "graphic_communication",
+            "geography",
+            "business",
+            "music"
+          ],
+          "title": "Subject",
+          "type": "string"
+        }
+      },
+      "required": [
+        "subject",
+        "level"
+      ],
+      "title": "Qualification",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "first_idea": {
+      "description": "SOC 2020 code or free text, e.g. 'architect'",
+      "maxLength": 80,
+      "minLength": 1,
+      "title": "First Idea",
+      "type": "string"
+    },
+    "profile": {
+      "$ref": "#/$defs/ProfileIn"
+    }
+  },
+  "required": [
+    "profile",
+    "first_idea"
+  ],
+  "title": "RecommendationRequest",
+  "type": "object"
+}

@@ -1,0 +1,75 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "entry_requirements": {
+      "title": "Entry Requirements",
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "degree",
+        "graduate_apprenticeship",
+        "apprenticeship",
+        "college"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "nation": {
+      "enum": [
+        "scotland",
+        "england",
+        "wales",
+        "northern_ireland"
+      ],
+      "title": "Nation",
+      "type": "string"
+    },
+    "provider": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Provider"
+    },
+    "soc2020": {
+      "pattern": "^\\d{4}$",
+      "title": "Soc2020",
+      "type": "string"
+    },
+    "source": {
+      "title": "Source",
+      "type": "string"
+    },
+    "url": {
+      "title": "Url",
+      "type": "string"
+    },
+    "verified_by": {
+      "minLength": 1,
+      "title": "Verified By",
+      "type": "string"
+    }
+  },
+  "required": [
+    "soc2020",
+    "nation",
+    "kind",
+    "name",
+    "entry_requirements",
+    "url",
+    "source",
+    "verified_by"
+  ],
+  "title": "Route",
+  "type": "object"
+}

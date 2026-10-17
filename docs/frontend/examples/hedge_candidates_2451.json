@@ -1,0 +1,42 @@
+[
+  {
+    "shared_skills": [],
+    "similarity": 0.8,
+    "soc2020": "2453",
+    "status": "mock",
+    "title": "Quantity surveyors",
+    "why": "Placeholder until ESCO skill overlap is computed (M3)."
+  },
+  {
+    "shared_skills": [],
+    "similarity": 0.8,
+    "soc2020": "2452",
+    "status": "mock",
+    "title": "Chartered architectural technologists, planning officers and consultants",
+    "why": "Placeholder until ESCO skill overlap is computed (M3)."
+  },
+  {
+    "shared_skills": [],
+    "similarity": 0.8,
+    "soc2020": "2454",
+    "status": "mock",
+    "title": "Chartered surveyors",
+    "why": "Placeholder until ESCO skill overlap is computed (M3)."
+  },
+  {
+    "shared_skills": [],
+    "similarity": 0.8,
+    "soc2020": "2421",
+    "status": "mock",
+    "title": "Chartered and certified accountants",
+    "why": "Placeholder until ESCO skill overlap is computed (M3)."
+  },
+  {
+    "shared_skills": [],
+    "similarity": 0.8,
+    "soc2020": "2433",
+    "status": "mock",
+    "title": "Actuaries, economists and statisticians",
+    "why": "Placeholder until ESCO skill overlap is computed (M3)."
+  }
+]

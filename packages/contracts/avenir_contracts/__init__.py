@@ -1,4 +1,4 @@
-"""Avenir shared contract v2: built on packages/ml/CONTRACTS.md v1.0 (Arsenii).
+"""Avenir shared contract v2.1: built on packages/ml/CONTRACTS.md v1.1 (Arsenii).
 
 Owner: Yehor. Change only through a PR with "needs a contract change" ticked.
 """

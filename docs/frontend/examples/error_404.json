@@ -1,0 +1,85 @@
+{
+  "data": null,
+  "error": {
+    "code": "NOT_FOUND",
+    "details": [],
+    "message": "Unknown SOC code 9999"
+  },
+  "meta": {
+    "as_of": "2026-10-17T19:54:42+00:00",
+    "request_id": "example",
+    "sources": [
+      {
+        "as_of": null,
+        "name": "ml_occupations",
+        "quality": "preliminary",
+        "region": "UK",
+        "status": "snapshot"
+      },
+      {
+        "as_of": null,
+        "name": "ml_history",
+        "quality": "preliminary",
+        "region": "UK",
+        "status": "snapshot"
+      },
+      {
+        "as_of": null,
+        "name": "ml_hedges",
+        "quality": null,
+        "region": "UK",
+        "status": "mock"
+      },
+      {
+        "as_of": null,
+        "name": "ml_fit",
+        "quality": null,
+        "region": "UK",
+        "status": "mock"
+      },
+      {
+        "as_of": null,
+        "name": "ml_backtest",
+        "quality": "preliminary",
+        "region": "UK",
+        "status": "snapshot"
+      },
+      {
+        "as_of": null,
+        "name": "ml_crises",
+        "quality": "preliminary",
+        "region": "UK",
+        "status": "snapshot"
+      },
+      {
+        "as_of": null,
+        "name": "ml_sources",
+        "quality": "preliminary",
+        "region": "UK",
+        "status": "snapshot"
+      },
+      {
+        "as_of": null,
+        "name": "ml_eval",
+        "quality": "preliminary",
+        "region": "UK",
+        "status": "snapshot"
+      },
+      {
+        "as_of": "2026-10-17T19:54:42+00:00",
+        "name": "catalogue",
+        "quality": null,
+        "region": "UK",
+        "status": "mock"
+      },
+      {
+        "as_of": "2026-10-17T19:54:42+00:00",
+        "name": "routes",
+        "quality": null,
+        "region": "UK",
+        "status": "mock"
+      }
+    ]
+  },
+  "ok": false
+}
