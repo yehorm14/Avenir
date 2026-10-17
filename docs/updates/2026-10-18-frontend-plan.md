@@ -7,7 +7,7 @@ Code freeze is **Sunday 18 Oct, 11:30**. The detailed handoff is `docs/frontend/
 
 - The backend is mostly on `main`: contract v2.1, the decision engine, live adapters, catalogue ETL, the frontend pack.
 - Nazar's API (PR #9) is ready but not merged yet. Until it is, run it from the `nazar/api` branch.
-- Everything you see today is **sample data**, with `status: "mock"` and `source: "MOCK"`. Shapes are final. Values move on Sunday.
+- Today: ML numbers are real but preliminary (status `preliminary`); job names, subjects and routes are sample data (`mock`); live ads are missing. Shapes are final; values move on Sunday.
 - Proposal (confirm at standup): Illia's app is the base and talks to our API. Two pairs build the screens.
 - `apps/web/` is empty. Nothing in the UI is on our response envelope yet. That is the first job.
 
@@ -18,17 +18,17 @@ Paths come from `routes_read.py` and `routes_write.py` on `origin/nazar/api`. Th
 
 | Screen | Endpoint | Status |
 | --- | --- | --- |
-| Interest checklist | `GET /api/v1/tags` | Works on sample data |
+| Interest checklist | `GET /api/v1/tags` | Works. Preliminary ML data |
 | Interests from free text | `POST /api/v1/profile` | Works. No keys exist, so suggestions come from the fallback suggester |
-| Three picks vs first idea, roadmap, explanation | `POST /api/v1/recommendations` | Works on sample data |
+| Three picks vs first idea, roadmap, explanation | `POST /api/v1/recommendations` | Works. Preliminary ML numbers, sample names |
 | "Did you mean...?" | same, `first_idea_candidates` | Works. `first_idea` is `null` when it fires |
-| Career card | `GET /api/v1/careers/{soc}` | Works on sample data. `ads_now` is "missing" (no Adzuna key) |
+| Career card | `GET /api/v1/careers/{soc}` | Works. ML metrics preliminary, names and subjects sample. `ads_now` is "missing" (no Adzuna key) |
 | Career list (20 demo careers) | `GET /api/v1/careers` | Works. Confirm the 20 (section 7) |
-| History chart | `GET /api/v1/careers/{soc}/history` | Works on sample data |
+| History chart | `GET /api/v1/careers/{soc}/history` | Works. Preliminary ML data |
 | Hedge | `GET /api/v1/careers/{soc}/hedge` | Works. Also inside the recommendation |
 | Routes into a career | `GET /api/v1/routes/{soc}?nation=scotland` | Sample routes only. Real routes after Sunday 08:00 |
-| Crises | `GET /api/v1/crises` | Works on sample data |
-| Backtest button | `GET /api/v1/backtest/years`, `GET /api/v1/backtest?year=2013` | Works on sample data |
+| Crises | `GET /api/v1/crises` | Works. Preliminary ML data |
+| Backtest button | `GET /api/v1/backtest/years`, `GET /api/v1/backtest?year=2013` | Works. Preliminary ML data |
 | Sources page, badge lookups | `GET /api/v1/sources` | Works. Licences not all checked yet |
 | Pull the plug | `POST /api/v1/demo/live` with `{"enabled": false}` | Works. Today it switches off Adzuna ads only (section 7) |
 | Health | `GET /health` | Works. `ml_mode` says real, mock, mixed or missing |
@@ -61,14 +61,14 @@ Never edit them by hand. Regenerate with `python -m avenir_contracts.examples`.
 
 | Thing | Today | Sunday | What you do |
 | --- | --- | --- | --- |
-| ML numbers (pay, demand, exposure, resilience, hedges, backtest) | Sample (`MOCK`) | Arsenii's real data, one PR, 08:00-09:30 | Nothing. Shapes stay compatible, values move |
-| Career catalogue (20 careers) and routes | Sample | Real, after the team fills the CSVs at 08:00 | Re-check cards and route lists |
+| ML numbers (pay, demand, exposure, resilience, hedges, backtest) | Real but preliminary (`preliminary`), from `snapshots/ml/mock` | Arsenii's final data, one PR, 08:00-09:30 | Nothing. Shapes stay compatible, values move |
+| Career catalogue (20 careers: names, subjects) and routes | Sample (`mock`) | Real, after the team fills the CSVs at 08:00 | Re-check cards and route lists |
 | Live job adverts (Adzuna) | "missing", no key | Live only if someone has a key | Show the badge as the API sends it |
 | AI-written explanation | Template text, `ai_written: false` | Same, unless someone has an LLM key | Show "AI-written, check the source" when `true` |
 | `AVENIR_FREEZE=1 pytest` | Fails on purpose | Green around 10:00 | Backend concern |
 | Frontend pack in `docs/frontend/` | Sample-based | Regenerated around 09:30 | Re-pull types and fixtures |
 
-Amira's flow on sample data (first idea "architect"): ambitious 2141 Web designer, safe 2452 Architectural technologist or planner,
+Amira's flow today (first idea "architect"): ambitious 2141 Web designer, safe 2452 Architectural technologist or planner,
 balanced 2453 Quantity surveyor, hedge 2123 Electrical engineer. These will change when real data lands. Do not hard-code them.
 
 ## 4. One app, two pairs (proposal, confirm at standup)
@@ -119,9 +119,9 @@ Backtest and pull the plug are never-cut and have no owner yet. Proposal: backte
 | When | Pair A (Illia + Yehor) | Pair B (Maksym + Nazar) |
 | --- | --- | --- |
 | Tonight to 01:00 | Move the app to `apps/web/`, remove the mock backend, generate types from `docs/frontend/schemas`. One typed envelope client. Career card from `/careers/{soc}` with the badge component and the metric rules | Run the API from `nazar/api`. Quiz calling `/tags` and `/profile`. Post to `/recommendations` and render three picks vs the first idea |
-| 01:00 | API serves Amira's flow on sample data. Switch types to `docs/openapi.json`. Codex integration run | Same. Add hedge and roadmap |
+| 01:00 | API serves Amira's flow end to end. Switch types to `docs/openapi.json`. Codex integration run | Same. Add hedge and roadmap |
 | Sun 08:00 to 09:30 | Real data lands. Fill the catalogue and routes CSVs with the team. History chart, flags, backtest button, sources page | "Did you mean...?", pull the plug button, error states. Fill CSVs with the team |
-| Sun 09:30 to 10:00 | Regenerate the pack and types. Re-check every card against real values | Same for the quiz flow. Nazar fixes backend tests that hard-coded sample values |
+| Sun 09:30 to 10:00 | Regenerate the pack and types. Re-check every card against real values | Same for the quiz flow. Nazar fixes backend tests that hard-coded today's values |
 | Sun 10:00 to 11:30 | Rehearse the flow and pull the plug. README sections for the frontend. Fix only what breaks the demo | Same. Text alternatives and wording pass |
 | Sun 11:30 | Freeze | Freeze |
 
