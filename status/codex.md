@@ -2,12 +2,12 @@
 
 Updated: 17 October 2026
 
-Doing now: QuantSoc design implementation complete locally on codex/quantsoc-design. Preview: http://127.0.0.1:4175/.
+Doing now: Simplified public entry complete locally on codex/quant-soc-branch.
 
-Done and merged: Studied quant-soc.com homepage, hero, skill-tree, leaderboard, footer, welcome flow, contact and stylesheet tokens. Applied locally hosted Inter, dark charcoal/silver palette, floating top menu, silver pill buttons, navy landing hero with original gold SVG waves, outlined panels, blue sliders and chart series, guided-chat styling and subdued footer wordmark. Applied across landing, conversations, matches, overview, pathways, universities, opportunities, guides and evidence. Simplified page headings. Existing discovery/data behavior preserved. No remote merge, push, PR or formal review.
+Done and merged: Removed top-left logo and header slogans. Kept the main Aventier name and mission, removed filler lines and reassurance/choice-intro screens. Both options are on the first screen with Explore career / Find careers buttons. Removed footer slogan/oversized duplicate wordmark. Conversation headings/actions now use direct short labels; removed generic reassurance sidebar copy. No remote push or merge.
 
-Interfaces changed: None. Backend, contracts and evidence datasets untouched.
+Interfaces changed: None. Both onChoose callbacks and discovery/data behavior preserved.
 
-Verified: Production TypeScript/Vite build, Prettier and whitespace checks pass. All 30 app API tests pass (one dependency deprecation warning). Desktop browser exercised both onboarding modes to exactly three matches, known Civil engineer reference first, slider reranking, three ranked choices to pathway, all four pathway tabs, real/nominal/jobs chart modes with keyboard inspection, every top navigation route, preferences, reduced motion and 1440px overflow checks. No browser errors or warnings. Screenshots: apps/web/artifacts/quantsoc-landing-desktop.jpg and quantsoc-matches-desktop.jpg.
+Verified: TypeScript/Vite production build and whitespace check pass. Browser screenshot confirms one section, both buttons visible within a 1440×960 viewport, no header logo, no removed slogans and no horizontal overflow. Refreshed user preview. No test suite or formal review run. Evidence: apps/web/artifacts/simplified-entry-desktop.jpg.
 
-Blocked on: Nothing for this design request. Guided chat and preliminary evidence labels retain their existing behavior.
+Blocked on: Nothing.

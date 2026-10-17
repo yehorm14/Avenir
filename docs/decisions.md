@@ -15,3 +15,5 @@ One line per decision, newest at the bottom. Agents: read this before undoing an
 - 17 Oct Codex for Illia: Replace the public entry with Aventier mission → reassurance → two starting points. Known-direction and exploring conversations now return three options using the supplied ML tags/affinities; known careers remain labelled references, and guided chat is not presented as a live LLM. Preserve desktop top navigation and pathway tools.
 
 - 17 Oct Codex for Illia: QuantSoc is the chosen visual reference, replacing the earlier Apple/green direction. Use its researched Inter, charcoal/silver palette, floating pill navigation, navy hero, original gold signal paths, outlined panels and blue chart/selection accents throughout Aventier. Preserve all discovery and evidence behavior; desktop is the priority.
+
+- 17 Oct Codex for Illia: Simplify the public entry to one screen. Remove the top-left logo, header/hero/footer slogans and reassurance screen; place the known-career and discovery choices directly under the mission with two-word action labels.

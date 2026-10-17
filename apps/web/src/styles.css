@@ -4110,7 +4110,7 @@ summary:focus-visible,
   border-radius: 999px;
 }
 .top-links {
-  justify-content: center;
+  justify-content: flex-start;
   font-size: 13px;
 }
 .top-links > button {
@@ -4510,28 +4510,15 @@ input[type="range"]::-moz-range-thumb {
   color: #e5b89b;
 }
 .site-footer {
-  display: grid;
-  grid-template-columns: 1fr auto;
+  display: flex;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 64px 40px 40px;
+  padding: 20px 40px;
   color: var(--muted);
   font-size: 11px;
   border-color: #dae0e710;
 }
-.site-footer::before {
-  content: "AVENTIER";
-  grid-column: 1 / -1;
-  text-align: center;
-  font-size: clamp(64px, 12vw, 160px);
-  line-height: 1.15;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  background: linear-gradient(#dae0e726, #dae0e703);
-  background-clip: text;
-  color: transparent;
-  padding-bottom: 32px;
-}
+
 .site-footer button {
   color: var(--muted);
   font-size: 11px;

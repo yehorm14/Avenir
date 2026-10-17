@@ -197,13 +197,11 @@ export default function Discovery({
       aria-labelledby="discovery-title"
     >
       <button className="discovery-back" onClick={onBack}>
-        ← Choose a different starting point
+        Back
       </button>
       <header className="discovery-intro">
         <h1 id="discovery-title">
-          {mode === "known"
-            ? "Let’s explore your direction."
-            : "Let’s find a starting point."}
+          {mode === "known" ? "Explore career" : "Find careers"}
         </h1>
         <p>A few questions about you, then three careers worth exploring.</p>
       </header>
@@ -332,7 +330,7 @@ export default function Discovery({
               </>
             ) : (
               <div className="discovery-ready" aria-busy={busy}>
-                <h2>Ready to explore the possibilities?</h2>
+                <h2>Compare careers</h2>
                 <p>
                   I’ll compare your interests, subjects, priorities and
                   strengths with the careers in our collection. These are
@@ -352,7 +350,7 @@ export default function Discovery({
                     ? "Comparing your answers…"
                     : error
                       ? "Try again"
-                      : "Explore my three careers"}
+                      : "Show careers"}
                 </button>
               </div>
             )}
@@ -362,7 +360,7 @@ export default function Discovery({
                 onClick={editPrevious}
                 disabled={busy}
               >
-                Edit my previous answer
+                Edit answer
               </button>
             )}
           </div>
@@ -390,10 +388,6 @@ export default function Discovery({
               </li>
             ))}
           </ol>
-          <small>
-            You can be uncertain. You can change your mind. This is a place to
-            begin.
-          </small>
         </aside>
       </div>
     </section>

@@ -308,18 +308,9 @@ export default function App() {
         Skip to content
       </a>
       <header className="topbar">
-        <button
-          className="brand"
-          onClick={() => go("discover")}
-          aria-label="Aventier home"
-        >
-          <span className="brand-symbol">a</span>
-          <span>
-            aventier<span className="brand-dot">.</span>
-          </span>
-        </button>
         {showShell ? (
           <nav className="workspace-nav" aria-label="Main navigation">
+            <button onClick={() => go("discover")}>Home</button>
             {[...nav, { id: "evidence" as const, icon: "chart" }].map((n) => (
               <button
                 key={n.id}
@@ -334,18 +325,9 @@ export default function App() {
             ))}
           </nav>
         ) : (
-          <div className="top-links">
-            <button
-              onClick={() => go("discover")}
-              className={page === "discover" ? "active" : ""}
-            >
-              Discover your direction
-            </button>
-            <span className="nav-divider" />
-            <span className="muted">
-              A little clarity. A world of possibilities.
-            </span>
-          </div>
+          <nav className="top-links" aria-label="Main navigation">
+            <button onClick={() => go("discover")}>Home</button>
+          </nav>
         )}
         <div className="top-actions">
           <span className="private-note">
@@ -926,9 +908,8 @@ export default function App() {
       </main>
       {!showShell && (
         <footer className="site-footer">
-          <span>Made for the possibilities ahead.</span>
           <button onClick={() => go("evidence")}>
-            About the research <Icon name="external" size={12} />
+            Research <Icon name="external" size={12} />
           </button>
           <span>© 2026 Aventier</span>
         </footer>
