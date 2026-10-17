@@ -10,6 +10,13 @@ GUTS Hackathon 2026, Aladdin by BlackRock challenge: "One app. One clear decisio
 
 ## Where things are
 
+### Illia's Aventir demo
+
+The standalone React/Vite + FastAPI career exploration demo is in [`apps/aventir/`](apps/aventir/README.md).
+It includes a mock backend with 20 sample careers, chart fixtures and labelled research responses.
+Follow its README for installation and `AVENTIR_MODE=mock` startup; no API key or database import is needed for the mock demo.
+The canonical `apps/web`, `services/api` and team contract remain separate from this prototype.
+
 | Path | What |
 | --- | --- |
 | `AGENTS.md` | Rules for every AI agent and contributor |
