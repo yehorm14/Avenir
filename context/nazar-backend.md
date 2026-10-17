@@ -1,9 +1,9 @@
 # Nazar: backend (decision engine + API)
 
 - **Owner:** Nazar (human) / Claude (orchestrator) with Haiku and Sonnet subagents
-- **Branches:** `nazar/decision` (Track A), `nazar/api` (Track B), both rebased on `main` 227b5e9 (contract v2)
-- **PR:** none yet (draft PRs at checkpoint 1)
-- **Status:** in progress (Tasks 1 and 11 done, plan v2)
+- **Branches:** `nazar/decision` (Track A), `nazar/api` (Track B), both on `main` 227b5e9 (contract v2)
+- **PR:** draft PRs at checkpoint 1 (pending Nazar's go)
+- **Status:** checkpoint 1 reached: Tasks 1-6 and 11-12 done and reviewed
 
 ## Task
 Build `packages/decision` (pure scoring: picks, hedge, roadmap, notices, `recommend()`) and
@@ -11,45 +11,60 @@ Build `packages/decision` (pure scoring: picks, hedge, roadmap, notices, `recomm
 `docs/superpowers/plans/2026-10-17-avenir-decision-and-api.md` (v2).
 
 ## Done so far
-| Task | Branch | Commit | Notes |
-| --- | --- | --- | --- |
-| 1 ranks + test fixtures | `nazar/decision` | `feat(decision): 0-100 ranks with ties and missing values` | fixtures use `load_data(snapshot_dir=tmp)` after `mock.write(tmp/"mock")` |
-| 11 app, envelope, errors | `nazar/api` | `feat(api): app, envelope and error handling` | `create_app(data: AvenirData)`, `/health` reports `ml_mode`; starts with no keys and no data dirs |
+| Task | Branch | What |
+| --- | --- | --- |
+| 1 ranks | decision | `rank_0_100`; fixtures load mocks via `load_data` |
+| 2 confidence | decision | `lowest`, `downgrade`, `component_confidence` |
+| 3 fit | decision | `fit_scores`, `head_start`; Amira: Architect 58.3 best |
+| 4 components | decision | return, market risk, disruption risk, risk (slider) |
+| 5 picks | decision | Amira (first idea Architect excluded): 7 eligible; ambitious 2141 Web designer, safe 2452 Architectural technologist or planner, balanced 2453 Quantity surveyor |
+| 6 first idea + compare | decision | `resolve_first_idea`, `first_idea_candidates`, `vs_first_idea` |
+| 11 app, envelope, errors | api | `create_app(data)`, `/health` with `ml_mode`; runs with no keys, no data dirs |
+| 12 read endpoints | api | tags, sources, careers, career card (+ads overlay), history, crises, backtest(+years), routes |
 
-Each task: tests written first, implemented by a subagent, reviewed against the plan by a
-separate reviewer, then checked by the orchestrator. Rebased onto contract v2 on 17 Oct and
-amended (one commit per task).
+Each task: tests first, implemented by a subagent, reviewed against the plan by a separate
+reviewer, checked by the orchestrator. One commit per task.
 
-## Execution plan
-| Phase | Track | Tasks | Done when |
-| --- | --- | --- | --- |
-| 1 | A / B | 1 ✅, 2 confidence / 11 ✅ | plan tests pass |
-| 2 | A / B | 3 fit, 4 components, 5 picks, 6 first idea / 12 read endpoints | Review Focus 1-4 tested |
-| CP1 | | draft PRs "nazar: decision engine", "nazar: API skeleton" | tell Nazar |
-| 3 | A | 7 hedge, 8 roadmap, 9 reasons + notices, 10 `recommend()` | PR ready for review |
-| 4 | B | rebase on `main` after Track A merge; 13 write endpoints; 14 OpenAPI + Docker | Review Focus 5 tested |
-| CP3 01:00 | B | uvicorn serves the Amira flow on mock data; `docs/openapi.json` to frontend | |
-| 5 Sun 08-10 | B | real `snapshots/ml/*.json` + catalogue; 15 provenance + freeze tests | `AVENIR_FREEZE=1` green |
+## Decisions (Nazar, 17 Oct)
+1. Fit gate (Task 5): best fit is taken among careers other than the first idea (plan rule); the
+   plan's "6 eligible" note was a typo, Amira gets 7.
+2. Backtest (Task 12): any `/api/v1/backtest` request with no backtest data loaded → 503
+   `UPSTREAM_UNAVAILABLE`; 404 only for a year missing from loaded data.
+3. Pending metrics (Task 4): metrics with `status: "pending"` (source not loaded yet) are skipped in
+   scores and do not lower confidence; only career-specific gaps do.
+4. `exposure_uk` (Task 4) is a cross-check only, not a confidence input.
+5. First idea (Task 6): never guess. A tie between distinct careers at any matching step (exact
+   name, contains, fuzzy) → `first_idea: null` plus candidates; e.g. "engineer" → Civil engineer
+   (2121) and Electrical engineer (2123).
+6. Candidates in the API need a contract field: proposed to Yehor as
+   `RecommendationOut.first_idea_candidates: list[CareerRef{soc2020, title}]`. Until it lands,
+   ambiguous text gives `first_idea: null` only.
+7. Task 14 may add only `run` and `openapi` targets to `Makefile`.
+8. Sync: before every task, fetch, rebase on `main`, read and test against `yehor/*` branches
+   (never merge them into ours).
 
-## Decisions
-- Branches started from Yehor's contract branch, now rebased on `main` (contract v2).
-- Task 14 may add only `run` and `openapi` targets to `Makefile` (Nazar approved, 17 Oct).
-- Task 13's empty `first_idea` test must send a valid profile, or the first error is the missing profile.
+## For Arsenii
+- Pick rules (Task 5) his backtest groups should use: eligible = fit ≥ max(5, 0.5 × best fit among
+  non-excluded careers) with return and risk present; ambitious = max return; safe = min risk of the
+  rest; balanced = max (return − 50) / max(risk, 10) of the rest; ties: higher fit, then lower SOC.
 
 ## Deferred minor findings (for the final review)
-- API: non-404 HTTP errors (e.g. 405) map to 500; unhandled 500s lack CORS headers; no test for
-  the `default_ports()` ImportError fallback or `X-Request-ID` on success.
-- Decision: `rank_0_100` does not guard NaN; more rank edge-case tests possible.
-- Repo: `ruff format --check` fails on several files (mostly contract files); not part of `make check`.
+- API: non-404 HTTP errors (e.g. 405) map to 500; unhandled 500s lack CORS headers; error
+  envelopes have empty `meta.sources`.
+- Decision: no NaN guard in ranks; double rounding in risk; a short alias inside longer typed text
+  can match (plan rule, e.g. "technician"); several coverage gaps noted per task.
+- Repo: `ruff format --check` fails on several files (mostly contract files); not in `make check`.
 
 ## Blocked on
-- Task 13 needs Track A merged into `main`.
+- Task 13 needs Track A merged into `main` (via PR, squash merge).
+- `first_idea_candidates` in the API needs Yehor's contract field.
 
 ## Open questions (for humans)
-- Roadmap step 1 says "Take Higher ..." for every nation (plan rule); English students would see it too.
+- Yehor: OK with the `first_idea_candidates` field and shape?
+- Roadmap step 1 says "Take Higher ..." for every nation (plan rule); English students see it too.
 
 ## Marked (verify)
-- None yet.
+- None.
 
 ## Next step
-Task 2 (confidence, Track A) and Task 12 (read endpoints, Track B).
+Draft PRs "nazar: decision engine" and "nazar: API skeleton"; then Tasks 7-10.
