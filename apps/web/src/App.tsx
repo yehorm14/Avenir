@@ -117,7 +117,6 @@ export default function App() {
   const [matches, setMatches] = useState<Career[]>([]);
   const [ranking, setRanking] = useState(false);
   const [matchError, setMatchError] = useState("");
-  const [mobileNav, setMobileNav] = useState(false);
   const [settings, setSettings] = useState(false);
   const [toast, setToast] = useState("");
   const [inspect, setInspect] = useState<Career | null>(null);
@@ -125,14 +124,12 @@ export default function App() {
   const go = (p: Page) => {
     setPage(p);
     window.location.hash = `/${p}`;
-    setMobileNav(false);
     window.scrollTo(0, 0);
     setTimeout(() => mainRef.current?.focus({ preventScroll: true }), 0);
   };
   useEffect(() => {
     const fn = () => {
       setPage(route());
-      setMobileNav(false);
       window.scrollTo(0, 0);
     };
     window.addEventListener("hashchange", fn);
@@ -248,7 +245,7 @@ export default function App() {
     </div>
   );
   return (
-    <div className={showShell ? "app with-sidebar" : "app"}>
+    <div className={showShell ? "app with-top-nav" : "app"}>
       <a
         href="#main"
         className="skip-link"
@@ -270,41 +267,39 @@ export default function App() {
             avenir<span className="brand-dot">.</span>
           </span>
         </button>
-        <div className="top-links">
-          {!showShell && (
-            <>
+        {showShell ? (
+          <nav className="workspace-nav" aria-label="Main navigation">
+            {[...nav, { id: "evidence" as const, icon: "chart" }].map((n) => (
               <button
-                onClick={() => go("discover")}
-                className={page === "discover" ? "active" : ""}
+                key={n.id}
+                onClick={() => go(n.id)}
+                aria-current={page === n.id ? "page" : undefined}
+                className={page === n.id ? "active" : ""}
               >
-                Discover your direction
+                <Icon name={n.icon} size={17} />
+                {pageNames[n.id]}
+                {n.id === "matches" && <span className="nav-count">5</span>}
               </button>
-              <span className="nav-divider" />
-              <span className="muted">
-                A little clarity. A world of possibilities.
-              </span>
-            </>
-          )}
-          {showShell && (
-            <span className="breadcrumb">
-              Your future <Icon name="chevron" size={14} />{" "}
-              <b>{pageNames[page]}</b>
+            ))}
+          </nav>
+        ) : (
+          <div className="top-links">
+            <button
+              onClick={() => go("discover")}
+              className={page === "discover" ? "active" : ""}
+            >
+              Discover your direction
+            </button>
+            <span className="nav-divider" />
+            <span className="muted">
+              A little clarity. A world of possibilities.
             </span>
-          )}
-        </div>
+          </div>
+        )}
         <div className="top-actions">
           <span className="private-note">
             <Icon name="lock" size={13} /> Private to this device
           </span>
-          {showShell && (
-            <button
-              className="icon-button mobile-menu"
-              aria-label="Open navigation"
-              onClick={() => setMobileNav(!mobileNav)}
-            >
-              <Icon name="menu" />
-            </button>
-          )}
           <button
             className="profile-button"
             aria-label="Your preferences"
@@ -357,57 +352,6 @@ export default function App() {
           </div>
         )}
       </header>
-      {showShell && (
-        <aside className={`sidebar ${mobileNav ? "mobile-open" : ""}`}>
-          <div className="sidebar-label">Your workspace</div>
-          <nav aria-label="Main navigation">
-            {nav.map((n) => (
-              <button
-                key={n.id}
-                onClick={() => go(n.id)}
-                aria-current={page === n.id ? "page" : undefined}
-                className={page === n.id ? "active" : ""}
-              >
-                <Icon name={n.icon} />
-                {pageNames[n.id]}
-                {n.id === "matches" && <span className="nav-count">5</span>}
-              </button>
-            ))}
-          </nav>
-          <div className="sidebar-path">
-            <span className="tiny">Your first choice</span>
-            {primary ? (
-              <>
-                <CareerMark career={primary} />
-                <strong>{primary.title}</strong>
-                <button className="text-button" onClick={() => go("path")}>
-                  Keep exploring <Icon name="chevron" size={14} />
-                </button>
-              </>
-            ) : (
-              <>
-                <strong>A direction that's yours.</strong>
-                <p>Rank three matches to start building your plan.</p>
-                <button className="text-button" onClick={() => go("matches")}>
-                  Choose your careers
-                </button>
-              </>
-            )}
-          </div>
-          <div className="sidebar-bottom">
-            <button
-              onClick={() => go("evidence")}
-              className={page === "evidence" ? "active" : ""}
-            >
-              <Icon name="chart" size={18} /> The evidence
-            </button>
-            <div className="snapshot-state">
-              <span /> Using saved research
-            </div>
-            <p>UK career evidence. Room to explore.</p>
-          </div>
-        </aside>
-      )}
       <main
         id="main"
         ref={mainRef}

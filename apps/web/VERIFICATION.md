@@ -36,3 +36,9 @@ Screenshots: `artifacts/overview-desktop.jpg`, `artifacts/pathway-mobile.jpg`.
 ## Limits reflected in the UI
 
 Career metrics and fit are preliminary. The quiz is not psychometrically validated. Need is a historical trend, not an LLM forecast. Guides are prepared, grounded demos, with browser read-aloud where supported. University and opportunity links are curated discovery sources, not confirmed places or live vacancies. Overtime and starting-salary data are unavailable. No credentials or remote providers are needed.
+
+## Desktop top navigation follow-up
+
+Moved workspace navigation into the sticky top header; removed the sidebar and its layout offsets. All six destinations, active-page states and match count are retained. Overview/pathway retain the primary career context previously repeated in the sidebar. No mobile work was requested.
+
+Fresh verification: production TypeScript/Vite build passes, format check and git whitespace check pass. Chrome DevTools verifies all six header links activate and render their pages, no sidebar remains, main starts at x=0, and the top menu fits at 1894px and 1280px without overflow or overlap with profile controls. Screenshot: artifacts/top-navigation-desktop.jpg.
