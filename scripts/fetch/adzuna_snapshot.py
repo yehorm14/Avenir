@@ -7,7 +7,6 @@ per occupation query, keyed by SOC 2020 code. The API adapter serves this file w
 
     python scripts/fetch/adzuna_snapshot.py
     python scripts/fetch/adzuna_snapshot.py --dry-run
-    python scripts/fetch/adzuna_snapshot.py --where Glasgow
 """
 from __future__ import annotations
 
@@ -34,9 +33,12 @@ def load_env() -> None:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--where", default="", help="optional location filter, e.g. Glasgow")
+    ap.add_argument("--where", default="", help="not supported: the adapter serves UK-wide snapshots only")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
+    if args.where:
+        die("--where is not supported: the Adzuna adapter reads UK-wide snapshots only, "
+            "so a location-filtered file would be served as a UK figure")
 
     occ_file = REPO / "data" / "curated" / "occupations.csv"
     occs = list(csv.DictReader(occ_file.open(encoding="utf-8")))
