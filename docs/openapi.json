@@ -1,0 +1,619 @@
+{
+  "components": {
+    "schemas": {
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "LiveSwitch": {
+        "additionalProperties": false,
+        "properties": {
+          "enabled": {
+            "title": "Enabled",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "enabled"
+        ],
+        "title": "LiveSwitch",
+        "type": "object"
+      },
+      "ProfileIn": {
+        "additionalProperties": false,
+        "properties": {
+          "automation_worry": {
+            "default": 0.5,
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Automation Worry",
+            "type": "number"
+          },
+          "free_text": {
+            "default": "",
+            "maxLength": 300,
+            "title": "Free Text",
+            "type": "string"
+          },
+          "interests": {
+            "description": "tag ids from GET /api/v1/tags",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 16,
+            "title": "Interests",
+            "type": "array"
+          },
+          "location": {
+            "default": "Glasgow",
+            "maxLength": 60,
+            "title": "Location",
+            "type": "string"
+          },
+          "nation": {
+            "default": "scotland",
+            "enum": [
+              "scotland",
+              "england",
+              "wales",
+              "northern_ireland"
+            ],
+            "title": "Nation",
+            "type": "string"
+          },
+          "qualifications": {
+            "items": {
+              "$ref": "#/components/schemas/Qualification"
+            },
+            "maxItems": 20,
+            "title": "Qualifications",
+            "type": "array"
+          }
+        },
+        "title": "ProfileIn",
+        "type": "object"
+      },
+      "Qualification": {
+        "additionalProperties": false,
+        "properties": {
+          "grade": {
+            "anyOf": [
+              {
+                "maxLength": 3,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Grade"
+          },
+          "level": {
+            "enum": [
+              "national5",
+              "higher",
+              "advanced_higher",
+              "gcse",
+              "a_level"
+            ],
+            "title": "Level",
+            "type": "string"
+          },
+          "subject": {
+            "enum": [
+              "maths",
+              "english",
+              "physics",
+              "chemistry",
+              "biology",
+              "computing",
+              "art",
+              "design_technology",
+              "graphic_communication",
+              "geography",
+              "business",
+              "music"
+            ],
+            "title": "Subject",
+            "type": "string"
+          }
+        },
+        "required": [
+          "subject",
+          "level"
+        ],
+        "title": "Qualification",
+        "type": "object"
+      },
+      "RecommendationRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "first_idea": {
+            "description": "SOC 2020 code or free text, e.g. 'architect'",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "First Idea",
+            "type": "string"
+          },
+          "profile": {
+            "$ref": "#/components/schemas/ProfileIn"
+          }
+        },
+        "required": [
+          "profile",
+          "first_idea"
+        ],
+        "title": "RecommendationRequest",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "Avenir API",
+    "version": "1"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/v1/backtest": {
+      "get": {
+        "operationId": "backtest_api_v1_backtest_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "year",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Year"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Backtest"
+      }
+    },
+    "/api/v1/backtest/years": {
+      "get": {
+        "operationId": "backtest_years_api_v1_backtest_years_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Backtest Years"
+      }
+    },
+    "/api/v1/careers": {
+      "get": {
+        "operationId": "careers_api_v1_careers_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Careers"
+      }
+    },
+    "/api/v1/careers/{soc}": {
+      "get": {
+        "operationId": "career_api_v1_careers__soc__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "soc",
+            "required": true,
+            "schema": {
+              "title": "Soc",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Career"
+      }
+    },
+    "/api/v1/careers/{soc}/hedge": {
+      "get": {
+        "operationId": "hedge_api_v1_careers__soc__hedge_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "soc",
+            "required": true,
+            "schema": {
+              "title": "Soc",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Hedge"
+      }
+    },
+    "/api/v1/careers/{soc}/history": {
+      "get": {
+        "operationId": "career_history_api_v1_careers__soc__history_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "soc",
+            "required": true,
+            "schema": {
+              "title": "Soc",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Career History"
+      }
+    },
+    "/api/v1/crises": {
+      "get": {
+        "operationId": "crises_api_v1_crises_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Crises"
+      }
+    },
+    "/api/v1/demo/live": {
+      "post": {
+        "operationId": "demo_live_api_v1_demo_live_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LiveSwitch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Demo Live"
+      }
+    },
+    "/api/v1/profile": {
+      "post": {
+        "operationId": "profile_api_v1_profile_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProfileIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Profile"
+      }
+    },
+    "/api/v1/recommendations": {
+      "post": {
+        "operationId": "recommendations_api_v1_recommendations_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecommendationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Recommendations"
+      }
+    },
+    "/api/v1/routes/{soc}": {
+      "get": {
+        "operationId": "routes_api_v1_routes__soc__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "soc",
+            "required": true,
+            "schema": {
+              "title": "Soc",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "nation",
+            "required": false,
+            "schema": {
+              "default": "scotland",
+              "enum": [
+                "scotland",
+                "england",
+                "wales",
+                "northern_ireland"
+              ],
+              "title": "Nation",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Routes"
+      }
+    },
+    "/api/v1/sources": {
+      "get": {
+        "operationId": "sources_api_v1_sources_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Sources"
+      }
+    },
+    "/api/v1/tags": {
+      "get": {
+        "operationId": "tags_api_v1_tags_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Tags"
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health"
+      }
+    }
+  }
+}

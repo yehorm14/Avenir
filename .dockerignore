@@ -1,0 +1,13 @@
+.git
+.venv
+.worktrees
+.superpowers
+.env
+.env.*
+data/raw
+snapshots
+**/__pycache__
+**/*.egg-info
+.pytest_cache
+.ruff_cache
+node_modules
