@@ -30,10 +30,13 @@ Then `make data-check` on both machines and compare `data/manifest.lock.json`.
    tables; the current demand trend uses APS218. APS168's earliest period is not stated on its
    page (revisions start July 2011), so trends before about 2012 may need the ONS EMP04
    spreadsheets (2001 to 2018, discontinued; check their SOC level).
-3. **No SOC 2020 → ISCO-08 file exists.** ONS says there is no simple mapping even at unit
-   group level, and links only a SOC 2010 → ISCO-08 file. Route: SOC 2020 → SOC 2010
-   (relationship tables) → ISCO-08, then a person approves each of our 20 occupations in
-   `data/curated/occupations.csv` (`verified_by`).
+3. **A SOC 2020 → ISCO-08 map can be built from the ONS coding index.** ONS publishes no simple
+   mapping file (it says there is none even at unit group level) and links only a SOC 2010 →
+   ISCO-08 file. But the ONS SOC 2020 coding index gives each job title both a SOC 2020 and an
+   ISCO-08 code, so a SOC 2020 → ISCO-08 map with shares can be built from it (Arsenii's
+   `crosswalk_build.py`; source `soc2020_coding_index`). The SOC 2020 → SOC 2010 → ISCO-08 route
+   (relationship tables, then `soc2010_isco08`) stays as a cross-check, and a person approves each
+   of our 20 occupations in `data/curated/occupations.csv` (`verified_by`).
 4. **SOC 2010 ↔ SOC 2020 tables are percentages, not a lookup.** They come from people coded to
    both (LFS 2014 to 2016, 2011 Census 1% sample). Use the largest share for the bridge and mark
    splits and merges low confidence.

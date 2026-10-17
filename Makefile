@@ -1,14 +1,22 @@
 PY ?= python
 
-.PHONY: help data data-dry data-check data-sync adzuna check lint test secrets
+.PHONY: help run openapi data data-dry data-check data-sync adzuna check lint test secrets
 
 help:
+	@echo "make run         start the API on :8000 with reload"
+	@echo "make openapi     export docs/openapi.json for the frontend client"
 	@echo "make data        fetch scripted sources (ONS crosswalks, ASHE 2011-2025, Nomis defs)"
 	@echo "make data-dry    show what would be fetched"
 	@echo "make data-check  check data/manifest.yaml against data/raw, write checksums"
 	@echo "make data-sync   rsync data/raw and snapshots to the cluster (needs .env)"
 	@echo "make adzuna      take a dated Adzuna snapshot (laptop, keys in .env)"
 	@echo "make check       lint + tests + secret scan, run before every push"
+
+run:
+	$(PY) -m uvicorn avenir_api.app:app --reload --port 8000
+
+openapi:
+	$(PY) -m avenir_api.export_openapi
 
 data:
 	$(PY) scripts/fetch/ons_files.py

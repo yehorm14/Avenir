@@ -5,14 +5,23 @@ with warnings.catch_warnings():
     warnings.simplefilter("ignore")
     import fastapi.testclient  # noqa: F401
 
+from pathlib import Path
+
 import pytest
 
 from avenir_contracts import load_data
 from avenir_contracts import mock as contracts_mock
 
+# Pinned to the ML mock files so these tests don't change when Arsenii's real data lands;
+# test_freeze.py is the one check that reads the real data.
+ML_MOCK = Path(__file__).resolve().parents[3] / "snapshots" / "ml" / "mock"
+
 
 @pytest.fixture(scope="session")
 def data(tmp_path_factory):
     tmp = tmp_path_factory.mktemp("snaps")
-    contracts_mock.write(tmp / "mock")
-    return load_data(snapshot_dir=tmp)
+    # Pin catalogue generation too: its seeded metrics depend on ML occupation order.
+    with pytest.MonkeyPatch.context() as env:
+        env.setenv("PATHFINDER_ML_DIR", str(ML_MOCK))
+        contracts_mock.write(tmp / "mock")
+    return load_data(ml_dir=ML_MOCK, snapshot_dir=tmp)

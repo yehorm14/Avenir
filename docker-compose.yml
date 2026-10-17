@@ -1,0 +1,21 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: services/api/Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./snapshots:/app/snapshots:ro
+    # The demo needs no keys. Only uncomment for the optional live-ads path (never commit .env).
+    # env_file:
+    #   - .env
+
+  # web:
+  #   build: ./apps/web
+  #   ports:
+  #     - "5173:5173"
+  #   environment:
+  #     VITE_API_URL: http://localhost:8000
+  #   depends_on:
+  #     - api

@@ -36,6 +36,13 @@ class Career(BaseModel):
         description="keys: vocab.ML_METRICS + vocab.CATALOGUE_METRICS; an absent key means missing")
 
 
+class CareerRef(BaseModel):
+    """Light pointer to a career, for 'Did you mean...?' lists."""
+    model_config = STRICT
+    soc2020: str = SOC
+    title: str
+
+
 class Tag(BaseModel):
     """One checklist interest, from ML fit.json."""
     model_config = LOOSE
@@ -205,6 +212,9 @@ class RecommendationRequest(BaseModel):
 class RecommendationOut(BaseModel):
     model_config = STRICT
     first_idea: Career | None
+    first_idea_candidates: list[CareerRef] = Field(
+        default_factory=list,
+        description="careers the typed first idea matches equally; first_idea is null then")
     first_idea_components: Components | None
     picks: list[Pick] = Field(max_length=3, description="0-3; fewer if not enough careers pass the fit gate")
     hedge: Hedge | None

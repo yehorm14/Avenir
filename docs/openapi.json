@@ -1,0 +1,3101 @@
+{
+  "components": {
+    "schemas": {
+      "BacktestGroup": {
+        "properties": {
+          "jobs_growth": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Range"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "n": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "N"
+          },
+          "real_pay_growth": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Range"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "share_jobs_fell": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Share Jobs Fell"
+          }
+        },
+        "required": [
+          "key",
+          "label"
+        ],
+        "title": "BacktestGroup",
+        "type": "object"
+      },
+      "BacktestOccupation": {
+        "properties": {
+          "flags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Flags",
+            "type": "array"
+          },
+          "group_then": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Group Then"
+          },
+          "jobs_growth": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Jobs Growth"
+          },
+          "real_pay_growth": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Real Pay Growth"
+          },
+          "soc2020": {
+            "title": "Soc2020",
+            "type": "string"
+          }
+        },
+        "required": [
+          "soc2020"
+        ],
+        "title": "BacktestOccupation",
+        "type": "object"
+      },
+      "BacktestOut": {
+        "additionalProperties": false,
+        "properties": {
+          "caveats": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Caveats",
+            "type": "array"
+          },
+          "status": {
+            "description": "file status from backtest.json: final | preliminary | mock",
+            "title": "Status",
+            "type": "string"
+          },
+          "window": {
+            "$ref": "#/components/schemas/BacktestWindow"
+          }
+        },
+        "required": [
+          "window",
+          "caveats",
+          "status"
+        ],
+        "title": "BacktestOut",
+        "type": "object"
+      },
+      "BacktestWindow": {
+        "properties": {
+          "base_year": {
+            "title": "Base Year",
+            "type": "integer"
+          },
+          "coding": {
+            "title": "Coding",
+            "type": "string"
+          },
+          "flags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Flags",
+            "type": "array"
+          },
+          "groups": {
+            "description": "a group is null while its rule isn't fixed",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/BacktestGroup"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Groups",
+            "type": "array"
+          },
+          "horizon": {
+            "title": "Horizon",
+            "type": "integer"
+          },
+          "jobs_comparable": {
+            "title": "Jobs Comparable",
+            "type": "boolean"
+          },
+          "occupations": {
+            "items": {
+              "$ref": "#/components/schemas/BacktestOccupation"
+            },
+            "title": "Occupations",
+            "type": "array"
+          },
+          "outcome_year": {
+            "title": "Outcome Year",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "base_year",
+          "outcome_year",
+          "horizon",
+          "coding",
+          "jobs_comparable",
+          "groups"
+        ],
+        "title": "BacktestWindow",
+        "type": "object"
+      },
+      "Career": {
+        "additionalProperties": false,
+        "properties": {
+          "aliases": {
+            "description": "other names, for matching a typed first idea",
+            "items": {
+              "type": "string"
+            },
+            "title": "Aliases",
+            "type": "array"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "entry_subjects": {
+            "items": {
+              "enum": [
+                "maths",
+                "english",
+                "physics",
+                "chemistry",
+                "biology",
+                "computing",
+                "art",
+                "design_technology",
+                "graphic_communication",
+                "geography",
+                "business",
+                "music"
+              ],
+              "type": "string"
+            },
+            "title": "Entry Subjects",
+            "type": "array"
+          },
+          "isco08": {
+            "items": {
+              "$ref": "#/components/schemas/IscoShare"
+            },
+            "title": "Isco08",
+            "type": "array"
+          },
+          "metrics": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Metric"
+            },
+            "description": "keys: vocab.ML_METRICS + vocab.CATALOGUE_METRICS; an absent key means missing",
+            "title": "Metrics",
+            "type": "object"
+          },
+          "official_title": {
+            "description": "ONS SOC 2020 unit group title",
+            "title": "Official Title",
+            "type": "string"
+          },
+          "soc2020": {
+            "pattern": "^\\d{4}$",
+            "title": "Soc2020",
+            "type": "string"
+          },
+          "title": {
+            "description": "friendly title: catalogue title, else ML short_title",
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "soc2020",
+          "title",
+          "official_title",
+          "metrics"
+        ],
+        "title": "Career",
+        "type": "object"
+      },
+      "CareerRef": {
+        "additionalProperties": false,
+        "description": "Light pointer to a career, for 'Did you mean...?' lists.",
+        "properties": {
+          "soc2020": {
+            "pattern": "^\\d{4}$",
+            "title": "Soc2020",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "soc2020",
+          "title"
+        ],
+        "title": "CareerRef",
+        "type": "object"
+      },
+      "ComponentScore": {
+        "additionalProperties": false,
+        "properties": {
+          "confidence": {
+            "enum": [
+              "high",
+              "medium",
+              "low"
+            ],
+            "title": "Confidence",
+            "type": "string"
+          },
+          "score": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "0-100 rank within the demo set; None = missing",
+            "title": "Score"
+          }
+        },
+        "required": [
+          "score",
+          "confidence"
+        ],
+        "title": "ComponentScore",
+        "type": "object"
+      },
+      "Components": {
+        "additionalProperties": false,
+        "properties": {
+          "disruption_risk": {
+            "$ref": "#/components/schemas/ComponentScore"
+          },
+          "expected_return": {
+            "$ref": "#/components/schemas/ComponentScore"
+          },
+          "fit": {
+            "$ref": "#/components/schemas/ComponentScore"
+          },
+          "market_risk": {
+            "$ref": "#/components/schemas/ComponentScore"
+          },
+          "risk": {
+            "$ref": "#/components/schemas/ComponentScore"
+          }
+        },
+        "required": [
+          "fit",
+          "expected_return",
+          "market_risk",
+          "disruption_risk",
+          "risk"
+        ],
+        "title": "Components",
+        "type": "object"
+      },
+      "Crisis": {
+        "properties": {
+          "baseline_median": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Baseline Median"
+          },
+          "baseline_real_pay_median": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Baseline Real Pay Median"
+          },
+          "flags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Flags",
+            "type": "array"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "measure": {
+            "title": "Measure",
+            "type": "string"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "enum": [
+                  "final",
+                  "preliminary",
+                  "mock",
+                  "pending"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "default": "preliminary",
+            "title": "Status"
+          },
+          "window": {
+            "title": "Window",
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "label",
+          "window",
+          "measure"
+        ],
+        "title": "Crisis",
+        "type": "object"
+      },
+      "Envelope_BacktestOut_": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BacktestOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ErrorBody"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          },
+          "ok": {
+            "title": "Ok",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "ok",
+          "meta"
+        ],
+        "title": "Envelope[BacktestOut]",
+        "type": "object"
+      },
+      "Envelope_Career_": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Career"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ErrorBody"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          },
+          "ok": {
+            "title": "Ok",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "ok",
+          "meta"
+        ],
+        "title": "Envelope[Career]",
+        "type": "object"
+      },
+      "Envelope_HealthOut_": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/HealthOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ErrorBody"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          },
+          "ok": {
+            "title": "Ok",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "ok",
+          "meta"
+        ],
+        "title": "Envelope[HealthOut]",
+        "type": "object"
+      },
+      "Envelope_LiveState_": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/LiveState"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ErrorBody"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          },
+          "ok": {
+            "title": "Ok",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "ok",
+          "meta"
+        ],
+        "title": "Envelope[LiveState]",
+        "type": "object"
+      },
+      "Envelope_NoneType_": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "title": "Data",
+            "type": "null"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ErrorBody"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          },
+          "ok": {
+            "title": "Ok",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "ok",
+          "meta"
+        ],
+        "title": "Envelope[NoneType]",
+        "type": "object"
+      },
+      "Envelope_ProfileOut_": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProfileOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ErrorBody"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          },
+          "ok": {
+            "title": "Ok",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "ok",
+          "meta"
+        ],
+        "title": "Envelope[ProfileOut]",
+        "type": "object"
+      },
+      "Envelope_RecommendationOut_": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RecommendationOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ErrorBody"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          },
+          "ok": {
+            "title": "Ok",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "ok",
+          "meta"
+        ],
+        "title": "Envelope[RecommendationOut]",
+        "type": "object"
+      },
+      "Envelope_SourcesOut_": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SourcesOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ErrorBody"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          },
+          "ok": {
+            "title": "Ok",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "ok",
+          "meta"
+        ],
+        "title": "Envelope[SourcesOut]",
+        "type": "object"
+      },
+      "Envelope_Union_Hedge__NoneType__": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Hedge"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ErrorBody"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          },
+          "ok": {
+            "title": "Ok",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "ok",
+          "meta"
+        ],
+        "title": "Envelope[Union[Hedge, NoneType]]",
+        "type": "object"
+      },
+      "Envelope_list_Career__": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Career"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ErrorBody"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          },
+          "ok": {
+            "title": "Ok",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "ok",
+          "meta"
+        ],
+        "title": "Envelope[list[Career]]",
+        "type": "object"
+      },
+      "Envelope_list_Crisis__": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Crisis"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ErrorBody"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          },
+          "ok": {
+            "title": "Ok",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "ok",
+          "meta"
+        ],
+        "title": "Envelope[list[Crisis]]",
+        "type": "object"
+      },
+      "Envelope_list_HistoryPoint__": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/HistoryPoint"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ErrorBody"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          },
+          "ok": {
+            "title": "Ok",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "ok",
+          "meta"
+        ],
+        "title": "Envelope[list[HistoryPoint]]",
+        "type": "object"
+      },
+      "Envelope_list_Route__": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Route"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ErrorBody"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          },
+          "ok": {
+            "title": "Ok",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "ok",
+          "meta"
+        ],
+        "title": "Envelope[list[Route]]",
+        "type": "object"
+      },
+      "Envelope_list_Tag__": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Tag"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ErrorBody"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          },
+          "ok": {
+            "title": "Ok",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "ok",
+          "meta"
+        ],
+        "title": "Envelope[list[Tag]]",
+        "type": "object"
+      },
+      "Envelope_list_int__": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "integer"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ErrorBody"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          },
+          "ok": {
+            "title": "Ok",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "ok",
+          "meta"
+        ],
+        "title": "Envelope[list[int]]",
+        "type": "object"
+      },
+      "ErrorBody": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "$ref": "#/components/schemas/ErrorCode"
+          },
+          "details": {
+            "items": {
+              "$ref": "#/components/schemas/ErrorDetail"
+            },
+            "title": "Details",
+            "type": "array"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "ErrorBody",
+        "type": "object"
+      },
+      "ErrorCode": {
+        "enum": [
+          "VALIDATION_ERROR",
+          "NOT_FOUND",
+          "UPSTREAM_UNAVAILABLE",
+          "INTERNAL"
+        ],
+        "title": "ErrorCode",
+        "type": "string"
+      },
+      "ErrorDetail": {
+        "additionalProperties": false,
+        "properties": {
+          "field": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Field"
+          },
+          "issue": {
+            "title": "Issue",
+            "type": "string"
+          }
+        },
+        "required": [
+          "issue"
+        ],
+        "title": "ErrorDetail",
+        "type": "object"
+      },
+      "Explanation": {
+        "additionalProperties": false,
+        "properties": {
+          "ai_written": {
+            "title": "Ai Written",
+            "type": "boolean"
+          },
+          "cited_numbers": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Cited Numbers",
+            "type": "array"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text",
+          "ai_written"
+        ],
+        "title": "Explanation",
+        "type": "object"
+      },
+      "HealthOut": {
+        "properties": {
+          "ml_mode": {
+            "title": "Ml Mode",
+            "type": "string"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/SourceStatus"
+            },
+            "title": "Sources",
+            "type": "array"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "ml_mode",
+          "sources"
+        ],
+        "title": "HealthOut",
+        "type": "object"
+      },
+      "Hedge": {
+        "additionalProperties": false,
+        "properties": {
+          "career": {
+            "$ref": "#/components/schemas/Career"
+          },
+          "evidence": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "title | estimate; show 'estimate' as a badge",
+            "title": "Evidence"
+          },
+          "for_soc": {
+            "title": "For Soc",
+            "type": "string"
+          },
+          "risk_delta": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "hedge risk minus top-pick risk; negative = safer",
+            "title": "Risk Delta"
+          },
+          "shared_skills": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Shared Skills",
+            "type": "array"
+          },
+          "similarity": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Similarity",
+            "type": "number"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "why": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Why"
+          }
+        },
+        "required": [
+          "for_soc",
+          "career",
+          "similarity",
+          "shared_skills",
+          "why",
+          "risk_delta",
+          "status"
+        ],
+        "title": "Hedge",
+        "type": "object"
+      },
+      "HistoryPoint": {
+        "properties": {
+          "flags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Flags",
+            "type": "array"
+          },
+          "jobs_k": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Jobs K"
+          },
+          "pay_median": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pay Median"
+          },
+          "pay_median_real": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pay Median Real"
+          },
+          "year": {
+            "title": "Year",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "year"
+        ],
+        "title": "HistoryPoint",
+        "type": "object"
+      },
+      "IscoShare": {
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "share": {
+            "title": "Share",
+            "type": "number"
+          }
+        },
+        "required": [
+          "code",
+          "share"
+        ],
+        "title": "IscoShare",
+        "type": "object"
+      },
+      "LiveState": {
+        "properties": {
+          "live": {
+            "title": "Live",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "live"
+        ],
+        "title": "LiveState",
+        "type": "object"
+      },
+      "LiveSwitch": {
+        "additionalProperties": false,
+        "properties": {
+          "enabled": {
+            "title": "Enabled",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "enabled"
+        ],
+        "title": "LiveSwitch",
+        "type": "object"
+      },
+      "Meta": {
+        "additionalProperties": false,
+        "properties": {
+          "as_of": {
+            "title": "As Of",
+            "type": "string"
+          },
+          "request_id": {
+            "title": "Request Id",
+            "type": "string"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/SourceStatus"
+            },
+            "title": "Sources",
+            "type": "array"
+          }
+        },
+        "required": [
+          "as_of",
+          "request_id"
+        ],
+        "title": "Meta",
+        "type": "object"
+      },
+      "Metric": {
+        "properties": {
+          "as_of": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "As Of"
+          },
+          "confidence": {
+            "enum": [
+              "high",
+              "medium",
+              "low"
+            ],
+            "title": "Confidence",
+            "type": "string"
+          },
+          "extra": {
+            "additionalProperties": true,
+            "title": "Extra",
+            "type": "object"
+          },
+          "flags": {
+            "description": "vocabulary in packages/ml/CONTRACTS.md 2.3",
+            "items": {
+              "type": "string"
+            },
+            "title": "Flags",
+            "type": "array"
+          },
+          "granularity": {
+            "default": "occupation",
+            "description": "occupation | parent_group | major_group | estimate",
+            "title": "Granularity",
+            "type": "string"
+          },
+          "high": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "High"
+          },
+          "low": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Low"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "region": {
+            "default": "UK",
+            "title": "Region",
+            "type": "string"
+          },
+          "source": {
+            "description": "key in sources.json / data/manifest.yaml, or MOCK",
+            "minLength": 1,
+            "title": "Source",
+            "type": "string"
+          },
+          "status": {
+            "default": "final",
+            "enum": [
+              "final",
+              "preliminary",
+              "mock",
+              "pending"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "unit": {
+            "title": "Unit",
+            "type": "string"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          }
+        },
+        "required": [
+          "value",
+          "unit",
+          "source",
+          "confidence"
+        ],
+        "title": "Metric",
+        "type": "object"
+      },
+      "Pick": {
+        "additionalProperties": false,
+        "properties": {
+          "career": {
+            "$ref": "#/components/schemas/Career"
+          },
+          "components": {
+            "$ref": "#/components/schemas/Components"
+          },
+          "reasons": {
+            "description": "template sentences built only from numbers in this response",
+            "items": {
+              "type": "string"
+            },
+            "title": "Reasons",
+            "type": "array"
+          },
+          "tier": {
+            "enum": [
+              "ambitious",
+              "safe",
+              "balanced"
+            ],
+            "title": "Tier",
+            "type": "string"
+          },
+          "vs_first_idea": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "description": "component -> pick score minus first-idea score; None if either is missing",
+            "title": "Vs First Idea",
+            "type": "object"
+          }
+        },
+        "required": [
+          "tier",
+          "career",
+          "components",
+          "vs_first_idea",
+          "reasons"
+        ],
+        "title": "Pick",
+        "type": "object"
+      },
+      "ProfileIn": {
+        "additionalProperties": false,
+        "properties": {
+          "automation_worry": {
+            "default": 0.5,
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Automation Worry",
+            "type": "number"
+          },
+          "free_text": {
+            "default": "",
+            "maxLength": 300,
+            "title": "Free Text",
+            "type": "string"
+          },
+          "interests": {
+            "description": "tag ids from GET /api/v1/tags",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 16,
+            "title": "Interests",
+            "type": "array"
+          },
+          "location": {
+            "default": "Glasgow",
+            "maxLength": 60,
+            "title": "Location",
+            "type": "string"
+          },
+          "nation": {
+            "default": "scotland",
+            "enum": [
+              "scotland",
+              "england",
+              "wales",
+              "northern_ireland"
+            ],
+            "title": "Nation",
+            "type": "string"
+          },
+          "qualifications": {
+            "items": {
+              "$ref": "#/components/schemas/Qualification"
+            },
+            "maxItems": 20,
+            "title": "Qualifications",
+            "type": "array"
+          }
+        },
+        "title": "ProfileIn",
+        "type": "object"
+      },
+      "ProfileOut": {
+        "additionalProperties": false,
+        "properties": {
+          "interests": {
+            "description": "checklist interests plus suggestions; the user confirms them",
+            "items": {
+              "type": "string"
+            },
+            "title": "Interests",
+            "type": "array"
+          },
+          "suggested": {
+            "items": {
+              "$ref": "#/components/schemas/TagMatch"
+            },
+            "title": "Suggested",
+            "type": "array"
+          },
+          "tag_source": {
+            "description": "keyword | matcher | llm | none",
+            "title": "Tag Source",
+            "type": "string"
+          }
+        },
+        "required": [
+          "suggested",
+          "tag_source",
+          "interests"
+        ],
+        "title": "ProfileOut",
+        "type": "object"
+      },
+      "Qualification": {
+        "additionalProperties": false,
+        "properties": {
+          "grade": {
+            "anyOf": [
+              {
+                "maxLength": 3,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Grade"
+          },
+          "level": {
+            "enum": [
+              "national5",
+              "higher",
+              "advanced_higher",
+              "gcse",
+              "a_level"
+            ],
+            "title": "Level",
+            "type": "string"
+          },
+          "subject": {
+            "enum": [
+              "maths",
+              "english",
+              "physics",
+              "chemistry",
+              "biology",
+              "computing",
+              "art",
+              "design_technology",
+              "graphic_communication",
+              "geography",
+              "business",
+              "music"
+            ],
+            "title": "Subject",
+            "type": "string"
+          }
+        },
+        "required": [
+          "subject",
+          "level"
+        ],
+        "title": "Qualification",
+        "type": "object"
+      },
+      "Range": {
+        "properties": {
+          "high": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "High"
+          },
+          "low": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Low"
+          },
+          "median": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median"
+          }
+        },
+        "title": "Range",
+        "type": "object"
+      },
+      "RecommendationOut": {
+        "additionalProperties": false,
+        "properties": {
+          "explanation": {
+            "$ref": "#/components/schemas/Explanation"
+          },
+          "first_idea": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Career"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "first_idea_candidates": {
+            "description": "careers the typed first idea matches equally; first_idea is null then",
+            "items": {
+              "$ref": "#/components/schemas/CareerRef"
+            },
+            "title": "First Idea Candidates",
+            "type": "array"
+          },
+          "first_idea_components": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Components"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "hedge": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Hedge"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "notices": {
+            "description": "FLAG_TEXT for every MUST_MENTION flag on a metric in this response; shown and cited by the LLM",
+            "items": {
+              "type": "string"
+            },
+            "title": "Notices",
+            "type": "array"
+          },
+          "picks": {
+            "description": "0-3; fewer if not enough careers pass the fit gate",
+            "items": {
+              "$ref": "#/components/schemas/Pick"
+            },
+            "maxItems": 3,
+            "title": "Picks",
+            "type": "array"
+          },
+          "roadmap": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Roadmap"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "first_idea",
+          "first_idea_components",
+          "picks",
+          "hedge",
+          "roadmap",
+          "explanation"
+        ],
+        "title": "RecommendationOut",
+        "type": "object"
+      },
+      "RecommendationRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "first_idea": {
+            "description": "SOC 2020 code or free text, e.g. 'architect'",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "First Idea",
+            "type": "string"
+          },
+          "profile": {
+            "$ref": "#/components/schemas/ProfileIn"
+          }
+        },
+        "required": [
+          "profile",
+          "first_idea"
+        ],
+        "title": "RecommendationRequest",
+        "type": "object"
+      },
+      "Roadmap": {
+        "additionalProperties": false,
+        "properties": {
+          "soc2020": {
+            "title": "Soc2020",
+            "type": "string"
+          },
+          "steps": {
+            "items": {
+              "$ref": "#/components/schemas/RoadmapStep"
+            },
+            "maxItems": 3,
+            "title": "Steps",
+            "type": "array"
+          },
+          "this_month": {
+            "title": "This Month",
+            "type": "string"
+          }
+        },
+        "required": [
+          "soc2020",
+          "steps",
+          "this_month"
+        ],
+        "title": "Roadmap",
+        "type": "object"
+      },
+      "RoadmapStep": {
+        "additionalProperties": false,
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "string"
+          },
+          "order": {
+            "maximum": 3.0,
+            "minimum": 1.0,
+            "title": "Order",
+            "type": "integer"
+          },
+          "route": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Route"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "order",
+          "title",
+          "detail"
+        ],
+        "title": "RoadmapStep",
+        "type": "object"
+      },
+      "Route": {
+        "additionalProperties": false,
+        "properties": {
+          "entry_requirements": {
+            "title": "Entry Requirements",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "degree",
+              "graduate_apprenticeship",
+              "apprenticeship",
+              "college"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "nation": {
+            "enum": [
+              "scotland",
+              "england",
+              "wales",
+              "northern_ireland"
+            ],
+            "title": "Nation",
+            "type": "string"
+          },
+          "provider": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Provider"
+          },
+          "soc2020": {
+            "pattern": "^\\d{4}$",
+            "title": "Soc2020",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          },
+          "verified_by": {
+            "minLength": 1,
+            "title": "Verified By",
+            "type": "string"
+          }
+        },
+        "required": [
+          "soc2020",
+          "nation",
+          "kind",
+          "name",
+          "entry_requirements",
+          "url",
+          "source",
+          "verified_by"
+        ],
+        "title": "Route",
+        "type": "object"
+      },
+      "SourceInfo": {
+        "properties": {
+          "coverage": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Coverage"
+          },
+          "licence": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Licence"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "publisher": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Publisher"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url"
+          },
+          "years": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Years"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "SourceInfo",
+        "type": "object"
+      },
+      "SourceStatus": {
+        "additionalProperties": false,
+        "properties": {
+          "as_of": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "As Of"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "quality": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "file status when real: final | preliminary",
+            "title": "Quality"
+          },
+          "region": {
+            "default": "UK",
+            "title": "Region",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "live",
+              "snapshot",
+              "mock",
+              "missing"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "status"
+        ],
+        "title": "SourceStatus",
+        "type": "object"
+      },
+      "SourcesOut": {
+        "properties": {
+          "registry": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/SourceInfo"
+            },
+            "title": "Registry",
+            "type": "object"
+          },
+          "statuses": {
+            "items": {
+              "$ref": "#/components/schemas/SourceStatus"
+            },
+            "title": "Statuses",
+            "type": "array"
+          }
+        },
+        "required": [
+          "statuses",
+          "registry"
+        ],
+        "title": "SourcesOut",
+        "type": "object"
+      },
+      "Tag": {
+        "description": "One checklist interest, from ML fit.json.",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "keywords": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Keywords",
+            "type": "array"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "label"
+        ],
+        "title": "Tag",
+        "type": "object"
+      },
+      "TagMatch": {
+        "properties": {
+          "matched": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Matched",
+            "type": "array"
+          },
+          "score": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Score",
+            "type": "number"
+          },
+          "tag": {
+            "title": "Tag",
+            "type": "string"
+          }
+        },
+        "required": [
+          "tag",
+          "score"
+        ],
+        "title": "TagMatch",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "Avenir API",
+    "version": "1"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/v1/backtest": {
+      "get": {
+        "operationId": "backtest_api_v1_backtest_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "year",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Year"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_BacktestOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "NOT_FOUND envelope"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "VALIDATION_ERROR envelope"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "INTERNAL envelope"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "UPSTREAM_UNAVAILABLE envelope"
+          }
+        },
+        "summary": "Backtest"
+      }
+    },
+    "/api/v1/backtest/years": {
+      "get": {
+        "operationId": "backtest_years_api_v1_backtest_years_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_int__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "NOT_FOUND envelope"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "VALIDATION_ERROR envelope"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "INTERNAL envelope"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "UPSTREAM_UNAVAILABLE envelope"
+          }
+        },
+        "summary": "Backtest Years"
+      }
+    },
+    "/api/v1/careers": {
+      "get": {
+        "operationId": "careers_api_v1_careers_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_Career__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "NOT_FOUND envelope"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "VALIDATION_ERROR envelope"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "INTERNAL envelope"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "UPSTREAM_UNAVAILABLE envelope"
+          }
+        },
+        "summary": "Careers"
+      }
+    },
+    "/api/v1/careers/{soc}": {
+      "get": {
+        "operationId": "career_api_v1_careers__soc__get",
+        "parameters": [
+          {
+            "description": "SOC 2020 unit group, 4 digits",
+            "in": "path",
+            "name": "soc",
+            "required": true,
+            "schema": {
+              "description": "SOC 2020 unit group, 4 digits",
+              "pattern": "^\\d{4}$",
+              "title": "Soc",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_Career_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "NOT_FOUND envelope"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "VALIDATION_ERROR envelope"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "INTERNAL envelope"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "UPSTREAM_UNAVAILABLE envelope"
+          }
+        },
+        "summary": "Career"
+      }
+    },
+    "/api/v1/careers/{soc}/hedge": {
+      "get": {
+        "operationId": "hedge_api_v1_careers__soc__hedge_get",
+        "parameters": [
+          {
+            "description": "SOC 2020 unit group, 4 digits",
+            "in": "path",
+            "name": "soc",
+            "required": true,
+            "schema": {
+              "description": "SOC 2020 unit group, 4 digits",
+              "pattern": "^\\d{4}$",
+              "title": "Soc",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_Union_Hedge__NoneType__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "NOT_FOUND envelope"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "VALIDATION_ERROR envelope"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "INTERNAL envelope"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "UPSTREAM_UNAVAILABLE envelope"
+          }
+        },
+        "summary": "Hedge"
+      }
+    },
+    "/api/v1/careers/{soc}/history": {
+      "get": {
+        "operationId": "career_history_api_v1_careers__soc__history_get",
+        "parameters": [
+          {
+            "description": "SOC 2020 unit group, 4 digits",
+            "in": "path",
+            "name": "soc",
+            "required": true,
+            "schema": {
+              "description": "SOC 2020 unit group, 4 digits",
+              "pattern": "^\\d{4}$",
+              "title": "Soc",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_HistoryPoint__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "NOT_FOUND envelope"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "VALIDATION_ERROR envelope"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "INTERNAL envelope"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "UPSTREAM_UNAVAILABLE envelope"
+          }
+        },
+        "summary": "Career History"
+      }
+    },
+    "/api/v1/crises": {
+      "get": {
+        "operationId": "crises_api_v1_crises_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_Crisis__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "NOT_FOUND envelope"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "VALIDATION_ERROR envelope"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "INTERNAL envelope"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "UPSTREAM_UNAVAILABLE envelope"
+          }
+        },
+        "summary": "Crises"
+      }
+    },
+    "/api/v1/demo/live": {
+      "post": {
+        "operationId": "demo_live_api_v1_demo_live_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LiveSwitch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_LiveState_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "NOT_FOUND envelope"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "VALIDATION_ERROR envelope"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "INTERNAL envelope"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "UPSTREAM_UNAVAILABLE envelope"
+          }
+        },
+        "summary": "Demo Live"
+      }
+    },
+    "/api/v1/profile": {
+      "post": {
+        "operationId": "profile_api_v1_profile_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProfileIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ProfileOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "NOT_FOUND envelope"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "VALIDATION_ERROR envelope"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "INTERNAL envelope"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "UPSTREAM_UNAVAILABLE envelope"
+          }
+        },
+        "summary": "Profile"
+      }
+    },
+    "/api/v1/recommendations": {
+      "post": {
+        "operationId": "recommendations_api_v1_recommendations_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecommendationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_RecommendationOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "NOT_FOUND envelope"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "VALIDATION_ERROR envelope"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "INTERNAL envelope"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "UPSTREAM_UNAVAILABLE envelope"
+          }
+        },
+        "summary": "Recommendations"
+      }
+    },
+    "/api/v1/routes/{soc}": {
+      "get": {
+        "operationId": "routes_api_v1_routes__soc__get",
+        "parameters": [
+          {
+            "description": "SOC 2020 unit group, 4 digits",
+            "in": "path",
+            "name": "soc",
+            "required": true,
+            "schema": {
+              "description": "SOC 2020 unit group, 4 digits",
+              "pattern": "^\\d{4}$",
+              "title": "Soc",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "nation",
+            "required": false,
+            "schema": {
+              "default": "scotland",
+              "enum": [
+                "scotland",
+                "england",
+                "wales",
+                "northern_ireland"
+              ],
+              "title": "Nation",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_Route__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "NOT_FOUND envelope"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "VALIDATION_ERROR envelope"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "INTERNAL envelope"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "UPSTREAM_UNAVAILABLE envelope"
+          }
+        },
+        "summary": "Routes"
+      }
+    },
+    "/api/v1/sources": {
+      "get": {
+        "operationId": "sources_api_v1_sources_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_SourcesOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "NOT_FOUND envelope"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "VALIDATION_ERROR envelope"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "INTERNAL envelope"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "UPSTREAM_UNAVAILABLE envelope"
+          }
+        },
+        "summary": "Sources"
+      }
+    },
+    "/api/v1/tags": {
+      "get": {
+        "operationId": "tags_api_v1_tags_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_Tag__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "NOT_FOUND envelope"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "VALIDATION_ERROR envelope"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "INTERNAL envelope"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "UPSTREAM_UNAVAILABLE envelope"
+          }
+        },
+        "summary": "Tags"
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_HealthOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "NOT_FOUND envelope"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "VALIDATION_ERROR envelope"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "INTERNAL envelope"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "UPSTREAM_UNAVAILABLE envelope"
+          }
+        },
+        "summary": "Health"
+      }
+    }
+  }
+}

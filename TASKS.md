@@ -1,5 +1,7 @@
 # Integration tasks
 
+- [ ] [codex] Execute hackathon launch plan: latest backend/ML integration, full evidence directory, durable decision plan, source/a11y fixes, reproducible serving, independent review and pushed checkpoints. See docs/superpowers/plans/2026-10-18-hackathon-launch.md.
+
 - [x] [codex] Combine all fetched Avenir branches on codex/complete-career-experience, preserving Max's prototype and Arsenii's actual fixtures.
 - [x] [codex] Build the quiz → five weighted matches → three ranked choices → pathway → opportunities and career guide flow in apps/web.
 - [x] [codex] Verify production build, Python tests, and desktop/mobile browser flow; record evidence. No code-review workflow or public deployment requested.

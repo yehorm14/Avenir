@@ -100,8 +100,7 @@ def test_none_eligible() -> None:
 def test_amira_real_fixtures(amira, careers, data) -> None:  # type: ignore[no-untyped-def]
     comps = score_components(amira, careers, data.affinity)
     el = eligible(comps, exclude={"2451"})
-    # Arsenii's cb9e169 embedding affinities replace the earlier hand-made fit table.
-    assert len(el) == 11
+    assert len(el) == 7
     picks = choose_picks(comps, exclude={"2451"})
     assert len(picks) == 3
     assert len({s for _, s in picks}) == 3

@@ -1,70 +1,115 @@
 """Read-only endpoints. Every response is an envelope; unknown ids are 404."""
 from __future__ import annotations
 
-from fastapi import APIRouter, Request
+import logging
+from typing import Annotated
 
-from avenir_contracts import BacktestOut, ErrorCode
+from fastapi import APIRouter, Path, Request
+from pydantic import BaseModel
+
+from avenir_contracts import (
+    AdsSource,
+    BacktestOut,
+    Career,
+    Crisis,
+    Envelope,
+    ErrorCode,
+    HistoryPoint,
+    Route,
+    SnapshotAds,
+    SourceInfo,
+    SourceStatus,
+    Tag,
+)
 from avenir_contracts.vocab import Nation
 
 from .envelope import fail, ok
 
-router = APIRouter(prefix="/api/v1")
+log = logging.getLogger("avenir_api")
+
+# Own descriptions, so docs/openapi.json does not change with the Starlette version's phrases.
+ERROR_RESPONSES: dict[int | str, dict] = {
+    422: {"model": Envelope[None], "description": "VALIDATION_ERROR envelope"},
+    404: {"model": Envelope[None], "description": "NOT_FOUND envelope"},
+    503: {"model": Envelope[None], "description": "UPSTREAM_UNAVAILABLE envelope"},
+    500: {"model": Envelope[None], "description": "INTERNAL envelope"},
+}
+router = APIRouter(prefix="/api/v1", responses=ERROR_RESPONSES)
+# docs/contracts.md: a malformed SOC (not 4 digits) is 422; a well-formed unknown SOC is 404.
+Soc = Annotated[str, Path(pattern=r"^\d{4}$", description="SOC 2020 unit group, 4 digits")]
+
+
+class SourcesOut(BaseModel):
+    statuses: list[SourceStatus]
+    registry: dict[str, SourceInfo]
 
 
 def _not_found(what: str):
     return fail(ErrorCode.NOT_FOUND, f"{what} not found")
 
 
-@router.get("/tags")
+def with_ads_now(ads: AdsSource, career: Career) -> tuple[Career, SourceStatus]:
+    """Copy of `career` with its ads_now metric from the ads source (never mutates the original).
+
+    If the ads source fails (e.g. Adzuna down), fall back to the catalogue's ads_now so the page still loads.
+    """
+    try:
+        metric, status = ads.ads_now(career, "UK")
+    except Exception:
+        log.warning("ads source failed for %s; using catalogue value", career.soc2020, exc_info=True)
+        metric, status = SnapshotAds().ads_now(career, "UK")
+    return career.model_copy(update={"metrics": {**career.metrics, "ads_now": metric}}), status
+
+
+@router.get("/tags", response_model=Envelope[list[Tag]])
 def tags(request: Request):
     d = request.app.state.data
     return ok(d.tags, d.statuses)
 
 
-@router.get("/sources")
+@router.get("/sources", response_model=Envelope[SourcesOut])
 def sources(request: Request):
     d = request.app.state.data
     return ok({"statuses": d.statuses, "registry": d.sources}, d.statuses)
 
 
-@router.get("/careers")
+@router.get("/careers", response_model=Envelope[list[Career]])
 def careers(request: Request):
     d = request.app.state.data
     return ok(list(d.careers.values()), d.statuses)
 
 
-@router.get("/careers/{soc}")
-def career(soc: str, request: Request):
+@router.get("/careers/{soc}", response_model=Envelope[Career])
+def career(soc: Soc, request: Request):
     d = request.app.state.data
     c = d.careers.get(soc)
     if c is None:
         return _not_found("Career")
-    metric, status = request.app.state.ads.ads_now(c, "UK")
-    c = c.model_copy(update={"metrics": {**c.metrics, "ads_now": metric}})
+    c, status = with_ads_now(request.app.state.ads, c)
     return ok(c, [*d.statuses, status])
 
 
-@router.get("/careers/{soc}/history")
-def career_history(soc: str, request: Request):
+@router.get("/careers/{soc}/history", response_model=Envelope[list[HistoryPoint]])
+def career_history(soc: Soc, request: Request):
     d = request.app.state.data
     if soc not in d.careers:
         return _not_found("Career")
     return ok(d.history.get(soc, []), d.statuses)
 
 
-@router.get("/crises")
+@router.get("/crises", response_model=Envelope[list[Crisis]])
 def crises(request: Request):
     d = request.app.state.data
     return ok(d.crises, d.statuses)
 
 
-@router.get("/backtest/years")
+@router.get("/backtest/years", response_model=Envelope[list[int]])
 def backtest_years(request: Request):
     d = request.app.state.data
     return ok(sorted(d.backtest), d.statuses)
 
 
-@router.get("/backtest")
+@router.get("/backtest", response_model=Envelope[BacktestOut])
 def backtest(request: Request, year: int | None = None):
     d = request.app.state.data
     if not d.backtest:
@@ -76,8 +121,8 @@ def backtest(request: Request, year: int | None = None):
     return ok(out, d.statuses)
 
 
-@router.get("/routes/{soc}")
-def routes(soc: str, request: Request, nation: Nation = "scotland"):
+@router.get("/routes/{soc}", response_model=Envelope[list[Route]])
+def routes(soc: Soc, request: Request, nation: Nation = "scotland"):
     d = request.app.state.data
     if soc not in d.careers:
         return _not_found("Career")
