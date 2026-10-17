@@ -68,7 +68,10 @@ def test_join_gives_20_careers_with_ml_and_catalogue_metrics(data):
 def test_everything_else_loads(data):
     assert data.tags and data.affinity and data.backtest and data.crises and data.sources
     assert all(len(v) <= 5 for v in data.hedges.values())
-    assert data.history["2134"][0].year == 2011
+    hist = data.history["2134"]
+    years = [pt.year for pt in hist]
+    assert years[0] <= 2011 and years == sorted(set(years))  # v1.0 starts 2011, v1.1 starts 2007
+    assert all(pt.jobs_k is None for pt in hist if pt.year < 2011)  # before 2011 only pay
     assert data.routes["2451"][0].nation == "scotland"
     names = {s.name: s.status for s in data.statuses}
     assert names["catalogue"] == "mock" and names["routes"] == "mock"
