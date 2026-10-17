@@ -246,3 +246,24 @@ def test_nan_metric_is_sent_as_null(data):
     assert r.json()["data"]["metrics"]["pay_median"]["value"] is None
     r = client.post(R, json={"profile": AMIRA, "first_idea": "architect"})
     assert r.status_code == 200
+
+
+def test_ads_overlays_run_in_parallel(data):
+    # Yehor on PR #8: ~5 overlays one after another could take 5 x 3 s when Adzuna is slow
+    import time
+
+    from avenir_contracts import SnapshotAds
+
+    class SlowAds(SnapshotAds):
+        def ads_now(self, career, region):
+            time.sleep(0.4)
+            return super().ads_now(career, region)
+
+    c = TestClient(create_app(data=data, ads=SlowAds()))
+    start = time.monotonic()
+    r = c.post(R, json={"profile": AMIRA, "first_idea": "architect"})
+    elapsed = time.monotonic() - start
+    assert r.status_code == 200
+    d = r.json()["data"]
+    assert len(d["picks"]) == 3 and d["first_idea"] and d["hedge"]  # 5 overlays: one after another is 2 s
+    assert elapsed < 1.2, elapsed
