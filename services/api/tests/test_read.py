@@ -77,7 +77,7 @@ def test_crises(client):
 
 
 def test_backtest_years_sorted(client):
-    assert _ok(client.get("/api/v1/backtest/years")) == [2013, 2014, 2019]
+    assert _ok(client.get("/api/v1/backtest/years")) == [2013, 2014, 2015, 2019]
 
 
 def test_backtest_latest_by_default(client, data):

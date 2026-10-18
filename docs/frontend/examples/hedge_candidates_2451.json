@@ -30,53 +30,5 @@
     "status": "preliminary",
     "title": "Civil engineers",
     "why": "Shares 55 skills, e.g. integrate measures in architectural designs, integrated design, satisfy technical requirements"
-  },
-  {
-    "evidence": "title",
-    "shared_skills": [
-      "execute feasibility study",
-      "provide cost benefit analysis reports",
-      "build business relationships",
-      "design open spaces",
-      "study the relationship between buildings, people and the environment",
-      "write an architectural brief"
-    ],
-    "similarity": 0.0498,
-    "soc2020": "2133",
-    "status": "preliminary",
-    "title": "IT business analysts, architects and systems designers",
-    "why": "Shares 97 skills, e.g. execute feasibility study, provide cost benefit analysis reports, build business relationships"
-  },
-  {
-    "evidence": "title",
-    "shared_skills": [
-      "green building practices",
-      "interpret technical requirements",
-      "build business relationships",
-      "project management",
-      "identify customer's needs",
-      "participate in governmental tenders"
-    ],
-    "similarity": 0.0399,
-    "soc2020": "1122",
-    "status": "preliminary",
-    "title": "Production managers and directors in construction",
-    "why": "Shares 25 skills, e.g. green building practices, interpret technical requirements, build business relationships"
-  },
-  {
-    "evidence": "title",
-    "shared_skills": [
-      "ecology",
-      "characteristics of plants",
-      "plant species",
-      "perform pest control",
-      "perform weed control operations",
-      "pest control in plants"
-    ],
-    "similarity": 0.0375,
-    "soc2020": "2151",
-    "status": "preliminary",
-    "title": "Conservation professionals",
-    "why": "Shares 20 skills, e.g. ecology, characteristics of plants, plant species"
   }
 ]

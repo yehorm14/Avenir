@@ -19,11 +19,11 @@ def test_amira_architect(data, amira):
     assert out.first_idea is not None and out.first_idea.soc2020 == "2451"
     assert out.first_idea_components is not None
     assert [p.tier for p in out.picks] == ["ambitious", "safe", "balanced"]
-    assert [p.career.soc2020 for p in out.picks] == ["2141", "2452", "2453"]
+    assert [p.career.soc2020 for p in out.picks] == ["2134", "2121", "2133"]
     for p in out.picks:
         assert set(p.vs_first_idea) == set(COMPONENT_NAMES)
         assert p.reasons
-    assert out.hedge is not None and out.hedge.for_soc == "2141" and out.hedge.career.soc2020 == "2123"
+    assert out.hedge is not None and out.hedge.for_soc == "2134" and out.hedge.career.soc2020 == "2133"
     assert out.roadmap is not None and out.roadmap.steps[0].detail.startswith("Take Higher Computing")
     assert out.notices
     assert out.explanation.ai_written is False

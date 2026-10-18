@@ -1,4 +1,8 @@
 {
+  "bridged_low_purity": {
+    "must_mention": true,
+    "text": "The older occupation code behind the figures before 2021 mixed several different jobs, so those figures may not describe this job well."
+  },
   "bridged_soc2000": {
     "must_mention": true,
     "text": "Figures before 2011 are estimated from the older SOC 2000 occupation codes using two ONS crosswalks."
@@ -17,11 +21,15 @@
   },
   "cv_high": {
     "must_mention": false,
-    "text": "This estimate has a sampling error of 10 to 20 percent; treat it with caution."
+    "text": "This estimate has a sampling error above 10 percent; treat it with caution."
   },
   "employees_only": {
     "must_mention": true,
     "text": "Covers employees only; self-employed and freelance workers are not included."
+  },
+  "fallback_all_employees": {
+    "must_mention": false,
+    "text": "Full-time figures were too sparse, so this uses all employees (full- and part-time)."
   },
   "imputed_parent": {
     "must_mention": true,
@@ -34,6 +42,14 @@
   "multi_isco": {
     "must_mention": false,
     "text": "This occupation spans several international job codes; the score is their weighted average and the range shows how much they differ."
+  },
+  "ons_indicative_counts": {
+    "must_mention": true,
+    "text": "ONS says its job counts are indicative, not accurate estimates."
+  },
+  "partial_sources": {
+    "must_mention": false,
+    "text": "Part of the data behind this figure was missing, so it rests on only some of the job titles or older codes."
   },
   "pending_source": {
     "must_mention": false,
@@ -49,10 +65,10 @@
   },
   "sources_disagree": {
     "must_mention": true,
-    "text": "Two independent research estimates disagree for this job, so the range is wider."
+    "text": "Two research estimates disagree for this job, so the range is wider."
   },
   "suppressed": {
     "must_mention": false,
-    "text": "ONS withheld this estimate because it was too unreliable."
+    "text": "This figure is withheld because the underlying data are too sparse or unreliable."
   }
 }

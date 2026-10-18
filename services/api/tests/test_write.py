@@ -56,8 +56,10 @@ def test_amira_flow(client):
     assert prof["tag_source"] == "keyword"
     rec = _ok(client.post(R, json={"profile": AMIRA, "first_idea": "architect"}))
     assert rec["first_idea"]["soc2020"] == "2451"
-    assert [p["career"]["soc2020"] for p in rec["picks"]] == ["2141", "2452", "2453"]
-    assert rec["hedge"]["career"]["soc2020"] == "2123"
+    assert [p["career"]["soc2020"] for p in rec["picks"]] == ["2134", "2121", "2133"]
+    assert [p["tier"] for p in rec["picks"]] == ["ambitious", "safe", "balanced"]
+    assert rec["hedge"]["for_soc"] == "2134"
+    assert rec["hedge"]["career"]["soc2020"] == "2133"
     assert rec["notices"]
     assert rec["explanation"]["text"]
     assert rec["roadmap"]
@@ -111,13 +113,13 @@ def test_ads_overlay_on_every_career(data):
     assert len(careers) == 5
     for car in careers:
         assert car["metrics"]["ads_now"]["value"] == 1000.0 + int(car["soc2020"])
-    assert data.careers["2141"].metrics.get("ads_now") != c.app.state.ads.ads_now(data.careers["2141"], "UK")[0]
+    assert data.careers["2134"].metrics.get("ads_now") != c.app.state.ads.ads_now(data.careers["2134"], "UK")[0]
 
 
 def test_hedge_endpoint(client):
     h = _ok(client.get("/api/v1/careers/2141/hedge"))
     assert h["for_soc"] == "2141"
-    assert h["career"]["soc2020"] == "2123"
+    assert h["career"]["soc2020"] == "2142"
     _err(client.get("/api/v1/careers/9999/hedge"), 404, "NOT_FOUND")
 
 
@@ -142,11 +144,19 @@ def test_suggested_tags_appended(client):
     assert [m["tag"] for m in out["suggested"]]
 
 
-@pytest.mark.parametrize("tag", ["science_health", "helping_people"])
-def test_narrow_profile_gives_fewer_picks(client, tag):
+@pytest.mark.parametrize(
+    ("tag", "eligible_socs"), [("science_health", ["2254"]), ("helping_people", ["2254", "2313"])],
+)
+def test_narrow_profile_gives_fewer_picks(data, tag, eligible_socs):
+    # Embedding affinities need not be narrow. Control the gate inputs to test
+    # that the API returns only the one or two eligible options without padding.
+    narrow = replace(data, affinity={**data.affinity, tag: {soc: 1.0 for soc in eligible_socs}})
+    client = TestClient(create_app(data=narrow))
     r = client.post(R, json={"profile": {"interests": [tag]}, "first_idea": "architect"})
     rec = _ok(r)
-    assert 0 < len(rec["picks"]) < 3
+    assert len(rec["picks"]) == len(eligible_socs)
+    assert {pick["career"]["soc2020"] for pick in rec["picks"]} == set(eligible_socs)
+    assert [pick["tier"] for pick in rec["picks"]] == ["ambitious", "safe"][: len(eligible_socs)]
     assert rec["explanation"]["text"]
     assert rec["hedge"] is None or rec["hedge"]["career"]["soc2020"]
 

@@ -100,8 +100,9 @@ def test_none_eligible() -> None:
 def test_amira_real_fixtures(amira, careers, data) -> None:  # type: ignore[no-untyped-def]
     comps = score_components(amira, careers, data.affinity)
     el = eligible(comps, exclude={"2451"})
-    assert len(el) == 7
+    assert el == ["2121", "2133", "2134", "2141", "2142", "2422", "2433", "2452", "2453", "2454", "3120"]
     picks = choose_picks(comps, exclude={"2451"})
     assert len(picks) == 3
     assert len({s for _, s in picks}) == 3
     assert "2451" not in [s for _, s in picks]
+    assert picks == [("ambitious", "2134"), ("safe", "2121"), ("balanced", "2133")]

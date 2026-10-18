@@ -96,4 +96,5 @@ def test_amira_mock_hedge(data, careers, amira):
     top = data.careers["2141"]
     cands = data.hedges["2141"]
     h = choose_hedge(top, cands, comps, data.careers)
-    assert h is not None and h.career.soc2020 == "2123"
+    assert h is not None and h.career.soc2020 == "2142"
+    assert h.risk_delta < 0

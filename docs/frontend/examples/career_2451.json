@@ -38,59 +38,71 @@
       "value": 3271.9
     },
     "demand_trend": {
-      "as_of": "2021-2025",
-      "confidence": "medium",
-      "extra": {},
+      "as_of": "2022-2025",
+      "confidence": "low",
+      "extra": {
+        "absolute_trend": -0.0055,
+        "typical_occupation_trend": 0.0342
+      },
       "flags": [
         "employees_only",
+        "ons_indicative_counts",
         "provisional"
       ],
       "granularity": "occupation",
-      "high": 0.0,
-      "low": -0.1115,
-      "note": "Robust (Theil-Sen) yearly trend in full-time employee jobs since the 2021 code change; range is a 90% interval.",
+      "high": 0.0444,
+      "low": -0.1234,
+      "note": "Yearly change in full-time employee jobs compared with the typical occupation, 2022 to 2025 (+0.02 = growing 2% a year faster). Robust (Theil-Sen) trend; range is a 90% interval including ONS sampling error.",
       "region": "UK",
       "source": "ons_ashe_t14",
       "status": "preliminary",
       "unit": "fraction/year",
-      "value": -0.0243
+      "value": -0.0432
     },
     "demand_trend_2011_19": {
       "as_of": "2011-2019",
-      "confidence": "high",
-      "extra": {},
+      "confidence": "low",
+      "extra": {
+        "absolute_trend": 0.0383,
+        "purity": 0.986,
+        "typical_occupation_trend": 0.0055
+      },
       "flags": [
         "bridged_soc2010",
         "employees_only",
-        "provisional"
+        "ons_indicative_counts",
+        "partial_sources"
       ],
       "granularity": "occupation",
-      "high": 0.0507,
-      "low": 0.016,
-      "note": "Robust yearly trend in full-time employee jobs in the previous code era, bridged to today's code; range is a 90% interval.",
+      "high": 0.0558,
+      "low": 0.002,
+      "note": "Yearly change in full-time employee jobs compared with the typical occupation in the previous code era, bridged to today's code. Describes the past; it doesn't predict the future.",
       "region": "UK",
       "source": "ons_ashe_t14",
       "status": "preliminary",
       "unit": "fraction/year",
-      "value": 0.0383
+      "value": 0.0285
     },
     "exposure": {
       "as_of": "2025",
-      "confidence": "high",
+      "confidence": "medium",
       "extra": {
         "dfe_percentile": 0.616,
         "dominant_isco": "2161",
         "gradient": "Minimal Exposure",
-        "ilo_percentile": 0.682,
-        "n_isco": 2
+        "ilo_percentile": 0.679,
+        "n_isco": 2,
+        "scored_title_share": 1.0,
+        "spread_between_codes": 0.0,
+        "spread_within_tasks": 0.08
       },
       "flags": [
         "multi_isco"
       ],
       "granularity": "occupation",
-      "high": 0.37,
-      "low": 0.37,
-      "note": "Generative-AI exposure of the occupation's tasks (ILO), averaged over the international codes its job titles map to; range shows their spread and any disagreement with the UK (DfE) estimate.",
+      "high": 0.45,
+      "low": 0.29,
+      "note": "Generative-AI exposure of the job's tasks (ILO 2025), averaged over the international codes its UK job titles map to. Range: how much exposure varies across its tasks and codes, widened where the UK (DfE) estimate disagrees.",
       "region": "UK",
       "source": "ilo_wp140",
       "status": "preliminary",
@@ -107,7 +119,7 @@
       "granularity": "occupation",
       "high": null,
       "low": null,
-      "note": "Percentile rank of the DfE's LLM exposure score among UK occupations (1 = most exposed); a cross-check, not a second headline number.",
+      "note": "Percentile rank of the DfE's language-model exposure score among UK occupations (1 = most exposed). A cross-check, not a second headline number.",
       "region": "UK",
       "source": "dfe_ai_uk_2023",
       "status": "preliminary",
@@ -116,16 +128,18 @@
     },
     "jobs": {
       "as_of": "2025",
-      "confidence": "medium",
+      "confidence": "low",
       "extra": {},
       "flags": [
+        "cv_high",
         "employees_only",
+        "ons_indicative_counts",
         "provisional"
       ],
       "granularity": "occupation",
       "high": null,
       "low": null,
-      "note": "Full-time employee jobs (ASHE estimate, rounded to the thousand).",
+      "note": "Full-time employee jobs (ASHE, rounded to the thousand). ONS calls these counts indicative, not accurate estimates.",
       "region": "UK",
       "source": "ons_ashe_t14",
       "status": "preliminary",
@@ -143,7 +157,7 @@
       "granularity": "occupation",
       "high": 55262.0,
       "low": 37342.0,
-      "note": "Median gross annual pay, full-time employees; range is the 25th to 75th percentile.",
+      "note": "Median gross annual pay of full-time adult employees who have been in the job for over a year, tax year 2024/25. It is not starting pay. Range: 25th to 75th percentile (the middle half).",
       "region": "UK",
       "source": "ons_ashe_t14",
       "status": "preliminary",
@@ -161,7 +175,7 @@
       "granularity": "occupation",
       "high": null,
       "low": null,
-      "note": "10th percentile (floor) of gross annual pay, full-time employees.",
+      "note": "10th percentile (a floor) of gross annual pay, full-time adult employees, tax year 2024/25.",
       "region": "UK",
       "source": "ons_ashe_t14",
       "status": "preliminary",
@@ -174,84 +188,92 @@
       "extra": {},
       "flags": [
         "employees_only",
-        "provisional",
-        "suppressed"
+        "imputed_parent",
+        "provisional"
       ],
-      "granularity": "occupation",
+      "granularity": "parent_group",
       "high": null,
       "low": null,
-      "note": "90th percentile (a ceiling) of gross annual pay, full-time employees.",
+      "note": "90th percentile (a ceiling; rarely published for single occupations) for the wider group 'Architects, Chartered Architectural Technologists, Planning Officers, Surveyors and Construction Professionals' (this occupation's own figure is withheld).",
       "region": "UK",
       "source": "ons_ashe_t14",
       "status": "preliminary",
       "unit": "GBP/year",
-      "value": null
+      "value": 76971.0
     },
     "real_pay_change_10y": {
       "as_of": "2015-2025",
-      "confidence": "medium",
-      "extra": {},
+      "confidence": "low",
+      "extra": {
+        "native_real_change_2022_2025": -0.0847,
+        "purity": 0.986,
+        "source_coverage_2015": 1.0
+      },
       "flags": [
         "bridged_soc2010",
         "employees_only",
         "provisional"
       ],
       "granularity": "occupation",
-      "high": null,
-      "low": null,
-      "note": "Real change in median full-time pay, 2015 to 2025, in April 2025 prices (CPIH).",
+      "high": 0.2274,
+      "low": -0.3187,
+      "note": "Real change in median full-time pay, tax year 2014/15 to 2024/25, in 2024/25 prices (CPIH, tax-year average). Range: 90% interval from sampling and code-bridging error.",
       "region": "UK",
       "source": "ons_ashe_t14",
       "status": "preliminary",
       "unit": "fraction",
-      "value": -0.1082
+      "value": -0.0855
     },
     "resilience_2008": {
       "as_of": "2008-2009",
-      "confidence": "medium",
+      "confidence": "low",
       "extra": {
-        "headline_from": "real_pay",
-        "jobs_vs_typical": 0.0603,
-        "real_pay_vs_typical": -0.0194
+        "parent_share": 1.0,
+        "real_pay_vs_typical": -0.0179,
+        "show_on_card": false
       },
       "flags": [
         "bridged_soc2000",
         "bridged_soc2010",
-        "employees_only"
+        "employees_only",
+        "imputed_parent"
       ],
-      "granularity": "occupation",
+      "granularity": "parent_group",
       "high": null,
       "low": null,
-      "note": "The worse of two hits from April 2008 to April 2009, each compared with the typical occupation: change in all-employee jobs and change in real full-time pay. Measured in the old SOC 2000 codes and carried to today's code.",
+      "note": "Change in employee jobs from 2008 to 2009 compared with the typical occupation, measured in the old SOC 2000 codes. Not for cards: in a placebo test the 2008-09 spread between careers was no larger than in ordinary years.",
       "region": "UK",
       "source": "ons_ashe_t14",
       "status": "preliminary",
       "unit": "fraction",
-      "value": -0.0194
+      "value": 0.0551
     },
     "resilience_cost_of_living": {
-      "as_of": "2021-2023",
+      "as_of": "2023-2025",
       "confidence": "medium",
-      "extra": {},
+      "extra": {
+        "parent_share": 0.0
+      },
       "flags": [
         "employees_only"
       ],
       "granularity": "occupation",
       "high": null,
       "low": null,
-      "note": "Real pay change from 2021 to 2023 compared with the typical occupation (+0.05 = 5 points better).",
+      "note": "Real pay change after the cost-of-living shock, tax year 2022/23 (peak inflation) to 2024/25, compared with the typical occupation (+0.05 = about 5% better). Own median only when ONS's sampling error is at most 10%, else the wider group.",
       "region": "UK",
       "source": "ons_ashe_t14",
       "status": "preliminary",
       "unit": "fraction",
-      "value": -0.0164
+      "value": -0.0915
     },
     "resilience_covid": {
       "as_of": "2019-2020",
       "confidence": "low",
       "extra": {
         "adverts_category": "Construction / trades",
-        "adverts_vs_all_2020": -0.2539
+        "adverts_vs_all_2020": -0.248,
+        "parent_share": 1.0
       },
       "flags": [
         "bridged_soc2010",
@@ -262,7 +284,7 @@
       "granularity": "parent_group",
       "high": null,
       "low": null,
-      "note": "Change in all-employee jobs from 2019 to 2020 compared with the typical occupation (+0.10 = 10 points better).",
+      "note": "Change in employee jobs from 2019 to 2020 compared with the typical occupation (+0.10 = about 10% better). Own figure only for jobs with at least 50,000 employees, else the wider group.",
       "region": "UK",
       "source": "ons_ashe_t14",
       "status": "preliminary",
@@ -271,9 +293,10 @@
     },
     "resilience_tech_slump": {
       "as_of": "2022-2024",
-      "confidence": "medium",
+      "confidence": "low",
       "extra": {
-        "adverts_category": "Construction / trades"
+        "adverts_category": "Construction / trades",
+        "volatile_category": false
       },
       "flags": [
         "category_level"
@@ -281,12 +304,12 @@
       "granularity": "estimate",
       "high": null,
       "low": null,
-      "note": "Change in online job adverts for the 'Construction / trades' category from the first half of 2022 to 2024, compared with all adverts.",
+      "note": "Change in online job adverts for the 'Construction / trades' category, January-June 2022 to January-June 2024, compared with the typical occupation's category (de-duplicated adverts).",
       "region": "UK",
       "source": "ons_online_job_adverts",
       "status": "preliminary",
       "unit": "fraction",
-      "value": -0.3057
+      "value": -0.1569
     },
     "shortage": {
       "as_of": "2025",
@@ -349,7 +372,7 @@
       "granularity": "occupation",
       "high": null,
       "low": null,
-      "note": "Share of people in this job aged 16 to 24 in 2016, including self-employed: a sign of how open it is to young entrants.",
+      "note": "Share of people in this job aged 16 to 24 in 2016, including self-employed: a sign of how open it is to young entrants. Survey estimate from small samples.",
       "region": "UK",
       "source": "ons_aps_2016_age",
       "status": "preliminary",

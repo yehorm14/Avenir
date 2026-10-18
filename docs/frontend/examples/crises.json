@@ -8,42 +8,42 @@
     ],
     "key": "covid",
     "label": "COVID-19",
-    "measure": "All-employee jobs, relative to the median occupation",
+    "measure": "Employee jobs (all), relative to the median occupation",
     "status": "preliminary",
     "window": "2019-2020"
   },
   {
-    "baseline_median": -0.0439,
+    "baseline_median": 0.0378,
     "baseline_real_pay_median": null,
     "flags": [],
     "key": "cost_of_living",
-    "label": "Cost-of-living shock",
-    "measure": "Real median full-time pay, relative to the median occupation",
+    "label": "After the cost-of-living shock",
+    "measure": "Real median full-time pay, tax year 2022/23 (peak inflation) to 2024/25, relative to the median occupation",
     "status": "preliminary",
-    "window": "2021-2023"
+    "window": "2023-2025"
   },
   {
-    "baseline_median": -0.3159,
+    "baseline_median": -0.4076,
     "baseline_real_pay_median": null,
     "flags": [
       "category_level"
     ],
     "key": "tech_slump",
-    "label": "Tech hiring slump",
-    "measure": "Online job adverts by category, relative to all adverts",
+    "label": "Hiring slump",
+    "measure": "Online job adverts by category (de-duplicated), January-June 2022 to January-June 2024, relative to the median occupation's category",
     "status": "preliminary",
     "window": "2022-2024"
   },
   {
-    "baseline_median": -0.0659,
-    "baseline_real_pay_median": 0.0018,
+    "baseline_median": -0.0613,
+    "baseline_real_pay_median": -0.0133,
     "flags": [
       "bridged_soc2000",
       "bridged_soc2010"
     ],
     "key": "gfc_2008",
     "label": "2008 financial crisis",
-    "measure": "Worse of all-employee jobs change and real full-time pay change (SOC 2000), each relative to the median occupation",
+    "measure": "Employee jobs (all), SOC 2000, relative to the median occupation",
     "status": "preliminary",
     "window": "2008-2009"
   }

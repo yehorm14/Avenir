@@ -21,10 +21,10 @@
       "years": "2023"
     },
     "esco": {
-      "coverage": "3,043 occupations, 13,939 skills",
+      "coverage": "3,039 occupations, 13,939 skills",
       "licence": "EU open data (attribution)",
       "name": "ESCO v1.2.1 classification",
-      "notes": "Skills for hedges",
+      "notes": "Skills for hedges and the matcher's career texts",
       "publisher": "European Commission",
       "status": "loaded",
       "url": "https://esco.ec.europa.eu/",
@@ -32,9 +32,9 @@
     },
     "ilo_wp140": {
       "coverage": "427 ISCO-08 occupations",
-      "licence": "To confirm before public release",
+      "licence": "CC BY 4.0 (© ILO 2025)",
       "name": "Generative AI and Jobs: A Refined Global Index of Occupational Exposure (Working Paper 140)",
-      "notes": "Mean task exposure and its spread",
+      "notes": "Mean task exposure and its spread per occupation",
       "publisher": "ILO",
       "status": "loaded",
       "url": "https://webapps.ilo.org/static/english/intserv/working-papers/wp140/index.html",
@@ -61,30 +61,30 @@
       "years": "2016"
     },
     "ons_ashe_t14": {
-      "coverage": "UK employees; excludes self-employed",
+      "coverage": "UK employees on adult rates who have been in the same job for over a year; excludes self-employed",
       "licence": "Open Government Licence v3.0",
       "name": "Annual Survey of Hours and Earnings, Table 14 (occupation by 4-digit SOC)",
-      "notes": "SOC 2000 to 2010, SOC 2010 2011-2020, SOC 2020 from 2021; 2018 and 2025 provisional",
+      "notes": "SOC 2000 to 2010, SOC 2010 2011-2020, SOC 2020 from 2021. 2018 and 2025 editions are provisional. ONS says job counts are indicative, not accurate estimates, and that 2021-22 are affected by occupation miscoding.",
       "publisher": "ONS",
       "status": "loaded",
       "url": "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/occupation4digitsoc2010ashetable14",
-      "years": "2007-2025"
+      "years": "2007-2025 (tax years ending 5 April)"
     },
     "ons_cpih": {
       "coverage": "UK",
       "licence": "Open Government Licence v3.0",
       "name": "CPIH index (L522)",
-      "notes": "April values, the ASHE reference month",
+      "notes": "Tax-year means (April to March) deflate annual pay, matching the ASHE reference period",
       "publisher": "ONS",
       "status": "loaded",
       "url": "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/l522/mm23",
       "years": "1988-2026"
     },
     "ons_online_job_adverts": {
-      "coverage": "28 job-advert categories, weekly",
+      "coverage": "28 job-advert categories, weekly, de-duplicated series",
       "licence": "Open Government Licence v3.0",
       "name": "Online job advert estimates (source: Adzuna)",
-      "notes": "Discontinued October 2024; category level only",
+      "notes": "Discontinued October 2024; category level only; ONS flags Education, Marketing/PR, Transport and Travel as inconsistent in 2023",
       "publisher": "ONS",
       "status": "loaded",
       "url": "https://www.ons.gov.uk/economy/economicoutputandproductivity/output/datasets/onlinejobadvertestimates",
