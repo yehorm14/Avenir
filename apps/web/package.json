@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "api": "../../.venv/bin/python -m uvicorn api.main:app --host 127.0.0.1 --port 8015",
+    "api": "../../.venv/bin/python -m uvicorn api.application:app --host 127.0.0.1 --port 8015",
     "start": "node ../../scripts/run-app.mjs",
     "format": "prettier --write src index.html vite.config.ts",
     "format:check": "prettier --check src index.html vite.config.ts"
