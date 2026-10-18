@@ -3,7 +3,9 @@ run in a second without downloads; set PATHFINDER_SLOW_TESTS=1 to also exercise 
 Requests go through httpx's ASGI transport (works with any httpx/starlette combination)."""
 import asyncio
 import os
+import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 import numpy as np
 import pytest
@@ -49,6 +51,73 @@ def fake_matcher(monkeypatch):
         m.vecs[soc] = m.model.encode(chunks)
     monkeypatch.setattr(service, "_matcher", m)
     return m
+
+
+@pytest.fixture
+def startup_matcher(monkeypatch):
+    if not TEXTS.is_file():
+        pytest.skip("career_texts.json not built yet")
+    matcher = service.Matcher(TEXTS, "fake")
+    monkeypatch.setattr(service, "_matcher", matcher)
+    monkeypatch.setattr(service.app.state, "load_error", None, raising=False)
+    monkeypatch.setitem(sys.modules, "torch", SimpleNamespace(cuda=SimpleNamespace(is_available=lambda: False)))
+
+    def install(model):
+        monkeypatch.setitem(
+            sys.modules, "sentence_transformers", SimpleNamespace(SentenceTransformer=lambda *args, **kwargs: model)
+        )
+
+    return matcher, install
+
+
+@pytest.mark.parametrize("fail_after", [0, 1], ids=["first-career", "partial-table"])
+def test_failed_startup_keeps_health_and_match_unavailable(startup_matcher, fail_after):
+    _, install = startup_matcher
+
+    class FailingModel(FakeModel):
+        calls = 0
+
+        def encode(self, texts, **kwargs):
+            self.calls += 1
+            if self.calls > fail_after:
+                raise RuntimeError("career encoding failed")
+            return super().encode(texts, **kwargs)
+
+    install(FailingModel())
+    service._startup()
+    health = call("GET", "/health")
+    assert health.status_code == 503
+    assert health.json()["data"]["loaded"] is False
+    assert health.json()["data"]["n_careers"] == 0
+    assert health.json()["data"]["error"]
+    match = call("POST", "/match", json={"text": "I enjoy drawing buildings"})
+    assert match.status_code == 503
+    assert match.json()["error"]["code"] == "matcher_unavailable"
+
+
+def test_missing_career_texts_keep_service_unavailable(startup_matcher, monkeypatch, tmp_path):
+    _, install = startup_matcher
+    install(FakeModel())
+    monkeypatch.setattr(service, "_matcher", service.Matcher(tmp_path / "missing.json", "fake"))
+    service._startup()
+    health = call("GET", "/health")
+    assert health.status_code == 503
+    assert health.json()["data"]["loaded"] is False
+    assert call("POST", "/match", json={"text": "I enjoy maths"}).status_code == 503
+
+
+def test_successful_startup_enables_matching(startup_matcher):
+    _, install = startup_matcher
+    install(FakeModel())
+    service._startup()
+    health = call("GET", "/health")
+    assert health.status_code == 200
+    assert health.json()["data"]["loaded"] is True
+    assert health.json()["data"]["n_careers"] == 20
+    assert health.json()["data"]["error"] is None
+    match = call("POST", "/match", json={"text": "I enjoy drawing buildings", "top_k": 3})
+    assert match.status_code == 200
+    assert len(match.json()["data"]["matches"]) == 3
 
 
 def test_health_reports_loaded(fake_matcher):

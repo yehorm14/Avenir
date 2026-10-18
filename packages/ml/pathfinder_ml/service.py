@@ -43,14 +43,20 @@ class Matcher:
         self.vecs: dict[str, np.ndarray] = {}
 
     def load(self) -> None:
+        self.model, self.device, self.vecs = None, None, {}
+        if not self.texts:
+            raise ValueError("career texts not loaded; use the tag chain")
         import torch
         from sentence_transformers import SentenceTransformer
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        self.model = SentenceTransformer(self.model_name, device=self.device)
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        model = SentenceTransformer(self.model_name, device=device)
+        vecs = {}
         for soc, e in self.texts.items():
             chunks = [c["text"] for c in e["chunks"]] or [e["title"]]
             chunks.append(f"{e['title']}. Skills: {', '.join(e['skills'])}")
-            self.vecs[soc] = np.asarray(self.model.encode(chunks, normalize_embeddings=True, show_progress_bar=False))
+            vecs[soc] = np.asarray(model.encode(chunks, normalize_embeddings=True, show_progress_bar=False))
+        self.device, self.vecs = device, vecs
+        self.model = model
 
     def match(self, text: str, top_k: int) -> list[dict]:
         q = np.asarray(self.model.encode([QUERY_PREFIX + text], normalize_embeddings=True, show_progress_bar=False))[0]
