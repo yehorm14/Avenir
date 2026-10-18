@@ -44,6 +44,8 @@ Committed snapshots make the demo reproducible without keys or external provider
 
 ## Run and verify
 
+The [portable submission guide](submission.md) explains the prebuilt ZIP, its revision/checksums and Python-only startup. The developer checkout uses the workflow below.
+
 From the repository root, with **Node 20+ and Python 3.12+**:
 
 ```sh

@@ -1,7 +1,12 @@
 import { useEffect, useId, useState } from "react";
 import type { CSSProperties } from "react";
-import type { Career, Metric } from "./types";
+import type { Career, Metric, Weights } from "./types";
 import { money, percent } from "./Charts";
+import {
+  isRelativeDemand,
+  demandTrendLabel,
+  metricCaveats,
+} from "./planDocument";
 import { api } from "./store";
 import "./scopedComparison.css";
 
@@ -10,7 +15,7 @@ type Props = {
   careers: Career[];
   selectedSoc?: string;
   onSelect: (soc: string) => void;
-  onPlan: (career: Career) => void;
+  onPlan: (career: Career, weights?: Weights) => void;
 };
 type Result = {
   key: string;
@@ -143,7 +148,7 @@ export default function ScopedComparison({
           >
             {[
               { label: "Higher pay", value: 100 },
-              { label: "Growing employment", value: 0 },
+              { label: "Employment trend", value: 0 },
               { label: "Balanced", value: 50 },
             ].map((preset) => (
               <button
@@ -206,23 +211,31 @@ export default function ScopedComparison({
                 <h3>{top.title}</h3>
                 <p>
                   {money(observed(top.metrics.pay_median))} median annual pay
-                  and {percent(observed(top.metrics.demand_trend))} / year
-                  historical employment trend.
+                  and {percent(observed(top.metrics.demand_trend))} / year{" "}
+                  {isRelativeDemand(top.metrics.demand_trend)
+                    ? "employment trend relative to the typical occupation."
+                    : "historical employment trend."}
                 </p>
                 {comparison && (
                   <p>
                     Compare with {comparison.title.toLowerCase()}:{" "}
                     {money(observed(comparison.metrics.pay_median))} median pay
                     and {percent(observed(comparison.metrics.demand_trend))} /
-                    year. Consider the work, routes and task exposure below
-                    before choosing.
+                    year
+                    {isRelativeDemand(comparison.metrics.demand_trend)
+                      ? " relative to the typical occupation"
+                      : ""}
+                    . Consider the work, routes and task exposure below before
+                    choosing.
                   </p>
                 )}
               </div>
               <button
                 className="button primary"
                 type="button"
-                onClick={() => onPlan(top)}
+                onClick={() =>
+                  onPlan(top, { pay, interest: 0, need: 100 - pay })
+                }
               >
                 Build my plan
               </button>
@@ -244,7 +257,9 @@ export default function ScopedComparison({
                   <tr>
                     <th scope="col">Occupation</th>
                     <th scope="col">Median annual pay</th>
-                    <th scope="col">Employment trend</th>
+                    <th scope="col">
+                      {demandTrendLabel(careers[0]?.metrics.demand_trend)}
+                    </th>
                     <th scope="col">AI task exposure</th>
                     <th scope="col">Comparison index</th>
                     <th scope="col">
@@ -283,6 +298,11 @@ export default function ScopedComparison({
                           {career.metrics.demand_trend?.as_of ||
                             "Period unavailable"}
                         </small>
+                        {metricCaveats(career.metrics.demand_trend) && (
+                          <small>
+                            {metricCaveats(career.metrics.demand_trend)}
+                          </small>
+                        )}
                       </td>
                       <td>
                         {exposure(career)}
@@ -290,6 +310,11 @@ export default function ScopedComparison({
                           ILO ·{" "}
                           {career.metrics.exposure?.as_of || "Year unavailable"}
                         </small>
+                        {metricCaveats(career.metrics.exposure) && (
+                          <small>
+                            {metricCaveats(career.metrics.exposure)}
+                          </small>
+                        )}
                       </td>
                       <td>
                         {career.score == null
@@ -331,10 +356,12 @@ export default function ScopedComparison({
         </p>
         <p>
           No personal interest match or completed quiz is assumed. ONS figures
-          cover employees and exclude self-employment; the employment trend
-          stays within the 2021–2025 coding period. Open Evidence for source
-          links, research ranges, coverage and caveats. You choose the role and
-          route to explore.
+          cover employees and exclude self-employment; the employment trend uses
+          its stated period. Relative trends compare each occupation’s job-count
+          path with the typical occupation’s path before estimating annual
+          growth; a positive value can coexist with falling employment. Open
+          Evidence for source links, research ranges, coverage and caveats. You
+          choose the role and route to explore.
         </p>
       </details>
     </section>

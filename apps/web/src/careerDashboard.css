@@ -435,3 +435,19 @@
     gap: 14px;
   }
 }
+
+.dashboard-view-switch {
+  display: flex;
+  gap: 22px;
+  padding: 10px 0 2px;
+}
+.dashboard-view-switch button {
+  color: #96a1b1;
+  font-size: 13px;
+  padding: 4px 0;
+  border-bottom: 1px solid transparent;
+}
+.dashboard-view-switch button[aria-pressed="true"] {
+  color: #dae0e7;
+  border-bottom-color: #6da2f8;
+}

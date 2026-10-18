@@ -1,8 +1,13 @@
-import { useEffect, useState } from "react";
-import type { Career, Metric } from "./types";
+import { useEffect, useRef, useState } from "react";
+import type { Career, Metric, Weights } from "./types";
 import { money, percent, SalaryChart } from "./Charts";
 import { careerEvidence } from "./careerEvidence";
-import { metricCaveats } from "./planDocument";
+import {
+  metricCaveats,
+  isRelativeDemand,
+  demandTrendLabel,
+} from "./planDocument";
+import ScopedComparison from "./ScopedComparison";
 import DashboardNextSteps from "./DashboardNextSteps";
 import "./careerDashboard.css";
 
@@ -10,7 +15,7 @@ type Area = "cs" | "finance";
 type Props = {
   area: Area;
   careers: Career[];
-  onPlan: (career: Career) => void;
+  onPlan: (career: Career, weights?: Weights) => void;
   onGuide: (career: Career) => void;
   saved: string[];
   onToggleSave: (id: string) => void;
@@ -124,7 +129,11 @@ function DetailedMeasure({ name, metric }: { name: string; metric: Metric }) {
   ].filter(Boolean);
   return (
     <div className="dashboard-measure">
-      <dt>{measureNames[name] ?? name.replaceAll("_", " ")}</dt>
+      <dt>
+        {name === "demand_trend"
+          ? demandTrendLabel(metric)
+          : (measureNames[name] ?? name.replaceAll("_", " "))}
+      </dt>
       <dd>
         <span className="dashboard-value">{displayMetric(metric)}</span>
         <p className="dashboard-provenance">{observation(metric)}</p>
@@ -158,6 +167,8 @@ export default function CareerDashboard({ area, careers, ...actions }: Props) {
     const career = careers.find((item) => item.soc === soc);
     return career ? [career] : [];
   });
+  const evidenceButton = useRef<HTMLButtonElement>(null);
+  const [view, setView] = useState<"evidence" | "compare">("evidence");
   const [selection, setSelection] = useState<Record<Area, string>>({
     cs: "2134",
     finance: "2422",
@@ -228,20 +239,22 @@ export default function CareerDashboard({ area, careers, ...actions }: Props) {
         <div>
           <h1>{configuration.title}</h1>
         </div>
-        <div className="dashboard-header-actions">
-          <button
-            className="button primary"
-            onClick={() => actions.onPlan(career)}
-          >
-            Build my plan
-          </button>
-          <button
-            className="button secondary"
-            onClick={() => actions.onGuide(career)}
-          >
-            Ask career guide
-          </button>
-        </div>
+        {view === "evidence" && (
+          <div className="dashboard-header-actions">
+            <button
+              className="button primary"
+              onClick={() => actions.onPlan(career)}
+            >
+              Build my plan
+            </button>
+            <button
+              className="button secondary"
+              onClick={() => actions.onGuide(career)}
+            >
+              Ask career guide
+            </button>
+          </div>
+        )}
       </header>
 
       <nav className="dashboard-role-switch" aria-label="Choose an occupation">
@@ -259,208 +272,252 @@ export default function CareerDashboard({ area, careers, ...actions }: Props) {
         ))}
       </nav>
 
-      <div className="dashboard-selected-role" aria-live="polite">
-        <h2>{career.title}</h2>
-        <p>{roleDescriptions[career.soc] ?? career.summary}</p>
-        <small>
-          Representative occupation. These figures describe this job, not every{" "}
-          {configuration.title.toLowerCase()} graduate.
-        </small>
-      </div>
-
-      <dl className="dashboard-facts">
-        <div>
-          <dt>Median annual pay</dt>
-          <dd>
-            <span className="dashboard-value">{money(available(pay))}</span>
-            <p>
-              {pay &&
-              available(pay) != null &&
-              pay.low != null &&
-              pay.high != null
-                ? `Middle 50%: ${money(pay.low)}–${money(pay.high)}`
-                : "Pay range unavailable"}
-            </p>
-            <small>{observation(pay)}</small>
-            <small>Full-time employees; not starting pay.</small>
-            {headlineCaveat(pay) && <small>{headlineCaveat(pay)}</small>}
-          </dd>
-        </div>
-        <div>
-          <dt>Employee jobs</dt>
-          <dd>
-            <span className="dashboard-value">
-              {jobsValue == null
-                ? "Not available"
-                : Math.round(jobsValue * 1000).toLocaleString("en-GB")}
-            </span>
-            <p>Full-time employees; not vacancies.</p>
-            <small>{observation(jobs)}</small>
-            {headlineCaveat(jobs) && <small>{headlineCaveat(jobs)}</small>}
-          </dd>
-        </div>
-        <div>
-          <dt>Employment trend</dt>
-          <dd>
-            <span className="dashboard-value">
-              {percent(available(trend))}
-              {available(trend) != null && <span> / year</span>}
-            </span>
-            <p>Historical trend, not a forecast.</p>
-            <small>{observation(trend)}</small>
-            {headlineCaveat(trend) && <small>{headlineCaveat(trend)}</small>}
-          </dd>
-        </div>
-        <div>
-          <dt>Automation exposure</dt>
-          <dd>
-            <span className="dashboard-value">
-              {exposureValue == null
-                ? "Not available"
-                : (exposureValue * 100).toFixed(0)}
-              {exposureValue != null && <span> / 100</span>}
-            </span>
-            <p>Research estimate; not job-loss risk.</p>
-            <small>{observation(exposure)}</small>
-            {exposure &&
-              exposure.low != null &&
-              exposure.high != null &&
-              exposureValue != null && (
-                <small>
-                  Research range: {(exposure.low * 100).toFixed(0)}–
-                  {(exposure.high * 100).toFixed(0)} / 100.
-                </small>
-              )}
-            {exposure?.flags.includes("multi_isco") && (
-              <small>Multiple international job codes mapped.</small>
-            )}
-            {headlineCaveat(exposure) && (
-              <small>{headlineCaveat(exposure)}</small>
-            )}
-          </dd>
-        </div>
-      </dl>
-
-      <div className="career-dashboard-layout">
-        <div className="career-dashboard-evidence">
-          <SalaryChart key={career.soc} careers={[career]} />
-
-          {evidence && (
-            <section className="dashboard-demand">
-              <div>
-                <h2>Demand assessment</h2>
-                <strong>{evidence.demand}</strong>
-              </div>
-              <p>{evidence.demandReason}</p>
-              <small>
-                <Source source={evidence.demandSource} />
-              </small>
-            </section>
-          )}
-
-          {evidence && (
-            <section className="dashboard-outlook">
-              <h2>Sector outlook</h2>
-              <h3>{evidence.outlook.title}</h3>
-              <p>{evidence.outlook.summary}</p>
-              <div className="dashboard-outlook-columns">
-                <div>
-                  <h3>Demand drivers</h3>
-                  <ul>
-                    {evidence.outlook.drivers.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <h3>Uncertainty</h3>
-                  <ul>
-                    {evidence.outlook.risks.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-              <small>
-                {evidence.outlook.period}.{" "}
-                <Source source={evidence.outlook.source} />
-              </small>
-            </section>
-          )}
-        </div>
-
-        <aside
-          className="career-dashboard-rail"
-          aria-label="Routes and next steps"
+      <nav className="dashboard-view-switch" aria-label="Dashboard view">
+        <button
+          ref={evidenceButton}
+          aria-pressed={view === "evidence"}
+          onClick={() => setView("evidence")}
         >
-          <section className="dashboard-starting-pay">
-            <h2>Starting pay guide</h2>
-            {evidence?.salary ? (
-              <>
-                <p>{evidence.salary.role}</p>
-                <dl>
-                  <div>
-                    <dt>Starter</dt>
-                    <dd>{money(evidence.salary.low)}</dd>
-                  </div>
-                  <div>
-                    <dt>Experienced</dt>
-                    <dd>{money(evidence.salary.high)}</dd>
-                  </div>
-                </dl>
-                <small>
-                  Annual role guide, not a graduate salary or a two-year
-                  outcome. The source does not specify years of experience.
-                </small>
-                <small>
-                  <Source source={evidence.salary.source} />
-                </small>
-              </>
-            ) : (
-              <p>
-                No verified starting-pay guide is supplied for this occupation.
-                The workforce median above is not a starting salary.
-              </p>
-            )}
-          </section>
-          <DashboardNextSteps
-            key={career.soc}
-            career={career}
-            onPlan={actions.onPlan}
-            saved={actions.saved}
-            onToggleSave={actions.onToggleSave}
-          />
-        </aside>
-      </div>
+          Evidence
+        </button>
+        <button
+          aria-pressed={view === "compare"}
+          onClick={() => setView("compare")}
+        >
+          Compare careers
+        </button>
+      </nav>
+      {view === "compare" ? (
+        <ScopedComparison
+          area={area}
+          careers={roles}
+          selectedSoc={career.soc}
+          onPlan={actions.onPlan}
+          onSelect={(soc) => {
+            setSelection((current) => ({ ...current, [area]: soc }));
+            window.location.hash = `/${configuration.route}/${soc}`;
+            setView("evidence");
+            evidenceButton.current?.focus({ preventScroll: true });
+          }}
+        />
+      ) : (
+        <>
+          <div className="dashboard-selected-role" aria-live="polite">
+            <h2>{career.title}</h2>
+            <p>{roleDescriptions[career.soc] ?? career.summary}</p>
+            <small>
+              Representative occupation. These figures describe this job, not
+              every {configuration.title.toLowerCase()} graduate.
+            </small>
+          </div>
 
-      <section className="dashboard-method" aria-label="Evidence details">
-        <details>
-          <summary>
-            Measures and caveats ({Object.keys(career.metrics).length})
-          </summary>
-          <dl className="dashboard-measures">
-            {Object.entries(career.metrics).map(([name, metric]) => (
-              <DetailedMeasure key={name} name={name} metric={metric} />
-            ))}
+          <dl className="dashboard-facts">
+            <div>
+              <dt>Median annual pay</dt>
+              <dd>
+                <span className="dashboard-value">{money(available(pay))}</span>
+                <p>
+                  {pay &&
+                  available(pay) != null &&
+                  pay.low != null &&
+                  pay.high != null
+                    ? `Middle 50%: ${money(pay.low)}–${money(pay.high)}`
+                    : "Pay range unavailable"}
+                </p>
+                <small>{observation(pay)}</small>
+                <small>Full-time employees; not starting pay.</small>
+                {headlineCaveat(pay) && <small>{headlineCaveat(pay)}</small>}
+              </dd>
+            </div>
+            <div>
+              <dt>Employee jobs</dt>
+              <dd>
+                <span className="dashboard-value">
+                  {jobsValue == null
+                    ? "Not available"
+                    : Math.round(jobsValue * 1000).toLocaleString("en-GB")}
+                </span>
+                <p>Full-time employees; not vacancies.</p>
+                <small>{observation(jobs)}</small>
+                {headlineCaveat(jobs) && <small>{headlineCaveat(jobs)}</small>}
+              </dd>
+            </div>
+            <div>
+              <dt>{demandTrendLabel(trend)}</dt>
+              <dd>
+                <span className="dashboard-value">
+                  {percent(available(trend))}
+                  {available(trend) != null && <span> / year</span>}
+                </span>
+                <p>
+                  {isRelativeDemand(trend)
+                    ? "Relative to the typical occupation; not a forecast."
+                    : "Historical trend, not a forecast."}
+                </p>
+                <small>{observation(trend)}</small>
+                {headlineCaveat(trend) && (
+                  <small>{headlineCaveat(trend)}</small>
+                )}
+              </dd>
+            </div>
+            <div>
+              <dt>Automation exposure</dt>
+              <dd>
+                <span className="dashboard-value">
+                  {exposureValue == null
+                    ? "Not available"
+                    : (exposureValue * 100).toFixed(0)}
+                  {exposureValue != null && <span> / 100</span>}
+                </span>
+                <p>Research estimate; not job-loss risk.</p>
+                <small>{observation(exposure)}</small>
+                {exposure &&
+                  exposure.low != null &&
+                  exposure.high != null &&
+                  exposureValue != null && (
+                    <small>
+                      Research range: {(exposure.low * 100).toFixed(0)}–
+                      {(exposure.high * 100).toFixed(0)} / 100.
+                    </small>
+                  )}
+                {exposure?.flags.includes("multi_isco") && (
+                  <small>Multiple international job codes mapped.</small>
+                )}
+                {headlineCaveat(exposure) && (
+                  <small>{headlineCaveat(exposure)}</small>
+                )}
+              </dd>
+            </div>
           </dl>
-        </details>
-        <details>
-          <summary>Sources and coverage ({sources.length})</summary>
-          <p>
-            Pay covers full-time employees and excludes self-employment.
-            Historic occupation mappings are estimates; the 2021 code change
-            breaks the employee-job series. Published outlooks retain their
-            original horizon and region. Missing evidence stays unavailable.
-          </p>
-          <ul>
-            {sources.map((source) => (
-              <li key={source.url}>
-                <Source source={source} />
-              </li>
-            ))}
-          </ul>
-        </details>
-      </section>
+
+          <div className="career-dashboard-layout">
+            <div className="career-dashboard-evidence">
+              <SalaryChart key={career.soc} careers={[career]} />
+
+              {evidence && (
+                <section className="dashboard-demand">
+                  <div>
+                    <h2>Demand assessment</h2>
+                    <strong>{evidence.demand}</strong>
+                  </div>
+                  <p>{evidence.demandReason}</p>
+                  <small>
+                    <Source source={evidence.demandSource} />
+                  </small>
+                </section>
+              )}
+
+              {evidence && (
+                <section className="dashboard-outlook">
+                  <h2>Sector outlook</h2>
+                  <h3>{evidence.outlook.title}</h3>
+                  <p>{evidence.outlook.summary}</p>
+                  <div className="dashboard-outlook-columns">
+                    <div>
+                      <h3>Demand drivers</h3>
+                      <ul>
+                        {evidence.outlook.drivers.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <h3>Uncertainty</h3>
+                      <ul>
+                        {evidence.outlook.risks.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                  <small>
+                    {evidence.outlook.period}.{" "}
+                    <Source source={evidence.outlook.source} />
+                  </small>
+                </section>
+              )}
+            </div>
+
+            <aside
+              className="career-dashboard-rail"
+              aria-label="Routes and next steps"
+            >
+              <section className="dashboard-starting-pay">
+                <h2>Starting pay guide</h2>
+                {evidence?.salary ? (
+                  <>
+                    <p>{evidence.salary.role}</p>
+                    <dl>
+                      <div>
+                        <dt>Starter</dt>
+                        <dd>{money(evidence.salary.low)}</dd>
+                      </div>
+                      <div>
+                        <dt>Experienced</dt>
+                        <dd>{money(evidence.salary.high)}</dd>
+                      </div>
+                    </dl>
+                    <small>
+                      Annual role guide, not a graduate salary or a two-year
+                      outcome. The source does not specify years of experience.
+                    </small>
+                    <small>
+                      <Source source={evidence.salary.source} />
+                    </small>
+                  </>
+                ) : (
+                  <p>
+                    No verified starting-pay guide is supplied for this
+                    occupation. The workforce median above is not a starting
+                    salary.
+                  </p>
+                )}
+              </section>
+              <DashboardNextSteps
+                key={career.soc}
+                career={career}
+                onPlan={actions.onPlan}
+                saved={actions.saved}
+                onToggleSave={actions.onToggleSave}
+              />
+            </aside>
+          </div>
+
+          <section className="dashboard-method" aria-label="Evidence details">
+            <details>
+              <summary>
+                Measures and caveats ({Object.keys(career.metrics).length})
+              </summary>
+              <p>
+                Historical checks marked as failing the placebo test are
+                retained here for transparency and excluded from
+                recommendations.
+              </p>
+              <dl className="dashboard-measures">
+                {Object.entries(career.metrics).map(([name, metric]) => (
+                  <DetailedMeasure key={name} name={name} metric={metric} />
+                ))}
+              </dl>
+            </details>
+            <details>
+              <summary>Sources and coverage ({sources.length})</summary>
+              <p>
+                Pay covers full-time employees and excludes self-employment.
+                Historic occupation mappings are estimates; the 2021 code change
+                breaks the employee-job series. Published outlooks retain their
+                original horizon and region. Missing evidence stays unavailable.
+              </p>
+              <ul>
+                {sources.map((source) => (
+                  <li key={source.url}>
+                    <Source source={source} />
+                  </li>
+                ))}
+              </ul>
+            </details>
+          </section>
+        </>
+      )}
     </article>
   );
 }

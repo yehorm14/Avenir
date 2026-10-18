@@ -1,11 +1,17 @@
 import { useEffect, useRef, useState } from "react";
-import type { Bootstrap, Career, Page, Preferences } from "./types";
+import type { Bootstrap, Career, Page, Preferences, Weights } from "./types";
 import { api, initial, usePreferences } from "./store";
 import { questions, tagsFromAnswers } from "./quiz";
 import { Icon, careerIcon } from "./icons";
 import { SalaryChart, money, percent } from "./Charts";
 import { allOpportunities, getCareerContent } from "./content";
-import { buildPlanDocument, resolvePlanRoute } from "./planDocument";
+import {
+  buildPlanDocument,
+  resolvePlanRoute,
+  demandTrendLabel,
+  isRelativeDemand,
+  metricCaveats,
+} from "./planDocument";
 import MyPlan from "./MyPlan";
 import Guides from "./Guides";
 import DecisionReview from "./DecisionReview";
@@ -235,10 +241,12 @@ export default function App() {
     go("matches");
   };
   const showShell = !["discover", "quiz", "conversation"].includes(page);
-  const useCareer = (career: Career, destination: Page) => {
+  const useCareer = (career: Career, destination: Page, weights?: Weights) => {
     // Subject exploration does not imply a completed quiz or a personal match.
     setPrefs((current) => ({
       ...current,
+      ...(weights ? { weights } : {}),
+      completed: false,
       selected: [
         career.soc,
         ...current.selected.filter((soc) => soc !== career.soc),
@@ -386,7 +394,7 @@ export default function App() {
                     { name?: string; url?: string }
                   >
                 }
-                onPlan={(career) => useCareer(career, "path")}
+                onPlan={(career, weights) => useCareer(career, "path", weights)}
                 onGuide={(career) => go("guides", career.soc)}
                 saved={prefs.saved}
                 onToggleSave={(id) =>
@@ -525,7 +533,9 @@ export default function App() {
                                 <b>{money(value(c, "pay_median"))}</b>
                               </div>
                               <div>
-                                <span>Employment trend</span>
+                                <span>
+                                  {demandTrendLabel(c.metrics.demand_trend)}
+                                </span>
                                 <b
                                   className={
                                     (value(c, "demand_trend") ?? 0) >= 0
@@ -557,7 +567,11 @@ export default function App() {
                                 ONS ASHE
                               </External>{" "}
                               Pay {c.metrics.pay_median?.as_of}; employee-job
-                              trend {c.metrics.demand_trend?.as_of}.
+                              trend {c.metrics.demand_trend?.as_of}
+                              {isRelativeDemand(c.metrics.demand_trend)
+                                ? ", relative to the typical occupation"
+                                : ""}
+                              .
                               {c.metrics.demand_trend?.flags.includes(
                                 "imputed_parent",
                               )
@@ -608,11 +622,12 @@ export default function App() {
                         ))
                       )}
                       <p className="fine-print">
-                        Pay and employment: ONS ASHE, UK, 2025 / 2021–2025.
-                        Preliminary. Pay covers full-time employees; employment
-                        coverage varies by occupation. The pay range and all
-                        evidence are available under “Why this could fit”.
-                        Scores are comparison indices, not probabilities.
+                        Pay and employment: ONS ASHE, UK; source periods are
+                        shown for each role. Preliminary. Pay covers full-time
+                        employees; employment coverage varies by occupation. The
+                        pay range and all evidence are available under “Why this
+                        could fit”. Scores are comparison indices, not
+                        probabilities.
                       </p>
                     </section>
                     <aside className="priorities-panel">
@@ -955,7 +970,7 @@ export default function App() {
               <MetricDetail
                 career={inspect}
                 metricKey="demand_trend"
-                label="Employment trend, 2021–2025"
+                label={`${demandTrendLabel(inspect.metrics.demand_trend)}, ${inspect.metrics.demand_trend?.as_of || "period unavailable"}`}
               />
               <MetricDetail
                 career={inspect}
@@ -1252,7 +1267,9 @@ function MetricDetail({
       )}
       {metricKey === "demand_trend" && (
         <p>
-          Historical annual employee-job growth.{" "}
+          {isRelativeDemand(m)
+            ? "Annual employee-job growth relative to the typical occupation. "
+            : "Historical annual employee-job growth. "}
           {m?.low != null && m.high != null
             ? `Range: ${percent(m.low)} to ${percent(m.high)}. `
             : ""}
@@ -1260,6 +1277,7 @@ function MetricDetail({
         </p>
       )}
       {m?.note && <p>{m.note}</p>}
+      {m && metricCaveats(m) && <p>{metricCaveats(m)}</p>}
       {m?.flags.includes("imputed_parent") && (
         <p>
           No direct figure exists; this is estimated from the wider occupation
@@ -1921,8 +1939,8 @@ function Evidence({ data, selected }: { data: Bootstrap; selected: Career[] }) {
       <section className="track-record">
         <div className="section-header">
           <div>
-            <h2>How did earlier signals hold up?</h2>
-            <p>Earlier career signals, compared with what happened next.</p>
+            <h2>How simple rules held up</h2>
+            <p>Base-year market rules, compared with later outcomes.</p>
           </div>
           <select
             aria-label="Historical test window"
@@ -1962,6 +1980,51 @@ function Evidence({ data, selected }: { data: Bootstrap; selected: Career[] }) {
               <li key={s}>{s}</li>
             ))}
           </ul>
+        </details>
+      </section>
+      <section className="track-record">
+        <details>
+          <summary>Which historical disruption checks are useful?</summary>
+          <p>
+            We compare the spread between occupations during a shock with
+            ordinary periods. A similar spread in ordinary years weakens the
+            claim that the measure captures crisis resilience.
+          </p>
+          <ul className="plain-list">
+            {(
+              data.crises as {
+                key: string;
+                label: string;
+                window: string;
+                show_on_card?: boolean;
+                placebo?: {
+                  passes?: boolean | null;
+                  ratio?: number;
+                  note?: string;
+                };
+              }[]
+            ).map((crisis) => (
+              <li key={crisis.key}>
+                <b>
+                  {crisis.label} · {crisis.window}
+                </b>
+                :{" "}
+                {crisis.show_on_card === false
+                  ? "Failed the placebo threshold; excluded from recommendations."
+                  : crisis.placebo?.passes === true
+                    ? "Passed the placebo threshold; remains preliminary."
+                    : "No placebo comparison available; treat cautiously."}
+                {crisis.placebo?.ratio != null &&
+                  ` Spread ratio: ${crisis.placebo.ratio.toFixed(2)}; threshold 1.25.`}
+                {crisis.placebo?.note && ` ${crisis.placebo.note}`}
+              </li>
+            ))}
+          </ul>
+          <p className="fine-print">
+            These checks assess market measures, not the accuracy of
+            personalised career advice. Failed checks stay visible in the
+            detailed evidence.
+          </p>
         </details>
       </section>
       <section className="evidence-explainer">
