@@ -68,7 +68,9 @@ def test_profile_is_validated_and_reflected_in_the_prompt_with_compared_roles(cl
     answer = client.post(
         "/api/guide", json={"soc": "2134", "message": "What is the path into this career?", "profile": PROFILE}
     ).json()
-    assert answer["mode"] == "llm_grounded" and answer["checks"] == "passed" and answer["text"] == PATH_REPLY
+    assert (
+        answer["mode"] == "llm_grounded" and answer["checks"] == "passed" and answer["text"] == PATH_REPLY.split(" Based on:")[0]
+    )
     assert answer["profile_used"] is True and answer["compared"] == ["2451", "3544"]
     system = calls[0]["payload"]["messages"][0]["content"]
     assert "Student's preferences" in system

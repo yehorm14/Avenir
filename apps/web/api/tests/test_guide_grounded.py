@@ -111,7 +111,7 @@ def test_guide_uses_the_configured_model_and_grounded_reply_passes_checks(client
     ).json()
     assert answer["mode"] == "llm_grounded" and answer["ai_written"] is True
     assert answer["model"] == "test-model" and answer["checks"] == "passed"
-    assert answer["text"] == GOOD_REPLY
+    assert answer["text"] == GOOD_REPLY.split(" Based on:")[0]
     assert {source["id"] for source in answer["sources"]} >= {"ons_ashe_t14", "ilo_wp140"}
     assert answer["based_on"][0].startswith("Median pay £56,914")
     assert client.get("/api/health").json()["guide_mode"] == "llm_grounded"

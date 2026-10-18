@@ -17,9 +17,11 @@ import hashlib
 import json
 import logging
 import os
+import re
 import time
 from collections.abc import Mapping
 from dataclasses import dataclass, field
+from decimal import ROUND_HALF_UP, Decimal, InvalidOperation
 from typing import Any
 
 import requests
@@ -43,13 +45,16 @@ DEFAULT_ANTHROPIC_MODEL = "claude-sonnet-5-5"
 PROMPT_EXCLUDED_KEYS = ("allowed_numbers", "based_on")
 
 SYSTEM_PROMPT = (
-    "You are a careers guide for a 17-year-old in the UK. Use ONLY the facts in the evidence pack below. "
-    "Every number you quote must appear in the pack, written the same way (same digits, commas and decimal "
-    "places); never add, round or convert numbers yourself. When you use a figure, copy its caveat sentences "
-    "word for word. History is not a forecast: describe what happened, never what will happen. Never give "
-    "probabilities of job loss, graduate or starting salaries, or the words \"you should\" or \"don't\"; say "
-    "careers are \"worth exploring\". If the pack has no answer, say so plainly. Write in plain English, under "
-    "160 words. End with one line starting \"Based on:\" that names the sources you used.\n\nEvidence pack:\n"
+    "You are a careers guide talking to a 16-18 year old in the UK. Answer the student's actual question in "
+    "your first sentence. Use plain, friendly English a teenager would use, in 80-140 words. Use ONLY the facts "
+    "in the evidence pack below. Quote at most 2 or 3 numbers, only the ones that matter to the question, "
+    "written exactly as they appear in the pack. Add at most ONE short caveat, in your own plain words (for "
+    'example: "these are 2025 figures for all full-time staff, not starting pay"); never paste caveat or '
+    "notice sentences from the pack. Do not list sources in the text; the app shows source links. History is "
+    "not a forecast: describe what happened, never what will happen. Never give probabilities of job loss, "
+    'graduate or starting salaries, or the words "you should" or "don\'t"; say careers are "worth '
+    'exploring". Never invent numbers. If the pack has no answer, say so plainly. End with one concrete next '
+    "step the student can take.\n\nEvidence pack:\n"
 )
 COMPARED_PROMPT = "\n\nOther roles the student selected (metrics and hedges only), so you can compare:\n"
 PREFERENCES_PROMPT = (
@@ -58,9 +63,7 @@ PREFERENCES_PROMPT = (
     "pull in different directions, say so plainly. The figures describe what happened to employees in the past; "
     "never claim they predict this student's outcome."
 )
-LINKS_PROMPT = (
-    "\n\nThe app shows these links under your reply; cite them by label only and never write a URL: {labels}"
-)
+LINKS_PROMPT = "\n\nThe app shows these links under your reply; cite them by label only and never write a URL: {labels}"
 PATH_PROMPT = (
     "\n\nThe student asked for a career path. Walk through it in prose: the routes, the courses, the skills to "
     "build, and what can be said about grades, using only the path data below and the packs' numbers. The app "
@@ -159,13 +162,61 @@ def _reply_text(provider: str, body: Any) -> str:
     return str(body["choices"][0]["message"]["content"]).strip()
 
 
+def _rounds_from(token: str, precise: list[Decimal]) -> bool:
+    """True when `token` is an allowed number rounded to its own decimals (23.3 for 23.32, 53342 for 53342.4).
+    Whole-number rounding is only accepted for values of 100 or more, so 0.5444 can never pass as 1."""
+    try:
+        value = Decimal(token)
+    except InvalidOperation:
+        return False
+    exponent = value.as_tuple().exponent
+    places = -exponent if exponent < 0 else 0
+    step = Decimal(1).scaleb(-places)
+    for other in precise:
+        if -other.as_tuple().exponent <= places:
+            continue  # only a number with MORE decimals than the reply's can be rounded down to it
+        if places == 0 and abs(other) < 100:
+            continue
+        if other.quantize(step, rounding=ROUND_HALF_UP) == value:
+            return True
+    return False
+
+
+def stray_numbers(text: str, allowed: set[str]) -> list[str]:
+    """Numbers in `text` that are neither allowed as written nor a correct rounding of a more precise allowed one."""
+    stray = sorted(numbers_in(text) - allowed)
+    if not stray:
+        return []
+    precise: list[Decimal] = []
+    for item in allowed:
+        try:
+            number = Decimal(item)
+        except InvalidOperation:
+            continue
+        if number.is_finite() and number.as_tuple().exponent < 0:
+            precise.append(number)
+    return [token for token in stray if not _rounds_from(token, precise)]
+
+
+def clean_reply(text: str) -> str:
+    """Drop any "Based on:" source line (the app shows links) and trim an over-long reply to its last whole sentence."""
+    kept = [line for line in text.strip().splitlines() if not line.strip().lower().startswith("based on:")]
+    text = re.sub(r"\s*Based on:.*$", "", "\n".join(kept), flags=re.IGNORECASE | re.DOTALL).strip()
+    if len(text) > MAX_CHARS:
+        cut = text[:MAX_CHARS]
+        ends = [m.end() for m in re.finditer(r"[.!?](?=\s|$)", cut)]
+        if ends:
+            text = cut[: ends[-1]].strip()
+    return text
+
+
 def failed_check(text: str, allowed: set[str]) -> str | None:
     """Name of the first hard check the reply fails, or None when it passes."""
     if not text or not text.strip():
         return "empty reply"
     if len(text) > MAX_CHARS:
         return f"reply over {MAX_CHARS:,} characters"
-    stray = sorted(numbers_in(text) - allowed)
+    stray = stray_numbers(text, allowed)
     if stray:
         return "number not in the evidence pack: " + ", ".join(stray[:5])
     lowered = text.lower()
@@ -208,6 +259,7 @@ def grounded_reply(
         text = _reply_text(config.provider, body)
     except (KeyError, IndexError, TypeError, AttributeError):
         return None, "fallback: unexpected response shape"
+    text = clean_reply(text)
     failed = failed_check(text, allowed)
     if failed:
         return None, f"fallback: {failed}"
@@ -221,14 +273,19 @@ MAX_TOOL_ROUNDS = 2  # each round is one model request (free-tier quotas): 2 too
 MAX_CALLS_PER_ROUND = 6
 QUOTA_STATUSES = (429, 403)
 _EXHAUSTED: set[str] = set()  # fingerprints of keys that hit a quota error; kept for the life of the process
+FINAL_MAX_TOKENS = 700  # last round, answer only: 80-140 words plus headroom for thinking tokens
+FINAL_MAX_TOKENS_ANTHROPIC = 400
 TOOL_MAX_TOKENS = 1500  # OpenAI-compatible path: room for Gemini models that count thinking tokens as output
 TOOLS_PROMPT = (
-    "\n\nTools: you can call read-only tools that return Aventier's own data with sources: get_role_stats, "
-    "search_jobs, compare_roles, get_career_path and get_employer (BlackRock only). Use the tools to fetch the "
-    "facts before you answer, for this role or any role the student mentions. Every number must come from the "
-    "evidence pack or a tool result, copied as written. Cite which tool and source each figure came from, e.g. "
-    "\"(get_role_stats: ONS ASHE 2025)\". When the student's quiz preferences are given, tie the advice to them. "
-    "Describe history, not forecasts. Never write \"you should\". Keep the reply under 180 words."
+    "\n\nTools: you can call read-only tools that return Aventier's own data: get_role_stats, search_jobs, "
+    "compare_roles, get_career_path and get_employer (BlackRock only). Pick the tools that fit the question. "
+    'Questions about an employer (for example BlackRock) -> get_employer. "How do I become..." or "what '
+    'should I study" -> get_career_path. Comparing jobs -> compare_roles. If the student names a job title '
+    'that is not one of the app\'s occupations (for example "quant researcher"), call search_jobs to find the '
+    "closest occupation and say which occupation the figures describe. Every number must come from the "
+    "evidence pack or a tool result. Quote only the 2 or 3 numbers that matter to the question. Describe "
+    'history, not forecasts. Never write "you should". Answer in 80-140 words, with the answer first and '
+    "one concrete next step last."
 )
 
 
@@ -238,7 +295,6 @@ def _tool_system(system: str) -> str:
         "Use ONLY the facts in the evidence pack below.",
         "Use ONLY the facts in the evidence pack below and in tool results.",
     )
-    head = head.replace("under 160 words", "under 180 words")
     return head + TOOLS_PROMPT + sep.replace("Evidence pack:", "Evidence pack (headline metrics; tools have the rest):") + rest
 
 
@@ -338,6 +394,7 @@ def tool_reply(
     for round_no in range(MAX_TOOL_ROUNDS + 1):
         if round_no == MAX_TOOL_ROUNDS:  # last round: answer with what has been fetched
             payload["tool_choice"] = {"type": "none"} if config.provider == "anthropic" else "none"
+            payload["max_tokens"] = FINAL_MAX_TOKENS_ANTHROPIC if config.provider == "anthropic" else FINAL_MAX_TOKENS
         try:
             status, body = _send(config, payload, deadline)
         except (DeadlineExceeded, requests.Timeout) as error:
@@ -367,6 +424,7 @@ def tool_reply(
             payload["messages"] += [echo, {"role": "user", "content": content}]
         else:
             payload["messages"] += [echo] + [{"role": "tool", "tool_call_id": cid, "content": _compact(r)} for cid, r in results]
+    text = clean_reply(text)
     failed = failed_check(text, allowed)
     if failed:
         return None, f"fallback: {failed}", []

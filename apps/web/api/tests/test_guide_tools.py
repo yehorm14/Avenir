@@ -132,7 +132,7 @@ def test_two_round_tool_conversation_reports_tools_and_passes_number_check(clien
     )
     answer = client.post("/api/guide", json={"soc": "2134", "message": "How does pay compare at BlackRock?"}).json()
     assert answer["mode"] == "llm_grounded" and answer["checks"] == "passed"
-    assert answer["text"] == TOOL_REPLY
+    assert answer["text"] == TOOL_REPLY.split(" Based on:")[0]
     assert [tool["name"] for tool in answer["tools_used"]] == ["get_role_stats", "get_employer"]
     assert answer["tools_used"][0]["args"] == {"soc": "2134"}
     assert answer["tools_used"][0]["summary"].startswith("get_role_stats(2134): pay")
@@ -149,7 +149,7 @@ def test_two_round_tool_conversation_reports_tools_and_passes_number_check(clien
         "get_employer",
     }
     system = first["messages"][0]["content"]
-    assert "Use the tools to fetch the facts" in system and "under 180 words" in system and "Evidence pack" in system
+    assert "Pick the tools that fit the question" in system and "80-140 words" in system and "Evidence pack" in system
     third = calls[2]["payload"]["messages"]
     tool_messages = [m for m in third if m["role"] == "tool"]
     assert [m["tool_call_id"] for m in tool_messages] == ["c1", "c2"]
