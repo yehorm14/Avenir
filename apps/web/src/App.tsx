@@ -429,7 +429,7 @@ export default function App() {
               />
             )}
             {page === "quiz" && (
-              <Quiz prefs={prefs} update={update} finish={finish} go={go} />
+              <Quiz prefs={prefs} update={update} finish={finish} />
             )}
             {page === "jobs" && (
               <Jobs
@@ -1066,28 +1066,32 @@ function Quiz({
   prefs,
   update,
   finish,
-  go,
 }: {
   prefs: Preferences;
   update: (p: Partial<Preferences>) => void;
   finish: () => void;
-  go: (p: Page) => void;
 }) {
   // A finished quiz stores the end position. Reopening it should let the
   // learner review their answers from the start, rather than strand them.
   const step = prefs.step < questions.length ? prefs.step : 0,
     q = questions[step];
   const answered = prefs.answers[q.id];
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    headingRef.current?.focus({ preventScroll: true });
+    window.scrollTo(0, 0);
+  }, [step]);
   return (
     <section className="quiz-container" key={q.id}>
       <div className="quiz-progress">
-        <button
-          className="text-button"
-          onClick={() => (step ? update({ step: step - 1 }) : go("discover"))}
-        >
-          <Icon name="back" size={16} />{" "}
-          {step ? "Previous question" : "Back to discovery"}
-        </button>
+        {step > 0 && (
+          <button
+            className="text-button"
+            onClick={() => update({ step: step - 1 })}
+          >
+            <Icon name="back" size={16} /> Previous question
+          </button>
+        )}
         <span>
           Question {step + 1} of {questions.length}
         </span>
@@ -1095,14 +1099,15 @@ function Quiz({
       <div className="progress-track">
         <i style={{ width: `${((step + 1) / questions.length) * 100}%` }} />
       </div>
-      <span className="quiz-theme">{q.theme}</span>
-      <h1>{q.title}</h1>
-      <p className="quiz-hint">{q.hint}</p>
+      <h1 ref={headingRef} tabIndex={-1}>
+        {q.title}
+      </h1>
       <div className="quiz-options" role="radiogroup" aria-label={q.title}>
         {q.options.map((o, i) => (
           <button
             role="radio"
             aria-checked={answered === i}
+            tabIndex={i === (answered ?? 0) ? 0 : -1}
             key={o.text}
             className={`quiz-option ${answered === i ? "is-selected" : ""}`}
             onClick={() => update({ answers: { ...prefs.answers, [q.id]: i } })}
@@ -1116,8 +1121,8 @@ function Quiz({
                 const next =
                   (i +
                     (e.key === "ArrowUp" || e.key === "ArrowLeft" ? -1 : 1) +
-                    4) %
-                  4;
+                    q.options.length) %
+                  q.options.length;
                 update({ answers: { ...prefs.answers, [q.id]: next } });
                 (
                   e.currentTarget.parentElement?.children[next] as HTMLElement
@@ -1137,7 +1142,6 @@ function Quiz({
         ))}
       </div>
       <div className="quiz-footer">
-        <span className="muted">Choose one answer</span>
         <button
           className="button primary"
           disabled={answered === undefined}

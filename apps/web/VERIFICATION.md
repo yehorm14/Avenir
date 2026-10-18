@@ -1,6 +1,16 @@
 # Final CS/Finance delivery verification — 18 October 2026
 
-Current local branch: `codex/final-delivery`. Runtime checkpoint: `538690c` (final follow-up increases historical-stat readability and records verification). Preview: http://127.0.0.1:4186. The previous 4175 release and original dirty checkout are preserved. This delivery is committed and pushed to origin/codex/final-delivery; it has not been merged or publicly deployed.
+Release branch: `codex/final-delivery`. The quiz/Jobs cleanup is based on its latest `5ec744f` checkpoint, developed on `codex/final-quiz-jobs`. The assembled ML v1.2 app now runs at http://127.0.0.1:4175; the earlier release remains preserved in Git. The original dirty checkout is untouched. No merge into main or public deployment occurred.
+
+## Marked quiz cleanup and Jobs debugging
+
+Removed Back to discovery from question1, the theme label, question hint and Choose one answer text. Previous question remains available from question2. Continue is aligned to the right. Each question receives heading focus and starts at the top; the radio group has one keyboard tab stop and arrow-key selection.
+
+Reproduced the Jobs history defect: opening a profile left #/jobs unchanged, so browser Back skipped the list. Profiles now use #/jobs/{soc}; Back/Forward and refresh follow that selection. Returning to the list preserves search/sort and restores focus to the career button. A guard prevents an earlier career appearing while a different profile loads. Removed the redundant Jobs header description. Network failures now show connection guidance while cancellation remains silent.
+
+Final make check exited0:645 passed/3 optional skips, plus Ruff, formatting, TypeScript/Vite and tracked-file secret scan. Log: /private/tmp/aventier-quiz-jobs-release-check.log. Chrome verified all8 questions, all four requested removals, heading focus/scroll, arrow-key selection→Tab→Continue, immediate finish, saved-plan preservation,412-row reset, case/space/SOC search, descending pay and alphabetical sorts, profile Back with filters/focus, deep-link refresh, offline failure and successful retry. At390px the directory and profile have no page overflow. After restoring connectivity and reloading, no console warnings/errors remain. The user’s actual tab was refreshed to the cleaned quiz and inspected visually.
+
+[Quiz screenshot](artifacts/quiz-cleanup.png), [Jobs screenshot](artifacts/jobs-cleanup.png). Earlier Lighthouse results below describe the earlier dashboard audit, not a fresh quiz/Jobs audit.
 
 ## Quiz recovery follow-up
 

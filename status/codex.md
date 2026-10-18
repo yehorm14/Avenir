@@ -1,13 +1,11 @@
-# Status: codex
+# Status: Codex
 
-Updated:18 October2026.
+Updated: 18 October 2026
 
-**Doing now:** Quiz follow-up complete: completed quizzes reopen at question1 and Finish quiz shows career results directly. Latest delivery rebuilt and verified; publishing the fix.
+Doing now: Quiz/Jobs cleanup verified against the latest final-delivery checkpoint5ec744f, ready for integration into codex/final-delivery. The assembled MLv1.2 app is running at http://127.0.0.1:4175.
 
-**Previous delivery:** Final CS/Finance delivery identified and pushed to origin/codex/final-delivery (delivery checkpoint 98f744c). Preview http://127.0.0.1:4186. Portable source+prebuilt ZIP has independently installed and run without keys.
+Done and integrated: Removed the four marked quiz elements; retained Previous question after question1 and direct Finish→careers. Added heading focus/scroll and correct radio tab stops. Jobs profiles have persistent hash URLs, Back/Forward/refresh, retained list filters and restored focus, with stale-profile display prevented. Removed the redundant Jobs header description and replaced raw network errors with connection guidance. No engine, ML, API-shape or contract changes in this follow-up.
 
-**Done and merged:** Three specialist agents plus integration completed priority comparison, semantic accessibility/compact guide/pathway, correct grouped-role guidance, atomic owner MLv1.2 integration and UI/API compatibility, exact fixture regeneration, adversarial retry/stale-response/persistence/export checks and aligned six-core/17-checklist documentation.645 tests passed/3 optional skipped after the quiz follow-up; lint/format/build/secret check passed. Current dashboard/comparison Lighthouse snapshots100 across audited categories, no failed audits. Pushed to origin/codex/final-delivery; nothing merged to main.
+Verified: make check645 passed/3 optional skipped, lint/format/build/secret scan green. Chrome covers all8 questions, exact removals, keyboard selection/focus, saved-plan preservation, Jobs search/sort/empty/reset, profile history/deep-link refresh, offline error/retry, and390px overflow checks. Actual user tab refreshed; screenshots recorded in apps/web/artifacts.
 
-**Interfaces changed:** ScopedComparison calls existing matches API with explicit pay/need weights and no interest inference. Optional evidence_metadata on bootstrap/full career; metric shapes unchanged. Direct plans retain actual weights without quiz completion. Production canonical input boundary filters failed-placebo metrics, raw evidence retained. No manual engine/ML/contract edits; owner release preserves authorship.
-
-**Blocked on:** Nothing for local delivery. Public source-rights/catalogue review and Docker execution remain documented limits. Existing4175 release and dirty user checkout preserved. See apps/web/VERIFICATION.md and docs/launch/submission.md.
+Publication: Latest final branch is the merge/push target; no main merge or public deployment. Prior GitHub PR authentication blocker remains. Dirty root KATYATA and other teammate work are preserved. Source-rights/catalogue review and Docker execution remain documented limits.

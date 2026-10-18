@@ -686,6 +686,9 @@ main:focus {
   font-size: 11px;
   color: var(--muted);
 }
+.quiz-progress > span {
+  margin-left: auto;
+}
 .progress-track {
   height: 3px;
   background: var(--surface-soft);
@@ -711,6 +714,12 @@ main:focus {
   line-height: 1.2;
   letter-spacing: -0.04em;
   max-width: 580px;
+}
+.quiz-container h1:focus {
+  outline: none;
+}
+.quiz-container h1 + .quiz-options {
+  margin-top: 28px;
 }
 .quiz-hint {
   font-size: 12px;
@@ -792,7 +801,7 @@ main:focus {
   margin-top: 29px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 15px;
 }
 .quiz-footer > .muted {

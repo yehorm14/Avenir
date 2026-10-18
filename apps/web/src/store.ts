@@ -30,6 +30,11 @@ export async function api<T>(
     signal,
     headers: body ? { "Content-Type": "application/json" } : undefined,
     ...(body ? { method: "POST", body: JSON.stringify(body) } : {}),
+  }).catch((error: unknown) => {
+    if (error instanceof Error && error.name === "AbortError") throw error;
+    throw new Error(
+      "We couldn’t connect. Check your connection and try again.",
+    );
   });
   const result = await r.json().catch(() => null);
   if (!r.ok || result?.ok === false) {

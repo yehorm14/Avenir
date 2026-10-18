@@ -1,5 +1,7 @@
 # Integration tasks
 
+- [x] [codex] Remove the four marked quiz elements, retain previous-question navigation, fix question focus and Jobs history/deep links. Search/sort/empty/retry/mobile browser checks pass;645 tests pass/3 optional skips. Latest final delivery is the integration target and the assembled v1.2 app now runs on4175.
+
 - [x] [codex] Fix completed-quiz reopening and Finish navigation. All8 questions complete directly to career results; reopening restores question1 and preserves the saved plan. Full gate645 passed/3 optional skipped; actual HTTP and browser flow pass on the rebuilt delivery.
 
 - [x] [codex] Identify and push the latest completed work: final-delivery checkpoint 98f744c, including CS/Finance polish and owner ML v1.2. Tracked-file secret scan and whitespace checks pass; remote push verified.

@@ -81,6 +81,8 @@ const priority = (career: { soc: string }) => {
         ? 4
         : 5;
 };
+const selectedCareerFromHash = () =>
+  /^#\/jobs\/(\d{4})\/?$/.exec(window.location.hash)?.[1] ?? null;
 
 export default function Jobs({
   onExplore,
@@ -93,10 +95,24 @@ export default function Jobs({
   const [catalogue, setCatalogue] = useState<CareerSummary[] | null>(null);
   const [catalogueError, setCatalogueError] = useState("");
   const [catalogueAttempt, setCatalogueAttempt] = useState(0);
-  const [selectedSoc, setSelectedSoc] = useState<string | null>(null);
+  const [selectedSoc, setSelectedSoc] = useState<string | null>(
+    selectedCareerFromHash,
+  );
   const [selected, setSelected] = useState<Career | null>(null);
   const [profileError, setProfileError] = useState("");
   const [profileAttempt, setProfileAttempt] = useState(0);
+  useEffect(() => {
+    const followHistory = () => {
+      const nextSoc = selectedCareerFromHash();
+      setSelectedSoc(nextSoc);
+      if (selectedSoc && !nextSoc)
+        window.requestAnimationFrame(() => {
+          document.getElementById(`job-${selectedSoc}`)?.focus();
+        });
+    };
+    window.addEventListener("hashchange", followHistory);
+    return () => window.removeEventListener("hashchange", followHistory);
+  }, [selectedSoc]);
   useEffect(() => {
     const controller = new AbortController();
     setCatalogueError("");
@@ -123,6 +139,7 @@ export default function Jobs({
   }, [selectedSoc, profileAttempt]);
   const goBack = () => {
     const previousSoc = selectedSoc;
+    window.location.hash = "/jobs";
     setSelectedSoc(null);
     setSelected(null);
     window.requestAnimationFrame(() => {
@@ -130,7 +147,7 @@ export default function Jobs({
     });
   };
   if (selectedSoc) {
-    if (selected)
+    if (selected?.soc === selectedSoc)
       return (
         <JobProfile
           key={selected.soc}
@@ -189,7 +206,6 @@ export default function Jobs({
     >
       <header className="jobs-heading">
         <h1>Jobs</h1>
-        <small>Compare UK pay, employment and demand evidence</small>
       </header>
       <div className="jobs-controls">
         <label className="search">
@@ -269,6 +285,7 @@ export default function Jobs({
                             <button
                               id={`job-${career.soc}`}
                               onClick={() => {
+                                window.location.hash = `/jobs/${career.soc}`;
                                 setSelectedSoc(career.soc);
                                 window.scrollTo(0, 0);
                               }}
