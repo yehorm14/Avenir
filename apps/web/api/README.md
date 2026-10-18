@@ -57,7 +57,7 @@ curl -sS http://127.0.0.1:8015/api/v1/recommendations \
 
 ## Experience endpoints
 
-- `GET /api/health`: status, curated-career count, ML mode and guide mode.
+- `GET /api/health`: status, curated-career count, ML mode, guide mode and text-to-speech status.
 - `GET /api/bootstrap`: 21 curated profiles (20 matched careers plus plumber),
   tags, original source registry, backtest, crises, evidence metadata and data status.
   `evidence_metadata` carries the source schema version, CPIH price base and a
@@ -113,6 +113,59 @@ to the prepared reply with the reason in `checks`; logs and responses never
 carry the key, the URL or the prompt. Only the evidence pack is cached (per
 SOC); nothing from a conversation is kept.
 
+## Guide tools
+
+When a model is configured, `POST /api/guide` gives it read-only tools
+(`guide_tools.py`) so it fetches the app's own data itself before answering. The
+backend runs every tool from data already loaded; no tool writes or uses the network:
+
+- `get_role_stats(soc)`: the role's evidence pack summary (pay, jobs, trend,
+  automation exposure, Occupations in Demand rating, hedges, crisis checks) with sources.
+- `search_jobs(query?, min_pay?, demand?, limit<=8)`: catalogue roles by title words,
+  minimum median pay and demand rating (`Critical`, `Elevated`, `Not in high demand`,
+  read from the same table as the Jobs page), sorted by demand rating, then median pay.
+- `compare_roles(socs)`: up to three roles side by side.
+- `get_career_path(soc)`: the same structure as the response's `path`.
+- `get_employer(name)`: only BlackRock, from `apps/web/public/employers/blackrock.json`
+  (ways in, career ladder, how pay works, sources); nothing beyond the file.
+
+The loop allows 2 tool rounds plus the final answer (each round is one request, to
+fit free-tier quotas), within a 25 s total deadline. With tools on, the prompt
+carries only the role's headline metrics, not the whole pack; the model calls tools
+for the rest. A reply is accepted only if every number in it appears in the pack or
+in a tool result, plus the existing checks. Unknown tools and bad arguments come
+back to the model as `{"error": ...}`; any transport error, timeout or failed check
+falls back to the prepared reply with the reason in `checks`. OpenAI-compatible
+endpoints use `tools` with `tool_choice: "auto"`; Anthropic uses its
+`tool_use`/`tool_result` blocks.
+
+The response adds `tools_used: [{name, args, summary}]` (for example
+`get_role_stats(2134): pay, jobs, trend, exposure, demand, 3 hedges`; empty for a
+prepared reply) and `cached`. Every existing field stays.
+
+Keys and quota: set `LLM_API_KEY` and optionally `LLM_API_KEY_2`. On HTTP 429 or
+403 the same request is retried once with the other key, and the exhausted key is
+skipped for the rest of the process.
+
+Cache: accepted replies are stored on disk, keyed by sha256 of the SOC, message,
+quiz profile and model, so a rehearsed demo replays without spending quota
+(`cached: true`). The default folder is `apps/web/api/.cache/guide/` (git-ignored);
+set `GUIDE_CACHE_DIR` to move it or `GUIDE_CACHE=0` to turn it off.
+
+Enable with a Gemini key in the repo-root `.env`:
+
+```
+LLM_ENABLED=1
+LLM_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai
+LLM_API_KEY=<your key>
+LLM_MODEL=gemini-3.5-flash-lite
+```
+
+`gemini-3.5-flash-lite` (free tier 500 requests a day) is the default;
+`gemini-3.8-flash` gives higher-quality replies but allows 20 requests a day.
+`/api/health` and `/api/bootstrap` are unchanged; `guide_mode` already says
+`llm_grounded` when a model is configured.
+
 The canonical API also provides `/api/v1/tags`, `/api/v1/careers`,
 `/api/v1/profile`, `/api/v1/recommendations`, history, hedges, routes, sources and
 backtests. Inspect `/docs` or `/openapi.json` for their exact input/output models.
@@ -142,6 +195,46 @@ careers site publishes no general enquiry email, so the route is its official
 "Talent Community for students & graduates" form, `mailto` is `null` and
 `form_url` is set. `mailto` (RFC 6068, `%20` spaces, `%0D%0A` newlines) is used
 only if a verified email contact is added later.
+
+## Text to speech
+
+`POST /api/tts` reads one guide answer aloud with Gemini's native speech model.
+Body: `{"text": "...", "voice": "Kore"}`. `text` is 1 to 1,500 characters and
+`voice` is one of `Kore` (default), `Puck`, `Charon`, `Aoede`; anything else,
+or text that is empty once markdown and URLs are removed, returns HTTP 422.
+Markdown links are read as their label; bare URLs, headings, bullets and
+emphasis marks are dropped. The reply is JSON, not raw bytes, because the
+assembled app wraps every experience route in the `{ok, data, error, meta}`
+envelope: `data` is `{mime_type: "audio/wav", audio_base64, voice, model, cached}`.
+
+Keys come from `GEMINI_API_KEY`, then `GEMINI_API_KEY_2`, then `LLM_API_KEY`
+when `LLM_BASE_URL` points at generativelanguage.googleapis.com. The key is sent
+in the `x-goog-api-key` header and never appears in logs, URLs or responses.
+The model is `TTS_MODEL` (default `gemini-3.8-flash-tts`), falling back once to
+`gemini-2.5-flash-preview-tts` on 404, 5xx or when every key is out of quota for
+the first model; that model's raw 24 kHz 16-bit PCM is wrapped in a WAV header.
+The whole call has a 20 s deadline.
+
+The free tier allows only 3 requests a minute and 10 a day per key and model.
+A key that returns 429 is retried once with the other key and remembered as
+spent for the process (60 s for a per-minute limit); a 401/403 key is skipped
+for the process. Audio is cached in memory (64 entries) and on disk in
+`data/cache/tts/` (or `TTS_CACHE_DIR`; the folder writes its own `.gitignore`),
+keyed by model, voice and the cleaned text, so rehearsed answers replay instantly
+and free across restarts, even without a key. With no key, or every key spent,
+the route answers HTTP 503: on `api.main` the detail is
+`{"code": "TTS_UNAVAILABLE", "message": "<short reason>"}`; through the assembled
+app it is the envelope's standard error with `ok: false`. `GET /api/health` and
+the bootstrap `data_status` report `tts` (a key is configured) and
+`tts_quota_note`.
+
+Frontend contract: a small speaker button under each guide answer POSTs
+`{text}` to `/api/tts`. On 200, play
+`new Audio(URL.createObjectURL(blob))`, where `blob` is
+`new Blob([Uint8Array.from(atob(data.audio_base64), c => c.charCodeAt(0))], {type: "audio/wav"})`.
+On 503 (or any other failure) fall back to `window.speechSynthesis` with a
+`SpeechSynthesisUtterance` of the same text. That fallback is the normal path
+once the day's quota is spent, not an error to show.
 
 ## Evidence and matching coverage
 

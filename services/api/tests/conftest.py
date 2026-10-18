@@ -25,3 +25,12 @@ def data(tmp_path_factory):
         env.setenv("PATHFINDER_ML_DIR", str(ML_MOCK))
         contracts_mock.write(tmp / "mock")
     return load_data(ml_dir=ML_MOCK, snapshot_dir=tmp)
+
+
+@pytest.fixture(autouse=True)
+def _no_live_model(monkeypatch):
+    """Tests never call a real model. A local .env (loaded with setdefault) must not switch the
+    explanation writer on, so these are set explicitly rather than deleted."""
+    monkeypatch.setenv("LLM_ENABLED", "0")
+    for name in ("LLM_API_KEY", "LLM_API_KEY_2", "ANTHROPIC_API_KEY", "GEMINI_API_KEY", "GEMINI_API_KEY_2"):
+        monkeypatch.setenv(name, "")

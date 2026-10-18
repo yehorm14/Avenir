@@ -26,12 +26,13 @@ from app.data import get_store  # noqa: E402
 from app.path import build_plan  # noqa: E402
 from pathfinder_ml import ML  # noqa: E402
 
+from . import guide_cache  # noqa: E402
 from .catalogue import detail as catalogue_detail  # noqa: E402
 from .catalogue import summaries as catalogue_summaries  # noqa: E402
 from .discovery import DiscoveryRequest, discover  # noqa: E402
 from .evidence_metadata import demand_comparison, evidence_metadata  # noqa: E402
 from .evidence_pack import build_evidence_pack, metric_caveats  # noqa: E402
-from .guide_llm import config_from_env, grounded_reply  # noqa: E402
+from .guide_llm import config_from_env, tool_reply  # noqa: E402
 from .guide_profile import (  # noqa: E402
     COMPARE_COUNT,
     career_path,
@@ -42,8 +43,10 @@ from .guide_profile import (  # noqa: E402
     role_links,
     wants_path,
 )
+from .guide_tools import ToolContext  # noqa: E402
 from .outreach import MESSAGE_MAX, NAME_MAX, build_draft, clean_text, employer_record  # noqa: E402
 from .ranking import rank_careers  # noqa: E402
+from .tts import text_to_speech, tts_status  # noqa: E402
 
 app = FastAPI(title="Avenir app API", version="1.0.0")
 app.add_middleware(
@@ -52,6 +55,7 @@ app.add_middleware(
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
+app.add_api_route("/api/tts", text_to_speech, methods=["POST"])
 
 # Text/pathway bridges only. Numeric data ALWAYS retains the requested ML SOC.
 # These map ML careers absent from Max's earlier 40-career prototype to a
@@ -259,6 +263,7 @@ def health() -> dict:
         "ml_mode": ml().status()["mode"],
         "guide_mode": guide_mode(),
         "guide_accepts_profile": True,
+        **tts_status(),
     }
 
 
@@ -284,6 +289,7 @@ def bootstrap() -> dict:
             "pathways": "curated_demo",
             "guide": guide_mode(),
             "guide_accepts_profile": True,
+            **tts_status(),
             "note": (
                 "Career evidence and matching use Arsenii's committed dataset and supplied affinities. "
                 "The matching method and evaluation limits are supplied alongside its status. "
@@ -565,6 +571,20 @@ def _compared_packs(profile: GuideProfile | None, soc: str) -> list[dict]:
     return packs
 
 
+def _tool_rows() -> list[dict]:
+    """Every catalogue role for `search_jobs`, with the app's display titles for the curated careers."""
+    titles = {career["soc"]: career["title"] for career in _careers()}
+    return [
+        {"soc": o["soc2020"], "title": titles.get(o["soc2020"], o["title"]), "metrics": o["metrics"]}
+        for o in ml().occupations()
+    ]
+
+
+def _tool_context() -> ToolContext:
+    """The guide model's read-only data tools, backed by the same loaded data as the endpoints."""
+    return ToolContext(pack_for=evidence_pack, occupations=_tool_rows, path_for=lambda soc: _career_path(_career(soc)))
+
+
 @app.post("/api/guide")
 def guide(request: GuideRequest) -> dict:
     """Model-written from the role's evidence pack when a model is configured and the reply passes the hard
@@ -588,29 +608,43 @@ def guide(request: GuideRequest) -> dict:
     }
     config = config_from_env()
     if config is not None:
-        text, checks = grounded_reply(
-            config,
-            pack,
-            request.message,
-            request.history,
-            preferences=words,
-            compared=compared,
-            link_labels=[link["label"] for link in links],
-            path=path_data,
-        )
+        profile = request.profile.model_dump() if request.profile is not None else None
+        key = guide_cache.cache_key(request.soc, request.message, profile, config.model)
+        hit = guide_cache.load(key)
+        if hit is not None:
+            text, checks, tools_used = hit["text"], hit["checks"] or "passed", list(hit["tools_used"] or [])
+        else:
+            text, checks, tools_used = tool_reply(
+                config,
+                pack,
+                request.message,
+                request.history,
+                _tool_context(),
+                preferences=words,
+                compared=compared,
+                link_labels=[link["label"] for link in links],
+                path=path_data,
+            )
+            if text is not None:
+                guide_cache.save(key, {"text": text, "model": config.model, "tools_used": tools_used, "checks": checks})
         if text is not None:
+            note = "AI-written from this role's evidence pack; every number was checked against the pack. Check the source."
+            if tools_used:
+                note = (
+                    "AI-written from this role's evidence pack and the app's data tools listed below; every number "
+                    "was checked against the pack and the tool results. Check the source."
+                )
             return {
                 "text": text,
                 "mode": "llm_grounded",
                 "ai_written": True,
                 "model": config.model,
                 "sources": _source_refs([source["id"] for source in pack["sources"]]),
-                "note": (
-                    "AI-written from this role's evidence pack; every number was checked against the pack. "
-                    "Check the source."
-                ),
+                "note": note,
                 "based_on": list(pack["based_on"]),
                 "checks": checks,
+                "tools_used": tools_used,
+                "cached": hit is not None,
                 **extras,
             }
         note = PREPARED_NOTE.replace("no live language model is connected", "the configured model's reply was not used")
@@ -628,5 +662,7 @@ def guide(request: GuideRequest) -> dict:
         "note": note,
         "based_on": list(pack["based_on"]),
         "checks": checks,
+        "tools_used": [],
+        "cached": False,
         **extras,
     }

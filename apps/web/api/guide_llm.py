@@ -13,6 +13,7 @@ Configuration (same names as the LLM explanation writer): `LLM_ENABLED`, `LLM_BA
 
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
 import os
@@ -26,6 +27,7 @@ import requests
 from avenir_adapters._deadline import DeadlineExceeded, call_with_deadline
 from avenir_adapters.llm.writer import TRUTHY, numbers_in
 
+from . import guide_tools
 from .evidence_pack import allowed_numbers
 
 log = logging.getLogger(__name__)
@@ -76,6 +78,7 @@ class ModelConfig:
     url: str
     model: str
     headers: dict[str, str] = field(repr=False)  # never printed: carries the key
+    fallback_headers: dict[str, str] | None = field(default=None, repr=False)  # LLM_API_KEY_2, used on quota errors
 
 
 def config_from_env(env: Mapping[str, str] | None = None) -> ModelConfig | None:
@@ -87,7 +90,10 @@ def config_from_env(env: Mapping[str, str] | None = None) -> ModelConfig | None:
 
     base, key, model = get("LLM_BASE_URL"), get("LLM_API_KEY"), get("LLM_MODEL")
     if get("LLM_ENABLED").lower() in TRUTHY and base and key and model:
-        return ModelConfig("openai", base.rstrip("/") + "/chat/completions", model, {"Authorization": f"Bearer {key}"})
+        second = get("LLM_API_KEY_2")
+        fallback = {"Authorization": f"Bearer {second}"} if second and second != key else None
+        url = base.rstrip("/") + "/chat/completions"
+        return ModelConfig("openai", url, model, {"Authorization": f"Bearer {key}"}, fallback)
     anthropic_key = get("ANTHROPIC_API_KEY")
     if anthropic_key and not base:
         headers = {"x-api-key": anthropic_key, "anthropic-version": ANTHROPIC_VERSION}
@@ -206,3 +212,162 @@ def grounded_reply(
     if failed:
         return None, f"fallback: {failed}"
     return text, "passed"
+
+
+# --- Tool use: the model fetches Aventier's own data itself (guide_tools), then answers. ---
+
+TOOL_DEADLINE_S = 25.0
+MAX_TOOL_ROUNDS = 2  # each round is one model request (free-tier quotas): 2 tool rounds plus the final answer
+MAX_CALLS_PER_ROUND = 6
+QUOTA_STATUSES = (429, 403)
+_EXHAUSTED: set[str] = set()  # fingerprints of keys that hit a quota error; kept for the life of the process
+TOOL_MAX_TOKENS = 1500  # OpenAI-compatible path: room for Gemini models that count thinking tokens as output
+TOOLS_PROMPT = (
+    "\n\nTools: you can call read-only tools that return Aventier's own data with sources: get_role_stats, "
+    "search_jobs, compare_roles, get_career_path and get_employer (BlackRock only). Use the tools to fetch the "
+    "facts before you answer, for this role or any role the student mentions. Every number must come from the "
+    "evidence pack or a tool result, copied as written. Cite which tool and source each figure came from, e.g. "
+    "\"(get_role_stats: ONS ASHE 2025)\". When the student's quiz preferences are given, tie the advice to them. "
+    "Describe history, not forecasts. Never write \"you should\". Keep the reply under 180 words."
+)
+
+
+def _tool_system(system: str) -> str:
+    head, sep, rest = system.partition("\n\nEvidence pack:\n")
+    head = head.replace(
+        "Use ONLY the facts in the evidence pack below.",
+        "Use ONLY the facts in the evidence pack below and in tool results.",
+    )
+    head = head.replace("under 160 words", "under 180 words")
+    return head + TOOLS_PROMPT + sep.replace("Evidence pack:", "Evidence pack (headline metrics; tools have the rest):") + rest
+
+
+def _fingerprint(headers: dict[str, str]) -> str:
+    return hashlib.sha256(_compact(sorted(headers.items())).encode()).hexdigest()
+
+
+def _send(config: ModelConfig, payload: dict[str, Any], deadline: float) -> tuple[int, Any]:
+    """One model request. On a quota error (429/403) the key is marked exhausted and the same request is
+    retried once with the other key (LLM_API_KEY_2); keys not yet exhausted are tried first."""
+    keys = [config.headers] + ([config.fallback_headers] if config.fallback_headers else [])
+    keys.sort(key=lambda headers: _fingerprint(headers) in _EXHAUSTED)  # stable: fresh keys first
+    status, body = 0, None
+    for headers in keys[:2]:
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise DeadlineExceeded()
+        status, body = call_with_deadline(_post, remaining, config.url, headers, payload, remaining)
+        if status not in QUOTA_STATUSES:
+            return status, body
+        _EXHAUSTED.add(_fingerprint(headers))
+        log.warning("guide model key hit a quota error (HTTP %s); trying the other key if set", status)
+    return status, body
+
+
+SLIM_METRIC_KEYS = ("value", "display", "source", "as_of", "caveats")
+
+
+def slim_pack(pack: dict) -> dict:
+    """The headline metrics only; with tools on, the model fetches hedges, demand and the rest itself."""
+    metrics = {
+        key: {k: entry.get(k) for k in SLIM_METRIC_KEYS}
+        for key, entry in (pack.get("metrics") or {}).items()
+        if entry.get("value") is not None
+    }
+    return {"soc": pack.get("soc"), "title": pack.get("title"), "metrics": metrics}
+
+
+def build_tool_request(
+    config: ModelConfig, pack: dict, message: str, history: list[Any], *, compared: list[dict] | None = None, **kwargs: Any
+) -> dict[str, Any]:
+    """A compact grounded request (headline metrics, not the whole pack) plus tool definitions and instructions."""
+    slim_compared = [slim_pack(other) for other in compared or []]
+    payload = build_request(config, slim_pack(pack), message, history, compared=slim_compared, **kwargs)
+    if config.provider == "anthropic":
+        payload["system"] = _tool_system(payload["system"])
+        payload["tools"] = guide_tools.anthropic_tools()
+        return payload
+    payload["messages"][0]["content"] = _tool_system(payload["messages"][0]["content"])
+    payload["max_tokens"] = TOOL_MAX_TOKENS
+    payload["tools"] = guide_tools.openai_tools()
+    payload["tool_choice"] = "auto"
+    return payload
+
+
+def _tool_calls(provider: str, body: Any) -> tuple[list[dict], dict]:
+    """([{id, name, args}], the assistant message to echo back). Raises on an unexpected shape."""
+    if provider == "anthropic":
+        blocks = body["content"]
+        calls = [{"id": b["id"], "name": b.get("name"), "args": b.get("input")} for b in blocks if b.get("type") == "tool_use"]
+        return calls, {"role": "assistant", "content": blocks}
+    message = body["choices"][0]["message"]
+    raw_calls = message.get("tool_calls") or []
+    calls = [
+        {"id": c.get("id"), "name": (c.get("function") or {}).get("name"), "args": (c.get("function") or {}).get("arguments")}
+        for c in raw_calls
+    ]
+    return calls, {"role": "assistant", "content": message.get("content") or "", "tool_calls": raw_calls}
+
+
+def tool_reply(
+    config: ModelConfig,
+    pack: dict,
+    message: str,
+    history: list[Any],
+    ctx: guide_tools.ToolContext,
+    *,
+    preferences: dict | None = None,
+    compared: list[dict] | None = None,
+    link_labels: list[str] | None = None,
+    path: dict | None = None,
+) -> tuple[str | None, str, list[dict]]:
+    """(accepted reply or None, check result, tools used). Never raises.
+
+    Up to MAX_TOOL_ROUNDS rounds of tool calls, then a final answer, all within TOOL_DEADLINE_S. The number
+    check allows every number in the pack, the compared packs, the preferences, the path and every tool result.
+    On any fallback the tools list is empty: the prepared reply did not use them."""
+    payload = build_tool_request(
+        config, pack, message, history, preferences=preferences, compared=compared, link_labels=link_labels, path=path
+    )
+    allowed = set(pack.get("allowed_numbers", [])) | allowed_numbers(
+        {"compared": compared or [], "preferences": preferences or {}, "path": path or {}}
+    )
+    used: list[dict] = []
+    deadline = time.monotonic() + TOOL_DEADLINE_S
+    text = ""
+    for round_no in range(MAX_TOOL_ROUNDS + 1):
+        if round_no == MAX_TOOL_ROUNDS:  # last round: answer with what has been fetched
+            payload["tool_choice"] = {"type": "none"} if config.provider == "anthropic" else "none"
+        try:
+            status, body = _send(config, payload, deadline)
+        except (DeadlineExceeded, requests.Timeout) as error:
+            return None, "fallback: " + ("timeout" if isinstance(error, requests.Timeout) else "deadline exceeded"), []
+        except Exception as error:  # noqa: BLE001  (any transport failure means the prepared reply)
+            return None, f"fallback: {type(error).__name__}", []
+        if not 200 <= status < 300:
+            return None, f"fallback: HTTP {status}", []
+        try:
+            calls, echo = _tool_calls(config.provider, body)
+            if not calls:
+                text = _reply_text(config.provider, body)
+                break
+        except (KeyError, IndexError, TypeError, AttributeError):
+            return None, "fallback: unexpected response shape", []
+        if round_no == MAX_TOOL_ROUNDS:
+            return None, "fallback: still calling tools after the last round", []
+        results = []
+        for call in calls[:MAX_CALLS_PER_ROUND]:
+            args = guide_tools.parse_args(call["args"])
+            result, summary = guide_tools.run_tool(ctx, call["name"], args)
+            used.append({"name": str(call["name"]), "args": args if isinstance(args, dict) else None, "summary": summary})
+            allowed |= allowed_numbers(result)
+            results.append((call["id"], result))
+        if config.provider == "anthropic":
+            content = [{"type": "tool_result", "tool_use_id": cid, "content": _compact(r)} for cid, r in results]
+            payload["messages"] += [echo, {"role": "user", "content": content}]
+        else:
+            payload["messages"] += [echo] + [{"role": "tool", "tool_call_id": cid, "content": _compact(r)} for cid, r in results]
+    failed = failed_check(text, allowed)
+    if failed:
+        return None, f"fallback: {failed}", []
+    return text, "passed", used
