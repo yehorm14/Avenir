@@ -1,10 +1,11 @@
 .dashboard-next-steps {
   min-width: 0;
-  padding: 26px;
+  padding: 24px 0 0;
   color: var(--foreground, #dae0e7);
-  background: var(--white, #111216);
-  border: 1px solid var(--line, #303540);
-  border-radius: 18px;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--line, #303540);
+  border-radius: 0;
 }
 
 .dashboard-next-steps-heading h2 {
@@ -13,12 +14,6 @@
   line-height: 1.25;
   font-weight: 550;
   letter-spacing: -0.035em;
-}
-
-.dashboard-next-steps-heading > p {
-  margin: 6px 0 0;
-  font-size: 12px;
-  line-height: 1.6;
 }
 
 .dashboard-next-steps h3 {
@@ -164,10 +159,4 @@
 .dashboard-next-steps button:focus-visible {
   outline: 2px solid #a9c8fc;
   outline-offset: 4px;
-}
-
-@media (max-width: 600px) {
-  .dashboard-next-steps {
-    padding: 22px;
-  }
 }

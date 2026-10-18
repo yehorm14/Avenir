@@ -23,7 +23,6 @@ export default function DashboardNextSteps({
     <aside className="dashboard-next-steps" aria-label="Your next steps">
       <header className="dashboard-next-steps-heading">
         <h2>Your next steps</h2>
-        <p>For {career.title.toLowerCase()}</p>
       </header>
 
       <section className="dashboard-starter-task">
