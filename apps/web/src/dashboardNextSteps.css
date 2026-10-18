@@ -1,0 +1,173 @@
+.dashboard-next-steps {
+  min-width: 0;
+  padding: 26px;
+  color: var(--foreground, #dae0e7);
+  background: var(--white, #111216);
+  border: 1px solid var(--line, #303540);
+  border-radius: 18px;
+}
+
+.dashboard-next-steps-heading h2 {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.25;
+  font-weight: 550;
+  letter-spacing: -0.035em;
+}
+
+.dashboard-next-steps-heading > p {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.dashboard-next-steps h3 {
+  margin: 0 0 10px;
+  font-size: 15px;
+  font-weight: 550;
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+}
+
+.dashboard-next-steps section {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--line, #303540);
+}
+
+.dashboard-starter-task > p {
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.dashboard-plan-button {
+  width: 100%;
+  min-height: 46px;
+  margin-top: 20px;
+  padding: 12px 18px;
+  color: #111216;
+  background: #dae0e7;
+  border: 1px solid #dae0e7;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 550;
+  line-height: 1.4;
+}
+
+.dashboard-plan-button:hover {
+  background: #edf0f4;
+  border-color: #edf0f4;
+}
+
+.dashboard-starter-task .dashboard-plan-detail {
+  margin-top: 10px;
+  font-size: 11px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.dashboard-next-steps ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.dashboard-course-examples li + li {
+  margin-top: 18px;
+}
+
+.dashboard-course-examples a {
+  display: inline-block;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.dashboard-course-examples a > span,
+.dashboard-course-examples a > small {
+  display: block;
+}
+
+.dashboard-course-examples a > small {
+  color: var(--foreground, #dae0e7);
+  font-size: 12px;
+}
+
+.dashboard-course-examples li > p {
+  margin-top: 3px;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.dashboard-learning-links li + li {
+  padding-top: 18px;
+  margin-top: 18px;
+  border-top: 1px solid #ffffff0c;
+}
+
+.dashboard-opportunity-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dashboard-opportunity-heading > a {
+  padding-top: 5px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.dashboard-save-button {
+  flex: 0 0 auto;
+  min-width: 57px;
+  min-height: 34px;
+  padding: 6px 10px;
+  color: var(--foreground, #dae0e7);
+  border: 1px solid #414957;
+  border-radius: 999px;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.dashboard-save-button:hover {
+  border-color: #8e9bb0;
+}
+
+.dashboard-save-button[aria-pressed="true"] {
+  color: #a9c8fc;
+  border-color: #6da2f899;
+  background: #6da2f80f;
+}
+
+.dashboard-opportunity-location {
+  margin-top: 5px;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.dashboard-opportunity-description {
+  margin-top: 7px;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.dashboard-discovery-note {
+  margin: 18px 0 0;
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.dashboard-next-steps a {
+  overflow-wrap: anywhere;
+}
+
+.dashboard-next-steps a:focus-visible,
+.dashboard-next-steps button:focus-visible {
+  outline: 2px solid #a9c8fc;
+  outline-offset: 4px;
+}
+
+@media (max-width: 600px) {
+  .dashboard-next-steps {
+    padding: 22px;
+  }
+}
