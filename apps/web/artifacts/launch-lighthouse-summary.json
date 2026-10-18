@@ -1,0 +1,31 @@
+{
+  "purpose": "Automated Lighthouse checks on the production My plan page; not a full accessibility certification.",
+  "runs": {
+    "desktop": {
+      "lighthouseVersion": "13.4.1",
+      "fetchTime": "2026-10-18T01:32:52.879Z",
+      "url": "http://127.0.0.1:4175/#/overview",
+      "scores": {
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1,
+        "agentic-browsing": 1
+      },
+      "failedAudits": [],
+      "warnings": []
+    },
+    "mobile": {
+      "lighthouseVersion": "13.4.1",
+      "fetchTime": "2026-10-18T01:33:09.431Z",
+      "url": "http://127.0.0.1:4175/#/overview",
+      "scores": {
+        "accessibility": 1,
+        "best-practices": 1,
+        "seo": 1,
+        "agentic-browsing": 1
+      },
+      "failedAudits": [],
+      "warnings": []
+    }
+  }
+}

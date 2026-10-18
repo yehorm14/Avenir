@@ -1,54 +1,50 @@
-# Verification — 17 October 2026
+# Launch verification — 18 October 2026
 
-The production app runs at http://127.0.0.1:4175 using `node scripts/run-app.mjs --preview`; API port 8015. This is a local integration on `codex/complete-career-experience`, not a public deployment or a merged branch. The original dirty KATYATA checkout is preserved.
+This record supersedes the earlier 17 October prototype checks. Release branch: `codex/hackathon-launch`. The complete product runs at http://127.0.0.1:4175 using `node scripts/run-app.mjs --production`, after the documented build. UI, experience API and canonical API share this one process and origin. This is a local running product and pushed integration branch, not a public deployment or a merge into main.
 
-## Commands and results
+## Release gate
 
-- `npm --prefix apps/web run format:check`: all matched files use Prettier style.
-- `npm --prefix apps/web run build`: TypeScript and Vite production build pass. Approx. 247 kB JavaScript / 78 kB gzip; 55 kB CSS / 12 kB gzip.
-- `.venv/bin/python -m pytest`: 305 passed, 1 skipped. The skipped smoke test requires the optional full real model environment. Two pre-existing FastAPI lifecycle deprecations remain.
-- `.venv/bin/python -m pytest apps/web/api/tests -q`: 13 passed. One dependency deprecation warns about Starlette's httpx test client; no test failures.
-- `.venv/bin/python -m ruff check apps/web/api`: passes.
-- `node --check scripts/run-app.mjs`: passes.
-- `git diff --check`: passes.
+Run `PATH="$PWD/.venv/bin:$PATH" make check` from the repository root. The gate runs repository Ruff, core Python tests, app/integration/scanner tests, preserved prototype tests, frontend tests, formatting, TypeScript/Vite build and the tracked-file secret scanner. Gitleaks additionally runs when installed; its failures propagate.
 
-After importing latest ML, the old fixture-specific eligibility count changed from seven to eleven. The test was updated to match cb9e169's supplied embedding table; selection rules are unchanged. Frontend schema/examples were regenerated from the imported owner's v2.1 models and latest data. No protected contract was manually edited.
+Final `make check` exited 0:
 
-## Browser evidence
+| Check | Result |
+| --- | --- |
+| Core ML/contracts/decision/ETL/API | 438 passed, 2 optional skipped |
+| App API, integration and scanner | 101 passed |
+| Preserved prototype backend | 32 passed |
+| Web state, notices, routes, export and chart gaps | 17 passed |
+| Ruff, Prettier, TypeScript/Vite, tracked-file secret scan | Passed |
 
-Chrome DevTools exercised the actual production bundle and real Python API. The eight quiz questions were answered through their visible radio controls and continued through the location screen. Five matches rendered with exactly three sliders; choosing three careers enabled pathway creation, prevented a fourth selection, and populated the first-choice route. Universities opened as official course links. The guide handled consecutive AI/pay questions with exact supplied salary/range and appropriate caveats. An opportunity was saved and filtered successfully.
+**588 passing tests in total.** Two optional core checks require the external model or freeze environment; dependency lifecycle/TestClient deprecation warnings remain. The secret fallback checks tracked text files, not all Git history or untracked files.
 
-A final automated browser pass completed **27/27 assertions** on the latest ML import:
+## Actual browser checks
 
-- Source mode real, fit preliminary, 20 mapped demo careers, 2007 salary history, populated ESCO shared skills.
-- Overview, matches, pathway, opportunities, guides and evidence render without horizontal overflow at 390px.
-- Five matches and exactly three priority sliders.
-- Changing Pay to 100% reorders the actual cards to the highest supplied median pay. Original weights restore successfully.
-- Ranked choices survive priority changes; location and local progress persist.
-- Historical outcomes include real pay growth and negative results.
-- Employee-job charts split into two eras per career at 2021; text tables contain all 19 years.
-- Related careers show actual shared skills; alumni outreach kit is retained.
+Chrome DevTools exercised the built React bundle against the assembled Python application, without keys or live AI:
 
-At 1440px, overview renders at scroll position zero with no horizontal overflow. Chrome reports **no console errors or warnings**. Modal focus containment, arrow-key quiz selection, keyboard chart inspection, reduced motion and clear input labels are implemented. These are browser checks, not a formal code review or a comprehensive accessibility certification.
+- Fresh Amira journey: known architecture direction, five answers, three options, ranked choices, first-choice plan and canonical trade-off comparison.
+- Route, personal note and completed action survive Home, resume and reload. Export contains those choices, the completed state and real source links/years. Saved RIBA opportunity remains accessible after Architect leaves the shortlist.
+- All 412 occupations load through the enveloped catalogue endpoint. Search, sort, empty results, retry and lazy details work. SOC1133 keeps its older 2024 employment observation; SOC1112 labels wider-group pay and preserves its source note.
+- Architect chart is visibly segmented at missing 2016, preserving the pay bridge and employment break at 2021. Text tables and keyboard year inspection remain available.
+- Electrician defaults to earn-and-learn consistently with its supplied route content; an explicit saved route takes precedence.
+- Guide replies show their source links. A delayed reply from the previous career is discarded. A failed request retries without duplicating the learner's question. Prepared guidance remains available without live providers.
+- Malformed browser storage recovers to a usable application. Production errors retain the shared envelope; canonical confidence is low when reviewed catalogue inputs are unavailable, and genuine ML values remain unchanged.
+- Desktop 1440px and mobile 390px My plan have no page overflow. Reduced motion, visible focus, labelled inputs and text chart alternatives are present.
 
-Screenshots: `artifacts/overview-desktop.jpg`, `artifacts/pathway-mobile.jpg`.
+Lighthouse on My plan scored **100 accessibility, 100 best practices and 100 SEO** at both widths, with no failed audits or run warnings. Automated audits cover this page and do not certify the entire application. [Compact audit record](artifacts/launch-lighthouse-summary.json), [desktop screenshot](artifacts/launch-plan-desktop.jpg), [mobile screenshot](artifacts/launch-plan-mobile.jpg).
 
-## Limits reflected in the UI
+## Review and integration
 
-Career metrics and fit are preliminary. The quiz is not psychometrically validated. Need is a historical trend, not an LLM forecast. Guides are prepared, grounded demos, with browser read-aloud where supported. University and opportunity links are curated discovery sources, not confirmed places or live vacancies. Overtime and starting-salary data are unavailable. No credentials or remote providers are needed.
+Latest fetched main `6695e58` and Arsenii's real-artefact branch `a17aebb` are included, preserving authorship. The original dirty KATYATA checkout and teammate worktrees remain untouched. No manual edits were made to protected AGENTS.md or docs/contracts.md.
 
-## Desktop top navigation follow-up
+Independent reviews and `codex review --base origin/main` identified evidence caveats, missing-year interpolation, saved disclosure length, statistical labels, coverage labels and optional matcher readiness. Follow-up fixes were tested and reviewed. Core fixture generation is pinned to mocks as well as fixture loading; exact recommendation assertions were preserved, not weakened to accept real-data ordering.
 
-Moved workspace navigation into the sticky top header; removed the sidebar and its layout offsets. All six destinations, active-page states and match count are retained. Overview/pathway retain the primary career context previously repeated in the sidebar. No mobile work was requested.
+## Limits and next release work
 
-Fresh verification: production TypeScript/Vite build passes, format check and git whitespace check pass. Chrome DevTools verifies all six header links activate and render their pages, no sidebar remains, main starts at x=0, and the top menu fits at 1894px and 1280px without overflow or overlap with profile controls. Screenshot: artifacts/top-navigation-desktop.jpg.
+Matching covers 20 calibrated roles; the evidence directory covers 412. Interest affinities and mappings are preliminary, with synthetic matcher development labels. Backtests concern historical market signals, not personalised recommendation accuracy. Full-time employee medians are not starting pay, research exposure is not job-loss probability, and historical demand is not a forecast. Group estimates, provisional observations, missing values and source disagreement stay explicit.
 
-## Aventier conversation-first entry
+Production excludes synthetic catalogue metrics and unreviewed canonical route rows. Editorial pathway and opportunity examples still require local eligibility/availability checks. Source redistribution rights and human catalogue verification need the team's review before public release. Docker/Compose definitions are supplied, but Docker was unavailable here, so container execution is unverified. The plan is browser-local; accounts, cross-device sharing, adviser dashboards, live vacancies and payment flows are future work. Business pricing, school targets and funding requests are untested pilot hypotheses.
 
-New scrolling entry: Aventier logo/student mission, reassurance, then two choices. Exploring asks four questions (interests, school subjects, values, skills); known direction adds the intended career first. Free text and multi-select suggestions, saved submitted answers, editing, confirmation and retry are supported. Both routes produce exactly three descriptions and feed the existing ranking/pathway experience.
+## Publication status
 
-Fresh checks: production build/format pass, API Ruff and whitespace pass. Root suite305 passed/1 optional real-model smoke skipped; app API30 passed (335 passing total). Discovery tests cover both routes, three unique results, original metrics/history, typed/bounded inputs, unsupported roles, priority wording, explicit dislikes, known references and no-signal errors. Dependency deprecation warnings remain as previously documented.
-
-Chrome exercised a fresh browser context at1440px: first arrival shows logo/mission; reassurance and two choices follow in scroll order. Multiple suggestion chips append into free text. All4 exploring answers persist, summary confirmation returns3 descriptions and appropriate demand weights. Known Civil engineer flow asks5 questions, retains2121 first after re-ranking, saves context, allows ranking3 choices and opens the civil-engineering pathway. No horizontal overflow or console errors/warnings. The first screenshot-node click timed out before results; retry after scrolling the confirmation into view succeeded. Both actual endpoints and visible results were verified.
-
-Screenshots: artifacts/aventier-landing-desktop.jpg and artifacts/aventier-starting-points-desktop.jpg. Desktop only; no mobile work or formal review. Guided prepared chat, deterministic extraction, preliminary affinities; no live LLM claim.
+All application checkpoints are committed and pushed to `origin/codex/hackathon-launch`. A draft PR description is prepared in [docs/launch/pull-request.md](../../docs/launch/pull-request.md). The GitHub connector returned404. Automatic approval review rejected use of stored Git credentials and an authenticated-browser fallback; no credentials were retrieved. The PR has not been opened. [Compare the pushed branch](https://github.com/yehorm14/Avenir/compare/main...codex/hackathon-launch?expand=1).
