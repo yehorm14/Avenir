@@ -45,7 +45,7 @@ test('guideReplyExtras keeps in-app and http(s) links only, deduplicated, and re
   const extras = guideReplyExtras({
     profile_used: true,
     links: [
-      { label: 'Software developer in Aventier', href: '#/guides/2134' },
+      { label: 'Software developer in Avenier', href: '#/guides/2134' },
       { label: 'ONS ASHE', href: 'https://www.ons.gov.uk/x' },
       { label: 'dup', href: 'https://www.ons.gov.uk/x' },
       { label: 'bad', href: 'javascript:alert(1)' },
@@ -56,13 +56,13 @@ test('guideReplyExtras keeps in-app and http(s) links only, deduplicated, and re
       routes: [{ label: 'University', summary: 'Study a degree.' }, { label: '' }],
       courses: [{ label: 'Computer science (BSc)' }, { label: 'Finder', href: 'https://example.org/' }, { label: 'x', href: 'ftp://a' }],
       skills: ['debug software', 'debug software', 3],
-      grades_note: 'Aventier holds no entry requirements.',
+      grades_note: 'Avenier holds no entry requirements.',
       first_step: 'Build a small project.',
     },
   });
   assert.equal(extras.profileUsed, true);
   assert.deepEqual(extras.links, [
-    { label: 'Software developer in Aventier', href: '#/guides/2134' },
+    { label: 'Software developer in Avenier', href: '#/guides/2134' },
     { label: 'ONS ASHE', href: 'https://www.ons.gov.uk/x' },
     { label: 'no label', href: 'http://example.org/' },
   ]);
@@ -70,7 +70,7 @@ test('guideReplyExtras keeps in-app and http(s) links only, deduplicated, and re
     routes: [{ label: 'University', summary: 'Study a degree.' }],
     courses: [{ label: 'Computer science (BSc)' }, { label: 'Finder', href: 'https://example.org/' }, { label: 'x' }],
     skills: ['debug software'],
-    grades_note: 'Aventier holds no entry requirements.',
+    grades_note: 'Avenier holds no entry requirements.',
     first_step: 'Build a small project.',
   });
   assert.equal(safeHref('#/guides/2134'), true);

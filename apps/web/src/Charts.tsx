@@ -245,8 +245,8 @@ export function SalaryChart({
         Source: ONS ASHE, {y0}–{y1}. Preliminary, full-time employees only;
         excludes self-employment.{" "}
         {mode === "jobs"
-          ? "The 2021 occupation-code change breaks the series; compare trends within each period."
-          : `Pre-2021 occupation mappings are estimates. ${lowPurityPay ? "For low-purity mappings the older occupation group mixed several jobs, so the pay line breaks at 2021. " : ""}2020 includes COVID distortions; 2025 is provisional. Real pay uses ${priceBase || "ONS CPIH, April 2025 prices"}.`}
+          ? "Dashed years use older occupation codes; the 2021 code change is marked. Compare trends within each period."
+          : `Pre-2021 occupation mappings are estimates. ${lowPurityPay ? "For low-purity mappings the older occupation group mixed several jobs, so pre-2021 values are estimates. " : ""}2020 includes COVID distortions; 2025 is provisional. Real pay uses ${priceBase || "ONS CPIH, April 2025 prices"}.`}
         {mode === "jobs" &&
           indicativeCounts &&
           " ONS says its job counts are indicative, not accurate estimates."}

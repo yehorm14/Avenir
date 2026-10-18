@@ -208,7 +208,7 @@ export default function Discovery({
           <div className="discovery-guide-identity">
             <span aria-hidden="true">a</span>
             <div>
-              <strong>Aventier guide</strong>
+              <strong>Avenier guide</strong>
               <small>Guided conversation</small>
             </div>
           </div>

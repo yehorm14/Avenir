@@ -1,6 +1,6 @@
-# A business hypothesis for Aventier
+# A business hypothesis for Avenier
 
-Aventier's first customer hypothesis is a school or careers-advice team helping learners make a career choice and follow through. The learner's immediate benefit is a clear comparison, an evidence trail and a next action they can discuss with an adviser. The pilot must establish whether that benefit is useful often enough for an organisation to pay.
+Avenier's first customer hypothesis is a school or careers-advice team helping learners make a career choice and follow through. The learner's immediate benefit is a clear comparison, an evidence trail and a next action they can discuss with an adviser. The pilot must establish whether that benefit is useful often enough for an organisation to pay.
 
 ## What exists and what remains a hypothesis
 

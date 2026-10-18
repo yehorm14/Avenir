@@ -1,8 +1,8 @@
-# Aventier
+# Avenier
 
 A career decision and action plan for UK school leavers. Compare Computer Science and Finance occupations, set your pay and employment priorities, then choose a first role to explore and a practical next step.
 
-The hackathon demo follows Amira, 17, in Glasgow. She enjoys maths and is choosing between Computer Science and Finance. Occupation earnings, employment evidence and independent automation research help her compare the trade-offs. She decides which role to explore first; Aventier keeps her chosen route and what to try this month.
+The hackathon demo follows Amira, 17, in Glasgow. She enjoys maths and is choosing between Computer Science and Finance. Occupation earnings, employment evidence and independent automation research help her compare the trade-offs. She decides which role to explore first; Avenier keeps her chosen route and what to try this month.
 
 ## Run the complete product
 
@@ -24,7 +24,7 @@ npm --prefix apps/web run build
 node scripts/run-app.mjs --production
 ```
 
-Open [Aventier](http://127.0.0.1:4175). The production launcher serves the UI and both API layers from one process. No API keys, database, cloud account or external font service are required. Set `AVENIR_PYTHON` to use another Python environment; `AVENIR_PORT` changes the production port. Ctrl+C stops the service.
+Open [Avenier](http://127.0.0.1:4175). The production launcher serves the UI and both API layers from one process. No API keys, database, cloud account or external font service are required. Set `AVENIR_PYTHON` to use another Python environment; `AVENIR_PORT` changes the production port. Ctrl+C stops the service.
 
 On Windows, create the environment with `python -m venv .venv` (Python 3.12 or newer; `py -3.13 -m venv .venv` if you use the Python launcher), install with `.venv\Scripts\python.exe -m pip install -e ".[dev]"`, then run the same npm and Node commands. `npm ci` needs the lock file to include npm's optional platform packages (added for npm 11 on 18 Oct); if it still fails, `npm --prefix apps/web install` is the fallback. `node scripts/run-app.mjs --production` works on Windows (checked on Windows 11 with Node 24, npm 11 and Python 3.13; see [VERIFICATION.md](apps/web/VERIFICATION.md)). Node may print a `DEP0190` deprecation warning from the launcher; the app still runs.
 

@@ -4,7 +4,7 @@
 
 - [x] [codex] Apply six Chatbot annotations on codex/final-delivery: remove page intro, prepared-guide badge, read-aloud control, footer notice and composer hint; generalize the chat copy while preserving career evidence context. `make check` 716 passed/3 optional skipped; isolated Chrome mobile check at 390px confirms all marked UI removed, full copy visible, no overflow or console messages. Pushed and verified `c34b640` on this branch only; latest fetch could not resolve github.com.
 
-- [x] [codex] Apply the eight My matches copy/source removals and remove the Aventier header mark/name on codex/final-delivery. Preserve the five main routes and selected career cards; full check 716 passed/3 optional skipped, production browser build checked; merge latest origin/main 0120e72 and push only this branch.
+- [x] [codex] Apply the eight My matches copy/source removals and remove the Avenier header mark/name on codex/final-delivery. Preserve the five main routes and selected career cards; full check 716 passed/3 optional skipped, production browser build checked; merge latest origin/main 0120e72 and push only this branch.
 
 - [x] [codex] Integrate origin/main eaf0740 into codex/final-delivery, preserve the five-item navigation and simple My plan, restore the simplified quiz, and correct misleading Chatbot fallback notes. Full check 716 passed/3 optional skipped; Chrome smoke passed; pushed only codex/final-delivery.
 
@@ -37,8 +37,8 @@
 - [x] [codex] Build the quiz → five weighted matches → three ranked choices → pathway → opportunities and career guide flow in apps/web.
 - [x] [codex] Verify production build, Python tests, and desktop/mobile browser flow; record evidence. No code-review workflow or public deployment requested.
 - [x] [codex] Move workspace navigation from the sidebar into a responsive top menu; verify desktop routes and full-width content. Mobile changes excluded per user instruction.
-- [x] [codex] Replace entry page with Aventier mission/reassurance/choice sections and two conversational discovery routes leading to three career options.
-- [x] [codex] Inspect QuantSoc design across the reference site, then apply its visual system throughout Aventier and verify desktop flows.
+- [x] [codex] Replace entry page with Avenier mission/reassurance/choice sections and two conversational discovery routes leading to three career options.
+- [x] [codex] Inspect QuantSoc design across the reference site, then apply its visual system throughout Avenier and verify desktop flows.
 
 - [x] [codex] Simplify entry to one screen, remove logo and marketing slogans, and move both clearly labelled career choices into the hero.
 

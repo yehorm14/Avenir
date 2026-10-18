@@ -506,10 +506,10 @@ function JobProfile({
           adzuna={sources.some((s) => s && /adzuna/i.test(s.label))}
         />
         <p className="jobs-source-note">
-          ASHE pay figures cover full-time employees, excluding self-employment.
-          Employee-job coverage is described alongside each supplied metric.
-          Observations marked provisional may be revised. Historical occupation
-          mappings and the 2021 code break are marked in the chart.
+          Pay figures exclude self-employment. Employee-job coverage is
+          described alongside each supplied metric. Observations marked
+          provisional may be revised. Historical occupation mappings and the
+          2021 code break are marked in the chart.
         </p>
       </details>
       {!career.match_supported && (

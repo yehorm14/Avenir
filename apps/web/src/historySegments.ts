@@ -13,14 +13,15 @@ export function historySegments(
       current = [];
     }
     if (typeof point[key] !== "number" || point.year === 2021) {
+      const last = current[current.length - 1];
       if (current.length) segments.push(current);
+      // Seed the post-2021 segment with 2020 so the line stays continuous.
       current =
-        key !== "jobs_k" &&
         point.year === 2021 &&
-        current.length &&
-        !current[current.length - 1].flags.includes("bridged_low_purity") &&
-        !point.flags.includes("bridged_low_purity")
-          ? [current[current.length - 1]]
+        typeof point[key] === "number" &&
+        last &&
+        last.year === 2020
+          ? [last]
           : [];
     }
     if (typeof point[key] === "number") current.push(point);

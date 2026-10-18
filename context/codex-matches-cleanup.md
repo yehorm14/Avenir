@@ -6,11 +6,11 @@
 - **Status:** ready for review
 
 ## Task
-Apply the eight My matches page copy/source removals and remove the Aventier header logo/name, preserving its career cards, controls and primary routes.
+Apply the eight My matches page copy/source removals and remove the Avenier header logo/name, preserving its career cards, controls and primary routes.
 
 ## Done so far
 - Removed redundant heading copy, list/model labels, repeated card source notes, footer fine print and the priority-method disclaimer.
-- Removed the header LogoMark and Aventier wordmark.
+- Removed the header LogoMark and Avenier wordmark.
 - Merged latest `origin/main` attribution update `0120e72` into `codex/final-delivery`.
 - Full `make check`: 716 passed, 3 optional skipped; production Chrome smoke confirmed primary navigation and no brand nodes.
 

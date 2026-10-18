@@ -327,7 +327,7 @@ export default function App() {
     );
     const a = document.createElement("a");
     a.href = url;
-    a.download = "my-aventier-plan.html";
+    a.download = "my-avenier-plan.html";
     a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
     setToast("Plan downloaded. Open it in a browser to share or print.");
@@ -896,7 +896,7 @@ export default function App() {
           <button onClick={() => go("evidence")}>
             Research <Icon name="external" size={12} />
           </button>
-          <span>© 2026 Aventier</span>
+          <span>© 2026 Avenier</span>
         </footer>
       )}
       {toast && (
@@ -1885,40 +1885,56 @@ function BacktestGroup({ group: g }: { group: HistoricalGroup }) {
           ["Real pay growth", g.real_pay_growth],
           ["Employment growth", g.jobs_growth],
         ] as const
-      ).map(([label, metric]) => (
-        <div key={label} className="historical-metric">
-          <div className="backtest-stat">
-            <span>{label}</span>
-            <b>{metric ? percent(metric.median) : "Not comparable"}</b>
+      )
+        .filter(
+          ([label, metric]) =>
+            label === "Real pay growth" ||
+            metric ||
+            g.jobs_growth ||
+            g.share_jobs_fell != null,
+        )
+        .map(([label, metric]) => (
+          <div key={label} className="historical-metric">
+            <div className="backtest-stat">
+              <span>{label}</span>
+              <b>{metric ? percent(metric.median) : "Not comparable"}</b>
+            </div>
+            {metric && (
+              <small>
+                95% confidence interval for the median: {percent(metric.low)} to{" "}
+                {percent(metric.high)}
+              </small>
+            )}
           </div>
-          {metric && (
-            <small>
-              95% confidence interval for the median: {percent(metric.low)} to{" "}
-              {percent(metric.high)}
-            </small>
-          )}
+        ))}
+      {(g.jobs_growth || g.share_jobs_fell != null) && (
+        <div className="backtest-stat">
+          <span>Share with fewer jobs</span>
+          <b>
+            {g.share_jobs_fell == null
+              ? "Not comparable"
+              : `${(g.share_jobs_fell * 100).toFixed(1)}%`}
+          </b>
         </div>
-      ))}
-      <div className="backtest-stat">
-        <span>Share with fewer jobs</span>
-        <b>
-          {g.share_jobs_fell == null
-            ? "Not comparable"
-            : `${(g.share_jobs_fell * 100).toFixed(1)}%`}
-        </b>
-      </div>
+      )}
     </article>
   );
 }
 
 function Evidence({ data, selected }: { data: Bootstrap; selected: Career[] }) {
-  const [windowIndex, setWindowIndex] = useState(0);
   const windows = (data.backtest.windows ?? []) as {
     base_year: number;
     outcome_year: number;
     groups: (HistoricalGroup | null)[];
     [k: string]: unknown;
   }[];
+  const [windowIndex, setWindowIndex] = useState(() => {
+    let last = -1;
+    windows.forEach((item, i) => {
+      if (item.outcome_year <= 2020) last = i;
+    });
+    return last >= 0 ? last : 0;
+  });
   const w = windows[windowIndex];
   const raw = data.sources as Record<string, unknown>;
   const registry = (raw?.sources ?? raw ?? {}) as Record<
@@ -1966,6 +1982,12 @@ function Evidence({ data, selected }: { data: Bootstrap; selected: Career[] }) {
                   <BacktestGroup key={g.key} group={g} />
                 ))}
             </div>
+            {w.base_year < 2021 && w.outcome_year >= 2021 && (
+              <p className="fine-print">
+                Employment measures are not comparable across the 2021 code
+                change, so this window shows pay only.
+              </p>
+            )}
             <p className="fine-print">
               Source: supplied historical test · Preliminary. Historical tiers
               are based on market data only; they do not test the personalised

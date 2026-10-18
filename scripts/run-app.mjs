@@ -38,4 +38,4 @@ for (const [command, args] of processes) {
   child.on('error', error => { console.error(error.message); stop(1); });
   child.on('exit', code => { if (!closing) stop(code || 0); });
 }
-console.log(`Aventier: http://${host}:${production ? port : '4175'} (same-origin APIs). Ctrl+C stops the app.`);
+console.log(`Avenier: http://${host}:${production ? port : '4175'} (same-origin APIs). Ctrl+C stops the app.`);

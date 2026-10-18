@@ -1,4 +1,4 @@
-# Aventier application
+# Avenier application
 
 The complete React/Vite + FastAPI product lives here. See the [root setup and architecture](../../README.md) and [launch acceptance matrix](../../docs/launch/README.md).
 

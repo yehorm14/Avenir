@@ -85,9 +85,9 @@ def test_failed_placebo_crises_are_withheld_from_production_scoring_but_raw_evid
 def test_production_static_ui_is_served_after_api_routes(tmp_path):
     from api.application import create_application
 
-    (tmp_path / "index.html").write_text("<!doctype html><title>Aventier production</title>")
+    (tmp_path / "index.html").write_text("<!doctype html><title>Avenier production</title>")
     client = TestClient(create_application(web_dir=tmp_path))
-    assert "Aventier production" in client.get("/").text
+    assert "Avenier production" in client.get("/").text
     assert client.get("/api/health").json()["data"]["status"] == "ok"
     assert client.get("/health").json()["data"]["status"] == "ok"
 

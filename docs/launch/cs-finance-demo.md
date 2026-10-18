@@ -13,7 +13,7 @@ bash scripts/setup.sh
 node scripts/run-app.mjs --production
 ```
 
-Open [Aventier](http://127.0.0.1:4175). `AVENIR_PORT` can select a different free production port. The complete UI and both API layers run from one origin without API keys. Use [check-setup and the release gate](README.md#run-and-verify) before the presentation. The earlier 4186 preview and older branch notes describe the previous polish checkpoint, not the final integrated release.
+Open [Avenier](http://127.0.0.1:4175). `AVENIR_PORT` can select a different free production port. The complete UI and both API layers run from one origin without API keys. Use [check-setup and the release gate](README.md#run-and-verify) before the presentation. The earlier 4186 preview and older branch notes describe the previous polish checkpoint, not the final integrated release.
 
 ## Primary journey
 

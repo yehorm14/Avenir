@@ -132,7 +132,6 @@ export default function EvidenceStats({
         ) : (
           <p>No hedge career is supplied for this occupation.</p>
         )}
-        <SourceLine pack={pack} hints={["hedge", "resilience", "ashe"]} />
       </section>
 
       <section className="dashboard-stats-section" data-section="backtest">
@@ -146,7 +145,6 @@ export default function EvidenceStats({
           <small>{pack.backtest.note}</small>
         )}
         <small>{BACKTEST_RULE_LINE}</small>
-        <SourceLine pack={pack} hints={["backtest", "ashe"]} />
       </section>
 
       <section className="dashboard-stats-section" data-section="crises">
@@ -183,7 +181,6 @@ export default function EvidenceStats({
           Checks that failed the placebo test are shown for transparency and
           excluded from recommendations.
         </small>
-        <SourceLine pack={pack} hints={["crisis", "resilience", "placebo"]} />
       </section>
 
       {pack.fitTags && (
@@ -233,8 +230,9 @@ export default function EvidenceStats({
           {pack.historyNote ??
             `Real pay is in ${priceLabel ?? "constant"} prices; nominal pay is as published. Full-time employees; history, not a forecast.`}
         </small>
-        <SourceLine pack={pack} hints={["ashe", "cpih"]} />
       </section>
+
+      <SourceLine pack={pack} hints={[]} />
 
       {pack.caveats.length > 0 && (
         <section className="dashboard-stats-section" data-section="caveats">

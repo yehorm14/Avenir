@@ -18,7 +18,7 @@ COURSE_COUNT = 4
 ROLE_ROUTE = "#/guides/{soc}"
 WEIGHT_NAMES = {"pay": "pay", "interest": "interest", "need": "UK need"}
 GRADES_NOTE = (
-    "Aventier holds no entry requirements for {title}, so it cannot say which grades a course asks for. "
+    "Avenier holds no entry requirements for {title}, so it cannot say which grades a course asks for. "
     "Grades and subjects vary by course, provider and nation (Scotland, England, Wales and Northern Ireland "
     "use different qualifications); check each course page before planning around it."
 )
@@ -90,8 +90,8 @@ def _ok_url(url: Any) -> bool:
 
 def role_links(pack: dict, compared: list[dict]) -> list[dict]:
     """The current role's page, each compared role's page, then every source URL in the pack."""
-    links = [{"label": f"{pack['title']} in Aventier", "href": ROLE_ROUTE.format(soc=pack["soc"])}]
-    links += [{"label": f"{other['title']} in Aventier", "href": ROLE_ROUTE.format(soc=other["soc"])} for other in compared]
+    links = [{"label": f"{pack['title']} in Avenier", "href": ROLE_ROUTE.format(soc=pack["soc"])}]
+    links += [{"label": f"{other['title']} in Avenier", "href": ROLE_ROUTE.format(soc=other["soc"])} for other in compared]
     for source in pack.get("sources", []):
         if _ok_url(source.get("url")):
             links.append({"label": source.get("name") or source.get("id") or "Source", "href": source["url"]})
@@ -138,7 +138,7 @@ def career_path(career: dict, plan: dict | None, skills: list[str]) -> dict:
 
 def path_text(title: str, path: dict, words: dict | None, first_step: bool = True) -> str:
     """The prepared (no-model) walk through the path, naming the student's top tags and selected roles."""
-    text = f"Your path into {title.lower()}, from Aventier's own data."
+    text = f"Your path into {title.lower()}, from Avenier's own data."
     if words:
         text += " Read it against your preferences: " + "; ".join(_preference_parts(words)) + "."
     if path["routes"]:

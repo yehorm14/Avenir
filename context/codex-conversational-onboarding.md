@@ -1,8 +1,8 @@
-# Aventier conversational onboarding
+# Avenier conversational onboarding
 
-User brief: first page shows Aventier logo and mission to help students decide and plan their future. Scroll to reassurance that uncertainty is okay and we are here to help. Scroll again to two choices: known career direction or still exploring. Both lead into a conversation collecting relevant interests, school subjects, values and hard/soft skills; known direction adds context about the intended career. End with three career options/descriptions, then preserve existing comparison and pathway tools.
+User brief: first page shows Avenier logo and mission to help students decide and plan their future. Scroll to reassurance that uncertainty is okay and we are here to help. Scroll again to two choices: known career direction or still exploring. Both lead into a conversation collecting relevant interests, school subjects, values and hard/soft skills; known direction adds context about the intended career. End with three career options/descriptions, then preserve existing comparison and pathway tools.
 
-User preferences: fast, desktop only, make reasonable assumptions, no formal code-review workflow. Retain the existing minimal neutral/green design and top navigation. Use existing logo symbol with Aventier wordmark. Conversation is guided and prepared; extraction uses Arsenii's supplied tag matcher and affinities, not a claimed live LLM.
+User preferences: fast, desktop only, make reasonable assumptions, no formal code-review workflow. Retain the existing minimal neutral/green design and top navigation. Use existing logo symbol with Avenier wordmark. Conversation is guided and prepared; extraction uses Arsenii's supplied tag matcher and affinities, not a claimed live LLM.
 
 Implementation: scroll-based Landing component, persistent Discovery chat draft, app-local discovery endpoint with deterministic extraction and exactly three unique careers. Known supported career is a labelled reference alongside two alternatives; unsupported roles are acknowledged rather than fabricated. Values can influence transparent comparison priorities. No signal prompts for clarification instead of returning random matches. Core extraction/ranking receives tests first; UI is verified in the actual browser.
 

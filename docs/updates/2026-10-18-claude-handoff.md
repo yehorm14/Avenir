@@ -4,7 +4,7 @@ For: the next agent (and the team). Freeze is **11:30**. `main` is protected (PR
 
 ## 1. State of `main` (b397851)
 
-- **Product "Aventier"** runs from one key-free command: `bash scripts/setup.sh && node scripts/run-app.mjs --production` → http://127.0.0.1:4175.
+- **Product "Avenier"** runs from one key-free command: `bash scripts/setup.sh && node scripts/run-app.mjs --production` → http://127.0.0.1:4175.
   - **Frontend** (`apps/web`): Home leads with Amira's "Try architect" journey: three picks vs her first idea, hedge, evidence, backtest, roadmap. CS/Finance is a secondary journey. Also: the Jobs catalogue (412 careers), My plan with export, Sources panels with the required attributions.
   - **Backend:**
     - canonical API (`services/api`, Nazar);

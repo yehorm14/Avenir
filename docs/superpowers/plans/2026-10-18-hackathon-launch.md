@@ -1,10 +1,10 @@
-# Aventier launch sprint
+# Avenier launch sprint
 
 > Execution: autonomous integration, isolated implementation slices, independent reviews, verified commits and pushes. The user explicitly delegated product decisions and execution; do not stop at planning gates.
 
 ## Product brief
 
-Amira is 17, studying in Glasgow, enjoys maths and art, and is considering architecture. Her decision is which career to explore first and what practical step to take this month. Aventier combines occupation earnings and employment, automation research, skills and route evidence to compare a first idea with alternatives, then saves a route and next actions. The student's priorities remain their choice.
+Amira is 17, studying in Glasgow, enjoys maths and art, and is considering architecture. Her decision is which career to explore first and what practical step to take this month. Avenier combines occupation earnings and employment, automation research, skills and route evidence to compare a first idea with alternatives, then saves a route and next actions. The student's priorities remain their choice.
 
 The supplied GUTS challenge brief requires multiple sources, API-first design, separated experience/decision/provider layers, core unit tests and an integration test, reproducible setup, resilience, accessibility and responsible AI. Success is a complete, comprehensible decision journey, not a collection of statistics. A strong funding story comes from a useful product and an explicit pilot/business hypothesis; never invent traction, accuracy, customers or revenue.
 

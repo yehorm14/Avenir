@@ -339,7 +339,7 @@ export default function CareerDashboard({ area, careers, ...actions }: Props) {
                     ? "Not available"
                     : Math.round(jobsValue * 1000).toLocaleString("en-GB")}
                 </span>
-                <p>Full-time employees; not vacancies.</p>
+                <p>Employee jobs, not vacancies.</p>
                 <small>{observation(jobs)}</small>
                 {headlineCaveat(jobs) && <small>{headlineCaveat(jobs)}</small>}
               </dd>
@@ -510,10 +510,10 @@ export default function CareerDashboard({ area, careers, ...actions }: Props) {
             <details>
               <summary>Sources and coverage ({sources.length})</summary>
               <p>
-                Pay covers full-time employees and excludes self-employment.
-                Historic occupation mappings are estimates; the 2021 code change
-                breaks the employee-job series. Published outlooks retain their
-                original horizon and region. Missing evidence stays unavailable.
+                Pay excludes self-employment. Historic occupation mappings are
+                estimates; the 2021 code change breaks the employee-job series.
+                Published outlooks retain their original horizon and region.
+                Missing evidence stays unavailable.
               </p>
               <ul>
                 {sources.map((source) => (

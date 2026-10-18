@@ -1,7 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import type { Career } from "./types";
 import { SalaryChart, money, percent } from "./Charts";
-import { getCareerContent } from "./content";
 import EmployerPulse from "./EmployerPulse";
 import "./landing.css";
 
@@ -140,39 +139,12 @@ function StepTimeline() {
   );
 }
 
-const evidence = [
-  [
-    "Pay",
-    "Median annual pay for full-time employees, with the middle 50% range. Shown in today's money and as paid at the time.",
-  ],
-  [
-    "Jobs",
-    "How many employee jobs the occupation has. This counts jobs, not vacancies.",
-  ],
-  [
-    "Employment trend",
-    "How employee jobs have changed in recent years compared with the typical occupation. It is history, not a forecast.",
-  ],
-  [
-    "Automation exposure",
-    "A research estimate of how much of the work AI could affect. It is not the chance of losing the job.",
-  ],
-  [
-    "Starting pay guide",
-    "A separate example range for new starters, because the median describes the whole workforce, not someone just beginning.",
-  ],
-  [
-    "Sources",
-    "Every figure shows where it comes from and its date, so you can check it yourself.",
-  ],
-] as const;
-
 const limits = [
   "It does not predict your future, your pay, or whether you will get a job.",
-  "A comparison score is a way to organise your thinking, not a probability of success.",
-  "The quiz explores interests. It is not a psychological test.",
-  "Courses, routes and opportunities are examples to explore. Check eligibility and availability with each provider.",
-  "No AI model ranks careers. Rankings come from fixed rules you can see.",
+  "Scores are not a chance of success.",
+  "The quiz is not a psychological test.",
+  "Courses and routes are examples. Check eligibility with each provider.",
+  "No account or tracking: your plan stays in this browser.",
 ];
 
 const cities: Record<string, string[]> = {
@@ -305,7 +277,7 @@ export default function Landing({
             ))}
           </select>
         </div>
-        <p className="ed-label">( AVENTIER )</p>
+        <p className="ed-label">( AVENIER )</p>
         <h1 id="mission-heading" className="ed-title">
           <span className="serif">Explore your</span> <b>career choices,</b>{" "}
           <span className="serif">see clear</span> <b>path</b>{" "}
@@ -313,7 +285,7 @@ export default function Landing({
         </h1>
         <div className="ed-row">
           <p className="ed-lede">
-            Aventier puts real UK pay, jobs and automation research for each
+            Avenier puts real UK pay, jobs and automation research for each
             career in one place, shows you the trade-offs, and turns your choice
             into a plan you can start this month.
           </p>
@@ -335,21 +307,6 @@ export default function Landing({
           occupation. ONS ASHE, 2022 to 2025. History, not a forecast.
         </p>
       </section>
-      <section className="explain-section" aria-labelledby="what-heading">
-        <h2 id="what-heading">What Aventier is</h2>
-        <p className="explain-lead">
-          Aventier helps a UK school leaver decide which career to look at
-          first, and what to do next. It puts real pay and employment evidence
-          next to your own priorities, so you can compare careers honestly
-          instead of guessing. You stay in charge: Aventier shows the
-          trade-offs, and you choose.
-        </p>
-        <p className="explain-note">
-          Built for people like Amira, 17, in Glasgow. She enjoys maths and art,
-          her first idea is architect, and she is not sure which roles are
-          really worth exploring.
-        </p>
-      </section>
       <section className="explain-section" aria-labelledby="how-heading">
         <h2 id="how-heading">How it works</h2>
         <StepTimeline />
@@ -360,11 +317,6 @@ export default function Landing({
       >
         <header className="subjects-heading">
           <h2 id="subjects-heading">Start with a subject</h2>
-          <p>
-            Two subjects are ready to explore in depth. Each opens a dashboard
-            that compares its related careers, with the evidence behind every
-            number.
-          </p>
         </header>
         <article className="amira-journey" aria-labelledby="amira-heading">
           <span className="amira-kicker">Start here</span>
@@ -398,25 +350,10 @@ export default function Landing({
             const pay = career?.metrics.pay_median;
             const available =
               pay?.status !== "pending" && !pay?.flags.includes("suppressed");
-            const content = career
-              ? getCareerContent(career.soc, career.family)
-              : null;
             return (
               <article className="subject-choice" key={subject.area}>
                 <h2>{subject.name}</h2>
                 <p>{subject.description}</p>
-                {content && (
-                  <div className="role-explainer">
-                    <span>What this job is</span>
-                    <p>{content.intro}</p>
-                    <span>A typical day</span>
-                    <ul>
-                      {content.dayToDay.slice(0, 3).map((task) => (
-                        <li key={task}>{task}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
                 <div className="subject-role">
                   <span>Example career</span>
                   <h3>{career?.title ?? "Career evidence unavailable"}</h3>
@@ -464,10 +401,7 @@ export default function Landing({
       <section className="explain-section" aria-labelledby="compare-heading">
         <h2 id="compare-heading">The evidence people weigh when they choose</h2>
         <p className="explain-lead">
-          Choosing between these two careers means trading things off: pay, how
-          many jobs there are, how employment is moving, and how much of the
-          work technology could change. This is that evidence for the two
-          example roles, from public UK sources.
+          Public UK sources, for the two example roles.
         </p>
         {(() => {
           const pair = subjects.map((subject) =>
@@ -520,51 +454,23 @@ export default function Landing({
               </div>
               <div className="compare-chart">
                 <h3>Pay over time, adjusted for inflation</h3>
-                <p>
-                  Pay can rise on paper and still buy less. This shows both
-                  roles in today's money, so the years can be compared fairly.
-                </p>
                 {pair.every(Boolean) && (
                   <SalaryChart careers={pair as Career[]} />
                 )}
               </div>
-              <p className="explain-note">
-                This is evidence about the jobs. It is not data on what other
-                people decided, and it does not tell you which choice is right
-                for you.
-              </p>
             </>
           );
         })()}
       </section>
-      <section className="explain-section" aria-labelledby="see-heading">
-        <h2 id="see-heading">What you see for every career</h2>
-        <dl className="explain-grid">
-          {evidence.map(([term, text]) => (
-            <div key={term}>
-              <dt>{term}</dt>
-              <dd>{text}</dd>
-            </div>
-          ))}
-        </dl>
-      </section>
-      <section className="explain-section" aria-labelledby="limits-heading">
-        <h2 id="limits-heading">What Aventier does not claim</h2>
-        <ul className="explain-list">
-          {limits.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      </section>
-      <section className="explain-section" aria-labelledby="data-heading">
-        <h2 id="data-heading">Your data stays with you</h2>
-        <p className="explain-lead">
-          There is no account and no tracking. Your answers, choices and plan
-          are stored in this browser only, and you can clear them at any time
-          from My plan. Figures come from the Office for National Statistics,
-          Skills England, the ILO and other public sources, listed under
-          Research at the bottom of the page.
-        </p>
+      <section className="explain-section" aria-label="Start and limits">
+        <details className="not-claim">
+          <summary>What this is not</summary>
+          <ul className="explain-list">
+            {limits.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </details>
         <div className="explain-actions">
           <button
             className="mission-cta mission-cta-primary"

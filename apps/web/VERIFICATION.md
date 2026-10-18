@@ -10,7 +10,7 @@ Applied the six Chatbot annotations: removed the page subtitle, prepared-guide b
 
 ## Matches cleanup and latest attribution sync
 
-Fetched and merged `origin/main` through `0120e72` (the 18 October attribution licence update) before applying the eight My matches annotations. Removed the redundant page eyebrow and intro, list label/model badge, per-card repeated source caveats, list footer note and priority disclaimer. Removed the Aventier header icon and wordmark while keeping Home, Quiz, Jobs, My plan and Chatbot and the selected career cards. The route's secondary workspace navigation remains available.
+Fetched and merged `origin/main` through `0120e72` (the 18 October attribution licence update) before applying the eight My matches annotations. Removed the redundant page eyebrow and intro, list label/model badge, per-card repeated source caveats, list footer note and priority disclaimer. Removed the Avenier header icon and wordmark while keeping Home, Quiz, Jobs, My plan and Chatbot and the selected career cards. The route's secondary workspace navigation remains available.
 
 `PATH="$PWD/.venv/bin:$PATH" make check` exited 0: **716 passed, 3 optional skipped** (477 core, 146 API/integration/scripts, 39 prototype, 54 web); Ruff, Prettier, TypeScript/Vite production build and tracked-file secret scan passed. After the build, isolated Chrome smoke confirmed the five primary links and zero header brand nodes. Match markup was checked against all eight requested targets. No user storage was changed.
 
@@ -221,3 +221,17 @@ Production excludes synthetic catalogue metrics and unreviewed canonical route r
 ## Publication status
 
 The completed launch and release checkpoints are committed and pushed to `origin/codex/hackathon-release`; the earlier launch branch remains available. A draft PR description is prepared in [docs/launch/pull-request.md](../../docs/launch/pull-request.md). The GitHub connector returned404. Automatic approval review rejected use of stored Git credentials and an authenticated-browser fallback without specific authorization; no credentials were retrieved. The user's subsequent instruction was to make a new branch, which is complete; it was not treated as authorization to retry the rejected access methods. The PR has not been opened. [Compare the pushed release branch](https://github.com/yehorm14/Avenir/compare/main...codex/hackathon-release?expand=1).
+
+## Final integrated main, 2059d30 (18 Oct 2026, 11:10, Windows 11, Node 24, npm 11, Python 3.13)
+
+Measured on the merged main (#35) with `pytest --junitxml` per suite, `npm --prefix apps/web test`, `npm --prefix apps/web run build`, `ruff check .` and `scripts/check_secrets.py`:
+
+| Suite | Tests | Failed | Skipped |
+| --- | --- | --- | --- |
+| Core (`pytest`, configured testpaths) | 480 | 0 | 3 (scipy not installed; slow tests; freeze mode) |
+| App API (`apps/web/api/tests`) | 142 | 0 | 0 |
+| Integration and scripts (`scripts/integration scripts/tests`) | 57 | 0 | 3 (symlink tests on an account without symlink rights) |
+| Prototype backend | 39 | 0 | 2 |
+| Web (`node --test`) | 55 | 0 | 0 |
+
+ruff clean; build OK; secret scan OK. `AVENIR_FREEZE=1` still fails `test_no_mock_at_freeze` because `snapshots/catalogue.json` and `routes.json` do not exist: all 20 rows of `data/curated/occupations.csv` have an empty `verified_by` and `routes.csv` has no rows, so `python -m avenir_etl.build` refuses to write them by design. Docker was not run. Browser: a reviewer walked Home (desktop and 375 px), Try architect to My plan, the menu, Jobs with the UK demand column, the Chatbot page and a role's statistics panel with no console errors. The guide was exercised live twice with Gemini (`gemini-3.5-flash-lite`): both replies passed the number check.
