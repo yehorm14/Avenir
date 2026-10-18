@@ -12,6 +12,7 @@ export default function MyPlan({
   go,
   onExport,
   onReset,
+  onEditChoices,
 }: {
   careers: Career[];
   prefs: Preferences;
@@ -19,6 +20,7 @@ export default function MyPlan({
   go: (page: Page) => void;
   onExport: () => void;
   onReset: () => void;
+  onEditChoices?: () => void;
 }) {
   const [confirmReset, setConfirmReset] = useState(false);
   const primary = careers[0];
@@ -29,6 +31,11 @@ export default function MyPlan({
   ).length;
   const route = resolvePlanRoute(content, prefs.routes[primary.soc]);
   const saved = allOpportunities.filter((o) => prefs.saved.includes(o.id));
+  const editChoices = () => {
+    if (prefs.completed) go("matches");
+    else if (onEditChoices) onEditChoices();
+    else go("jobs");
+  };
   const metric = (c: Career, key: string) => {
     const m = c.metrics[key];
     return !m || m.status === "pending" || m.flags?.includes("suppressed")
@@ -133,8 +140,8 @@ export default function MyPlan({
             <button className="button primary" onClick={() => go("path")}>
               Explore pathway <Icon name="arrow" size={17} />
             </button>
-            <button className="text-button" onClick={() => go("matches")}>
-              Revisit choices
+            <button className="text-button" onClick={editChoices}>
+              {prefs.completed ? "Revisit choices" : "Change career"}
             </button>
           </div>
         </section>
@@ -199,8 +206,8 @@ export default function MyPlan({
       <section className="decision-alternatives">
         <div className="section-header">
           <h2>Keep your alternatives in view</h2>
-          <button className="text-button" onClick={() => go("matches")}>
-            Edit ranking
+          <button className="text-button" onClick={editChoices}>
+            {prefs.completed ? "Edit ranking" : "Change career"}
           </button>
         </div>
         <div className="decision-comparison table-scroll">
