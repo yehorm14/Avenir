@@ -13,7 +13,7 @@ done
 node -e 'if (Number(process.versions.node.split(".")[0]) < 20) { console.error("Node 20 or newer is required."); process.exit(1); }'
 
 if [[ ! -d .venv ]]; then
-  setup_python="${AVENIR_PYTHON:-}"
+  setup_python="${AVENIR_SETUP_PYTHON:-}"
   if [[ -z "$setup_python" ]]; then
     for candidate in python3.14 python3.13 python3.12 python3; do
       if command -v "$candidate" >/dev/null 2>&1 && "$candidate" -c 'import sys; raise SystemExit(sys.version_info < (3, 12))' 2>/dev/null; then
@@ -23,7 +23,7 @@ if [[ ! -d .venv ]]; then
     done
   fi
   if [[ -z "$setup_python" ]]; then
-    printf 'Install Python 3.12 or newer, or set AVENIR_PYTHON to its executable.\n' >&2
+    printf 'Install Python 3.12 or newer, or set AVENIR_SETUP_PYTHON to its executable.\n' >&2
     exit 1
   fi
   "$setup_python" -m venv .venv
