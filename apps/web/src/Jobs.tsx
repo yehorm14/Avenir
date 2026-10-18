@@ -62,7 +62,7 @@ function metric(career: Career, key: string) {
 }
 function observation(m?: Metric) {
   if (!m) return "No observation";
-  return `${m.as_of || "Year unavailable"}${m.flags.includes("historical_observation") ? " · last available" : ""}${m.flags.includes("provisional") ? " · provisional" : ""}`;
+  return `${m.as_of || "Year unavailable"}${m.flags.includes("historical_observation") ? " · last available" : ""}${m.flags.includes("provisional") ? " · provisional" : ""}${m.flags.includes("imputed_parent") ? " · wider-group estimate" : ""}`;
 }
 const number = (n: number | null | undefined) =>
   n == null ? "Not available" : Math.round(n).toLocaleString("en-GB");
@@ -411,8 +411,9 @@ function JobProfile({
       </header>
       <dl className="job-facts">
         <div>
-          <dt>Pay, {pay?.as_of || "year unavailable"}</dt>
+          <dt>Pay, {observation(pay)}</dt>
           <dd>{money(metric(career, "pay_median"))}</dd>
+          {pay?.flags.includes("imputed_parent") && <small>{pay.note}</small>}
           <small>
             {pay?.low != null && pay.high != null
               ? `Middle 50%: ${money(pay.low)}–${money(pay.high)}`
@@ -420,7 +421,7 @@ function JobProfile({
           </small>
         </div>
         <div>
-          <dt>Employee jobs, {jobs?.as_of || "year unavailable"}</dt>
+          <dt>Employee jobs, {observation(jobs)}</dt>
           <dd>{number(employeeJobs == null ? null : employeeJobs * 1000)}</dd>
           <small>{jobs?.note || "Employees only. Not vacancies."}</small>
         </div>
