@@ -1,6 +1,6 @@
 # Final CS/Finance delivery verification — 18 October 2026
 
-Current local branch: `codex/final-delivery`. Runtime checkpoint: `538690c` (final follow-up increases historical-stat readability and records verification). Preview: http://127.0.0.1:4186. The previous 4175 release and original dirty checkout are preserved. This delivery is committed locally; it has not been pushed, merged or publicly deployed.
+Current local branch: `codex/final-delivery`. Runtime checkpoint: `538690c` (final follow-up increases historical-stat readability and records verification). Preview: http://127.0.0.1:4186. The previous 4175 release and original dirty checkout are preserved. This delivery is committed and pushed to origin/codex/final-delivery; it has not been merged or publicly deployed.
 
 ## Current release gate
 

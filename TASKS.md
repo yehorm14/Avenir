@@ -1,5 +1,7 @@
 # Integration tasks
 
+- [x] [codex] Identify and push the latest completed work: final-delivery checkpoint 98f744c, including CS/Finance polish and owner ML v1.2. Tracked-file secret scan and whitespace checks pass; remote push verified.
+
 - [x] [codex, local delivery] Final delivery pass against the GUTS brief: scoped priority comparison, accessibility/guide/pathway fixes, owner MLv1.2 integration with accurate semantics, adversarial demo checks, six-core/17-item evidence map and verified portable package. Branch codex/final-delivery;645 tests pass/3 optional skipped, current dashboard audits100, fresh extraction installs and runs without keys. Earlier checkpoints preserved; no push/public deployment.
 
 - [x] [codex, local changes] Improve the desktop Computer Science and Finance demos: direct role-linked dashboards, evidence-first composition, starting-pay guides, practical next steps and concise copy. Three specialist agents plus integration; full check 588 passed/2 optional skipped, desktop browser regressions and independent visual/code reviews passed. Isolated on codex/cs-finance-demo; preview4186, prior release4175 preserved. No push or public deployment.
