@@ -123,6 +123,26 @@ the 2008 and cost-of-living measures that failed the placebo check. The raw
 bootstrap and career evidence retain these observations and their crisis checks
 for inspection. The decision engine itself is unchanged.
 
+## Employer outreach
+
+`POST /api/outreach/draft` with `{ "soc": "2134", "employer": "blackrock",
+"message"?: "<= 2000 chars", "name"?: "<= 80 chars", "route"?: "university" | "apprenticeship" }`
+returns `{to, subject, body, mailto, form_url, employer_contact, note}`. Frontend
+contract: on "Make a first connection", show an editable `<textarea>` prefilled from
+`plan.alumni.template` (or `template_apprenticeship` for the apprenticeship route),
+send the edited text as `message`, then open `mailto` if it is set, otherwise
+`form_url` in a new tab, and show `note` and `employer_contact.source`/`checked`.
+Without `message` the body is the same template with the employer, role and first
+kit question filled in; `[degree]`, `[university]` and `[Your name]` stay for the
+student to edit. Control characters are stripped and the body is capped at 2,000
+characters; bad input returns HTTP 422 and an unknown SOC 404. The server never
+sends email or posts forms. The contact is read from
+`public/employers/blackrock.json` (`contact`, checked 18 Oct 2026): BlackRock's
+careers site publishes no general enquiry email, so the route is its official
+"Talent Community for students & graduates" form, `mailto` is `null` and
+`form_url` is set. `mailto` (RFC 6068, `%20` spaces, `%0D%0A` newlines) is used
+only if a verified email contact is added later.
+
 ## Evidence and matching coverage
 
 The imported ML evidence revision is Arsenii's `41a55f4` (contract v1.2), with

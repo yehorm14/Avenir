@@ -16,7 +16,7 @@ from typing import Annotated, Literal
 from fastapi import FastAPI, HTTPException
 from fastapi import Path as ApiPath
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 for module_dir in (REPO_ROOT / "packages/ml", REPO_ROOT / "prototypes/pathfinder-game/backend"):
@@ -42,6 +42,7 @@ from .guide_profile import (  # noqa: E402
     role_links,
     wants_path,
 )
+from .outreach import MESSAGE_MAX, NAME_MAX, build_draft, clean_text, employer_record  # noqa: E402
 from .ranking import rank_careers  # noqa: E402
 
 app = FastAPI(title="Avenir app API", version="1.0.0")
@@ -129,6 +130,32 @@ class GuideRequest(BaseModel):
     message: str = Field(min_length=1, max_length=2000)
     history: list[GuideTurn] = Field(default_factory=list, max_length=30)
     profile: GuideProfile | None = None
+
+
+class OutreachRequest(BaseModel):
+    """A draft message to an employer's verified careers route; the student sends it themselves."""
+
+    model_config = ConfigDict(extra="forbid")
+    soc: str = Field(pattern=r"^\d{4}$")
+    employer: Literal["blackrock"]
+    message: str | None = Field(default=None, max_length=MESSAGE_MAX)
+    name: str | None = Field(default=None, max_length=NAME_MAX)
+    route: Literal["university", "apprenticeship"] = "university"
+
+    @field_validator("message")
+    @classmethod
+    def _clean_message(cls, value: str | None) -> str | None:
+        if value is None:
+            return None
+        cleaned = clean_text(value, MESSAGE_MAX)
+        if not cleaned:
+            raise ValueError("message is empty once control characters and spaces are removed")
+        return cleaned
+
+    @field_validator("name")
+    @classmethod
+    def _clean_name(cls, value: str | None) -> str | None:
+        return (clean_text(value, NAME_MAX, single_line=True) or None) if value is not None else None
 
 
 @lru_cache(maxsize=1)
@@ -319,6 +346,23 @@ def path(soc: str = ApiPath(pattern=r"^\d{4}$"), nation: str = "Scotland") -> di
             f"adapted for {career['title'].lower()}; check requirements for the exact career. " + data["demo_note"]
         )
     return data
+
+
+@app.post("/api/outreach/draft")
+def outreach_draft(request: OutreachRequest) -> dict:
+    """The student's message (or the alumni-kit template) addressed to the employer's verified careers
+    route, with a mailto: link or the official form URL. The server never sends anything."""
+    career = _career(request.soc)
+    alumni = get_store().pathways["common"]["alumni"]
+    template = alumni["template_apprenticeship"] if request.route == "apprenticeship" else alumni["template"]
+    return build_draft(
+        employer_record(request.employer),
+        role=career["title"],
+        template=template,
+        question=alumni["questions"][0],
+        message=request.message,
+        name=request.name,
+    )
 
 
 def _source_refs(keys: list[str]) -> list[dict]:

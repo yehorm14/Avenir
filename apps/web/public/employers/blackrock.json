@@ -1,6 +1,15 @@
 {
   "employer": "BlackRock",
   "as_of": "2026-10-18",
+  "contact": {
+    "type": "form",
+    "value": "https://flows.beamery.com/blackrock/earlycareers",
+    "purpose": "BlackRock's Talent Community for students & graduates: the sign-up its careers site links for news on open roles, upcoming events and life at the firm.",
+    "source": "careers.blackrock.com, \"Join our Talent Community for students & graduates\"",
+    "url": "https://careers.blackrock.com/",
+    "checked": "2026-10-18",
+    "note": "BlackRock's careers pages publish no general enquiry email address, so this official sign-up form is the route. It is a sign-up, not a question inbox; a reply is not promised. Disability.Assistance@blackrock.com is only for adjustments during hiring, and reportascam@blackrock.com only for suspected fraud."
+  },
   "facts": [
     {
       "label": "Employees worldwide",
