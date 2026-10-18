@@ -406,7 +406,16 @@ def _guide_reply(career: dict, message: str, history: list[GuideTurn]) -> tuple[
             "societ",
         )
     ):
-        text = plan["first_step"] + " " + plan["degree_role"]["note"]
+        text = plan["first_step"]
+        # A related pathway is an exploration example, not evidence that its
+        # occupation-specific entry requirements apply to the requested career.
+        if not plan.get("related_pathway_soc"):
+            text += " " + plan["degree_role"]["note"]
+        if career["soc"] == "2433":
+            text += (
+                " This group covers actuaries, economists and statisticians. "
+                "Their study routes and entry requirements differ; check the exact career you want to explore."
+            )
         subjects = [degree["subject"] for degree in plan["degrees"]]
         if subjects:
             text += " Degree subjects to compare: " + ", ".join(subjects[:3]) + "."

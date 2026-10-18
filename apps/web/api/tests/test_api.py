@@ -80,6 +80,36 @@ def test_demo_guide_is_grounded_and_declines_unrelated_requests(client):
     assert client.post("/api/guide", json={"soc": "9999", "message": "salary"}).status_code == 404
 
 
+def test_grouped_quantitative_guide_routes_do_not_claim_a_software_entry_route(client):
+    response = client.post("/api/guide", json={"soc": "2433", "message": "What are the routes into this career?"})
+    assert response.status_code == 200
+    text = response.json()["text"].lower()
+    assert "software, data and security" not in text
+    assert "developers" not in text
+    assert all(role in text for role in ("actuaries", "economists", "statisticians"))
+    assert "routes" in text and "differ" in text
+    assert "related data scientist or statistician pathway example" in text
+
+
+@pytest.mark.parametrize(
+    ("soc", "unrelated_claim"),
+    [
+        ("3544", "Plenty of developers"),
+        ("2133", "Plenty of developers"),
+        ("2452", "To use the title 'architect'"),
+        ("3120", "To use the title 'architect'"),
+    ],
+)
+def test_bridged_guide_routes_keep_examples_without_related_occupation_entry_claims(client, soc, unrelated_claim):
+    response = client.post("/api/guide", json={"soc": soc, "message": "What are the study routes?"})
+    assert response.status_code == 200
+    text = response.json()["text"]
+    assert unrelated_claim not in text
+    assert "Degree subjects to compare:" in text
+    assert "related " in text and "pathway example" in text
+    assert "check requirements for the exact career" in text
+
+
 def test_api_health_and_dev_cors(client):
     assert client.get("/api/health").json()["status"] == "ok"
     response = client.options(
