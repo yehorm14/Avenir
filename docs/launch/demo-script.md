@@ -1,50 +1,35 @@
-# Three-minute demo
+# Three-minute demo: Amira and architect
 
-**Amira is 17, lives in Glasgow and enjoys maths. She is choosing between Computer Science and Finance. The decision is which role to explore first and what to try this month.**
+**Amira is 17, in S6 at a Glasgow school. She is good at maths and art, her first idea is "architect", and she is worried AI will hit the jobs she likes. The decision is which career to aim for and what her next step into it is.**
 
-Show an evidence-backed recommendation that changes with her stated priorities, then a route and a saved action. The broader quiz and 412-profile directory are secondary; the primary demo stays with the seven supported CS/Finance occupation groups.
+This follows [AGENTS.md section 1](../../AGENTS.md). The Computer Science and Finance journey is a [secondary journey](cs-finance-demo.md) and is not part of this timed run.
 
 ## Before the clock starts
 
-- Start the app using the [launch commands](README.md#run-and-verify). Use the exact final integrated build with optional keys empty.
-- Use a dedicated browser profile with a fresh plan. Keep a second tab with a saved Amira plan for recovery, without deleting anyone's progress.
-- Rehearse at 1200×800 or the presentation display's actual dimensions. Check keyboard focus, Compare, plan persistence, export and the historical checks panel.
-- Rehearse with external internet unavailable while keeping the local API reachable. Source websites still need internet. State the actual verification result recorded for this release; do not reuse an older test count.
+- Start the app with the [launch commands](README.md#run-and-verify) (`node scripts/run-app.mjs --production`), with no API keys set.
+- Use a fresh browser profile so Home shows the Amira card. Rehearse at 1200x800.
+- Rehearse the last step (pull the plug) once, so you know where the app shows its snapshot badges.
 
 ## Timed run
 
-| Time      | Action                                                                                                                                                                                                          | What to explain                                                                                                                                                                                                                                                                                                                                        |
-| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 0:00–0:20 | From Home, open **Explore CS**.                                                                                                                                                                                 | “Amira likes maths and is choosing between computing and finance. We will help her choose a first role to explore and one practical next step.” No questionnaire is required for this direct comparison.                                                                                                                                               |
-| 0:20–0:45 | In **Evidence**, inspect Software developer, then Data analyst. Point to pay, employment, automation research and the separate Starting pay guide.                                                              | ONS workforce median pay is not a graduate salary. The NCS guide describes an example role; ILO task exposure is not a probability of job loss. Each observation keeps its date, range and limitations.                                                                                                                                                |
-| 0:45–1:20 | Open **Compare careers**. Move the Pay / Employment trend slider, using **Higher pay**, **Employment trend** and **Balanced** as useful shortcuts. Read the actual first-role recommendation and its trade-off. | The recommendation responds to Amira's explicit weights and stays within this subject. There is no inferred interest profile. Employment trend is relative historical performance in 2022–2025, not future vacancies; a positive relative result can still mean falling absolute jobs. Do not promise a particular winner before checking the release. |
-| 1:20–1:45 | Open **Finance**, inspect analyst/accountant evidence and its **Compare careers** result. Choose which recommendation Amira wants to explore first.                                                             | Combined information makes the decision clearer than separate salary and research pages. Amira controls the priorities and final choice; a score is not personal suitability or a forecast.                                                                                                                                                            |
-| 1:45–2:20 | Choose **Build my plan**. Compare **University** and **Earn & learn**, then open **My plan**. Add a short reason, choose a practical action and download the plan.                                              | The decision becomes a route and something she can try. Mark an action complete only if actually done during rehearsal; choosing it is not completing a course, application or event. Saved notes, route and progress should match the export.                                                                                                         |
-| 2:20–2:40 | Open **The evidence** from the plan workspace navigation. Show **How simple rules held up** and the crisis-check limitations.                                                                                   | Historical tiers use base-year inputs and later outcomes. Windows overlap; comparisons crossing 2021 are pay-only. The 2008 and cost-of-living measures failed placebo checks and are excluded from recommendations. These checks do not validate Amira's personal outcome or the current slider.                                                      |
-| 2:40–3:00 | Ask the selected role's prepared guide about pay or routes. Inspect any sources, then refresh or return Home and resume the plan.                                                                               | No live language model or account is required. Source coverage is explicit; current course requirements still need checking. The chosen route and next action remain saved in this browser.                                                                                                                                                            |
+| Time      | Action                                                                                                                                  | What to say                                                                                                                                                                                                     |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0:00-0:20 | On Home, read the **Amira** card, then click **Try architect**.                                                                        | "Amira is 17, in S6 in Glasgow. She likes maths and art, thinks architect, and worries about AI. One app, one clear decision: which career to aim for." The answers are prefilled from her story.            |
+| 0:20-1:15 | In **My plan**, open **Compare the trade-offs**. Read the three picks (High earnings, Lower risk, Balanced) next to her first idea.    | Each pick is compared with architect on interest fit, earnings index and combined risk. These are fixed rules, not an LLM and not a forecast. Say which careers appear in the actual build; do not script them. |
+| 1:15-1:35 | Point to the **hedge** career under the picks.                                                                                          | A hedge is a second career that shares skills with a pick but carries different risk. It is a way to spread her bets, labelled with its evidence status.                                                     |
+| 1:35-2:10 | Open **The evidence**, then **How simple rules held up** (the backtest).                                                                | The rules only read data published for the year they rate. Weak and negative results are shown, not hidden. Windows overlap, and it does not validate Amira's personal outcome.                              |
+| 2:10-2:30 | Open the **route** page for her chosen career and read the next step.                                                                   | The roadmap shows subjects and routes (degree, graduate apprenticeship, college) for Scotland, and the next step. Check current entry requirements; these are examples.                                      |
+| 2:30-3:00 | **Pull the plug.** Disconnect the network (Wi-Fi off, or unplug), then reload Home and click **Try architect** again.                  | See below. Say what you actually observe.                                                                                                                                                                       |
 
-Suggested plan note: `Compare a computing course with a finance course, check their entry requirements, and try a small task from each before deciding.`
+## Pull the plug, honestly
 
-Pick one real next action: a small app/data exercise for CS, or explaining a company's revenue, operating profit and cash flow for Finance. Use the action belonging to the actual selected role. Course and opportunity links are discovery resources, not confirmed openings or eligibility decisions.
+The app and its API run on this laptop and read committed snapshots, so with the network disconnected the comparison, hedge, backtest and roadmap should keep working. Show the source badges: they say **snapshot**, not live. This build has **no live job adverts**; do not claim any. Source websites and external links still need internet. If the local API is itself unreachable (for example DevTools global Offline blocks it), the app shows its error and Try again state; say so rather than calling it proof of offline mode.
 
-## Evidence wording to rehearse
-
-- **Real pay:** “In 2024/25 money, using tax-year average CPIH.” Low-purity historical mappings and missing observations create gaps; the 2021 occupation-code break matters.
-- **Employment trend:** “Faster or slower than the typical occupation during 2022–2025.” Positive relative performance does not necessarily mean absolute employment grew.
-- **Historical checks:** “Simple rules evaluated later, not our personalised recommendations.” Show weak or negative evidence alongside strong results; failed placebo checks are not validated resilience signals.
-- **AI:** “Offline embedding affinities support the secondary interest matcher. The primary comparison uses deterministic rules. The guide uses prepared information; no live model is needed.” Synthetic development labels do not establish learner matching accuracy.
-
-## Resilience and recovery
-
-Keep local servers reachable when demonstrating external-provider failure. DevTools' global Offline mode can block the local API too; use that deliberately to show the app's error/retry state. Do not describe a failed local API request as proof that snapshots require external internet.
-
-If a provider is unavailable, show its labelled snapshot or missing state. If a local request fails, use the visible retry action. If the stage environment interrupts the journey, switch to the prepared second tab, say it contains a saved plan, and continue. Never substitute invented live results.
+Automation exposure is a research estimate, not a prediction of job loss. Wording to use: "worth exploring", never "you should" or "don't".
 
 ## Answers for judges
 
-- **What decision is clearer?** Which CS/Finance role Amira wants to explore first, based on her priorities, followed by a practical next step.
-- **Why combine data?** Earnings, observed employment, automation research and training examples answer different questions. The comparison explains their trade-offs in one path to action.
-- **What is personalised?** The primary comparison uses Amira's explicit pay/employment priorities. It does not infer interests, admissions eligibility or personal success.
-- **How broad is it?** The primary comparison covers seven CS/Finance occupation groups. The secondary quiz matches across 20 roles; Jobs browses 412 supplied profiles with variable evidence and route coverage.
-- **What has been validated?** State only the final integrated verification recorded by the release owner. Historical rule checks and synthetic matcher development results do not establish real-learner recommendation accuracy.
-- **Could it become a business?** A school/adviser pilot could test evidence understanding and action follow-through. Proposed pricing, adoption and adviser tools remain [hypotheses](business-case.md), not existing traction.
+- **What decision is clearer?** Which career Amira aims for next to her first idea, and her next step.
+- **Is an LLM ranking careers?** No. Fit, return, risk, picks and hedge are deterministic rules. AI-written text is labelled.
+- **How did the rules hold up?** Show the backtest panel; state only what is on screen.
+- **Is the data live?** No. Snapshots, with the source and year on each number.

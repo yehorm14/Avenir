@@ -41,6 +41,14 @@ const nav: { id: Page; icon: string }[] = [
   { id: "opportunities", icon: "calendar" },
 ];
 const directPlanSocs = ["2134", "3544", "2133", "2135", "2422", "2421", "2433"];
+// Amira, 17, S6 in Glasgow (AGENTS.md section 1): the primary demo journey.
+const amiraAnswers: Record<string, string> = {
+  direction: "Architect",
+  interests: "Making or designing something; Solving a tricky problem",
+  subjects: "Maths; Art and design",
+  values: "Long-term demand; Making a useful impact",
+  skills: "Maths and data; Drawing or design",
+};
 const route = (): Page => {
   const p = window.location.hash.replace("#/", "").split("/")[0];
   return Object.prototype.hasOwnProperty.call(pageNames, p)
@@ -98,6 +106,8 @@ export default function App() {
   const [ranking, setRanking] = useState(false);
   const [matchError, setMatchError] = useState("");
   const [toast, setToast] = useState("");
+  const [amiraBusy, setAmiraBusy] = useState(false);
+  const [amiraError, setAmiraError] = useState("");
   const [inspect, setInspect] = useState<Career | null>(null);
   const mainRef = useRef<HTMLElement>(null);
   const go = (p: Page, soc?: string) => {
@@ -240,6 +250,52 @@ export default function App() {
     setMatches(result.results);
     go("matches");
   };
+  const startAmira = async () => {
+    if (amiraBusy) return;
+    setAmiraBusy(true);
+    setAmiraError("");
+    try {
+      const result = await api<DiscoveryResult>("discovery", {
+        mode: "known",
+        answers: amiraAnswers,
+      });
+      const reference = result.reference_soc ?? result.target_soc;
+      const socs = [
+        ...new Set([reference, ...result.results.map((c) => c.soc)]),
+      ]
+        .filter((soc): soc is string => !!soc)
+        .slice(0, 3);
+      setPrefs((p) => ({
+        ...p,
+        completed: true,
+        answers: {},
+        weights: result.weights,
+        nation: "Scotland",
+        location: "Glasgow",
+        selected: socs,
+        discovery: {
+          mode: "known",
+          answers: amiraAnswers,
+          step: 5,
+          tags: result.tags,
+          targetSoc: result.target_soc,
+          referenceSoc: result.reference_soc,
+          summary: result.profile_summary,
+          notices: result.notices,
+        },
+      }));
+      setMatches(result.results);
+      go("overview");
+    } catch (cause) {
+      setAmiraError(
+        cause instanceof Error
+          ? cause.message
+          : "We couldn’t compare careers. Try again.",
+      );
+    } finally {
+      setAmiraBusy(false);
+    }
+  };
   const showShell = !["discover", "quiz", "conversation"].includes(page);
   const useCareer = (career: Career, destination: Page, weights?: Weights) => {
     // Subject exploration does not imply a completed quiz or a personal match.
@@ -373,6 +429,9 @@ export default function App() {
               <Landing
                 careers={careers}
                 onChoose={start}
+                onAmira={startAmira}
+                amiraBusy={amiraBusy}
+                amiraError={amiraError}
                 onDashboard={(area) =>
                   go(area === "cs" ? "computer-science" : "finance")
                 }

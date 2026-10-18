@@ -23,11 +23,17 @@ export default function Landing({
   careers,
   onChoose,
   onDashboard,
+  onAmira,
+  amiraBusy = false,
+  amiraError = "",
   resume,
 }: {
   careers: Career[];
   onChoose: (mode: "known" | "explore") => void;
   onDashboard: (area: "cs" | "finance") => void;
+  onAmira: () => void;
+  amiraBusy?: boolean;
+  amiraError?: string;
   resume?: { title: string; onResume: () => void };
 }) {
   return (
@@ -37,6 +43,31 @@ export default function Landing({
           <h1 id="mission-heading">Aventier</h1>
           <p>Compare careers. Choose a route. Plan your next step.</p>
         </header>
+        <article className="amira-journey" aria-labelledby="amira-heading">
+          <span className="amira-kicker">Start here</span>
+          <h2 id="amira-heading">Amira, 17, S6 in Glasgow</h2>
+          <p>
+            Good at maths and art. Her first idea is architect, and she is
+            worried about AI. See three careers worth exploring next to that
+            first idea, a hedge career, how simple rules held up, and her next
+            step.
+          </p>
+          <button
+            className="mission-cta mission-cta-primary"
+            onClick={onAmira}
+            disabled={amiraBusy}
+          >
+            {amiraBusy ? "Comparing…" : "Try architect"}
+          </button>
+          {amiraError && (
+            <p className="amira-error" role="alert">
+              {amiraError}
+            </p>
+          )}
+        </article>
+        <h2 className="other-journey-heading">
+          Another journey: Computer Science and Finance
+        </h2>
         <div className="subject-choices" aria-label="Career dashboards">
           {subjects.map((subject) => {
             const career = careers.find((item) => item.soc === subject.soc);
@@ -70,7 +101,7 @@ export default function Landing({
           example occupations, not graduate earnings.
         </p>
         <div className="other-directions">
-          <span>Explore other careers</span>
+          <span>Or start with your own idea</span>
           <div>
             <button onClick={() => onChoose("known")}>Explore career</button>
             <button onClick={() => onChoose("explore")}>Find careers</button>

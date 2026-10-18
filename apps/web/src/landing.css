@@ -21,6 +21,36 @@
   margin-top: 18px;
   line-height: 1.6;
 }
+.amira-journey {
+  border: 1px solid var(--line);
+  padding: 32px;
+  margin-bottom: 56px;
+  max-width: 760px;
+}
+.amira-kicker {
+  color: var(--muted);
+  font-size: 12px;
+}
+.amira-journey h2 {
+  margin-top: 6px;
+  font-size: 30px;
+  font-weight: 500;
+}
+.amira-journey p {
+  margin: 12px 0 22px;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.amira-journey .amira-error {
+  margin: 14px 0 0;
+  font-size: 13px;
+}
+.other-journey-heading {
+  margin-bottom: 20px;
+  font-size: 15px;
+  font-weight: 450;
+  color: var(--muted);
+}
 .subject-choices {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

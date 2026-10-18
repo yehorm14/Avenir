@@ -1,6 +1,8 @@
 # Computer Science and Finance demo
 
-The primary story follows **Amira, 17, in Glasgow, good at maths and choosing between Computer Science and Finance**. Her decision is which role to explore first and what practical step to take this month. Follow the [three-minute script](demo-script.md); use this page for rehearsal and claim checks.
+> **Secondary journey.** The primary demo is Amira with first idea architect: see [demo-script.md](demo-script.md). This CS/Finance path stays available from Home.
+
+This secondary journey follows **Amira, 17, in Glasgow, good at maths and choosing between Computer Science and Finance**. Her decision is which role to explore first and what practical step to take this month. Use this page for rehearsal and claim checks; the timed demo is [Amira and architect](demo-script.md).
 
 ## Start the final release
 

@@ -27,3 +27,5 @@ One line per decision, newest at the bottom. Agents: read this before undoing an
 - 18 Oct Codex demo polish: Focus the desktop demo on Computer Science and Finance, using explicit supported occupations and direct evidence dashboards; preserve existing ML/API values and discovery, keep starting-pay guides distinct from workforce medians, and allow direct plans without fabricating completed matching.
 
 - 18 Oct Codex final delivery: Integrate Arsenii’s exact MLv1.2 release atomically with metadata-aware UI/API labels, purity gaps and exact fixture regeneration; exclude failed-placebo crisis inputs at the production boundary while preserving raw evidence. Add a transparent subject-scoped priority comparison and a checksummed prebuilt submission, keeping the timed demo to CS/Finance and human-controlled next actions.
+
+- 18 Oct, team (Yehor): the primary demo is Amira with first idea architect (AGENTS.md section 1); CS/Finance stays a secondary journey.

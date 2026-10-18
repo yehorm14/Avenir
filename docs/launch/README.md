@@ -1,10 +1,10 @@
 # Aventier launch handoff
 
-**Amira is 17, lives in Glasgow and enjoys maths. She is choosing between Computer Science and Finance. Her decision is which role to explore first and what to try this month.**
+**Amira is 17, in S6 in Glasgow, good at maths and art, with a first idea of architect and a worry about AI. Her decision is which career to aim for and what her next step is.** The primary journey is [Amira and architect](demo-script.md); Computer Science vs Finance is a [secondary journey](cs-finance-demo.md).
 
-The GUTS brief asks for **ONE APP. ONE CLEAR DECISION.** Aventier combines occupation earnings and employment with independent automation research, explains the trade-offs, and turns Amira's chosen priorities into a first role to explore. She then chooses a route and keeps a practical plan. The primary demo is Home → subject Evidence → Compare → Build my plan → a saved next action.
+The GUTS brief asks for **ONE APP. ONE CLEAR DECISION.** Aventier combines occupation earnings and employment with independent automation research, explains the trade-offs, and turns Amira's chosen priorities into a first role to explore. She then chooses a route and keeps a practical plan. The primary demo is Home → Try architect → three picks vs her first idea and a hedge → backtest → roadmap. The secondary CS/Finance path is Home → subject Evidence → Compare → Build my plan.
 
-- [Three-minute demo script](demo-script.md) and [CS/Finance rehearsal notes](cs-finance-demo.md)
+- [Three-minute demo script (Amira and architect)](demo-script.md) and [secondary CS/Finance rehearsal notes](cs-finance-demo.md)
 - [Pilot and business hypotheses](business-case.md)
 - [Application setup](../../apps/web/README.md), [API contract](../contracts.md), [ML v1.2 contract](../../packages/ml/CONTRACTS.md), [source registry](../../snapshots/ml/sources.json)
 
