@@ -1,6 +1,6 @@
 // Required source attributions (AGENTS.md section 7). Names and licences follow
-// data/manifest.yaml and snapshots/ml/sources.json exactly; no licence is claimed
-// where the manifest still says (verify): Skills England, ILO and ESCO.
+// data/manifest.yaml exactly (licences checked 18 Oct); ESCO's page states no licence,
+// so only its credit line is shown.
 export function Attributions({ adzuna = false }: { adzuna?: boolean }) {
   return (
     <div className="source-attributions">
@@ -11,18 +11,31 @@ export function Attributions({ adzuna = false }: { adzuna?: boolean }) {
           Government Licence v3.0.
         </li>
         <li>
-          Skills England / DfE Occupations in Demand 2025. Licence to be
-          confirmed.
+          Skills England / DfE Occupations in Demand 2025: contains public
+          sector information licensed under the Open Government Licence v3.0.
         </li>
         <li>
           DfE, The impact of AI on UK jobs and training (2023): contains public
           sector information licensed under the Open Government Licence v3.0.
         </li>
         <li>
-          Automation exposure adapted from ILO Working Paper 140 (Gmyrek et al.,
-          2025), © ILO 2025. Scores were averaged over the international codes
-          a UK occupation maps to; this adaptation was not reviewed or endorsed
-          by the ILO.
+          Automation exposure adapted from Gmyrek et al., Generative AI and
+          Jobs: A Refined Global Index of Occupational Exposure, ILO Working
+          Paper 140 (2025), © ILO,{" "}
+          <a
+            href="https://doi.org/10.54394/HETP0387"
+            target="_blank"
+            rel="noreferrer"
+          >
+            doi.org/10.54394/HETP0387
+          </a>
+          , licensed under CC BY 4.0. Changed by Avenir: scores averaged over
+          the ISCO-08 codes each UK occupation maps to. This adaptation has not
+          been prepared, reviewed or endorsed by the ILO.
+        </li>
+        <li>
+          National Careers Service job profiles: contains public sector
+          information licensed under the Open Government Licence v3.0.
         </li>
         <li>ESCO classification © European Commission.</li>
         <li>
