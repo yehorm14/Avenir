@@ -2,6 +2,12 @@
 
 Current local branch: `codex/final-delivery`. Runtime checkpoint: `538690c` (final follow-up increases historical-stat readability and records verification). Preview: http://127.0.0.1:4186. The previous 4175 release and original dirty checkout are preserved. This delivery is committed and pushed to origin/codex/final-delivery; it has not been merged or publicly deployed.
 
+## Quiz recovery follow-up
+
+The user’s 4175 tab reproduced a persisted completed-quiz screen without a restart option. The same UI existed in this delivery. The fix reopens completed positions at question1, retaining saved answers for review, and makes Finish quiz navigate directly to careers. In-progress question positions and saved plans are preserved.
+
+Full make check passes645 tests/3 optional skips after the correction. Chrome completed all8 questions against the rebuilt4186 delivery: bootstrap/matches return200, three career results render and no warnings/errors appear. The running4175 release also passed624 tests/2 skips; browser checks prove reopen→question1, finish→matches, unchanged saved-plan fields and no390px overflow. The actual user tab was reloaded and visibly restored to question1. No engine, API, ML or contract changes.
+
 ## Current release gate
 
 `PATH="$PWD/.venv/bin:$PATH" make check` passed: **645 tests passed, 3 optional tests skipped** — 467 core, 120 app/API/integration/scripts, 32 preserved prototype and 26 web tests. Repository Ruff, frontend formatting, TypeScript/Vite production build and tracked-file secret scan passed. The final CTA, keyboard-focus and method-wording refinements were followed by fresh web tests, formatting and production build. The scan checks current tracked files, not all history or untracked files.

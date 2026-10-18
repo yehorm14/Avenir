@@ -1,5 +1,7 @@
 # Integration tasks
 
+- [x] [codex] Fix completed-quiz reopening and Finish navigation. All8 questions complete directly to career results; reopening restores question1 and preserves the saved plan. Full gate645 passed/3 optional skipped; actual HTTP and browser flow pass on the rebuilt delivery.
+
 - [x] [codex] Identify and push the latest completed work: final-delivery checkpoint 98f744c, including CS/Finance polish and owner ML v1.2. Tracked-file secret scan and whitespace checks pass; remote push verified.
 
 - [x] [codex, local delivery] Final delivery pass against the GUTS brief: scoped priority comparison, accessibility/guide/pathway fixes, owner MLv1.2 integration with accurate semantics, adversarial demo checks, six-core/17-item evidence map and verified portable package. Branch codex/final-delivery;645 tests pass/3 optional skipped, current dashboard audits100, fresh extraction installs and runs without keys. Earlier checkpoints preserved; no push/public deployment.
