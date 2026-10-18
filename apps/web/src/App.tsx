@@ -1791,7 +1791,8 @@ function BacktestGroup({ group: g }: { group: HistoricalGroup }) {
           </div>
           {metric && (
             <small>
-              Middle half: {percent(metric.low)} to {percent(metric.high)}
+              95% confidence interval for the median: {percent(metric.low)} to{" "}
+              {percent(metric.high)}
             </small>
           )}
         </div>

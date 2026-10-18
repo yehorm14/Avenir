@@ -113,7 +113,8 @@ const digital: CareerEvidence["outlook"] = {
     "A sector-wide scenario cannot predict local hiring",
   ],
   source: digitalSource,
-  period: "2025–2035 sector scenarios; qualitative context for 2026–2031",
+  period:
+    "England skills-planning assessment, 2025–2035 scenarios; qualitative context for 2026–2031, not a Scotland-specific forecast",
 };
 const finance: CareerEvidence["outlook"] = {
   title: "Finance increasingly combines analysis with digital skills",
@@ -130,7 +131,8 @@ const finance: CareerEvidence["outlook"] = {
     "Different roles and regions can move in different directions",
   ],
   source: financeSource,
-  period: "2025–2035 sector scenario; qualitative context for 2026–2031",
+  period:
+    "England skills-planning assessment, 2025–2035 scenario; qualitative context for 2026–2031, not a Scotland-specific forecast",
 };
 const quantitative: CareerEvidence["outlook"] = {
   ...finance,
@@ -188,7 +190,8 @@ const creative: CareerEvidence["outlook"] = {
     "Sector growth can coexist with difficulty in individual roles",
   ],
   source: creativeSource,
-  period: "2025–2035 sector assessment; qualitative context for 2026–2031",
+  period:
+    "England skills-planning assessment, 2025–2035; qualitative context for 2026–2031, not a Scotland-specific forecast",
 };
 const health: CareerEvidence["outlook"] = {
   title: "Imaging demand depends on workforce and service plans",
