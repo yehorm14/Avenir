@@ -1,6 +1,10 @@
 # Final CS/Finance delivery verification — 18 October 2026
 
-Release branch: `codex/final-delivery`. The quiz/Jobs cleanup is based on its latest `5ec744f` checkpoint, developed on `codex/final-quiz-jobs`. The assembled ML v1.2 app now runs at http://127.0.0.1:4175; the earlier release remains preserved in Git. The original dirty checkout is untouched. No merge into main or public deployment occurred.
+Release branch: `codex/final-delivery`. The quiz/Jobs cleanup is based on its latest `5ec744f` checkpoint, developed on `codex/final-quiz-jobs`. The assembled ML v1.2 app now runs at http://127.0.0.1:4175; the earlier release remains preserved in Git. The original dirty checkout is untouched. The user subsequently requested publication to main; the verified delivery was fast-forwarded from6695e58 to9e5dffb. No public hosting deployment occurred.
+
+## Main publication
+
+The explicit user instruction “push to main” superseded the earlier draft-PR workflow. A fresh fetch confirmed all remote main commits were already included; independent review confirmed a clean tree and0 remote-only commits. The final make check exited0 with645 passed/3 optional skipped, lint/format/build/secret scan passed. GitHub accepted the non-force fast-forward push6695e58→9e5dffb. No browser or stored-credential access workaround was used. Log:/private/tmp/aventier-push-main-check.log.
 
 ## Marked quiz cleanup and Jobs debugging
 

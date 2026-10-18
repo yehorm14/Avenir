@@ -1,5 +1,7 @@
 # Integration tasks
 
+- [x] [codex] Publish the latest final delivery to main at the user’s explicit request. Verified main ancestry, clean tracked tree, independent sanity review and fresh make check645 passed/3 optional skips. Fast-forward push6695e58→9e5dffb succeeded without rewriting remote history.
+
 - [x] [codex] Remove the four marked quiz elements, retain previous-question navigation, fix question focus and Jobs history/deep links. Search/sort/empty/retry/mobile browser checks pass;645 tests pass/3 optional skips. Latest final delivery is the integration target and the assembled v1.2 app now runs on4175.
 
 - [x] [codex] Fix completed-quiz reopening and Finish navigation. All8 questions complete directly to career results; reopening restores question1 and preserves the saved plan. Full gate645 passed/3 optional skipped; actual HTTP and browser flow pass on the rebuilt delivery.
@@ -15,7 +17,7 @@
 - [x] [codex] Release follow-up on codex/hackathon-release: repair alternate API startup, add reproducible setup/check commands, verify a fresh installation and real HTTP demo without keys, resolve inherited npm advisories, review and push. Final release gate: 588 passed, 2 optional skipped; npm audit: 0 vulnerabilities.
 
 - [x] [codex] Execute hackathon launch plan: latest backend/ML integration, full evidence directory, durable decision plan, source/a11y fixes, reproducible serving, independent review and pushed checkpoints. See docs/superpowers/plans/2026-10-18-hackathon-launch.md.
-- [ ] [codex] Open prepared draft launch PR into main. Branch is pushed; GitHub connector lacks repository access and automatic approval review blocked alternate authentication without specific authorization. Description: docs/launch/pull-request.md.
+- [x] [codex] Earlier draft-PR task superseded by the user’s explicit instruction to push to main. The verified delivery is now on main. The earlier connector/browser authentication blocker was not retried; publication used the already authorized Git transport.
 
 - [x] [codex] Combine all fetched Avenir branches on codex/complete-career-experience, preserving Max's prototype and Arsenii's actual fixtures.
 - [x] [codex] Build the quiz → five weighted matches → three ranked choices → pathway → opportunities and career guide flow in apps/web.

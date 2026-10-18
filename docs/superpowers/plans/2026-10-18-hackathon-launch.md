@@ -63,3 +63,7 @@ Record work and decisions in context/codex-hackathon-launch.md, update TASKS.md 
 Tasks 1–5 are implemented, reviewed, verified and pushed. The user then requested a new branch: `codex/hackathon-release` contains the completed launch plus corrected alternate API startup, reproducible setup/check commands and the targeted Vite security update. A truly fresh install and real HTTP demonstration pass without keys. Final gate: 588 tests passed, 2 optional skipped; npm audit reports zero vulnerabilities. Desktop/mobile saved-plan checks pass against the rebuilt bundle. See apps/web/VERIFICATION.md for scope and evidence.
 
 The prepared draft PR remains unopened: the connector lacks repository access, and automatic approval review rejected alternate authentication without specific authorization. No main merge or public deployment occurred. Docker execution, human catalogue/route review and source rights remain explicitly documented limits.
+
+## Main publication follow-up
+
+The user explicitly requested pushing the latest final delivery to main. Fresh verification passed645 tests/3 optional skips plus lint/format/build/secret scan. Current main6695e58 was already an ancestor; the non-force fast-forward to9e5dffb succeeded, including MLv1.2 and the final quiz/Jobs cleanup. This request supersedes the earlier draft-PR handoff; no rejected alternate authentication was retried. No public hosting deployment occurred.
