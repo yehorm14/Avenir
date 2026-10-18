@@ -37,3 +37,29 @@ test('discovery drafts recover only valid text and supported modes', () => {
   assert.deepEqual(state.discovery.answers, { direction: 'Architect' });
   assert.deepEqual(state.discovery.tags, ['maths']);
 });
+
+test('the clinical-career substitution caveat survives saving and reloading', () => {
+  const notice = 'Your requested clinical career is not in this career collection. Medical radiographer is a related '
+    + 'healthcare option, not an exact match; its training and day-to-day work differ.';
+  const state = normalisePreferences({ discovery: { mode: 'known', answers: { direction: 'Doctor' }, notices: [notice] } });
+
+  assert.ok(notice.length > 120);
+  assert.deepEqual(state.discovery.notices, [notice]);
+  assert.deepEqual(normalisePreferences(JSON.parse(JSON.stringify(state))).discovery.notices, [notice]);
+});
+
+test('notice validation rejects malformed or oversized entries without changing accepted caveats', () => {
+  const notice = 'The published estimate covers a wider occupation group; check the source before comparing roles.';
+  const state = normalisePreferences({ discovery: { mode: 'explore', notices: [null, 7, {}, '', '   ', 'x'.repeat(2001), notice, notice] } });
+
+  assert.deepEqual(state.discovery.notices, [notice]);
+});
+
+test('saved notice collections have a bounded number of complete entries', () => {
+  const notices = Array.from({ length: 25 }, (_, index) => `Source caveat ${index}: ${'x'.repeat(180)}`);
+  const state = normalisePreferences({ discovery: { mode: 'explore', notices } });
+
+  assert.equal(state.discovery.notices.length, 20);
+  assert.equal(state.discovery.notices[0], notices[0]);
+  assert.equal(state.discovery.notices[19], notices[19]);
+});

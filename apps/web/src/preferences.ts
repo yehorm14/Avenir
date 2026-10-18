@@ -30,6 +30,21 @@ const strings = (v: unknown) =>
         ),
       ].slice(0, 200)
     : [];
+const discoveryNotices = (v: unknown): string[] =>
+  Array.isArray(v)
+    ? [
+        ...new Set(
+          v
+            .slice(0, 20)
+            .filter(
+              (s): s is string =>
+                typeof s === "string" &&
+                s.length <= 2000 &&
+                s.trim().length > 0,
+            ),
+        ),
+      ]
+    : [];
 const index = (v: unknown, max: number) =>
   typeof v === "number" && Number.isInteger(v) && v >= 0 ? Math.min(max, v) : 0;
 const soc = (v: string) => /^\d{4}$/.test(v);
@@ -102,7 +117,7 @@ export function normalisePreferences(raw: unknown): Preferences {
         ? { summary: text(draft.summary) }
         : {}),
       ...(Array.isArray(draft.notices)
-        ? { notices: strings(draft.notices) }
+        ? { notices: discoveryNotices(draft.notices) }
         : {}),
     };
   }
