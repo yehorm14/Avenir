@@ -9,6 +9,16 @@ export type PlanDocumentInput = {
   sources: Record<string, { name?: string; url?: string }>;
 };
 
+export function resolvePlanRoute(
+  content: Pick<CareerContent, "universities"> | undefined,
+  savedRoute?: Preferences["routes"][string],
+): Preferences["routes"][string] {
+  return (
+    savedRoute ??
+    (content?.universities.length ? "university" : "apprenticeship")
+  );
+}
+
 export function metricCaveats(metric?: Metric): string {
   if (!metric) return "";
   const notes: Record<string, string> = {
@@ -87,7 +97,7 @@ export function buildPlanDocument(plan: PlanDocumentInput): string {
         )
         .join("");
       const route =
-        prefs.routes[c.soc] === "apprenticeship"
+        resolvePlanRoute(content, prefs.routes[c.soc]) === "apprenticeship"
           ? "Earn and learn"
           : "University";
       const courses = (content?.universities ?? [])

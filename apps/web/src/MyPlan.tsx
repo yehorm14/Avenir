@@ -3,7 +3,7 @@ import type { Career, Page, Preferences } from "./types";
 import { allOpportunities, getCareerContent } from "./content";
 import { money, percent } from "./Charts";
 import { Icon } from "./icons";
-import { metricCaveats } from "./planDocument";
+import { metricCaveats, resolvePlanRoute } from "./planDocument";
 
 export default function MyPlan({
   careers,
@@ -27,7 +27,7 @@ export default function MyPlan({
   const done = steps.filter((_, i) =>
     prefs.checked.includes(`${primary.soc}-${i}`),
   ).length;
-  const route = prefs.routes[primary.soc] ?? "university";
+  const route = resolvePlanRoute(content, prefs.routes[primary.soc]);
   const saved = allOpportunities.filter((o) => prefs.saved.includes(o.id));
   const metric = (c: Career, key: string) => {
     const m = c.metrics[key];

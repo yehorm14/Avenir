@@ -1,8 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { loadSource } from './load-source.mjs';
-const { buildPlanDocument } = await loadSource('planDocument');
+const { buildPlanDocument, resolvePlanRoute } = await loadSource('planDocument');
 const { normalisePreferences } = await loadSource('preferences');
+const { getCareerContent } = await loadSource('content');
 
 const input = () => ({
   careers: [{ soc: '2451', title: 'Architect', metrics: { pay_median: { value: 48000, source: 'ons', as_of: '2024', note: 'Full-time employees only' }, demand_trend: { value: null, source: 'ons', as_of: '2021–2025' } } }],
@@ -35,4 +36,25 @@ test('downloaded document escapes personal text and rejects executable source UR
   assert.ok(html.includes('&lt;script&gt;'));
   assert.ok(!html.includes('<script>'));
   assert.ok(!html.includes('javascript:'));
+});
+
+for (const [soc, title, expectedRoute, expectedLabel] of [
+  ['5241', 'Electrician', 'apprenticeship', 'Earn and learn'],
+  ['2451', 'Architect', 'university', 'University'],
+]) {
+  test(`${title} defaults to the available training route in the plan and export`, () => {
+    const content = getCareerContent(soc);
+    const plan = input();
+    plan.careers[0] = { ...plan.careers[0], soc, title };
+    plan.preferences = normalisePreferences({ selected: [soc] });
+    plan.content = { [soc]: content };
+
+    assert.equal(resolvePlanRoute(content), expectedRoute);
+    assert.ok(buildPlanDocument(plan).includes(`<strong>Route to explore:</strong> ${expectedLabel}.`));
+  });
+}
+
+test('an explicit saved route takes precedence over the career default', () => {
+  assert.equal(resolvePlanRoute(getCareerContent('5241'), 'university'), 'university');
+  assert.equal(resolvePlanRoute(getCareerContent('2451'), 'apprenticeship'), 'apprenticeship');
 });

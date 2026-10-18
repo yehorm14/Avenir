@@ -5,7 +5,7 @@ import { questions, tagsFromAnswers } from "./quiz";
 import { Icon, careerIcon } from "./icons";
 import { SalaryChart, money, percent } from "./Charts";
 import { allOpportunities, getCareerContent } from "./content";
-import { buildPlanDocument } from "./planDocument";
+import { buildPlanDocument, resolvePlanRoute } from "./planDocument";
 import MyPlan from "./MyPlan";
 import Guides from "./Guides";
 import DecisionReview from "./DecisionReview";
@@ -763,7 +763,10 @@ export default function App() {
                 <Pathway
                   career={primary}
                   nation={prefs.nation}
-                  routeType={prefs.routes[primary.soc] ?? "university"}
+                  routeType={resolvePlanRoute(
+                    getCareerContent(primary.soc, primary.family),
+                    prefs.routes[primary.soc],
+                  )}
                   onRouteChange={(routeType) =>
                     update({
                       routes: { ...prefs.routes, [primary.soc]: routeType },
