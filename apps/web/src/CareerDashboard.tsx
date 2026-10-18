@@ -125,27 +125,29 @@ function DetailedMeasure({ name, metric }: { name: string; metric: Metric }) {
   return (
     <div className="dashboard-measure">
       <dt>{measureNames[name] ?? name.replaceAll("_", " ")}</dt>
-      <dd>{displayMetric(metric)}</dd>
-      <p className="dashboard-provenance">{observation(metric)}</p>
-      {available(metric) != null &&
-        metric.low != null &&
-        metric.high != null && (
-          <p>
-            Supplied range: {displayMetric(metric, metric.low)} to{" "}
-            {displayMetric(metric, metric.high)}.
-          </p>
+      <dd>
+        <span className="dashboard-value">{displayMetric(metric)}</span>
+        <p className="dashboard-provenance">{observation(metric)}</p>
+        {available(metric) != null &&
+          metric.low != null &&
+          metric.high != null && (
+            <p>
+              Supplied range: {displayMetric(metric, metric.low)} to{" "}
+              {displayMetric(metric, metric.high)}.
+            </p>
+          )}
+        <p>{metric.note}</p>
+        <p>
+          {metric.status} · {metric.confidence} confidence.
+        </p>
+        {caveats && <p>{caveats}</p>}
+        {historicalNotes.map((note) => (
+          <p key={String(note)}>{note}</p>
+        ))}
+        {typeof metric.extra.adverts_category === "string" && (
+          <p>Job-advert category: {metric.extra.adverts_category}.</p>
         )}
-      <p>{metric.note}</p>
-      <p>
-        {metric.status} · {metric.confidence} confidence.
-      </p>
-      {caveats && <p>{caveats}</p>}
-      {historicalNotes.map((note) => (
-        <p key={String(note)}>{note}</p>
-      ))}
-      {typeof metric.extra.adverts_category === "string" && (
-        <p>Job-advert category: {metric.extra.adverts_category}.</p>
-      )}
+      </dd>
     </div>
   );
 }
@@ -269,65 +271,73 @@ export default function CareerDashboard({ area, careers, ...actions }: Props) {
       <dl className="dashboard-facts">
         <div>
           <dt>Median annual pay</dt>
-          <dd>{money(available(pay))}</dd>
-          <p>
-            {pay &&
-            available(pay) != null &&
-            pay.low != null &&
-            pay.high != null
-              ? `Middle 50%: ${money(pay.low)}–${money(pay.high)}`
-              : "Pay range unavailable"}
-          </p>
-          <small>{observation(pay)}</small>
-          <small>Full-time employees; not starting pay.</small>
-          {headlineCaveat(pay) && <small>{headlineCaveat(pay)}</small>}
+          <dd>
+            <span className="dashboard-value">{money(available(pay))}</span>
+            <p>
+              {pay &&
+              available(pay) != null &&
+              pay.low != null &&
+              pay.high != null
+                ? `Middle 50%: ${money(pay.low)}–${money(pay.high)}`
+                : "Pay range unavailable"}
+            </p>
+            <small>{observation(pay)}</small>
+            <small>Full-time employees; not starting pay.</small>
+            {headlineCaveat(pay) && <small>{headlineCaveat(pay)}</small>}
+          </dd>
         </div>
         <div>
           <dt>Employee jobs</dt>
           <dd>
-            {jobsValue == null
-              ? "Not available"
-              : Math.round(jobsValue * 1000).toLocaleString("en-GB")}
+            <span className="dashboard-value">
+              {jobsValue == null
+                ? "Not available"
+                : Math.round(jobsValue * 1000).toLocaleString("en-GB")}
+            </span>
+            <p>Full-time employees; not vacancies.</p>
+            <small>{observation(jobs)}</small>
+            {headlineCaveat(jobs) && <small>{headlineCaveat(jobs)}</small>}
           </dd>
-          <p>Full-time employees; not vacancies.</p>
-          <small>{observation(jobs)}</small>
-          {headlineCaveat(jobs) && <small>{headlineCaveat(jobs)}</small>}
         </div>
         <div>
           <dt>Employment trend</dt>
           <dd>
-            {percent(available(trend))}
-            {available(trend) != null && <span> / year</span>}
+            <span className="dashboard-value">
+              {percent(available(trend))}
+              {available(trend) != null && <span> / year</span>}
+            </span>
+            <p>Historical trend, not a forecast.</p>
+            <small>{observation(trend)}</small>
+            {headlineCaveat(trend) && <small>{headlineCaveat(trend)}</small>}
           </dd>
-          <p>Historical trend, not a forecast.</p>
-          <small>{observation(trend)}</small>
-          {headlineCaveat(trend) && <small>{headlineCaveat(trend)}</small>}
         </div>
         <div>
           <dt>Automation exposure</dt>
           <dd>
-            {exposureValue == null
-              ? "Not available"
-              : (exposureValue * 100).toFixed(0)}
-            {exposureValue != null && <span> / 100</span>}
-          </dd>
-          <p>Research estimate; not job-loss risk.</p>
-          <small>{observation(exposure)}</small>
-          {exposure &&
-            exposure.low != null &&
-            exposure.high != null &&
-            exposureValue != null && (
-              <small>
-                Research range: {(exposure.low * 100).toFixed(0)}–
-                {(exposure.high * 100).toFixed(0)} / 100.
-              </small>
+            <span className="dashboard-value">
+              {exposureValue == null
+                ? "Not available"
+                : (exposureValue * 100).toFixed(0)}
+              {exposureValue != null && <span> / 100</span>}
+            </span>
+            <p>Research estimate; not job-loss risk.</p>
+            <small>{observation(exposure)}</small>
+            {exposure &&
+              exposure.low != null &&
+              exposure.high != null &&
+              exposureValue != null && (
+                <small>
+                  Research range: {(exposure.low * 100).toFixed(0)}–
+                  {(exposure.high * 100).toFixed(0)} / 100.
+                </small>
+              )}
+            {exposure?.flags.includes("multi_isco") && (
+              <small>Multiple international job codes mapped.</small>
             )}
-          {exposure?.flags.includes("multi_isco") && (
-            <small>Multiple international job codes mapped.</small>
-          )}
-          {headlineCaveat(exposure) && (
-            <small>{headlineCaveat(exposure)}</small>
-          )}
+            {headlineCaveat(exposure) && (
+              <small>{headlineCaveat(exposure)}</small>
+            )}
+          </dd>
         </div>
       </dl>
 

@@ -34,6 +34,7 @@ const nav: { id: Page; icon: string }[] = [
   { id: "path", icon: "path" },
   { id: "opportunities", icon: "calendar" },
 ];
+const directPlanSocs = ["2134", "3544", "2133", "2135", "2422", "2421", "2433"];
 const route = (): Page => {
   const p = window.location.hash.replace("#/", "").split("/")[0];
   return Object.prototype.hasOwnProperty.call(pageNames, p)
@@ -795,24 +796,26 @@ export default function App() {
                       setToast("Saved plan cleared from this browser.");
                     }}
                   />
-                  <DecisionReview
-                    tags={
-                      prefs.discovery?.tags ?? tagsFromAnswers(prefs.answers)
-                    }
-                    firstIdea={
-                      careers.find(
-                        (c) =>
-                          c.soc ===
-                          (prefs.discovery?.referenceSoc ??
-                            prefs.discovery?.targetSoc),
-                      )?.title ?? primary.title
-                    }
-                    nation={prefs.nation}
-                    onInspect={(soc) => {
-                      const career = careers.find((c) => c.soc === soc);
-                      if (career) setInspect(career);
-                    }}
-                  />
+                  {prefs.completed && (
+                    <DecisionReview
+                      tags={
+                        prefs.discovery?.tags ?? tagsFromAnswers(prefs.answers)
+                      }
+                      firstIdea={
+                        careers.find(
+                          (c) =>
+                            c.soc ===
+                            (prefs.discovery?.referenceSoc ??
+                              prefs.discovery?.targetSoc),
+                        )?.title ?? primary.title
+                      }
+                      nation={prefs.nation}
+                      onInspect={(soc) => {
+                        const career = careers.find((c) => c.soc === soc);
+                        if (career) setInspect(career);
+                      }}
+                    />
+                  )}
                 </>
               ) : prefs.completed ? (
                 <NeedChoices go={go} />
@@ -823,6 +826,11 @@ export default function App() {
               (primary ? (
                 <Pathway
                   career={primary}
+                  allowedSocs={
+                    !prefs.completed && directPlanSocs.includes(primary.soc)
+                      ? directPlanSocs
+                      : undefined
+                  }
                   nation={prefs.nation}
                   routeType={resolvePlanRoute(
                     getCareerContent(primary.soc, primary.family),
@@ -835,7 +843,7 @@ export default function App() {
                   }
                   onExport={exportPlan}
                   onOpportunities={() => go("opportunities")}
-                  onGuide={() => go("guides")}
+                  onGuide={() => go("guides", primary.soc)}
                 />
               ) : (
                 <NeedChoices go={go} />
@@ -1011,7 +1019,7 @@ function PageHeading({
   return (
     <header className="page-heading">
       <div>
-        <p className="page-context">{label}</p>
+        {label && <p className="page-context">{label}</p>}
         <h1>{title}</h1>
         <p className="page-description">{description}</p>
       </div>
@@ -1150,8 +1158,17 @@ function Quiz({
   );
 }
 
-function RelatedCareers({ career }: { career: Career }) {
-  const related = career.hedges?.slice(0, 2) ?? [];
+function RelatedCareers({
+  career,
+  allowedSocs,
+}: {
+  career: Career;
+  allowedSocs?: readonly string[];
+}) {
+  const related =
+    career.hedges
+      ?.filter((hedge) => !allowedSocs || allowedSocs.includes(hedge.soc2020))
+      .slice(0, 2) ?? [];
   if (!related.length) return null;
   return (
     <section className="related-careers">
@@ -1159,7 +1176,9 @@ function RelatedCareers({ career }: { career: Career }) {
       <p>Related careers can give you another way forward.</p>
       {related.map((h) => (
         <article key={h.soc2020}>
-          <Icon name="path" size={18} />
+          {!directPlanSocs.includes(career.soc) && (
+            <Icon name="path" size={18} />
+          )}
           <div>
             <b>{h.title}</b>
             <p>
@@ -1284,6 +1303,7 @@ type Plan = {
 };
 function Pathway({
   career,
+  allowedSocs,
   nation,
   routeType,
   onRouteChange,
@@ -1292,6 +1312,7 @@ function Pathway({
   onGuide,
 }: {
   career: Career;
+  allowedSocs?: readonly string[];
   nation: string;
   routeType: "university" | "apprenticeship";
   onRouteChange: (route: "university" | "apprenticeship") => void;
@@ -1300,6 +1321,7 @@ function Pathway({
   onGuide: () => void;
 }) {
   const content = getCareerContent(career.soc, career.family);
+  const focused = directPlanSocs.includes(career.soc);
   const [tab, setTab] = useState("plan");
   const [plan, setPlan] = useState<Plan | null>(null);
   const [planError, setPlanError] = useState("");
@@ -1322,9 +1344,9 @@ function Pathway({
     ? []
     : (plan?.timelines?.[routeType] ?? []);
   return (
-    <>
+    <section className={`pathway${focused ? " pathway-focused" : ""}`}>
       <PageHeading
-        label="Career pathway"
+        label={focused ? "" : "Career pathway"}
         title={career.title}
         description="Compare study routes, practise the skills and choose a next step."
         action={
@@ -1334,10 +1356,14 @@ function Pathway({
         }
       />
       <div className="path-hero">
-        <CareerMark career={career} large />
+        {!focused && <CareerMark career={career} large />}
         <div>
-          <span className="tiny">Your first choice</span>
-          <h2>{career.title}</h2>
+          {!focused && (
+            <>
+              <span className="tiny">Your first choice</span>
+              <h2>{career.title}</h2>
+            </>
+          )}
           <p>{content.intro}</p>
         </div>
         <div className="path-pay">
@@ -1371,9 +1397,11 @@ function Pathway({
                 <h2>Study and training routes</h2>
               </div>
               <div className="broad-degree">
-                <Icon name="book" size={24} />
+                {!focused && <Icon name="book" size={24} />}
                 <div>
-                  <span className="tiny">A route worth exploring</span>
+                  {!focused && (
+                    <span className="tiny">A route worth exploring</span>
+                  )}
                   <h3>{content.broadDegree}</h3>
                   <p>{content.whyBroad}</p>
                 </div>
@@ -1453,7 +1481,7 @@ function Pathway({
                   </article>
                 ))}
               </div>
-              <RelatedCareers career={career} />
+              <RelatedCareers career={career} allowedSocs={allowedSocs} />
               {plan?.alumni && (
                 <details className="alumni-kit">
                   <summary>Make a first connection</summary>
@@ -1495,13 +1523,13 @@ function Pathway({
                 <h3>Typical tasks</h3>
                 {content.dayToDay.map((s) => (
                   <p key={s}>
-                    <Icon name="check" size={16} />
+                    {!focused && <Icon name="check" size={16} />}
                     {s}
                   </p>
                 ))}
               </section>
               <section className="guide-invite">
-                <Icon name="chat" size={28} />
+                {!focused && <Icon name="chat" size={28} />}
                 <h3>Ask about the evidence.</h3>
                 <p>
                   Ask about the work, the route, or the things you're still
@@ -1511,15 +1539,15 @@ function Pathway({
                   className="button secondary full-width"
                   onClick={onGuide}
                 >
-                  Open career guide <Icon name="chat" size={16} />
+                  Open career guide {!focused && <Icon name="chat" size={16} />}
                 </button>
                 <small>Prepared demo guidance</small>
               </section>
               <button className="opportunity-nudge" onClick={onOpportunities}>
-                <Icon name="calendar" size={22} />
+                {!focused && <Icon name="calendar" size={22} />}
                 <b>Start with an opportunity</b>
                 <span>Communities, events, and experience.</span>
-                <Icon name="arrow" size={18} />
+                {!focused && <Icon name="arrow" size={18} />}
               </button>
             </aside>
           </div>
@@ -1534,32 +1562,32 @@ function Pathway({
           </p>
           <div className="skills-columns">
             <div>
-              <Icon name="code" size={25} />
+              {!focused && <Icon name="code" size={25} />}
               <h3>Hard skills</h3>
               <p>The practical tools of the work.</p>
               {content.hardSkills.map((s, i) => (
                 <div className="skill-row" key={s}>
-                  <span>{String(i + 1).padStart(2, "0")}</span>
+                  {!focused && <span>{String(i + 1).padStart(2, "0")}</span>}
                   <b>{s}</b>
-                  <Icon name="plus" size={15} />
+                  {!focused && <Icon name="plus" size={15} />}
                 </div>
               ))}
             </div>
             <div>
-              <Icon name="chat" size={25} />
+              {!focused && <Icon name="chat" size={25} />}
               <h3>Human skills</h3>
               <p>Useful here, and wherever you go next.</p>
               {content.softSkills.map((s, i) => (
                 <div className="skill-row" key={s}>
-                  <span>{String(i + 1).padStart(2, "0")}</span>
+                  {!focused && <span>{String(i + 1).padStart(2, "0")}</span>}
                   <b>{s}</b>
-                  <Icon name="plus" size={15} />
+                  {!focused && <Icon name="plus" size={15} />}
                 </div>
               ))}
             </div>
           </div>
           <div className="quiet-callout">
-            <Icon name="leaf" />
+            {!focused && <Icon name="leaf" />}
             <p>
               One small project can build several skills at once. Start with:{" "}
               <b>{content.firstSteps[0]}</b>
@@ -1596,9 +1624,11 @@ function Pathway({
           <div className="university-list">
             {content.universities.map((u) => (
               <article key={u.name}>
-                <span className="university-icon">
-                  <Icon name="building" size={25} />
-                </span>
+                {!focused && (
+                  <span className="university-icon">
+                    <Icon name="building" size={25} />
+                  </span>
+                )}
                 <div>
                   <span className="tiny">{u.nation}</span>
                   <h3>{u.name}</h3>
@@ -1656,7 +1686,7 @@ function Pathway({
           </div>
         </>
       )}
-    </>
+    </section>
   );
 }
 

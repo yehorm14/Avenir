@@ -59,9 +59,13 @@ function sourceLinks(sources: Source[] = []) {
 export default function Guides({ careers }: { careers: Career[] }) {
   const [soc, setSoc] = useState(careers[0]?.soc ?? "");
   const career = careers.find((item) => item.soc === soc) ?? careers[0];
+  const singleCareer = careers.length === 1;
 
   return (
-    <section className="evidence-guide" aria-labelledby="guide-page-title">
+    <section
+      className={`evidence-guide${singleCareer ? " evidence-guide-single" : ""}`}
+      aria-labelledby="guide-page-title"
+    >
       <header className="page-heading">
         <div>
           <h1 id="guide-page-title">Career questions.</h1>
@@ -72,31 +76,37 @@ export default function Guides({ careers }: { careers: Career[] }) {
       </header>
       {career ? (
         <div className="evidence-guide-layout">
-          <aside className="evidence-guide-careers">
-            <h2>Choose a career</h2>
-            <nav aria-label="Career for your guide">
-              {careers.map((item) => (
-                <button
-                  key={item.soc}
-                  type="button"
-                  aria-pressed={career.soc === item.soc}
-                  onClick={() => setSoc(item.soc)}
-                >
-                  <span>
-                    <strong>{item.title}</strong>
-                    <small>{item.sector}</small>
-                  </span>
-                  <Icon name="chevron" size={16} />
-                </button>
-              ))}
-            </nav>
-            <p>
-              Conversations last while this guide is open. Switching careers
-              starts a new conversation.
-            </p>
-          </aside>
+          {!singleCareer && (
+            <aside className="evidence-guide-careers">
+              <h2>Choose a career</h2>
+              <nav aria-label="Career for your guide">
+                {careers.map((item) => (
+                  <button
+                    key={item.soc}
+                    type="button"
+                    aria-pressed={career.soc === item.soc}
+                    onClick={() => setSoc(item.soc)}
+                  >
+                    <span>
+                      <strong>{item.title}</strong>
+                      <small>{item.sector}</small>
+                    </span>
+                    <Icon name="chevron" size={16} />
+                  </button>
+                ))}
+              </nav>
+              <p>
+                Conversations last while this guide is open. Switching careers
+                starts a new conversation.
+              </p>
+            </aside>
+          )}
           {/* A separate instance prevents a late response entering another career's conversation. */}
-          <CareerGuide key={career.soc} career={career} />
+          <CareerGuide
+            key={career.soc}
+            career={career}
+            compact={singleCareer}
+          />
         </div>
       ) : (
         <div className="empty-state">
@@ -116,7 +126,13 @@ export default function Guides({ careers }: { careers: Career[] }) {
   );
 }
 
-function CareerGuide({ career }: { career: Career }) {
+function CareerGuide({
+  career,
+  compact = false,
+}: {
+  career: Career;
+  compact?: boolean;
+}) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
@@ -229,7 +245,7 @@ function CareerGuide({ career }: { career: Career }) {
 
   return (
     <section
-      className="evidence-guide-chat"
+      className={`evidence-guide-chat${messages.length ? " has-messages" : ""}`}
       aria-labelledby="guide-career-title"
     >
       <header className="evidence-guide-header">
@@ -250,7 +266,7 @@ function CareerGuide({ career }: { career: Career }) {
         tabIndex={0}
       >
         <article className="evidence-guide-message">
-          <h3>Explore {career.title.toLowerCase()}</h3>
+          {!compact && <h3>Explore {career.title.toLowerCase()}</h3>}
           <p>{introduction}</p>
           <p className="evidence-guide-note">
             Use this as a starting point. Check sources and current entry

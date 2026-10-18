@@ -97,6 +97,10 @@
   line-height: 1.5;
 }
 .dashboard-facts dd {
+  margin: 0;
+}
+.dashboard-facts .dashboard-value {
+  display: block;
   color: #dae0e7;
   font-size: 28px;
   font-weight: 450;
@@ -105,7 +109,7 @@
   font-variant-numeric: tabular-nums;
   margin: 6px 0;
 }
-.dashboard-facts dd > span {
+.dashboard-facts .dashboard-value > span {
   color: #acb6c3;
   font-size: 13px;
   font-weight: 400;
@@ -337,6 +341,10 @@
   line-height: 1.6;
 }
 .dashboard-measure dd {
+  margin: 0;
+}
+.dashboard-measure .dashboard-value {
+  display: block;
   color: #dae0e7;
   font-size: 22px;
   font-variant-numeric: tabular-nums;
@@ -369,7 +377,7 @@
   .dashboard-facts {
     gap: 20px;
   }
-  .dashboard-facts dd {
+  .dashboard-facts .dashboard-value {
     font-size: 27px;
   }
 }
@@ -412,7 +420,7 @@
   .dashboard-facts {
     gap: 22px 18px;
   }
-  .dashboard-facts dd {
+  .dashboard-facts .dashboard-value {
     font-size: 25px;
   }
   .career-dashboard .chart-module {

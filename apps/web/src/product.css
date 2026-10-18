@@ -327,7 +327,72 @@ summary:focus-visible,
 .top-links > button {
   flex-shrink: 0;
 }
+.main-content.workspace:has(.pathway-focused) {
+  padding-top: 28px;
+}
+.main-content.workspace:has(.pathway-focused) .plan-navigation {
+  margin-bottom: 24px;
+}
+.pathway-focused .page-heading {
+  margin-bottom: 18px;
+}
+.pathway-focused .page-heading h1 {
+  font-weight: 550;
+}
+.pathway-focused .path-hero {
+  gap: 32px;
+  padding: 0 0 22px;
+  margin-bottom: 24px;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  box-shadow: none;
+}
+.pathway-focused .path-hero p {
+  max-width: 76ch;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.75;
+}
+.pathway-focused .path-pay {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.pathway-focused .path-pay > small {
+  font-size: 11px;
+}
+.pathway-focused .broad-degree {
+  padding: 0;
+  margin: 16px 0 24px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+.pathway-focused .broad-degree h3 {
+  margin-top: 0;
+}
+.pathway-focused .opportunity-nudge {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.pathway-focused .related-careers article {
+  padding-left: 0;
+}
+.pathway-focused .skill-row {
+  padding-left: 0;
+}
 @media (max-width: 760px) {
+  .pathway-focused .path-hero {
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+  .pathway-focused .path-pay {
+    width: 100%;
+    text-align: left;
+  }
   .topbar,
   .with-top-nav .topbar {
     margin: 10px 12px 0;

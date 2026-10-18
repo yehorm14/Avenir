@@ -5,6 +5,39 @@
   gap: 24px;
 }
 
+.evidence-guide-single .page-heading {
+  margin-bottom: 24px;
+}
+
+.evidence-guide-single .evidence-guide-layout {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.evidence-guide-single .evidence-guide-header {
+  padding: 18px 22px;
+}
+
+.evidence-guide-single .evidence-guide-transcript {
+  height: 160px;
+  padding: 18px 22px;
+}
+
+.evidence-guide-single .has-messages .evidence-guide-transcript {
+  height: min(300px, 36vh);
+}
+
+.evidence-guide-single .evidence-guide-suggestions {
+  padding: 0 22px 18px;
+}
+
+.evidence-guide-single .evidence-guide-composer {
+  padding: 16px 22px 12px;
+}
+
+.evidence-guide-single .evidence-guide-footer {
+  padding: 0 22px 12px;
+}
+
 .evidence-guide-careers,
 .evidence-guide-chat {
   min-width: 0;
