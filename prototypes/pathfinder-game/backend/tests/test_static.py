@@ -43,6 +43,7 @@ def test_encoded_parent_path_cannot_read_outside_frontend(frontend):
     assert "outside frontend sentinel" not in response.text
 
 
+@pytest.mark.usefixtures("requires_symlinks")
 def test_symlink_cannot_read_outside_frontend(frontend):
     client, dist, outside = frontend
     (dist / "linked.txt").symlink_to(outside)
@@ -51,6 +52,7 @@ def test_symlink_cannot_read_outside_frontend(frontend):
     assert "outside frontend sentinel" not in response.text
 
 
+@pytest.mark.usefixtures("requires_symlinks")
 def test_spa_fallback_cannot_follow_outside_index_symlink(frontend):
     client, dist, outside = frontend
     (dist / "index.html").unlink()

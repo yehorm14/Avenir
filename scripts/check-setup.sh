@@ -4,13 +4,16 @@ set -euo pipefail
 project_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$project_root"
 
-if ! command -v node >/dev/null 2>&1 || [[ ! -x .venv/bin/python ]] || [[ ! -d apps/web/node_modules ]] || [[ ! -f apps/web/dist/index.html ]]; then
+venv_python=.venv/bin/python
+[[ -x $venv_python ]] || venv_python=.venv/Scripts/python.exe
+
+if ! command -v node >/dev/null 2>&1 || [[ ! -x $venv_python ]] || [[ ! -d apps/web/node_modules ]] || [[ ! -f apps/web/dist/index.html ]]; then
   printf 'Setup is incomplete. Run: bash scripts/setup.sh\n' >&2
   exit 1
 fi
 node -e 'if (Number(process.versions.node.split(".")[0]) < 20) { console.error("Node 20 or newer is required."); process.exit(1); } console.log(`Node ${process.versions.node}: ready`);'
 node --check scripts/run-app.mjs
-.venv/bin/python - <<'PY'
+"$venv_python" - <<'PY'
 import sys
 from pathlib import Path
 

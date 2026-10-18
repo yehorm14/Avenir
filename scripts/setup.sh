@@ -28,12 +28,14 @@ if [[ ! -d .venv ]]; then
   fi
   "$setup_python" -m venv .venv
 fi
-if [[ ! -x .venv/bin/python ]]; then
+venv_python=.venv/bin/python
+[[ -x $venv_python ]] || venv_python=.venv/Scripts/python.exe
+if [[ ! -x $venv_python ]]; then
   printf 'The existing .venv has no usable Python executable. See the manual setup in README.md.\n' >&2
   exit 1
 fi
-.venv/bin/python -c 'import sys; assert sys.version_info >= (3, 12), "The existing .venv requires Python 3.12 or newer; see README.md."'
-.venv/bin/python -m pip install -e '.[dev]'
+"$venv_python" -c 'import sys; assert sys.version_info >= (3, 12), "The existing .venv requires Python 3.12 or newer; see README.md."'
+"$venv_python" -m pip install -e '.[dev]'
 npm --prefix apps/web ci
 npm --prefix apps/web run build
 bash scripts/check-setup.sh

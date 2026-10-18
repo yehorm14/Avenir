@@ -137,6 +137,7 @@ def test_current_working_content_is_scanned_after_tracking(repository: Path) -> 
     assert "github-token" in result.stdout
 
 
+@pytest.mark.usefixtures("requires_symlinks")
 def test_symlinks_outside_repository_are_not_read(repository: Path, tmp_path: Path) -> None:
     outside = tmp_path.parent / (tmp_path.name + "-outside")
     outside.mkdir()
@@ -152,6 +153,7 @@ def test_symlinks_outside_repository_are_not_read(repository: Path, tmp_path: Pa
     assert result.stdout == result.stderr == ""
 
 
+@pytest.mark.usefixtures("requires_symlinks")
 def test_replaced_parent_symlink_cannot_escape_repository(repository: Path, tmp_path: Path) -> None:
     path = track(repository, "config/settings.txt", "TOKEN=\n")
     path.unlink()

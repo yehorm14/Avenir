@@ -99,6 +99,7 @@ def test_dirty_tracked_source_requires_checkpoint(release: Path, tmp_path: Path)
     assert not output.exists()
 
 
+@pytest.mark.usefixtures("requires_symlinks")
 def test_bundle_symlink_cannot_export_an_external_file(release: Path, tmp_path: Path):
     external = tmp_path / "outside.txt"
     external.write_text("not part of project")

@@ -1,0 +1,4 @@
+# False positive: table column definition `{ key: "<word>", label }` (UI field name, not a credential)
+e928ad8151afb914f4842f91777008e1397c787c:prototypes/pathfinder-game/frontend/src/screens/Advisers.tsx:generic-api-key:11
+# False positive: sort state `{ key: "<word>", dir }` (UI field name, not a credential)
+e928ad8151afb914f4842f91777008e1397c787c:prototypes/pathfinder-game/frontend/src/screens/Advisers.tsx:generic-api-key:22
