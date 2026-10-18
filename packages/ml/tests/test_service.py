@@ -50,6 +50,7 @@ def fake_matcher(monkeypatch):
         chunks = [c["text"] for c in e["chunks"]] or [e["title"]]
         m.vecs[soc] = m.model.encode(chunks)
     monkeypatch.setattr(service, "_matcher", m)
+    monkeypatch.setattr(service, "MIN_SCORE", 0.0)
     return m
 
 
@@ -143,6 +144,20 @@ def test_match_validates_input(fake_matcher):
     assert call("POST", "/match", json={"text": "x", "top_k": 0}).status_code == 422
 
 
+def test_out_of_scope_text_abstains(fake_matcher, monkeypatch):
+    monkeypatch.setattr(service, "MIN_SCORE", 1.01)
+    data = call("POST", "/match", json={"text": "asdf qwerty", "top_k": 3}).json()["data"]
+    assert data["matches"] == [] and data["abstained"] is True
+
+
+def test_health_is_503_without_career_texts(monkeypatch, tmp_path):
+    m = service.Matcher(tmp_path / "missing.json", "fake")
+    m.model, m.device = FakeModel(), "cpu"
+    monkeypatch.setattr(service, "_matcher", m)
+    assert call("GET", "/health").status_code == 503
+    assert call("POST", "/match", json={"text": "maths"}).status_code == 503
+
+
 def test_unloaded_model_gives_503_with_envelope(monkeypatch):
     if not TEXTS.is_file():
         pytest.skip("career_texts.json not built yet")
@@ -156,5 +171,5 @@ def test_unloaded_model_gives_503_with_envelope(monkeypatch):
 def test_real_model_smoke():
     m = service.Matcher(TEXTS, os.environ.get("MATCHER_MODEL", service.DEFAULT_MODEL))
     m.load()
-    top = m.match("I love drawing buildings and I'm good at maths", 3)
-    assert "2451" in {t["soc2020"] for t in top}
+    top, abstained = m.match("I love drawing buildings and I'm good at maths", 3)
+    assert not abstained and "2451" in {t["soc2020"] for t in top}

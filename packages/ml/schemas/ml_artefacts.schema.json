@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/yehorm14/KATYATA/packages/ml/schemas/ml_artefacts.schema.json",
-  "title": "Pathfinder ML artefacts v1.1",
+  "title": "Pathfinder ML artefacts v1.2",
   "description": "One definition per file in snapshots/ml: validate <name>.json against #/$defs/<name>_file. See packages/ml/CONTRACTS.md. Unknown keys are allowed so minor versions can add fields.",
   "$defs": {
     "status": {
@@ -27,7 +27,11 @@
         "mock",
         "category_level",
         "bridged_soc2000",
-        "sources_disagree"
+        "sources_disagree",
+        "bridged_low_purity",
+        "partial_sources",
+        "ons_indicative_counts",
+        "fallback_all_employees"
       ]
     },
     "soc2020": {
@@ -349,6 +353,12 @@
                     "title",
                     "estimate"
                   ]
+                },
+                "exposure_delta": {
+                  "$ref": "#/$defs/nullableNumber"
+                },
+                "lower_exposure": {
+                  "type": "boolean"
                 }
               }
             }
@@ -487,45 +497,39 @@
               "groups": {
                 "type": "array",
                 "items": {
-                  "oneOf": [
-                    {
-                      "type": "null"
+                  "type": "object",
+                  "required": [
+                    "key",
+                    "label",
+                    "n",
+                    "real_pay_growth",
+                    "jobs_growth",
+                    "share_jobs_fell"
+                  ],
+                  "properties": {
+                    "key": {
+                      "enum": [
+                        "ambitious",
+                        "balanced",
+                        "safe",
+                        "all"
+                      ]
                     },
-                    {
-                      "type": "object",
-                      "required": [
-                        "key",
-                        "label",
-                        "n",
-                        "real_pay_growth",
-                        "jobs_growth",
-                        "share_jobs_fell"
-                      ],
-                      "properties": {
-                        "key": {
-                          "enum": [
-                            "ambitious",
-                            "balanced",
-                            "safe",
-                            "all"
-                          ]
-                        },
-                        "n": {
-                          "type": "integer"
-                        },
-                        "real_pay_growth": {
-                          "$ref": "#/$defs/growthStat"
-                        },
-                        "jobs_growth": {
-                          "$ref": "#/$defs/growthStat"
-                        },
-                        "share_jobs_fell": {
-                          "$ref": "#/$defs/nullableNumber"
-                        }
-                      }
+                    "n": {
+                      "type": "integer"
+                    },
+                    "real_pay_growth": {
+                      "$ref": "#/$defs/growthStat"
+                    },
+                    "jobs_growth": {
+                      "$ref": "#/$defs/growthStat"
+                    },
+                    "share_jobs_fell": {
+                      "$ref": "#/$defs/nullableNumber"
                     }
-                  ]
-                }
+                  }
+                },
+                "minItems": 4
               },
               "occupations": {
                 "type": "array",
@@ -537,8 +541,29 @@
                     "real_pay_growth",
                     "jobs_growth",
                     "flags"
-                  ]
+                  ],
+                  "properties": {
+                    "group_then": {
+                      "enum": [
+                        "ambitious",
+                        "safe",
+                        "other"
+                      ]
+                    },
+                    "in_groups": {
+                      "type": "array",
+                      "items": {
+                        "enum": [
+                          "ambitious",
+                          "safe"
+                        ]
+                      }
+                    }
+                  }
                 }
+              },
+              "persistence": {
+                "type": "object"
               }
             }
           }
@@ -566,7 +591,8 @@
               "measure",
               "baseline_median",
               "status",
-              "flags"
+              "flags",
+              "show_on_card"
             ],
             "properties": {
               "key": {
@@ -591,6 +617,12 @@
               },
               "baseline_real_pay_median": {
                 "$ref": "#/$defs/nullableNumber"
+              },
+              "show_on_card": {
+                "type": "boolean"
+              },
+              "placebo": {
+                "type": "object"
               }
             }
           }

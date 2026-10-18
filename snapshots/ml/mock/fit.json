@@ -1,305 +1,698 @@
 {
-  "schema_version": "1.1",
-  "generated_at": "2026-10-17T19:38:01+00:00",
-  "status": "mock",
-  "method": "hand-assigned placeholder affinities",
-  "tags": [
-    {
-      "id": "maths",
-      "label": "Maths and numbers",
-      "keywords": [
-        "math",
-        "maths",
-        "numbers",
-        "algebra",
-        "calculus",
-        "equation",
-        "statistic"
-      ]
-    },
-    {
-      "id": "art_drawing",
-      "label": "Art and drawing",
-      "keywords": [
-        "draw",
-        "art",
-        "paint",
-        "sketch",
-        "illustrat"
-      ]
-    },
-    {
-      "id": "design",
-      "label": "Design and visuals",
-      "keywords": [
-        "design",
-        "layout",
-        "typograph",
-        "visual",
-        "graphics",
-        "ux"
-      ]
-    },
-    {
-      "id": "computers_coding",
-      "label": "Computers and coding",
-      "keywords": [
-        "code",
-        "coding",
-        "program",
-        "software",
-        "computer",
-        "app",
-        "python"
-      ]
-    },
-    {
-      "id": "data",
-      "label": "Data and spreadsheets",
-      "keywords": [
-        "data",
-        "spreadsheet",
-        "excel",
-        "analys",
-        "chart",
-        "trend"
-      ]
-    },
-    {
-      "id": "building_spaces",
-      "label": "Buildings and spaces",
-      "keywords": [
-        "building",
-        "architect",
-        "house",
-        "interior",
-        "cities",
-        "construction"
-      ]
-    },
-    {
-      "id": "engineering_making",
-      "label": "Engineering and making things",
-      "keywords": [
-        "engineer",
-        "make things",
-        "build things",
-        "lego",
-        "robot",
-        "machine"
-      ]
-    },
-    {
-      "id": "fixing_hands_on",
-      "label": "Fixing things, hands-on",
-      "keywords": [
-        "fix",
-        "repair",
-        "hands-on",
-        "tools",
-        "wiring",
-        "bike",
-        "practical"
-      ]
-    },
-    {
-      "id": "electricity_energy",
-      "label": "Electricity and energy",
-      "keywords": [
-        "electric",
-        "electronic",
-        "circuit",
-        "energy",
-        "solar",
-        "power"
-      ]
-    },
-    {
-      "id": "science_health",
-      "label": "Science and health",
-      "keywords": [
-        "biology",
-        "medicine",
-        "medical",
-        "health",
-        "hospital",
-        "physics",
-        "science"
-      ]
-    },
-    {
-      "id": "helping_people",
-      "label": "Helping people",
-      "keywords": [
-        "help people",
-        "caring",
-        "patient",
-        "community",
-        "support people"
-      ]
-    },
-    {
-      "id": "teaching_explaining",
-      "label": "Teaching and explaining",
-      "keywords": [
-        "teach",
-        "explain",
-        "tutor",
-        "coach",
-        "mentor"
-      ]
-    },
-    {
-      "id": "money_business",
-      "label": "Money and business",
-      "keywords": [
-        "money",
-        "financ",
-        "invest",
-        "business",
-        "stock",
-        "economic",
-        "trading"
-      ]
-    },
-    {
-      "id": "security_puzzles",
-      "label": "Security and puzzles",
-      "keywords": [
-        "security",
-        "hacking",
-        "cyber",
-        "puzzle",
-        "cipher"
-      ]
-    },
-    {
-      "id": "writing_language",
-      "label": "Writing and languages",
-      "keywords": [
-        "writ",
-        "language",
-        "english",
-        "stories",
-        "translat"
-      ]
-    },
-    {
-      "id": "outdoors_maps",
-      "label": "Outdoors and maps",
-      "keywords": [
-        "outdoor",
-        "map",
-        "geograph",
-        "landscape",
-        "survey"
-      ]
-    }
-  ],
-  "affinity": {
-    "maths": {
-      "2433": 0.95,
-      "2422": 0.8,
-      "2421": 0.75,
-      "3544": 0.8,
-      "2134": 0.6,
-      "2121": 0.6,
-      "2123": 0.6,
-      "2453": 0.6,
-      "2313": 0.5,
-      "2135": 0.4
-    },
-    "art_drawing": {
-      "2142": 0.95,
-      "2141": 0.7,
-      "2451": 0.75,
-      "3120": 0.6,
-      "2452": 0.4
-    },
-    "design": {
-      "2142": 0.9,
-      "2141": 0.9,
-      "2451": 0.8,
-      "3120": 0.6,
-      "2452": 0.5,
-      "2133": 0.3
-    },
-    "computers_coding": {
-      "2134": 0.95,
-      "2135": 0.8,
-      "2141": 0.7,
-      "2133": 0.7,
-      "3544": 0.6,
-      "3120": 0.4
-    },
-    "data": {
-      "3544": 0.95,
-      "2433": 0.85,
-      "2422": 0.7,
-      "2133": 0.6,
-      "2421": 0.6,
-      "2134": 0.4
-    },
-    "building_spaces": {
-      "2451": 0.95,
-      "2452": 0.85,
-      "3120": 0.8,
-      "2121": 0.75,
-      "2453": 0.7,
-      "2454": 0.7
-    },
-    "engineering_making": {
-      "2121": 0.9,
-      "2123": 0.9,
-      "3113": 0.9,
-      "5241": 0.6,
-      "2134": 0.3
-    },
-    "fixing_hands_on": {
-      "5241": 0.95,
-      "3113": 0.85,
-      "2123": 0.5,
-      "2254": 0.3
-    },
-    "electricity_energy": {
-      "2123": 0.95,
-      "5241": 0.9,
-      "3113": 0.6
-    },
-    "science_health": {
-      "2254": 0.95,
-      "2313": 0.3,
-      "2433": 0.3
-    },
-    "helping_people": {
-      "2254": 0.8,
-      "2313": 0.85
-    },
-    "teaching_explaining": {
-      "2313": 0.95,
-      "2433": 0.3
-    },
-    "money_business": {
-      "2422": 0.95,
-      "2421": 0.9,
-      "2433": 0.7,
-      "2453": 0.5,
-      "2454": 0.5
-    },
-    "security_puzzles": {
-      "2135": 0.95,
-      "2134": 0.5,
-      "2433": 0.3
-    },
-    "writing_language": {
-      "2313": 0.4,
-      "2133": 0.3
-    },
-    "outdoors_maps": {
-      "2454": 0.8,
-      "2121": 0.6,
-      "2453": 0.4,
-      "2452": 0.5
-    }
+ "schema_version": "1.2",
+ "status": "preliminary",
+ "generated_at": "2026-10-18T02:18:57+00:00",
+ "method": "Tag-to-career affinities from BAAI/bge-base-en-v1.5 cosine similarity (max over ESCO text chunks), min-max scaled per tag; runtime maps free text to tags by keyword and averages affinities.",
+ "evaluation": {
+  "split": "dev",
+  "n": 30,
+  "universe_size": 20,
+  "note": "Development split only (synthetic profiles); the shipped choice is provisional until the team's held-out labels are scored once.",
+  "methods": {
+   "keyword_tags": {
+    "n": 30,
+    "hit_at_1": 0.7,
+    "hit_at_3": 0.9,
+    "hit_at_3_ci95": [
+     0.767,
+     1.0
+    ],
+    "mrr": 0.806,
+    "chance_hit_at_3": 0.362
+   },
+   "bm25": {
+    "n": 30,
+    "hit_at_1": 0.467,
+    "hit_at_3": 0.7,
+    "hit_at_3_ci95": [
+     0.533,
+     0.867
+    ],
+    "mrr": 0.617,
+    "chance_hit_at_3": 0.362
+   },
+   "embed": {
+    "n": 30,
+    "hit_at_1": 0.767,
+    "hit_at_3": 0.9,
+    "hit_at_3_ci95": [
+     0.8,
+     1.0
+    ],
+    "mrr": 0.847,
+    "chance_hit_at_3": 0.362
+   },
+   "embed_tags": {
+    "n": 30,
+    "hit_at_1": 0.467,
+    "hit_at_3": 0.933,
+    "hit_at_3_ci95": [
+     0.833,
+     1.0
+    ],
+    "mrr": 0.681,
+    "chance_hit_at_3": 0.362
+   },
+   "embed_ft": {
+    "n": 30,
+    "hit_at_1": 0.7,
+    "hit_at_3": 0.933,
+    "hit_at_3_ci95": [
+     0.833,
+     1.0
+    ],
+    "mrr": 0.819,
+    "chance_hit_at_3": 0.362
+   },
+   "embed_ft_tags": {
+    "n": 30,
+    "hit_at_1": 0.467,
+    "hit_at_3": 0.9,
+    "hit_at_3_ci95": [
+     0.8,
+     1.0
+    ],
+    "mrr": 0.673,
+    "chance_hit_at_3": 0.362
+   }
+  },
+  "paired_vs_bm25": {
+   "keyword_tags": {
+    "delta_hit_at_3": 0.2,
+    "ci95": [
+     0.0,
+     0.4
+    ]
+   },
+   "embed": {
+    "delta_hit_at_3": 0.2,
+    "ci95": [
+     0.067,
+     0.367
+    ]
+   },
+   "embed_tags": {
+    "delta_hit_at_3": 0.233,
+    "ci95": [
+     0.067,
+     0.4
+    ]
+   },
+   "embed_ft": {
+    "delta_hit_at_3": 0.233,
+    "ci95": [
+     0.1,
+     0.4
+    ]
+   },
+   "embed_ft_tags": {
+    "delta_hit_at_3": 0.2,
+    "ci95": [
+     0.0,
+     0.4
+    ]
+   }
+  },
+  "paired_vs_embed": {
+   "embed_ft": {
+    "delta_hit_at_3": 0.033,
+    "ci95": [
+     0.0,
+     0.1
+    ]
+   },
+   "embed_ft_tags": {
+    "delta_hit_at_3": 0.0,
+    "ci95": [
+     -0.167,
+     0.133
+    ]
+   }
   }
+ },
+ "tags": [
+  {
+   "id": "maths",
+   "label": "Maths and numbers",
+   "keywords": [
+    "math*",
+    "numbers",
+    "algebra",
+    "calculus",
+    "equation*",
+    "statistic*",
+    "probability"
+   ]
+  },
+  {
+   "id": "art_drawing",
+   "label": "Art and drawing",
+   "keywords": [
+    "draw*",
+    "art",
+    "paint*",
+    "sketch*",
+    "illustrat*"
+   ]
+  },
+  {
+   "id": "design",
+   "label": "Design and visuals",
+   "keywords": [
+    "design*",
+    "layout*",
+    "typograph*",
+    "visual*",
+    "graphic*",
+    "ux"
+   ]
+  },
+  {
+   "id": "computers_coding",
+   "label": "Computers and coding",
+   "keywords": [
+    "code",
+    "coding",
+    "program*",
+    "software",
+    "computer*",
+    "apps",
+    "python",
+    "developer"
+   ]
+  },
+  {
+   "id": "data",
+   "label": "Data and spreadsheets",
+   "keywords": [
+    "data",
+    "spreadsheet*",
+    "excel",
+    "analys*",
+    "chart*",
+    "trend*",
+    "pattern*"
+   ]
+  },
+  {
+   "id": "building_spaces",
+   "label": "Buildings and spaces",
+   "keywords": [
+    "building*",
+    "architect*",
+    "house*",
+    "interior*",
+    "cities",
+    "construction",
+    "spaces"
+   ]
+  },
+  {
+   "id": "engineering_making",
+   "label": "Engineering and making things",
+   "keywords": [
+    "engineer*",
+    "make things",
+    "making things",
+    "build things",
+    "building things",
+    "lego",
+    "robot*",
+    "machine*",
+    "mechanical"
+   ]
+  },
+  {
+   "id": "fixing_hands_on",
+   "label": "Fixing things, hands-on",
+   "keywords": [
+    "fix*",
+    "repair*",
+    "hands on",
+    "tools",
+    "wiring",
+    "bike*",
+    "practical",
+    "taking things apart"
+   ]
+  },
+  {
+   "id": "electricity_energy",
+   "label": "Electricity and energy",
+   "keywords": [
+    "electric*",
+    "electronic*",
+    "circuit*",
+    "energy",
+    "solar",
+    "power supply",
+    "batteries"
+   ]
+  },
+  {
+   "id": "science_health",
+   "label": "Science and health",
+   "keywords": [
+    "biology",
+    "medicine",
+    "medical",
+    "health*",
+    "hospital*",
+    "physics",
+    "science",
+    "scientific"
+   ]
+  },
+  {
+   "id": "helping_people",
+   "label": "Helping people",
+   "keywords": [
+    "help* people",
+    "helping",
+    "caring",
+    "care for",
+    "patient*",
+    "community",
+    "support* people"
+   ]
+  },
+  {
+   "id": "teaching_explaining",
+   "label": "Teaching and explaining",
+   "keywords": [
+    "teach*",
+    "explain*",
+    "tutor*",
+    "coach*",
+    "mentor*",
+    "kids"
+   ]
+  },
+  {
+   "id": "money_business",
+   "label": "Money and business",
+   "keywords": [
+    "money",
+    "financ*",
+    "invest*",
+    "business*",
+    "stock market",
+    "stocks",
+    "economic*",
+    "trading",
+    "accounts"
+   ]
+  },
+  {
+   "id": "security_puzzles",
+   "label": "Security and puzzles",
+   "keywords": [
+    "security",
+    "hacking",
+    "hacker*",
+    "cyber*",
+    "puzzle*",
+    "cipher*",
+    "breach*"
+   ]
+  },
+  {
+   "id": "writing_language",
+   "label": "Writing and languages",
+   "keywords": [
+    "writing",
+    "writer",
+    "language*",
+    "english",
+    "stories",
+    "translat*"
+   ]
+  },
+  {
+   "id": "outdoors_maps",
+   "label": "Outdoors and maps",
+   "keywords": [
+    "outdoor*",
+    "map*",
+    "geograph*",
+    "landscape*",
+    "survey*",
+    "measuring"
+   ]
+  }
+ ],
+ "affinity": {
+  "maths": {
+   "2134": 0.3311,
+   "3544": 0.7298,
+   "2133": 0.3025,
+   "2135": 0.035,
+   "2141": 0.0,
+   "2142": 0.3107,
+   "2451": 0.1784,
+   "2452": 0.1784,
+   "3120": 0.705,
+   "2121": 0.1798,
+   "2123": 0.1811,
+   "3113": 0.1301,
+   "2453": 0.3721,
+   "2454": 0.2636,
+   "2433": 1.0,
+   "2422": 0.5148,
+   "2421": 0.2814,
+   "2254": 0.1536,
+   "5241": 0.3196,
+   "2313": 0.5948
+  },
+  "art_drawing": {
+   "2134": 0.3564,
+   "3544": 0.2472,
+   "2133": 0.4713,
+   "2135": 0.0,
+   "2141": 0.464,
+   "2142": 1.0,
+   "2451": 0.7087,
+   "2452": 0.4713,
+   "3120": 0.8314,
+   "2121": 0.6221,
+   "2123": 0.272,
+   "3113": 0.206,
+   "2453": 0.3509,
+   "2454": 0.5035,
+   "2433": 0.4677,
+   "2422": 0.3932,
+   "2421": 0.2426,
+   "2254": 0.334,
+   "5241": 0.3578,
+   "2313": 0.461
+  },
+  "design": {
+   "2134": 0.5158,
+   "3544": 0.0,
+   "2133": 0.5712,
+   "2135": 0.0352,
+   "2141": 0.895,
+   "2142": 1.0,
+   "2451": 0.6153,
+   "2452": 0.5272,
+   "3120": 0.535,
+   "2121": 0.4111,
+   "2123": 0.5747,
+   "3113": 0.1906,
+   "2453": 0.2423,
+   "2454": 0.376,
+   "2433": 0.1164,
+   "2422": 0.2531,
+   "2421": 0.1436,
+   "2254": 0.2158,
+   "5241": 0.1152,
+   "2313": 0.0554
+  },
+  "computers_coding": {
+   "2134": 1.0,
+   "3544": 0.0662,
+   "2133": 0.7432,
+   "2135": 0.0812,
+   "2141": 0.3066,
+   "2142": 0.411,
+   "2451": 0.1979,
+   "2452": 0.2021,
+   "3120": 0.5835,
+   "2121": 0.0477,
+   "2123": 0.141,
+   "3113": 0.0741,
+   "2453": 0.1013,
+   "2454": 0.1226,
+   "2433": 0.269,
+   "2422": 0.2044,
+   "2421": 0.2198,
+   "2254": 0.0741,
+   "5241": 0.0983,
+   "2313": 0.0
+  },
+  "data": {
+   "2134": 1.0,
+   "3544": 1.0,
+   "2133": 0.6417,
+   "2135": 0.0,
+   "2141": 0.2574,
+   "2142": 0.3013,
+   "2451": 0.2284,
+   "2452": 0.2284,
+   "3120": 0.3027,
+   "2121": 0.031,
+   "2123": 0.0335,
+   "3113": 0.2049,
+   "2453": 0.1731,
+   "2454": 0.2446,
+   "2433": 0.7906,
+   "2422": 0.6106,
+   "2421": 0.3428,
+   "2254": 0.2049,
+   "5241": 0.1945,
+   "2313": 0.2222
+  },
+  "building_spaces": {
+   "2134": 0.4454,
+   "3544": 0.0541,
+   "2133": 0.9304,
+   "2135": 0.0,
+   "2141": 0.2838,
+   "2142": 0.2819,
+   "2451": 1.0,
+   "2452": 0.9304,
+   "3120": 0.476,
+   "2121": 0.4371,
+   "2123": 0.2273,
+   "3113": 0.1617,
+   "2453": 0.4922,
+   "2454": 0.4378,
+   "2433": 0.2372,
+   "2422": 0.1596,
+   "2421": 0.1462,
+   "2254": 0.1581,
+   "5241": 0.2998,
+   "2313": 0.1057
+  },
+  "engineering_making": {
+   "2134": 1.0,
+   "3544": 0.1234,
+   "2133": 0.5118,
+   "2135": 0.2875,
+   "2141": 0.2564,
+   "2142": 0.5667,
+   "2451": 0.5118,
+   "2452": 0.5118,
+   "3120": 0.476,
+   "2121": 0.729,
+   "2123": 0.8352,
+   "3113": 0.9637,
+   "2453": 0.9061,
+   "2454": 0.3493,
+   "2433": 0.3517,
+   "2422": 0.057,
+   "2421": 0.0,
+   "2254": 0.1093,
+   "5241": 0.7271,
+   "2313": 0.0599
+  },
+  "fixing_hands_on": {
+   "2134": 0.2674,
+   "3544": 0.0498,
+   "2133": 0.3128,
+   "2135": 0.0968,
+   "2141": 0.3328,
+   "2142": 0.1058,
+   "2451": 0.4183,
+   "2452": 0.3095,
+   "3120": 0.5075,
+   "2121": 0.3554,
+   "2123": 0.7677,
+   "3113": 0.4773,
+   "2453": 0.6003,
+   "2454": 0.378,
+   "2433": 0.1418,
+   "2422": 0.1397,
+   "2421": 0.0861,
+   "2254": 0.0,
+   "5241": 1.0,
+   "2313": 0.467
+  },
+  "electricity_energy": {
+   "2134": 0.2254,
+   "3544": 0.1128,
+   "2133": 0.4269,
+   "2135": 0.0248,
+   "2141": 0.0,
+   "2142": 0.192,
+   "2451": 0.1669,
+   "2452": 0.1803,
+   "3120": 0.235,
+   "2121": 0.245,
+   "2123": 1.0,
+   "3113": 0.5672,
+   "2453": 0.8451,
+   "2454": 0.2254,
+   "2433": 0.1071,
+   "2422": 0.1947,
+   "2421": 0.1045,
+   "2254": 0.1905,
+   "5241": 1.0,
+   "2313": 0.1955
+  },
+  "science_health": {
+   "2134": 0.1001,
+   "3544": 0.2137,
+   "2133": 0.3693,
+   "2135": 0.0515,
+   "2141": 0.0242,
+   "2142": 0.1102,
+   "2451": 0.3693,
+   "2452": 0.3693,
+   "3120": 0.2762,
+   "2121": 0.2548,
+   "2123": 0.2611,
+   "3113": 0.6919,
+   "2453": 0.9888,
+   "2454": 0.2762,
+   "2433": 0.6716,
+   "2422": 0.2137,
+   "2421": 0.0,
+   "2254": 1.0,
+   "5241": 0.3002,
+   "2313": 0.0293
+  },
+  "helping_people": {
+   "2134": 0.3352,
+   "3544": 0.4096,
+   "2133": 0.3073,
+   "2135": 0.1245,
+   "2141": 0.4676,
+   "2142": 0.0385,
+   "2451": 0.3073,
+   "2452": 0.6436,
+   "3120": 0.4343,
+   "2121": 0.0,
+   "2123": 0.1451,
+   "3113": 0.687,
+   "2453": 0.388,
+   "2454": 0.1202,
+   "2433": 0.4096,
+   "2422": 0.507,
+   "2421": 0.1377,
+   "2254": 1.0,
+   "5241": 0.2756,
+   "2313": 0.812
+  },
+  "teaching_explaining": {
+   "2134": 0.4138,
+   "3544": 0.2111,
+   "2133": 0.1848,
+   "2135": 0.0,
+   "2141": 0.0959,
+   "2142": 0.2136,
+   "2451": 0.271,
+   "2452": 0.2274,
+   "3120": 0.2023,
+   "2121": 0.1223,
+   "2123": 0.1172,
+   "3113": 0.1422,
+   "2453": 0.063,
+   "2454": 0.1697,
+   "2433": 0.2111,
+   "2422": 0.2988,
+   "2421": 0.2424,
+   "2254": 0.1578,
+   "5241": 0.2463,
+   "2313": 1.0
+  },
+  "money_business": {
+   "2134": 0.3474,
+   "3544": 0.3474,
+   "2133": 0.6532,
+   "2135": 0.1859,
+   "2141": 0.0081,
+   "2142": 0.1818,
+   "2451": 0.1453,
+   "2452": 0.1169,
+   "3120": 0.2761,
+   "2121": 0.0,
+   "2123": 0.041,
+   "3113": 0.0245,
+   "2453": 0.1672,
+   "2454": 0.14,
+   "2433": 0.6845,
+   "2422": 1.0,
+   "2421": 0.7103,
+   "2254": 0.0487,
+   "5241": 0.1777,
+   "2313": 0.1116
+  },
+  "security_puzzles": {
+   "2134": 0.3229,
+   "3544": 0.069,
+   "2133": 0.3398,
+   "2135": 1.0,
+   "2141": 0.2775,
+   "2142": 0.2144,
+   "2451": 0.1348,
+   "2452": 0.223,
+   "3120": 0.3885,
+   "2121": 0.1732,
+   "2123": 0.2659,
+   "3113": 0.1776,
+   "2453": 0.1654,
+   "2454": 0.2141,
+   "2433": 0.2959,
+   "2422": 0.2903,
+   "2421": 0.0979,
+   "2254": 0.0065,
+   "5241": 0.3134,
+   "2313": 0.0
+  },
+  "writing_language": {
+   "2134": 0.4795,
+   "3544": 0.2714,
+   "2133": 0.5845,
+   "2135": 0.1817,
+   "2141": 0.3811,
+   "2142": 0.4958,
+   "2451": 0.4668,
+   "2452": 0.0,
+   "3120": 1.0,
+   "2121": 0.3464,
+   "2123": 0.3966,
+   "3113": 0.5177,
+   "2453": 0.1028,
+   "2454": 0.2225,
+   "2433": 0.7193,
+   "2422": 0.7989,
+   "2421": 0.4833,
+   "2254": 0.243,
+   "5241": 0.5503,
+   "2313": 0.4576
+  },
+  "outdoors_maps": {
+   "2134": 0.1697,
+   "3544": 0.2313,
+   "2133": 0.7555,
+   "2135": 0.0,
+   "2141": 0.1577,
+   "2142": 0.2541,
+   "2451": 0.8162,
+   "2452": 0.7555,
+   "3120": 1.0,
+   "2121": 0.391,
+   "2123": 0.3013,
+   "3113": 0.417,
+   "2453": 0.5785,
+   "2454": 1.0,
+   "2433": 0.4376,
+   "2422": 0.0638,
+   "2421": 0.0602,
+   "2254": 0.417,
+   "5241": 0.2804,
+   "2313": 0.1381
+  }
+ }
 }

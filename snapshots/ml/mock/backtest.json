@@ -1,733 +1,2995 @@
 {
-  "schema_version": "1.1",
-  "generated_at": "2026-10-17T19:38:01+00:00",
-  "status": "preliminary",
-  "method": "Pre-registered naive tiers, nothing tuned to outcomes. Ambitious: top third by pay at the base year. Safe: top third by prior jobs growth. Outcomes 5 years later; real pay in CPIH-deflated terms.",
-  "caveats": [
-    "Historical tiers use market data only: no historical AI exposure index exists.",
-    "Windows overlap, so they are not independent.",
-    "Only occupations with complete data are included (larger occupations).",
-    "Low-pay occupations gained from minimum-wage rises after 2016, which lowers the Ambitious group's relative pay growth.",
-    "Windows crossing 2021 compare pay only; job counts are not comparable across the code change.",
-    "The 2019-2024 window includes the 2020 COVID year."
-  ],
-  "windows": [
+ "schema_version": "1.2",
+ "generated_at": "2026-10-18T02:17:27+00:00",
+ "status": "preliminary",
+ "method": "Simple rules, not the app's picks. Ambitious: top third by pay at the base year. Safe: top third by jobs growth before the base year. Outcomes 5 years later; real pay deflated by tax-year CPIH. The rules were fixed before these windows were scored, but earlier probes had looked at 2013-2019.",
+ "caveats": [
+  "These are simple rules, not the app's Ambitious, Balanced and Safe picks; there is no simple-rule version of Balanced.",
+  "Historical tiers use market data only: no historical AI exposure index exists.",
+  "Windows overlap, so they are not independent.",
+  "Only occupations with data at both ends are scored (larger occupations); n_base_occupations and n_scored say how many dropped out.",
+  "Low-pay occupations gained from minimum-wage rises after 2016, which lowers the Ambitious group's relative pay growth. Pay level itself persists strongly (see persistence).",
+  "Windows crossing 2021 compare pay only; job counts are not comparable across the code change.",
+  "Windows ending in 2020 include the COVID year; 2018 is a provisional ONS edition."
+ ],
+ "windows": [
+  {
+   "base_year": 2013,
+   "outcome_year": 2018,
+   "horizon": 5,
+   "coding": "SOC 2010 native",
+   "flags": [
+    "provisional"
+   ],
+   "jobs_comparable": true,
+   "n_base_occupations": 281,
+   "n_scored": 253,
+   "persistence": {
+    "pay_rank_spearman": 0.981,
+    "top_third_by_pay_still_top_third": 0.941
+   },
+   "groups": [
     {
-      "base_year": 2013,
-      "outcome_year": 2018,
-      "horizon": 5,
-      "coding": "SOC 2010 native",
-      "flags": [],
-      "jobs_comparable": true,
-      "groups": [
-        {
-          "key": "ambitious",
-          "label": "Ambitious then: top third by pay",
-          "n": 85,
-          "real_pay_growth": {
-            "median": -0.0107,
-            "low": -0.0251,
-            "high": 0.0032
-          },
-          "jobs_growth": {
-            "median": 0.061,
-            "low": 0.0307,
-            "high": 0.1053
-          },
-          "share_jobs_fell": 0.3294
-        },
-        {
-          "key": "safe",
-          "label": "Safe then: top third by prior jobs growth (2011 on)",
-          "n": 85,
-          "real_pay_growth": {
-            "median": 0.0014,
-            "low": -0.0136,
-            "high": 0.0231
-          },
-          "jobs_growth": {
-            "median": 0.058,
-            "low": 0.0,
-            "high": 0.069
-          },
-          "share_jobs_fell": 0.3294
-        },
-        null,
-        {
-          "key": "all",
-          "label": "All occupations with complete data",
-          "n": 253,
-          "real_pay_growth": {
-            "median": -0.001,
-            "low": -0.0083,
-            "high": 0.0084
-          },
-          "jobs_growth": {
-            "median": 0.0,
-            "low": 0.0,
-            "high": 0.0455
-          },
-          "share_jobs_fell": 0.4387
-        }
-      ],
-      "occupations": [
-        {
-          "soc2020": "2134",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0,
-          "jobs_growth": 0.3111,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "3544",
-          "group_then": "safe",
-          "real_pay_growth": -0.0471,
-          "jobs_growth": 0.2903,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2133",
-          "group_then": "ambitious",
-          "real_pay_growth": 0.1013,
-          "jobs_growth": 0.061,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2135",
-          "group_then": "ambitious",
-          "real_pay_growth": 0.0032,
-          "jobs_growth": 0.0857,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2141",
-          "group_then": "safe",
-          "real_pay_growth": -0.0175,
-          "jobs_growth": 0.1667,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2142",
-          "group_then": "other",
-          "real_pay_growth": -0.0157,
-          "jobs_growth": 0.3333,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2451",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0385,
-          "jobs_growth": 0.16,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "3120",
-          "group_then": "safe",
-          "real_pay_growth": -0.0224,
-          "jobs_growth": 0.0741,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2121",
-          "group_then": "ambitious",
-          "real_pay_growth": 0.0486,
-          "jobs_growth": 0.0278,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2123",
-          "group_then": "ambitious",
-          "real_pay_growth": 0.0586,
-          "jobs_growth": 0.0556,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "3113",
-          "group_then": "ambitious",
-          "real_pay_growth": 0.0032,
-          "jobs_growth": -0.0959,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2453",
-          "group_then": "ambitious",
-          "real_pay_growth": 0.047,
-          "jobs_growth": 0.125,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2454",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0119,
-          "jobs_growth": 0.0667,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2433",
-          "group_then": "ambitious",
-          "real_pay_growth": 0.0115,
-          "jobs_growth": 0.5714,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2422",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0681,
-          "jobs_growth": 0.1169,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2421",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0142,
-          "jobs_growth": -0.0469,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2254",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0476,
-          "jobs_growth": 0.1364,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "5241",
-          "group_then": "other",
-          "real_pay_growth": 0.017,
-          "jobs_growth": 0.1359,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2313",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0277,
-          "jobs_growth": 0.0694,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        }
-      ]
+     "key": "ambitious",
+     "label": "Top third by pay then",
+     "n": 85,
+     "real_pay_growth": {
+      "median": -0.013,
+      "low": -0.0274,
+      "high": 0.0009
+     },
+     "jobs_growth": {
+      "median": 0.061,
+      "low": 0.0308,
+      "high": 0.1017
+     },
+     "share_jobs_fell": 0.3294
     },
     {
-      "base_year": 2014,
-      "outcome_year": 2019,
-      "horizon": 5,
-      "coding": "SOC 2010 native",
-      "flags": [],
-      "jobs_comparable": true,
-      "groups": [
-        {
-          "key": "ambitious",
-          "label": "Ambitious then: top third by pay",
-          "n": 80,
-          "real_pay_growth": {
-            "median": -0.0088,
-            "low": -0.0148,
-            "high": 0.0012
-          },
-          "jobs_growth": {
-            "median": 0.0933,
-            "low": 0.0476,
-            "high": 0.1667
-          },
-          "share_jobs_fell": 0.2375
-        },
-        {
-          "key": "safe",
-          "label": "Safe then: top third by prior jobs growth (2011 on)",
-          "n": 80,
-          "real_pay_growth": {
-            "median": 0.0156,
-            "low": -0.0006,
-            "high": 0.0339
-          },
-          "jobs_growth": {
-            "median": 0.0819,
-            "low": 0.0534,
-            "high": 0.1205
-          },
-          "share_jobs_fell": 0.2875
-        },
-        null,
-        {
-          "key": "all",
-          "label": "All occupations with complete data",
-          "n": 240,
-          "real_pay_growth": {
-            "median": 0.0128,
-            "low": 0.0029,
-            "high": 0.0188
-          },
-          "jobs_growth": {
-            "median": 0.036,
-            "low": 0.0,
-            "high": 0.0748
-          },
-          "share_jobs_fell": 0.3833
-        }
-      ],
-      "occupations": [
-        {
-          "soc2020": "2134",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.004,
-          "jobs_growth": 0.3378,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "3544",
-          "group_then": "safe",
-          "real_pay_growth": -0.0307,
-          "jobs_growth": 0.4167,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2133",
-          "group_then": "ambitious",
-          "real_pay_growth": 0.0659,
-          "jobs_growth": 0.0652,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2135",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0089,
-          "jobs_growth": 0.2,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2141",
-          "group_then": "safe",
-          "real_pay_growth": 0.0204,
-          "jobs_growth": 0.25,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2142",
-          "group_then": "other",
-          "real_pay_growth": 0.0029,
-          "jobs_growth": 0.4074,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2451",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0001,
-          "jobs_growth": 0.2308,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "3120",
-          "group_then": "other",
-          "real_pay_growth": 0.0134,
-          "jobs_growth": 0.0769,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2121",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0193,
-          "jobs_growth": -0.025,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2123",
-          "group_then": "ambitious",
-          "real_pay_growth": 0.0459,
-          "jobs_growth": -0.05,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "3113",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0661,
-          "jobs_growth": -0.0946,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2453",
-          "group_then": "ambitious",
-          "real_pay_growth": 0.0309,
-          "jobs_growth": 0.3182,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2454",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0185,
-          "jobs_growth": 0.1957,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2433",
-          "group_then": "ambitious",
-          "real_pay_growth": 0.0025,
-          "jobs_growth": 0.25,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2422",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0223,
-          "jobs_growth": 0.2381,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2421",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0491,
-          "jobs_growth": 0.0,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2254",
-          "group_then": "ambitious",
-          "real_pay_growth": 0.0333,
-          "jobs_growth": -0.0435,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "5241",
-          "group_then": "other",
-          "real_pay_growth": 0.0168,
-          "jobs_growth": 0.1429,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        },
-        {
-          "soc2020": "2313",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0146,
-          "jobs_growth": 0.0625,
-          "flags": [
-            "bridged_soc2010"
-          ]
-        }
-      ]
+     "key": "balanced",
+     "label": "No simple-rule version",
+     "n": 0,
+     "real_pay_growth": null,
+     "jobs_growth": null,
+     "share_jobs_fell": null
     },
     {
-      "base_year": 2019,
-      "outcome_year": 2024,
-      "horizon": 5,
-      "coding": "bridged SOC 2010 -> SOC 2020",
-      "flags": [
-        "bridged_soc2010",
-        "covid_year",
-        "recoded_2021"
-      ],
-      "jobs_comparable": false,
-      "groups": [
-        {
-          "key": "ambitious",
-          "label": "Ambitious then: top third by pay",
-          "n": 102,
-          "real_pay_growth": {
-            "median": -0.0738,
-            "low": -0.0913,
-            "high": -0.0508
-          },
-          "jobs_growth": null,
-          "share_jobs_fell": null
-        },
-        {
-          "key": "safe",
-          "label": "Safe then: top third by prior jobs growth (2015-19)",
-          "n": 102,
-          "real_pay_growth": {
-            "median": -0.0279,
-            "low": -0.0547,
-            "high": -0.0182
-          },
-          "jobs_growth": null,
-          "share_jobs_fell": null
-        },
-        null,
-        {
-          "key": "all",
-          "label": "All occupations with complete data",
-          "n": 306,
-          "real_pay_growth": {
-            "median": -0.0179,
-            "low": -0.0277,
-            "high": -0.0032
-          },
-          "jobs_growth": null,
-          "share_jobs_fell": null
-        }
-      ],
-      "occupations": [
-        {
-          "soc2020": "2134",
-          "group_then": "ambitious",
-          "real_pay_growth": 0.051,
-          "jobs_growth": null,
-          "flags": [
-            "bridged_soc2010",
-            "covid_year"
-          ]
-        },
-        {
-          "soc2020": "3544",
-          "group_then": "safe",
-          "real_pay_growth": -0.0351,
-          "jobs_growth": null,
-          "flags": [
-            "bridged_soc2010",
-            "covid_year"
-          ]
-        },
-        {
-          "soc2020": "2133",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0707,
-          "jobs_growth": null,
-          "flags": [
-            "bridged_soc2010",
-            "covid_year"
-          ]
-        },
-        {
-          "soc2020": "2135",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0651,
-          "jobs_growth": null,
-          "flags": [
-            "bridged_soc2010",
-            "covid_year"
-          ]
-        },
-        {
-          "soc2020": "2141",
-          "group_then": "safe",
-          "real_pay_growth": 0.1053,
-          "jobs_growth": null,
-          "flags": [
-            "bridged_soc2010",
-            "covid_year"
-          ]
-        },
-        {
-          "soc2020": "2142",
-          "group_then": "safe",
-          "real_pay_growth": -0.065,
-          "jobs_growth": null,
-          "flags": [
-            "bridged_soc2010",
-            "covid_year"
-          ]
-        },
-        {
-          "soc2020": "2451",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0504,
-          "jobs_growth": null,
-          "flags": [
-            "bridged_soc2010",
-            "covid_year"
-          ]
-        },
-        {
-          "soc2020": "2452",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.1503,
-          "jobs_growth": null,
-          "flags": [
-            "bridged_soc2010",
-            "covid_year"
-          ]
-        },
-        {
-          "soc2020": "3120",
-          "group_then": "other",
-          "real_pay_growth": -0.0811,
-          "jobs_growth": null,
-          "flags": [
-            "bridged_soc2010",
-            "covid_year"
-          ]
-        },
-        {
-          "soc2020": "2121",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0001,
-          "jobs_growth": null,
-          "flags": [
-            "bridged_soc2010",
-            "covid_year"
-          ]
-        },
-        {
-          "soc2020": "2123",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0007,
-          "jobs_growth": null,
-          "flags": [
-            "bridged_soc2010",
-            "covid_year"
-          ]
-        },
-        {
-          "soc2020": "3113",
-          "group_then": "other",
-          "real_pay_growth": 0.0209,
-          "jobs_growth": null,
-          "flags": [
-            "bridged_soc2010",
-            "covid_year"
-          ]
-        },
-        {
-          "soc2020": "2453",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0963,
-          "jobs_growth": null,
-          "flags": [
-            "bridged_soc2010",
-            "covid_year"
-          ]
-        },
-        {
-          "soc2020": "2454",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0343,
-          "jobs_growth": null,
-          "flags": [
-            "bridged_soc2010",
-            "covid_year"
-          ]
-        },
-        {
-          "soc2020": "2433",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0466,
-          "jobs_growth": null,
-          "flags": [
-            "bridged_soc2010",
-            "covid_year"
-          ]
-        },
-        {
-          "soc2020": "2422",
-          "group_then": "ambitious",
-          "real_pay_growth": 0.0244,
-          "jobs_growth": null,
-          "flags": [
-            "bridged_soc2010",
-            "covid_year"
-          ]
-        },
-        {
-          "soc2020": "2421",
-          "group_then": "ambitious",
-          "real_pay_growth": 0.0452,
-          "jobs_growth": null,
-          "flags": [
-            "bridged_soc2010",
-            "covid_year"
-          ]
-        },
-        {
-          "soc2020": "2254",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0329,
-          "jobs_growth": null,
-          "flags": [
-            "bridged_soc2010",
-            "covid_year"
-          ]
-        },
-        {
-          "soc2020": "5241",
-          "group_then": "other",
-          "real_pay_growth": -0.0521,
-          "jobs_growth": null,
-          "flags": [
-            "bridged_soc2010",
-            "covid_year"
-          ]
-        },
-        {
-          "soc2020": "2313",
-          "group_then": "ambitious",
-          "real_pay_growth": -0.0632,
-          "jobs_growth": null,
-          "flags": [
-            "bridged_soc2010",
-            "covid_year"
-          ]
-        }
-      ]
+     "key": "safe",
+     "label": "Top third by jobs growth since 2011 then",
+     "n": 88,
+     "real_pay_growth": {
+      "median": -0.0016,
+      "low": -0.0193,
+      "high": 0.0154
+     },
+     "jobs_growth": {
+      "median": 0.0584,
+      "low": 0.0,
+      "high": 0.0775
+     },
+     "share_jobs_fell": 0.3295
+    },
+    {
+     "key": "all",
+     "label": "All occupations with complete data",
+     "n": 253,
+     "real_pay_growth": {
+      "median": -0.0033,
+      "low": -0.009,
+      "high": 0.006
+     },
+     "jobs_growth": {
+      "median": 0.0,
+      "low": -0.0176,
+      "high": 0.0455
+     },
+     "share_jobs_fell": 0.4387
     }
-  ]
+   ],
+   "occupations": [
+    {
+     "soc2020": "1131",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.0644,
+     "jobs_growth": 0.1163,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "1137",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.1617,
+     "jobs_growth": 0.1739,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2112",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0817,
+     "jobs_growth": -0.0435,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2113",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0817,
+     "jobs_growth": -0.0435,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2114",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.1345,
+     "jobs_growth": -0.25,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2121",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.0461,
+     "jobs_growth": 0.0278,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2122",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0725,
+     "jobs_growth": -0.2571,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2123",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.0562,
+     "jobs_growth": 0.0556,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2125",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0006,
+     "jobs_growth": 0.2812,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2126",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0725,
+     "jobs_growth": -0.2571,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2127",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0083,
+     "jobs_growth": 0.2241,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2129",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0083,
+     "jobs_growth": 0.2241,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2131",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0839,
+     "jobs_growth": 0.1333,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2133",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.0988,
+     "jobs_growth": 0.061,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2134",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0023,
+     "jobs_growth": 0.3111,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2135",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0009,
+     "jobs_growth": 0.0857,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2136",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0009,
+     "jobs_growth": 0.0857,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2137",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0009,
+     "jobs_growth": 0.0857,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2139",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0009,
+     "jobs_growth": 0.0857,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2141",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": -0.0197,
+     "jobs_growth": 0.1667,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2142",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": -0.018,
+     "jobs_growth": 0.3333,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2162",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0195,
+     "jobs_growth": -0.1463,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2222",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": -0.0723,
+     "jobs_growth": 0.0588,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2254",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0498,
+     "jobs_growth": 0.1364,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2259",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.0348,
+     "jobs_growth": 0.4375,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2312",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0283,
+     "jobs_growth": 0.0,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2313",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.03,
+     "jobs_growth": 0.0694,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2314",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0308,
+     "jobs_growth": 0.2081,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2315",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0308,
+     "jobs_growth": 0.2081,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2316",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0804,
+     "jobs_growth": 0.2,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2319",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": -0.1594,
+     "jobs_growth": 0.0526,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2421",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0165,
+     "jobs_growth": -0.0469,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2422",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0703,
+     "jobs_growth": 0.1169,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2423",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0196,
+     "jobs_growth": 0.0,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2433",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0092,
+     "jobs_growth": 0.5714,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2435",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.1368,
+     "jobs_growth": -0.283,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2451",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0407,
+     "jobs_growth": 0.16,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2453",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.0445,
+     "jobs_growth": 0.125,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2454",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0142,
+     "jobs_growth": 0.0667,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2455",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.008,
+     "jobs_growth": 0.125,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2481",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.04,
+     "jobs_growth": 0.2593,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2482",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.0414,
+     "jobs_growth": 0.3077,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "3112",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": -0.0175,
+     "jobs_growth": -0.2,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "3113",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0009,
+     "jobs_growth": -0.0959,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "3115",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": -0.0934,
+     "jobs_growth": 0.2273,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "3119",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": -0.0158,
+     "jobs_growth": 0.0631,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "3120",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": -0.0247,
+     "jobs_growth": 0.0741,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "3132",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": 0.0075,
+     "jobs_growth": 0.0606,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "3543",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": -0.0493,
+     "jobs_growth": 0.2903,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "3544",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": -0.0493,
+     "jobs_growth": 0.2903,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "5221",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": -0.0033,
+     "jobs_growth": -0.1228,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "5234",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0579,
+     "jobs_growth": -0.2222,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "5241",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": 0.0146,
+     "jobs_growth": 0.1359,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "5242",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0222,
+     "jobs_growth": -0.6765,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "5245",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": 0.015,
+     "jobs_growth": 0.03,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "5246",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": 0.015,
+     "jobs_growth": 0.03,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "5249",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": 0.015,
+     "jobs_growth": 0.03,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    }
+   ]
+  },
+  {
+   "base_year": 2014,
+   "outcome_year": 2019,
+   "horizon": 5,
+   "coding": "SOC 2010 native",
+   "flags": [],
+   "jobs_comparable": true,
+   "n_base_occupations": 271,
+   "n_scored": 240,
+   "persistence": {
+    "pay_rank_spearman": 0.984,
+    "top_third_by_pay_still_top_third": 0.928
+   },
+   "groups": [
+    {
+     "key": "ambitious",
+     "label": "Top third by pay then",
+     "n": 83,
+     "real_pay_growth": {
+      "median": -0.0078,
+      "low": -0.0142,
+      "high": 0.0009
+     },
+     "jobs_growth": {
+      "median": 0.0877,
+      "low": 0.0401,
+      "high": 0.1622
+     },
+     "share_jobs_fell": 0.253
+    },
+    {
+     "key": "balanced",
+     "label": "No simple-rule version",
+     "n": 0,
+     "real_pay_growth": null,
+     "jobs_growth": null,
+     "share_jobs_fell": null
+    },
+    {
+     "key": "safe",
+     "label": "Top third by jobs growth since 2011 then",
+     "n": 78,
+     "real_pay_growth": {
+      "median": 0.0162,
+      "low": -0.0005,
+      "high": 0.0336
+     },
+     "jobs_growth": {
+      "median": 0.0791,
+      "low": 0.0417,
+      "high": 0.115
+     },
+     "share_jobs_fell": 0.2949
+    },
+    {
+     "key": "all",
+     "label": "All occupations with complete data",
+     "n": 240,
+     "real_pay_growth": {
+      "median": 0.0137,
+      "low": 0.0035,
+      "high": 0.0205
+     },
+     "jobs_growth": {
+      "median": 0.036,
+      "low": 0.0,
+      "high": 0.0724
+     },
+     "share_jobs_fell": 0.3833
+    }
+   ],
+   "occupations": [
+    {
+     "soc2020": "1131",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.0041,
+     "jobs_growth": 0.2019,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "1137",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0085,
+     "jobs_growth": 0.2727,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2112",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0631,
+     "jobs_growth": -0.1087,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2113",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0631,
+     "jobs_growth": -0.1087,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2121",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0185,
+     "jobs_growth": -0.025,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2122",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.063,
+     "jobs_growth": -0.129,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2123",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.0467,
+     "jobs_growth": -0.05,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2125",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.0242,
+     "jobs_growth": 0.1622,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2126",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.063,
+     "jobs_growth": -0.129,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2127",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.0169,
+     "jobs_growth": 0.1488,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2129",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.0169,
+     "jobs_growth": 0.1488,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2131",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0686,
+     "jobs_growth": 0.2,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2133",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.0667,
+     "jobs_growth": 0.0652,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2134",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0032,
+     "jobs_growth": 0.3378,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2135",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0081,
+     "jobs_growth": 0.2,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2136",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0081,
+     "jobs_growth": 0.2,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2137",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0081,
+     "jobs_growth": 0.2,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2139",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0081,
+     "jobs_growth": 0.2,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2141",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": 0.0212,
+     "jobs_growth": 0.25,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2142",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": 0.0037,
+     "jobs_growth": 0.4074,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2162",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0142,
+     "jobs_growth": 0.0556,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2222",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": -0.0696,
+     "jobs_growth": 0.0,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2254",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.0341,
+     "jobs_growth": -0.0435,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2259",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0057,
+     "jobs_growth": 0.875,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2312",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0009,
+     "jobs_growth": 0.0366,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2313",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0138,
+     "jobs_growth": 0.0625,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2314",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0385,
+     "jobs_growth": 0.234,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2315",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0385,
+     "jobs_growth": 0.234,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2316",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0993,
+     "jobs_growth": 0.1429,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2319",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": -0.0992,
+     "jobs_growth": 0.093,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2421",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0483,
+     "jobs_growth": 0.0,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2422",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0215,
+     "jobs_growth": 0.2381,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2423",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0122,
+     "jobs_growth": 0.0,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2433",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.0034,
+     "jobs_growth": 0.25,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2435",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.2071,
+     "jobs_growth": -0.1837,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2451",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0007,
+     "jobs_growth": 0.2308,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2453",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0318,
+     "jobs_growth": 0.3182,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2454",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0177,
+     "jobs_growth": 0.1957,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2455",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0872,
+     "jobs_growth": 0.3333,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2481",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0449,
+     "jobs_growth": 0.3103,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2482",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.0494,
+     "jobs_growth": 0.2069,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "3112",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": 0.1015,
+     "jobs_growth": -0.3333,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "3113",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0653,
+     "jobs_growth": -0.0946,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "3115",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": -0.0686,
+     "jobs_growth": 0.0833,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "3119",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": -0.0046,
+     "jobs_growth": 0.1321,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "3120",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": 0.0143,
+     "jobs_growth": 0.0769,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "3132",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": -0.018,
+     "jobs_growth": 0.0762,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "3543",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": -0.0299,
+     "jobs_growth": 0.4167,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "3544",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": -0.0299,
+     "jobs_growth": 0.4167,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "5221",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": 0.0002,
+     "jobs_growth": -0.1552,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "5241",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": 0.0176,
+     "jobs_growth": 0.1429,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "5242",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0222,
+     "jobs_growth": -0.5143,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "5245",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": 0.0802,
+     "jobs_growth": 0.102,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "5246",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": 0.0802,
+     "jobs_growth": 0.102,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "5249",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": 0.0802,
+     "jobs_growth": 0.102,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    }
+   ]
+  },
+  {
+   "base_year": 2015,
+   "outcome_year": 2020,
+   "horizon": 5,
+   "coding": "SOC 2010 native",
+   "flags": [
+    "covid_year"
+   ],
+   "jobs_comparable": true,
+   "n_base_occupations": 268,
+   "n_scored": 233,
+   "persistence": {
+    "pay_rank_spearman": 0.983,
+    "top_third_by_pay_still_top_third": 0.925
+   },
+   "groups": [
+    {
+     "key": "ambitious",
+     "label": "Top third by pay then",
+     "n": 80,
+     "real_pay_growth": {
+      "median": -0.0021,
+      "low": -0.0176,
+      "high": 0.0086
+     },
+     "jobs_growth": {
+      "median": 0.1145,
+      "low": 0.0714,
+      "high": 0.163
+     },
+     "share_jobs_fell": 0.2375
+    },
+    {
+     "key": "balanced",
+     "label": "No simple-rule version",
+     "n": 0,
+     "real_pay_growth": null,
+     "jobs_growth": null,
+     "share_jobs_fell": null
+    },
+    {
+     "key": "safe",
+     "label": "Top third by jobs growth since 2011 then",
+     "n": 80,
+     "real_pay_growth": {
+      "median": 0.0224,
+      "low": 0.0076,
+      "high": 0.0357
+     },
+     "jobs_growth": {
+      "median": 0.0354,
+      "low": -0.0184,
+      "high": 0.1291
+     },
+     "share_jobs_fell": 0.4
+    },
+    {
+     "key": "all",
+     "label": "All occupations with complete data",
+     "n": 233,
+     "real_pay_growth": {
+      "median": 0.0223,
+      "low": 0.0121,
+      "high": 0.0291
+     },
+     "jobs_growth": {
+      "median": 0.0,
+      "low": -0.0256,
+      "high": 0.0421
+     },
+     "share_jobs_fell": 0.4635
+    }
+   ],
+   "occupations": [
+    {
+     "soc2020": "1131",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0164,
+     "jobs_growth": 0.3052,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "1137",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.029,
+     "jobs_growth": 0.0357,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2112",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0923,
+     "jobs_growth": -0.186,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2113",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0923,
+     "jobs_growth": -0.186,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2121",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0085,
+     "jobs_growth": -0.025,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2122",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0762,
+     "jobs_growth": -0.125,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2123",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.1105,
+     "jobs_growth": 0.15,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2125",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0429,
+     "jobs_growth": 0.2895,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2126",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0762,
+     "jobs_growth": -0.125,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2127",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.003,
+     "jobs_growth": 0.1984,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2129",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.003,
+     "jobs_growth": 0.1984,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2131",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.088,
+     "jobs_growth": 0.125,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2133",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.0814,
+     "jobs_growth": 0.2209,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2134",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.0207,
+     "jobs_growth": 0.2284,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2135",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0644,
+     "jobs_growth": 0.4085,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2136",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0644,
+     "jobs_growth": 0.4085,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2137",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0644,
+     "jobs_growth": 0.4085,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2139",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0644,
+     "jobs_growth": 0.4085,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2141",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": -0.0151,
+     "jobs_growth": 0.4286,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2142",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": 0.0829,
+     "jobs_growth": 0.129,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2162",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0747,
+     "jobs_growth": -0.0541,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2222",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": -0.0224,
+     "jobs_growth": 0.0,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2254",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.002,
+     "jobs_growth": -0.125,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2259",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0217,
+     "jobs_growth": 0.0952,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2312",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0339,
+     "jobs_growth": -0.0256,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2313",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0017,
+     "jobs_growth": 0.198,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2314",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0211,
+     "jobs_growth": 0.3092,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2315",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0211,
+     "jobs_growth": 0.3092,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2316",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.1806,
+     "jobs_growth": 0.2857,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2319",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": -0.0516,
+     "jobs_growth": 0.225,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2421",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0146,
+     "jobs_growth": 0.0781,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2422",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0147,
+     "jobs_growth": 0.1529,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2423",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0673,
+     "jobs_growth": 0.0714,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2433",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.068,
+     "jobs_growth": 0.5,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2435",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.2624,
+     "jobs_growth": -0.1304,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2451",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0322,
+     "jobs_growth": 0.36,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2453",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0249,
+     "jobs_growth": 0.4545,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2454",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.002,
+     "jobs_growth": 0.0816,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2481",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0049,
+     "jobs_growth": 0.2121,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "2482",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.0498,
+     "jobs_growth": 0.371,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "3113",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0341,
+     "jobs_growth": 0.0972,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "3115",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": -0.0502,
+     "jobs_growth": 0.0417,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "3119",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": 0.0131,
+     "jobs_growth": 0.217,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "3120",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": -0.0091,
+     "jobs_growth": 0.1786,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "3132",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": 0.0058,
+     "jobs_growth": 0.0351,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "3543",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": -0.0058,
+     "jobs_growth": 0.4857,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "3544",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": -0.0058,
+     "jobs_growth": 0.4857,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "5221",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": 0.0385,
+     "jobs_growth": -0.1167,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "5241",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": 0.0203,
+     "jobs_growth": -0.0169,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "5242",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0075,
+     "jobs_growth": -0.3824,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "5245",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": 0.0944,
+     "jobs_growth": -0.1081,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "5246",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": 0.0944,
+     "jobs_growth": -0.1081,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    },
+    {
+     "soc2020": "5249",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": 0.0944,
+     "jobs_growth": -0.1081,
+     "flags": [
+      "bridged_soc2010"
+     ]
+    }
+   ]
+  },
+  {
+   "base_year": 2019,
+   "outcome_year": 2024,
+   "horizon": 5,
+   "coding": "bridged SOC 2010 -> SOC 2020",
+   "flags": [
+    "bridged_soc2010",
+    "covid_year",
+    "recoded_2021"
+   ],
+   "jobs_comparable": false,
+   "n_base_occupations": 298,
+   "n_scored": 291,
+   "persistence": {
+    "pay_rank_spearman": 0.946,
+    "top_third_by_pay_still_top_third": 0.869
+   },
+   "groups": [
+    {
+     "key": "ambitious",
+     "label": "Top third by pay then",
+     "n": 99,
+     "real_pay_growth": {
+      "median": -0.0642,
+      "low": -0.0833,
+      "high": -0.0439
+     },
+     "jobs_growth": null,
+     "share_jobs_fell": null
+    },
+    {
+     "key": "balanced",
+     "label": "No simple-rule version",
+     "n": 0,
+     "real_pay_growth": null,
+     "jobs_growth": null,
+     "share_jobs_fell": null
+    },
+    {
+     "key": "safe",
+     "label": "Top third by jobs growth 2015-19 then",
+     "n": 97,
+     "real_pay_growth": {
+      "median": -0.0205,
+      "low": -0.0481,
+      "high": -0.0114
+     },
+     "jobs_growth": null,
+     "share_jobs_fell": null
+    },
+    {
+     "key": "all",
+     "label": "All occupations with complete data",
+     "n": 291,
+     "real_pay_growth": {
+      "median": -0.0088,
+      "low": -0.021,
+      "high": 0.004
+     },
+     "jobs_growth": null,
+     "share_jobs_fell": null
+    }
+   ],
+   "occupations": [
+    {
+     "soc2020": "1131",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0251,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "1137",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0243,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2112",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.1319,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2113",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0369,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2114",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0333,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2121",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0068,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2122",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0808,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2123",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0062,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2125",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0961,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2126",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0725,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2127",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0062,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2129",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.1153,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2131",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0049,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2133",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0642,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2134",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.0583,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2135",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0586,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2136",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.1939,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2137",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.1202,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2139",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.0199,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2141",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": 0.1129,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2142",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": -0.0586,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2162",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0662,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2222",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": 0.0734,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2254",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0261,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2259",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.0429,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2312",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0861,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2313",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0567,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2314",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0179,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2315",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.2668,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2316",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0036,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2319",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": 0.008,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2421",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0524,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2422",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": 0.0315,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2423",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.1402,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2433",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.04,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2451",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0439,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2453",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.09,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2454",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0276,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2455",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.085,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2481",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.078,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "2482",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious",
+      "safe"
+     ],
+     "real_pay_growth": -0.0889,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "3112",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.1137,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "3113",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.028,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "3115",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": -0.0597,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "3119",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": 0.0273,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "3132",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": -0.1077,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "3543",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": -0.0521,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "3544",
+     "group_then": "safe",
+     "in_groups": [
+      "safe"
+     ],
+     "real_pay_growth": -0.0285,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "5221",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": 0.0247,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "5241",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": -0.0455,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "5242",
+     "group_then": "other",
+     "in_groups": [],
+     "real_pay_growth": -0.0948,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "5245",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.1425,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "5246",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": -0.0442,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    },
+    {
+     "soc2020": "5249",
+     "group_then": "ambitious",
+     "in_groups": [
+      "ambitious"
+     ],
+     "real_pay_growth": 0.0943,
+     "jobs_growth": null,
+     "flags": [
+      "bridged_soc2010",
+      "covid_year"
+     ]
+    }
+   ]
+  }
+ ]
 }

@@ -8,6 +8,10 @@ where IDF = log(N / number of SOC groups that have the skill), so near-universal
 skills (teamwork, communication) count for little. Similarity between two groups is
 weighted Jaccard: sum(min) / sum(max). Writes PROCESSED_DIR/hedges_candidates.json with
 the top 5 per group and their most important shared skills.
+
+v1.2 (after review): a pair's evidence is the weaker of its two sides; candidates below a
+similarity of 0.05 are dropped; pairs whose skill vectors are identical because both rest only on
+the same ISCO fallback (similarity 1.0) are dropped, since they are not evidence of anything.
 """
 import json
 import math
@@ -18,6 +22,7 @@ from pathlib import Path
 import pandas as pd
 
 TOP_K = 5
+MIN_SIMILARITY = 0.05
 RELATION_WEIGHT = {"essential": 1.0, "optional": 0.5}
 
 
@@ -66,11 +71,15 @@ def main() -> None:
             union = sa + sum(vb.values()) - inter
             scored.append((inter / union, b))
         scored.sort(reverse=True)
+        ev_a = quality.get(a, "estimate")
+        scored = [(sim, b) for sim, b in scored if sim >= MIN_SIMILARITY
+                  and not (sim >= 0.999 and ev_a == "estimate" and quality.get(b, "estimate") == "estimate")]
         cands = []
         for sim, b in scored[:TOP_K]:
             shared = sorted(((min(w, vec[b][s]), s) for s, w in va.items() if s in vec[b]), reverse=True)
+            evidence = "estimate" if "estimate" in (ev_a, quality.get(b, "estimate")) else "title"
             cands.append({"soc2020": b, "similarity": round(sim, 4), "shared_skills": [skills.get(s, s) for _, s in shared[:6]],
-                          "n_shared": len(shared), "evidence": quality.get(b, "estimate")})
+                          "n_shared": len(shared), "evidence": evidence})
         out[a] = {"evidence": quality.get(a, "estimate"), "candidates": cands}
     (proc / "hedges_candidates.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
     print(f"skill vectors: {len(vec)} groups; distinct skills: {len(idf)}; written {len(out)} candidate lists")

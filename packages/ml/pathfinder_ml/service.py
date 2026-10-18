@@ -7,7 +7,8 @@ The app's backend may call it when it is up and fall back to the standard-librar
 Endpoints:
   GET  /health            -> {ok, data: {model, device, n_careers, loaded}}
   POST /match             body {"text": str, "top_k": int=3}
-                          -> {ok, data: {matches: [{soc2020, short_title, score, evidence}], tags: [...], model}}
+                          -> {ok, data: {matches: [{soc2020, short_title, score, evidence}], abstained, tags: [...], model}}
+                          matches is empty and abstained true when the text looks out of scope.
 """
 from __future__ import annotations
 
@@ -25,6 +26,11 @@ from .api import ML
 QUERY_PREFIX = "Represent this sentence for searching relevant passages: "
 _REPO = Path(__file__).resolve().parents[3]
 DEFAULT_MODEL = "BAAI/bge-base-en-v1.5"
+# Below this top cosine, or with the top three this close together, the text is treated as out of
+# scope and no careers are returned. Provisional: set from 9 probe texts (junk 0.40, "footballer" 0.45, "vet" 0.455,
+# "helping people" 0.46 with wrong careers; in-scope interests 0.485-0.60). The keyword tagger takes over when it abstains.
+MIN_SCORE = float(os.environ.get("MATCHER_MIN_SCORE", "0.47"))
+MIN_MARGIN = float(os.environ.get("MATCHER_MIN_MARGIN", "0.0"))
 
 
 def envelope(data=None, error=None, status=200, **meta):
@@ -58,11 +64,14 @@ class Matcher:
         self.device, self.vecs = device, vecs
         self.model = model
 
-    def match(self, text: str, top_k: int) -> list[dict]:
+    def match(self, text: str, top_k: int) -> tuple[list[dict], bool]:
+        """Top careers by max cosine, and whether the matcher abstained (top score too low)."""
         q = np.asarray(self.model.encode([QUERY_PREFIX + text], normalize_embeddings=True, show_progress_bar=False))[0]
         scored = sorted(((float((v @ q).max()), soc) for soc, v in self.vecs.items()), reverse=True)
-        return [{"soc2020": soc, "short_title": self.texts[soc]["short_title"], "score": round(s, 4), "evidence": self.texts[soc]["evidence"]}
-                for s, soc in scored[:top_k]]
+        abstain = not scored or scored[0][0] < MIN_SCORE or (len(scored) > 2 and scored[0][0] - scored[2][0] < MIN_MARGIN)
+        out = [{"soc2020": soc, "short_title": self.texts[soc]["short_title"], "score": round(s, 4), "evidence": self.texts[soc]["evidence"]}
+               for s, soc in scored[:top_k]]
+        return ([] if abstain else out), abstain
 
 
 app = FastAPI(title="Pathfinder matcher", version="1.0")
@@ -81,15 +90,16 @@ def _startup() -> None:
 
 @app.get("/health")
 def health():
-    loaded = _matcher.model is not None
+    loaded = _matcher.model is not None and len(_matcher.vecs) > 0
     return envelope({"model": _matcher.model_name, "device": _matcher.device, "n_careers": len(_matcher.vecs), "loaded": loaded,
                      "error": getattr(app.state, "load_error", None)}, status=200 if loaded else 503)
 
 
 @app.post("/match")
 def match(req: MatchRequest):
-    if _matcher.model is None:
-        return envelope(error={"code": "matcher_unavailable", "message": "embedding model not loaded; use the tag chain"}, status=503)
+    if _matcher.model is None or not _matcher.vecs:
+        return envelope(error={"code": "matcher_unavailable", "message": "embedding model or career texts not loaded; use the tag chain"}, status=503)
     tags = _ml.match_tags(req.text, top_k=5)
-    return envelope({"matches": _matcher.match(req.text, req.top_k), "tags": tags, "model": _matcher.model_name},
-                    method="embedding max-cosine over ESCO text chunks")
+    matches, abstained = _matcher.match(req.text, req.top_k)
+    return envelope({"matches": matches, "abstained": abstained, "tags": tags, "model": _matcher.model_name},
+                    method="embedding max-cosine over ESCO text chunks", min_score=MIN_SCORE)

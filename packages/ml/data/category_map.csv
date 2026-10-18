@@ -1,0 +1,413 @@
+soc2020,title,category,volatile_series
+1111,Chief executives and senior officials,Management / exec / consulting,False
+1112,Elected officers and representatives,Management / exec / consulting,False
+1121,Production managers and directors in manufacturing,Manufacturing,False
+1122,Production managers and directors in construction,Manufacturing,False
+1123,Production managers and directors in mining and energy,Manufacturing,False
+1131,Financial managers and directors,Management / exec / consulting,False
+1132,"Marketing, sales and advertising directors",Management / exec / consulting,False
+1133,Public relations and communications directors,Management / exec / consulting,False
+1134,Purchasing managers and directors,Management / exec / consulting,False
+1135,Charitable organisation managers and directors,Management / exec / consulting,False
+1136,Human resource managers and directors,Management / exec / consulting,False
+1137,Information technology directors,Management / exec / consulting,False
+1139,Functional managers and directors n.e.c.,Management / exec / consulting,False
+1140,"Directors in logistics, warehousing and transport",Transport / logistics / warehouse,True
+1150,Managers and directors in retail and wholesale,Wholesale and retail,False
+1161,Officers in armed forces,Other / general,False
+1162,Senior police officers,Other / general,False
+1163,"Senior officers in fire, ambulance, prison and related services",Other / general,False
+1171,Health services and public health managers and directors,Healthcare and Social care,False
+1172,Social services managers and directors,Healthcare and Social care,False
+1211,Managers and proprietors in agriculture and horticulture,Other / general,False
+1212,"Managers and proprietors in forestry, fishing and related services",Other / general,False
+1221,Hotel and accommodation managers and proprietors,Catering and hospitality,False
+1222,Restaurant and catering establishment managers and proprietors,Catering and hospitality,False
+1223,Publicans and managers of licensed premises,Catering and hospitality,False
+1224,Leisure and sports managers,Catering and hospitality,False
+1225,Travel agency managers and proprietors,Travel / tourism,True
+1231,Health care practice managers,Healthcare and Social care,False
+1232,"Residential, day and domiciliary care managers and proprietors",Healthcare and Social care,False
+1233,Early education and childcare services proprietors,Healthcare and Social care,False
+1241,Managers in transport and distribution,Transport / logistics / warehouse,True
+1242,Managers in storage and warehousing,Transport / logistics / warehouse,True
+1243,Managers in logistics,Transport / logistics / warehouse,True
+1251,"Property, housing and estate managers",Management / exec / consulting,False
+1252,Garage managers and proprietors,Management / exec / consulting,False
+1253,Hairdressing and beauty salon managers and proprietors,Property,False
+1254,Waste disposal and environmental services managers,Management / exec / consulting,False
+1255,Managers and directors in the creative industries,Management / exec / consulting,False
+1256,Betting shop and gambling establishment managers,Management / exec / consulting,False
+1257,Hire services managers and proprietors,Management / exec / consulting,False
+1258,Directors in consultancy services,Management / exec / consulting,False
+1259,Managers and proprietors in other services n.e.c.,Management / exec / consulting,False
+2111,Chemical scientists,Scientific / QA,False
+2112,Biological scientists,Scientific / QA,False
+2113,Biochemists and biomedical scientists,Scientific / QA,False
+2114,Physical scientists,Scientific / QA,False
+2115,Social and humanities scientists,Scientific / QA,False
+2119,Natural and social science professionals n.e.c.,Scientific / QA,False
+2121,Civil engineers,Engineering,False
+2122,Mechanical engineers,Engineering,False
+2123,Electrical engineers,Engineering,False
+2124,Electronics engineers,Engineering,False
+2125,Production and process engineers,Engineering,False
+2126,Aerospace engineers,Engineering,False
+2127,Engineering project managers and project engineers,Engineering,False
+2129,Engineering professionals n.e.c.,Engineering,False
+2131,IT project managers,IT / Computing / Software,False
+2132,IT managers,IT / Computing / Software,False
+2133,"IT business analysts, architects and systems designers",IT / Computing / Software,False
+2134,Programmers and software development professionals,IT / Computing / Software,False
+2135,Cyber security professionals,IT / Computing / Software,False
+2136,IT quality and testing professionals,IT / Computing / Software,False
+2137,IT network professionals,IT / Computing / Software,False
+2139,Information technology professionals n.e.c.,IT / Computing / Software,False
+2141,Web design professionals,Creative / design / arts & media,False
+2142,Graphic and multimedia designers,Creative / design / arts & media,False
+2151,Conservation professionals,Scientific / QA,False
+2152,Environment professionals,Scientific / QA,False
+2161,Research and development (R&D) managers,Scientific / QA,False
+2162,"Other researchers, unspecified discipline",Scientific / QA,False
+2211,Generalist medical practitioners,Healthcare and Social care,False
+2212,Specialist medical practitioners,Healthcare and Social care,False
+2221,Physiotherapists,Healthcare and Social care,False
+2222,Occupational therapists,Healthcare and Social care,False
+2223,Speech and language therapists,Healthcare and Social care,False
+2224,Psychotherapists and cognitive behaviour therapists,Healthcare and Social care,False
+2225,Clinical psychologists,Healthcare and Social care,False
+2226,Other psychologists,Healthcare and Social care,False
+2229,Therapy professionals n.e.c.,Healthcare and Social care,False
+2231,Midwifery nurses,Healthcare and Social care,False
+2232,Community nurses,Healthcare and Social care,False
+2233,Specialist nurses,Healthcare and Social care,False
+2234,Nurse practitioners,Healthcare and Social care,False
+2235,Mental health nurses,Healthcare and Social care,False
+2236,Children's nurses,Healthcare and Social care,False
+2237,Other nursing professionals,Healthcare and Social care,False
+2240,Veterinarians,Healthcare and Social care,False
+2251,Pharmacists,Healthcare and Social care,False
+2252,Optometrists,Healthcare and Social care,False
+2253,Dental practitioners,Healthcare and Social care,False
+2254,Medical radiographers,Healthcare and Social care,False
+2255,Paramedics,Healthcare and Social care,False
+2256,Podiatrists,Healthcare and Social care,False
+2259,Other health professionals n.e.c.,Healthcare and Social care,False
+2311,Higher education teaching professionals,Education,True
+2312,Further education teaching professionals,Education,True
+2313,Secondary education teaching professionals,Education,True
+2314,Primary education teaching professionals,Education,True
+2315,Nursery education teaching professionals,Education,True
+2316,Special needs education teaching professionals,Education,True
+2317,Teachers of English as a foreign language,Education,True
+2319,Teaching professionals n.e.c.,Education,True
+2321,Head teachers and principals,Education,True
+2322,Education managers,Education,True
+2323,Education advisers and school inspectors,Education,True
+2324,Early education and childcare services managers,Education,True
+2329,Other educational professionals n.e.c,Education,True
+2411,Barristers and judges,Legal,False
+2412,Solicitors and lawyers,Legal,False
+2419,Legal professionals n.e.c.,Legal,False
+2421,Chartered and certified accountants,Accounting / Finance,False
+2422,Finance and investment analysts and advisers,Accounting / Finance,False
+2423,Taxation experts,Accounting / Finance,False
+2431,Management consultants and business analysts,Management / exec / consulting,False
+2432,Marketing and commercial managers,Management / exec / consulting,False
+2433,"Actuaries, economists and statisticians",Management / exec / consulting,False
+2434,Business and related research professionals,Management / exec / consulting,False
+2435,Professional/Chartered company secretaries,Management / exec / consulting,False
+2439,"Business, research and administrative professionals n.e.c.",Management / exec / consulting,False
+2440,Business and financial project management professionals,Management / exec / consulting,False
+2451,Architects,Construction / trades,False
+2452,"Chartered architectural technologists, planning officers and consultants",Construction / trades,False
+2453,Quantity surveyors,Construction / trades,False
+2454,Chartered surveyors,Property,False
+2455,Construction project managers and related professionals,Construction / trades,False
+2461,Social workers,Healthcare and Social care,False
+2462,Probation officers,Healthcare and Social care,False
+2463,Clergy,Healthcare and Social care,False
+2464,Youth work professionals,Healthcare and Social care,False
+2469,Welfare professionals n.e.c.,Healthcare and Social care,False
+2471,Librarians,Education,True
+2472,Archivists and curators,Education,True
+2481,Quality control and planning engineers,Engineering,False
+2482,Quality assurance and regulatory professionals,Scientific / QA,False
+2483,Environmental health professionals,Scientific / QA,False
+2491,Newspaper and periodical editors,Creative / design / arts & media,False
+2492,Newspaper and periodical journalists and reporters,Creative / design / arts & media,False
+2493,Public relations professionals,Marketing / advertising / PR,True
+2494,Advertising accounts managers and creative directors,Marketing / advertising / PR,True
+3111,Laboratory technicians,Scientific / QA,False
+3112,Electrical and electronics technicians,Engineering,False
+3113,Engineering technicians,Engineering,False
+3114,Building and civil engineering technicians,Engineering,False
+3115,Quality assurance technicians,Scientific / QA,False
+3116,"Planning, process and production technicians",Manufacturing,False
+3119,"Science, engineering and production technicians n.e.c.",Engineering,False
+3120,"CAD, drawing and architectural technicians",Engineering,False
+3131,IT operations technicians,IT / Computing / Software,False
+3132,IT user support technicians,IT / Computing / Software,False
+3133,Database administrators and web content technicians,IT / Computing / Software,False
+3211,Dispensing opticians,Healthcare and Social care,False
+3212,Pharmaceutical technicians,Healthcare and Social care,False
+3213,Medical and dental technicians,Healthcare and Social care,False
+3214,Complementary health associate professionals,Healthcare and Social care,False
+3219,Health associate professionals n.e.c.,Healthcare and Social care,False
+3221,Youth and community workers,Healthcare and Social care,False
+3222,Child and early years officers,Healthcare and Social care,False
+3223,Housing officers,Healthcare and Social care,False
+3224,Counsellors,Healthcare and Social care,False
+3229,Welfare and housing associate professionals n.e.c.,Healthcare and Social care,False
+3231,Higher level teaching assistants,Education,True
+3232,Early education and childcare practitioners,Education,True
+3240,Veterinary nurses,Healthcare and Social care,False
+3311,Non-commissioned officers and other ranks,Other / general,False
+3312,Police officers (sergeant and below),Other / general,False
+3313,Fire service officers (watch manager and below),Other / general,False
+3314,Prison service officers (below principal officer),Other / general,False
+3319,Protective service associate professionals n.e.c.,Other / general,False
+3411,Artists,Creative / design / arts & media,False
+3412,"Authors, writers and translators",Creative / design / arts & media,False
+3413,"Actors, entertainers and presenters",Creative / design / arts & media,False
+3414,Dancers and choreographers,Creative / design / arts & media,False
+3415,Musicians,Creative / design / arts & media,False
+3416,"Arts officers, producers and directors",Creative / design / arts & media,False
+3417,"Photographers, audio-visual and broadcasting equipment operators",Creative / design / arts & media,False
+3421,Interior designers,Creative / design / arts & media,False
+3422,"Clothing, fashion and accessories designers",Creative / design / arts & media,False
+3429,Design occupations n.e.c.,Creative / design / arts & media,False
+3431,Sports players,Other / general,False
+3432,"Sports coaches, instructors and officials",Other / general,False
+3433,Fitness and wellbeing instructors,Other / general,False
+3511,Aircraft pilots and air traffic controllers,Transport / logistics / warehouse,True
+3512,Ship and hovercraft officers,Transport / logistics / warehouse,True
+3520,Legal associate professionals,Legal,False
+3531,Brokers,Accounting / Finance,False
+3532,Insurance underwriters,Accounting / Finance,False
+3533,Financial and accounting technicians,Accounting / Finance,False
+3534,Financial accounts managers,Accounting / Finance,False
+3541,"Estimators, valuers and assessors",Property,False
+3542,Importers and exporters,Transport / logistics / warehouse,True
+3543,Project support officers,Admin / clerical / secretarial,False
+3544,Data analysts,IT / Computing / Software,False
+3549,Business associate professionals n.e.c.,Sales,False
+3551,Buyers and procurement officers,Transport / logistics / warehouse,True
+3552,Business sales executives,Sales,False
+3553,Merchandisers,Wholesale and retail,False
+3554,Marketing associate professionals,Marketing / advertising / PR,True
+3555,Estate agents and auctioneers,Property,False
+3556,Sales accounts and business development managers,Sales,False
+3557,Events managers and organisers,Catering and hospitality,False
+3560,Public services associate professionals,Other / general,False
+3571,Human resources and industrial relations officers,HR & recruitment,False
+3572,Careers advisers and vocational guidance specialists,HR & recruitment,False
+3573,Information technology trainers,HR & recruitment,False
+3574,Other vocational and industrial trainers,HR & recruitment,False
+3581,Inspectors of standards and regulations,Scientific / QA,False
+3582,Health and safety managers and officers,Facilities / maintenance,False
+4111,National government administrative occupations,Admin / clerical / secretarial,False
+4112,Local government administrative occupations,Admin / clerical / secretarial,False
+4113,Officers of non-governmental organisations,Admin / clerical / secretarial,False
+4121,Credit controllers,Accounting / Finance,False
+4122,"Book-keepers, payroll managers and wages clerks",Accounting / Finance,False
+4123,Bank and post office clerks,Accounting / Finance,False
+4124,Finance officers,Accounting / Finance,False
+4129,Financial administrative occupations n.e.c.,Accounting / Finance,False
+4131,Records clerks and assistants,Admin / clerical / secretarial,False
+4132,Pensions and insurance clerks and assistants,Admin / clerical / secretarial,False
+4133,Stock control clerks and assistants,Admin / clerical / secretarial,False
+4134,Transport and distribution clerks and assistants,Admin / clerical / secretarial,False
+4135,Library clerks and assistants,Admin / clerical / secretarial,False
+4136,Human resources administrative occupations,Admin / clerical / secretarial,False
+4141,Office managers,Admin / clerical / secretarial,False
+4142,Office supervisors,Admin / clerical / secretarial,False
+4143,Customer service managers,Admin / clerical / secretarial,False
+4151,Sales administrators,Admin / clerical / secretarial,False
+4152,Data entry administrators,Admin / clerical / secretarial,False
+4159,Other administrative occupations n.e.c.,Admin / clerical / secretarial,False
+4211,Medical secretaries,Admin / clerical / secretarial,False
+4212,Legal secretaries,Admin / clerical / secretarial,False
+4213,School secretaries,Admin / clerical / secretarial,False
+4214,Company secretaries and administrators,Admin / clerical / secretarial,False
+4215,Personal assistants and other secretaries,Admin / clerical / secretarial,False
+4216,Receptionists,Admin / clerical / secretarial,False
+4217,Typists and related keyboard occupations,Admin / clerical / secretarial,False
+5111,Farmers,Other / general,False
+5112,Horticultural trades,Other / general,False
+5113,Gardeners and landscape gardeners,Other / general,False
+5114,Groundsmen and greenkeepers,Other / general,False
+5119,Agricultural and fishing trades n.e.c.,Other / general,False
+5211,Sheet metal workers,Manufacturing,False
+5212,"Metal plate workers, smiths, moulders and related occupations",Manufacturing,False
+5213,Welding trades,Manufacturing,False
+5214,Pipe fitters,Manufacturing,False
+5221,Metal machining setters and setter-operators,Manufacturing,False
+5222,"Tool makers, tool fitters and markers-out",Manufacturing,False
+5223,Metal working production and maintenance fitters,Manufacturing,False
+5224,Precision instrument makers and repairers,Manufacturing,False
+5225,Air-conditioning and refrigeration installers and repairers,Manufacturing,False
+5231,"Vehicle technicians, mechanics and electricians",Facilities / maintenance,False
+5232,Vehicle body builders and repairers,Facilities / maintenance,False
+5233,Vehicle paint technicians,Facilities / maintenance,False
+5234,Aircraft maintenance and related trades,Facilities / maintenance,False
+5235,Boat and ship builders and repairers,Facilities / maintenance,False
+5236,Rail and rolling stock builders and repairers,Facilities / maintenance,False
+5241,Electricians and electrical fitters,Construction / trades,False
+5242,Telecoms and related network installers and repairers,Construction / trades,False
+5243,"TV, video and audio servicers and repairers",Construction / trades,False
+5244,Computer system and equipment installers and servicers,Construction / trades,False
+5245,Security system installers and repairers,Construction / trades,False
+5246,Electrical service and maintenance mechanics and repairers,Construction / trades,False
+5249,Electrical and electronic trades n.e.c.,Construction / trades,False
+5250,"Skilled metal, electrical and electronic trades supervisors",Engineering,False
+5311,Steel erectors,Construction / trades,False
+5312,Stonemasons and related trades,Construction / trades,False
+5313,Bricklayers,Construction / trades,False
+5314,"Roofers, roof tilers and slaters",Construction / trades,False
+5315,Plumbers & heating and ventilating installers and repairers,Construction / trades,False
+5316,Carpenters and joiners,Construction / trades,False
+5317,"Glaziers, window fabricators and fitters",Construction / trades,False
+5319,Construction and building trades n.e.c.,Construction / trades,False
+5321,Plasterers,Construction / trades,False
+5322,Floorers and wall tilers,Construction / trades,False
+5323,Painters and decorators,Construction / trades,False
+5330,Construction and building trades supervisors,Construction / trades,False
+5411,Upholsterers,Manufacturing,False
+5412,Footwear and leather working trades,Manufacturing,False
+5413,Tailors and dressmakers,Manufacturing,False
+5419,"Textiles, garments and related trades n.e.c.",Manufacturing,False
+5421,Pre-press technicians,Manufacturing,False
+5422,Printers,Manufacturing,False
+5423,Print finishing and binding workers,Manufacturing,False
+5431,Butchers,Catering and hospitality,False
+5432,Bakers and flour confectioners,Catering and hospitality,False
+5433,Fishmongers and poultry dressers,Catering and hospitality,False
+5434,Chefs,Catering and hospitality,False
+5435,Cooks,Catering and hospitality,False
+5436,Catering and bar managers,Catering and hospitality,False
+5441,"Glass and ceramics makers, decorators and finishers",Manufacturing,False
+5442,Furniture makers and other craft woodworkers,Manufacturing,False
+5443,Florists,Manufacturing,False
+5449,Other skilled trades n.e.c.,Manufacturing,False
+6111,Early education and childcare assistants,Education,True
+6112,Teaching assistants,Education,True
+6113,Educational support assistants,Education,True
+6114,Childminders,Education,True
+6116,Nannies and au pairs,Education,True
+6117,Playworkers,Education,True
+6121,Pest control officers,Facilities / maintenance,False
+6129,Animal care services occupations n.e.c.,Other / general,False
+6131,Nursing auxiliaries and assistants,Healthcare and Social care,False
+6132,Ambulance staff (excluding paramedics),Healthcare and Social care,False
+6133,Dental nurses,Healthcare and Social care,False
+6134,Houseparents and residential wardens,Healthcare and Social care,False
+6135,Care workers and home carers,Healthcare and Social care,False
+6136,Senior care workers,Healthcare and Social care,False
+6137,Care escorts,Healthcare and Social care,False
+6138,"Undertakers, mortuary and crematorium assistants",Healthcare and Social care,False
+6211,Sports and leisure assistants,Other / general,False
+6212,Travel agents,Travel / tourism,True
+6213,Air travel assistants,Travel / tourism,True
+6214,Rail travel assistants,Travel / tourism,True
+6219,Leisure and travel service occupations n.e.c.,Travel / tourism,True
+6221,Hairdressers and barbers,Other / general,False
+6222,Beauticians and related occupations,Other / general,False
+6231,Housekeepers and related occupations,Domestic help,False
+6232,Caretakers,Facilities / maintenance,False
+6240,Cleaning and housekeeping managers and supervisors,Facilities / maintenance,False
+6250,Bed and breakfast and guest house owners and proprietors,Catering and hospitality,False
+6311,Police community support officers,Other / general,False
+6312,Parking and civil enforcement occupations,Other / general,False
+7111,Sales and retail assistants,Wholesale and retail,False
+7112,Retail cashiers and check-out operators,Wholesale and retail,False
+7113,Telephone salespersons,Wholesale and retail,False
+7114,Pharmacy and optical dispensing assistants,Wholesale and retail,False
+7115,Vehicle and parts salespersons and advisers,Wholesale and retail,False
+7121,Collector salespersons and credit agents,Sales,False
+7122,"Debt, rent and other cash collectors",Sales,False
+7123,Roundspersons and van salespersons,Sales,False
+7124,Market and street traders and assistants,Sales,False
+7125,Visual merchandisers and related occupations,Sales,False
+7129,Sales related occupations n.e.c.,Sales,False
+7131,Shopkeepers and owners - retail and wholesale,Wholesale and retail,False
+7132,Sales supervisors - retail and wholesale,Wholesale and retail,False
+7211,Call and contact centre occupations,Customer service / support,False
+7212,Telephonists,Customer service / support,False
+7213,Communication operators,Customer service / support,False
+7214,Market research interviewers,Customer service / support,False
+7219,Customer service occupations n.e.c.,Customer service / support,False
+7220,Customer service supervisors,Customer service / support,False
+8111,"Food, drink and tobacco process operatives",Manufacturing,False
+8112,Textile process operatives,Manufacturing,False
+8113,Chemical and related process operatives,Manufacturing,False
+8114,Plastics process operatives,Manufacturing,False
+8115,Metal making and treating process operatives,Manufacturing,False
+8119,Process operatives n.e.c.,Manufacturing,False
+8120,Metal working machine operatives,Manufacturing,False
+8131,Paper and wood machine operatives,Manufacturing,False
+8132,Mining and quarry workers and related operatives,Energy / oil & gas,False
+8133,Energy plant operatives,Energy / oil & gas,False
+8134,Water and sewerage plant operatives,Facilities / maintenance,False
+8135,Printing machine assistants,Manufacturing,False
+8139,Plant and machine operatives n.e.c.,Manufacturing,False
+8141,Assemblers (electrical and electronic products),Manufacturing,False
+8142,Assemblers (vehicles and metal goods),Manufacturing,False
+8143,Routine inspectors and testers,Manufacturing,False
+8144,"Weighers, graders and sorters",Manufacturing,False
+8145,"Tyre, exhaust and windscreen fitters",Manufacturing,False
+8146,Sewing machinists,Manufacturing,False
+8149,Assemblers and routine operatives n.e.c.,Manufacturing,False
+8151,"Scaffolders, stagers and riggers",Construction / trades,False
+8152,Road construction operatives,Construction / trades,False
+8153,Rail construction and maintenance operatives,Construction / trades,False
+8159,Construction operatives n.e.c.,Construction / trades,False
+8160,"Production, factory and assembly supervisors",Manufacturing,False
+8211,Large goods vehicle drivers,Transport / logistics / warehouse,True
+8212,Bus and coach drivers,Transport / logistics / warehouse,True
+8213,Taxi and cab drivers and chauffeurs,Transport / logistics / warehouse,True
+8214,Delivery drivers and couriers,Transport / logistics / warehouse,True
+8215,Driving instructors,Transport / logistics / warehouse,True
+8219,Road transport drivers n.e.c.,Transport / logistics / warehouse,True
+8221,Crane drivers,Transport / logistics / warehouse,True
+8222,Fork-lift truck drivers,Transport / logistics / warehouse,True
+8229,Mobile machine drivers and operatives n.e.c.,Transport / logistics / warehouse,True
+8231,Train and tram drivers,Transport / logistics / warehouse,True
+8232,Marine and waterways transport operatives,Transport / logistics / warehouse,True
+8233,Air transport operatives,Transport / logistics / warehouse,True
+8234,Rail transport operatives,Transport / logistics / warehouse,True
+8239,Other drivers and transport operatives n.e.c.,Transport / logistics / warehouse,True
+9111,Farm workers,Other / general,False
+9112,Forestry and related workers,Other / general,False
+9119,Fishing and other elementary agriculture occupations n.e.c.,Other / general,False
+9121,Groundworkers,Construction / trades,False
+9129,Elementary construction occupations n.e.c.,Construction / trades,False
+9131,Industrial cleaning process occupations,Manufacturing,False
+9132,"Packers, bottlers, canners and fillers",Manufacturing,False
+9139,Elementary process plant occupations n.e.c.,Manufacturing,False
+9211,"Postal workers, mail sorters and messengers",Admin / clerical / secretarial,False
+9219,Elementary administration occupations n.e.c.,Admin / clerical / secretarial,False
+9221,Window cleaners,Facilities / maintenance,False
+9222,Street cleaners,Facilities / maintenance,False
+9223,Cleaners and domestics,Facilities / maintenance,False
+9224,"Launderers, dry cleaners and pressers",Facilities / maintenance,False
+9225,Refuse and salvage occupations,Facilities / maintenance,False
+9226,Vehicle valeters and cleaners,Facilities / maintenance,False
+9229,Elementary cleaning occupations n.e.c.,Facilities / maintenance,False
+9231,Security guards and related occupations,Other / general,False
+9232,School midday and crossing patrol occupations,Education,True
+9233,Exam invigilators,Education,True
+9241,Shelf fillers,Wholesale and retail,False
+9249,Elementary sales occupations n.e.c.,Wholesale and retail,False
+9251,Elementary storage supervisors,Transport / logistics / warehouse,True
+9252,Warehouse operatives,Transport / logistics / warehouse,True
+9253,Delivery operatives,Transport / logistics / warehouse,True
+9259,Elementary storage occupations n.e.c.,Transport / logistics / warehouse,True
+9261,Bar and catering supervisors,Catering and hospitality,False
+9262,Hospital porters,Healthcare and Social care,False
+9263,Kitchen and catering assistants,Catering and hospitality,False
+9264,Waiters and waitresses,Catering and hospitality,False
+9265,Bar staff,Catering and hospitality,False
+9266,Coffee shop workers,Catering and hospitality,False
+9267,Leisure and theme park attendants,Travel / tourism,True
+9269,Other elementary services occupations n.e.c.,Catering and hospitality,False

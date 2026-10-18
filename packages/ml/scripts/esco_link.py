@@ -42,7 +42,7 @@ def main() -> None:
     idx = idx[idx.soc2020.str.fullmatch(r"\d{4}") & idx.isco08.str.fullmatch(r"\d{4}")]
     idx["key"] = idx.title.map(norm)
 
-    occ = pd.read_csv(raw / "esco" / "occupations_en.csv", dtype=str)
+    occ = pd.read_csv(raw / "esco" / "occupations_en.csv", dtype=str).drop_duplicates("conceptUri")  # the file repeats 4 URIs
     occ["isco08"] = occ["iscoGroup"].str[:4]
     pref = occ.assign(key=occ.preferredLabel.map(norm))[["conceptUri", "preferredLabel", "isco08", "key"]]
     alt_rows = []

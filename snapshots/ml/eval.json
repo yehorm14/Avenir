@@ -1,12 +1,12 @@
 {
- "schema_version": "1.1",
- "generated_at": "2026-10-17T20:26:08+00:00",
+ "schema_version": "1.2",
+ "generated_at": "2026-10-18T02:17:27+00:00",
  "status": "preliminary",
  "checks": {
   "bridge_seam": {
    "status": "preliminary",
-   "date": "2026-10-17",
-   "summary": "Bridged vs native values at both code changes: pay lines up, job counts do not.",
+   "date": "2026-10-18",
+   "summary": "Bridged vs native values at both code changes. Pay lines up on average (per-occupation error about 4%, larger where purity is low); job counts don't.",
    "metrics": {
     "2020_2021": {
      "pay": {
@@ -16,7 +16,11 @@
        0.95,
        1.034
       ],
-      "share_outside_0.8_1.25": 0.036
+      "share_outside_0.8_1.25": 0.036,
+      "abs_error_net_of_median": {
+       "median": 0.042,
+       "p90": 0.143
+      }
      },
      "jobs": {
       "n": 272,
@@ -25,7 +29,11 @@
        0.916,
        1.248
       ],
-      "share_outside_0.8_1.25": 0.382
+      "share_outside_0.8_1.25": 0.382,
+      "abs_error_net_of_median": {
+       "median": 0.157,
+       "p90": 0.546
+      }
      }
     },
     "2010_2011_all_employees": {
@@ -36,7 +44,11 @@
        0.958,
        1.053
       ],
-      "share_outside_0.8_1.25": 0.063
+      "share_outside_0.8_1.25": 0.063,
+      "abs_error_net_of_median": {
+       "median": 0.047,
+       "p90": 0.178
+      }
      },
      "jobs": {
       "n": 313,
@@ -45,15 +57,37 @@
        0.739,
        1.162
       ],
-      "share_outside_0.8_1.25": 0.486
+      "share_outside_0.8_1.25": 0.486,
+      "abs_error_net_of_median": {
+       "median": 0.227,
+       "p90": 0.897
+      }
      }
-    }
+    },
+    "pay_seam_by_purity": {
+     "purity_below_0.5": {
+      "n": 54,
+      "median_abs_error": 0.064,
+      "p90_abs_error": 0.231
+     },
+     "purity_0.5_to_0.95": {
+      "n": 84,
+      "median_abs_error": 0.044,
+      "p90_abs_error": 0.132
+     },
+     "purity_0.95_plus": {
+      "n": 222,
+      "median_abs_error": 0.036,
+      "p90_abs_error": 0.111
+     }
+    },
+    "n_low_purity": 67
    }
   },
   "backtest_probe": {
    "status": "preliminary",
-   "date": "2026-10-17",
-   "summary": "Spearman correlations in the two native windows.",
+   "date": "2026-10-18",
+   "summary": "Spearman correlations in the native windows (simple rules, not the app's picks).",
    "metrics": {
     "2013": {
      "pay_level_vs_later_real_pay_growth": -0.245,
@@ -62,25 +96,30 @@
     "2014": {
      "pay_level_vs_later_real_pay_growth": -0.39,
      "prior_jobs_growth_vs_later_jobs_growth": 0.147
+    },
+    "2015": {
+     "pay_level_vs_later_real_pay_growth": -0.492,
+     "prior_jobs_growth_vs_later_jobs_growth": 0.129
     }
    }
   },
   "exposure_agreement": {
    "status": "preliminary",
-   "date": "2026-10-17",
-   "summary": "ILO (weighted) vs DfE LLM exposure, rank correlation across occupations.",
+   "date": "2026-10-18",
+   "summary": "ILO (weighted) vs DfE language-model exposure: rank correlation across all occupations and within 2-digit groups. Both are task-based methods, so this is agreement between two methods, not proof.",
    "metrics": {
-    "spearman": 0.777,
-    "n": 409,
+    "spearman": 0.78,
+    "spearman_within_2digit_groups": 0.448,
+    "n": 400,
     "demo_disagreements_over_30_points": [
      {
       "soc2020": "2142",
-      "ilo_percentile": 0.854,
+      "ilo_percentile": 0.851,
       "dfe_percentile": 0.484
      },
      {
       "soc2020": "2454",
-      "ilo_percentile": 0.782,
+      "ilo_percentile": 0.776,
       "dfe_percentile": 0.455
      }
     ]
@@ -88,13 +127,25 @@
   },
   "hedge_sanity": {
    "status": "preliminary",
-   "date": "2026-10-17",
-   "summary": "Share of top-3 hedges that O*NET (US) also lists as related, vs two baselines.",
+   "date": "2026-10-18",
+   "summary": "Share of top-3 hedges that O*NET (US) also lists as related, for the 223 of 412 occupations with title-based links. Compared on the same occupations, hedges beat 'any job in the same 3-digit group' by a few points. The reference goes through the same SOC-to-ESCO links, so it is partly circular.",
    "metrics": {
-    "n": 233,
-    "hit_at_3": 0.821,
-    "baseline_random_same_level": 0.275,
-    "baseline_same_3_digit_group": 0.762,
+    "n": 223,
+    "n_occupations": 412,
+    "hit_at_3": 0.836,
+    "hit_at_3_ci95": [
+     0.801,
+     0.869
+    ],
+    "baseline_random_same_level": 0.278,
+    "matched_n": 217,
+    "matched_hit_at_3": 0.833,
+    "matched_baseline_same_3_digit_group": 0.762,
+    "matched_difference": 0.071,
+    "matched_difference_ci95": [
+     0.034,
+     0.111
+    ],
     "demo_hit_at_3": 0.833,
     "demo_zero_hits": [
      "2135"
@@ -103,7 +154,7 @@
   },
   "matcher": {
    "status": "preliminary",
-   "date": "2026-10-17",
+   "date": "2026-10-18",
    "summary": "Matcher methods on the dev split (n=30, 20 careers, chance hit@3 0.362). Shipped: embed_tags.",
    "metrics": {
     "methods": {
@@ -142,13 +193,13 @@
      },
      "embed_tags": {
       "n": 30,
-      "hit_at_1": 0.5,
-      "hit_at_3": 0.9,
+      "hit_at_1": 0.467,
+      "hit_at_3": 0.933,
       "hit_at_3_ci95": [
-       0.767,
+       0.833,
        1.0
       ],
-      "mrr": 0.693,
+      "mrr": 0.681,
       "chance_hit_at_3": 0.362
      },
      "embed_ft": {
@@ -165,12 +216,12 @@
      "embed_ft_tags": {
       "n": 30,
       "hit_at_1": 0.467,
-      "hit_at_3": 0.867,
+      "hit_at_3": 0.9,
       "hit_at_3_ci95": [
-       0.733,
-       0.967
+       0.8,
+       1.0
       ],
-      "mrr": 0.661,
+      "mrr": 0.673,
       "chance_hit_at_3": 0.362
      }
     },
@@ -190,10 +241,10 @@
       ]
      },
      "embed_tags": {
-      "delta_hit_at_3": 0.2,
+      "delta_hit_at_3": 0.233,
       "ci95": [
-       0.033,
-       0.367
+       0.067,
+       0.4
       ]
      },
      "embed_ft": {
@@ -204,12 +255,62 @@
       ]
      },
      "embed_ft_tags": {
-      "delta_hit_at_3": 0.167,
+      "delta_hit_at_3": 0.2,
       "ci95": [
-       -0.033,
-       0.367
+       0.0,
+       0.4
       ]
      }
+    }
+   }
+  },
+  "crisis_placebo": {
+   "status": "preliminary",
+   "date": "2026-10-18",
+   "summary": "Does each crisis show more spread between careers than ordinary years? Crises that fail are kept in the files but not shown on cards.",
+   "metrics": {
+    "covid": {
+     "measure": "all-employee jobs, one-year log change, occupations with at least 50,000 jobs",
+     "window_robust_sd": 0.1175,
+     "ordinary_robust_sd_median": 0.0581,
+     "ordinary_robust_sd_range": [
+      0.0524,
+      0.0816
+     ],
+     "n_ordinary_windows": 8,
+     "ratio": 2.021,
+     "passes": true,
+     "rule": "Shown on cards only if the spread between careers (robust SD) is at least 1.25x the ordinary-year median"
+    },
+    "gfc_2008": {
+     "measure": "all-employee jobs, one-year log change, occupations with at least 50,000 jobs",
+     "window_robust_sd": 0.0628,
+     "ordinary_robust_sd_median": 0.0587,
+     "ordinary_robust_sd_range": [
+      0.0524,
+      0.0816
+     ],
+     "n_ordinary_windows": 10,
+     "ratio": 1.069,
+     "passes": false,
+     "rule": "Shown on cards only if the spread between careers (robust SD) is at least 1.25x the ordinary-year median"
+    },
+    "cost_of_living": {
+     "measure": "full-time median pay, two-year log change, occupations with CV at most 10%",
+     "window_robust_sd": 0.0383,
+     "ordinary_robust_sd_median": 0.0315,
+     "ordinary_robust_sd_range": [
+      0.0278,
+      0.0409
+     ],
+     "n_ordinary_windows": 7,
+     "ratio": 1.215,
+     "passes": false,
+     "rule": "Shown on cards only if the spread between careers (robust SD) is at least 1.25x the ordinary-year median"
+    },
+    "tech_slump": {
+     "passes": null,
+     "note": "Not testable: the advert series starts in 2018, so there are no ordinary two-year windows."
     }
    }
   }

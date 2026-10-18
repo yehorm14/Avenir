@@ -7,7 +7,8 @@ OUT_DIR/ashe_long.parquet and OUT_DIR/ashe_long.csv with one row per
 year x SOC 4-digit code x sheet (Full-Time, All):
 
 year, edition, soc_version, soc_code, title, sheet, jobs_k, median, mean,
-p10, p20, p25, p30, p40, p60, p70, p75, p80, p90, median_cv
+p10, p20, p25, p30, p40, p60, p70, p75, p80, p90, and the CVs median_cv, jobs_k_cv, p10_cv,
+p25_cv, p75_cv, p90_cv
 
 Suppressed or missing cells ("x", "..", blanks) become NaN. median_cv is the
 coefficient of variation of the median from table 14.7b (ONS quality guide:
@@ -22,6 +23,10 @@ import pandas as pd
 
 SHEETS = ["Full-Time", "All"]
 FIXED = ["title", "soc_code", "jobs_k", "median", "median_change", "mean", "mean_change"]
+
+
+# Table 14.7b gives a coefficient of variation for each 14.7a column; these are the ones used downstream.
+CV_COLS = ("median", "jobs_k", "p10", "p25", "p75", "p90")
 
 
 def soc_version(year: int) -> int:
@@ -67,10 +72,13 @@ def parse_year(folder: Path) -> pd.DataFrame:
         keep = ["title", "soc_code", "jobs_k", "median", "mean"] + [c for c in a.columns if re.fullmatch(r"p\d+", c)]
         a = a[keep]
         if table_b is not None:
-            b = read_sheet(table_b, sheet)[["soc_code", "median"]].rename(columns={"median": "median_cv"})
+            b = read_sheet(table_b, sheet)
+            cv_cols = [c for c in CV_COLS if c in b.columns]
+            b = b[["soc_code"] + cv_cols].rename(columns={c: f"{c}_cv" for c in cv_cols})
             a = a.merge(b, on="soc_code", how="left")
-        else:
-            a["median_cv"] = np.nan
+        for c in CV_COLS:
+            if f"{c}_cv" not in a.columns:
+                a[f"{c}_cv"] = np.nan
         a.insert(0, "sheet", sheet)
         frames.append(a)
     out = pd.concat(frames, ignore_index=True)

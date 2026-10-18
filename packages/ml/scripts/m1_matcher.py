@@ -8,7 +8,7 @@ Usage:
 
 Methods (fixed before looking at results):
   random        expected top-3 hit rate by chance, given how many careers each row labels
-  keyword_tags  the runtime chain as shipped: ML.match_tags (keyword) -> fit_scores(tags) -> top 3
+  keyword_tags  the runtime chain with the hand-made affinity table (ml_common.AFFINITY, frozen baseline)
   bm25          lexical retrieval: profile text against each career's text (title, ESCO labels,
                 descriptions, distinctive skills); a proper keyword baseline
   embed         BGE-base embeddings; score = max cosine over the career's ESCO text chunks
@@ -39,7 +39,7 @@ os.environ.setdefault("HF_HUB_DISABLE_SYMLINKS_WARNING", "1")
 
 sys.path.insert(0, str(Path(__file__).parent))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from ml_common import DEMO, NOW, SCHEMA_VERSION, TAGS  # noqa: E402
+from ml_common import AFFINITY, DEMO, NOW, SCHEMA_VERSION, TAGS  # noqa: E402
 
 EMBED_MODEL = "BAAI/bge-base-en-v1.5"
 QUERY_PREFIX = "Represent this sentence for searching relevant passages: "
@@ -175,7 +175,7 @@ def tag_affinity_from_embeddings(embedder: Embedder, career_vecs: dict[str, np.n
     then min-max scaled within the tag so the best career for a tag is 1 and the worst 0."""
     aff = {}
     for tag_id, label, kws in TAGS:
-        q = embedder.encode([f"{label}: {', '.join(kws)}"], query=True)[0]
+        q = embedder.encode([f"{label}: {', '.join(k.rstrip('*') for k in kws)}"], query=True)[0]
         raw = embed_scores(q, career_vecs)
         lo, hi = min(raw.values()), max(raw.values())
         aff[tag_id] = {soc: round((s - lo) / (hi - lo), 4) if hi > lo else 0.0 for soc, s in raw.items()}
@@ -229,8 +229,16 @@ def cmd_eval(args) -> dict:
         raise SystemExit(f"no labelled rows for split '{args.split}'")
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
     from pathfinder_ml import ML
-    ml = ML(data_dir=snap)
-    shipped_aff = json.loads((snap / "fit.json").read_text(encoding="utf-8"))["affinity"]
+    # The chain always tags text with the current keyword list (ml_common.TAGS), and the keyword
+    # baseline is frozen to the hand-made table (ml_common.AFFINITY), so it never silently becomes
+    # whatever fit.json was last built with.
+    import tempfile
+    tag_dir = Path(tempfile.mkdtemp(prefix="m1_tags_"))
+    (tag_dir / "fit.json").write_text(json.dumps({"schema_version": SCHEMA_VERSION, "status": "mock", "generated_at": NOW, "method": "eval tags",
+                                                  "tags": [{"id": t, "label": lbl, "keywords": kws} for t, lbl, kws in TAGS],
+                                                  "affinity": AFFINITY}), encoding="utf-8")
+    ml = ML(data_dir=tag_dir, mock_dir=snap)
+    shipped_aff = AFFINITY
     bm25 = BM25({s: career_doc(e) for s, e in texts.items()})
     embedder = Embedder()
     career_vecs = embed_career_chunks(embedder, texts)
@@ -294,7 +302,7 @@ def cmd_build_fit(args) -> None:
         bm25 = BM25({s: career_doc(e) for s, e in texts.items()})
         aff = {}
         for tag_id, label, kws in TAGS:
-            raw = bm25.scores(f"{label} {' '.join(kws)}")
+            raw = bm25.scores(f"{label} {' '.join(k.rstrip('*') for k in kws)}")
             lo, hi = min(raw.values()), max(raw.values())
             aff[tag_id] = {s: round((v - lo) / (hi - lo), 4) if hi > lo else 0.0 for s, v in raw.items()}
         method = "Tag-to-career affinities from BM25 over career texts, min-max scaled per tag; runtime maps free text to tags by keyword."

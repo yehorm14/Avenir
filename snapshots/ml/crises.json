@@ -1,52 +1,100 @@
 {
- "schema_version": "1.1",
- "generated_at": "2026-10-17T20:26:08+00:00",
+ "schema_version": "1.2",
+ "generated_at": "2026-10-18T02:17:27+00:00",
  "status": "preliminary",
  "crises": [
   {
    "key": "covid",
    "label": "COVID-19",
    "window": "2019-2020",
-   "measure": "All-employee jobs, relative to the median occupation",
+   "measure": "Employee jobs (all), relative to the median occupation",
    "baseline_median": 0.0,
    "status": "preliminary",
    "flags": [
     "covid_year",
     "bridged_soc2010"
-   ]
+   ],
+   "show_on_card": true,
+   "placebo": {
+    "measure": "all-employee jobs, one-year log change, occupations with at least 50,000 jobs",
+    "window_robust_sd": 0.1175,
+    "ordinary_robust_sd_median": 0.0581,
+    "ordinary_robust_sd_range": [
+     0.0524,
+     0.0816
+    ],
+    "n_ordinary_windows": 8,
+    "ratio": 2.021,
+    "passes": true,
+    "rule": "Shown on cards only if the spread between careers (robust SD) is at least 1.25x the ordinary-year median"
+   }
   },
   {
    "key": "cost_of_living",
-   "label": "Cost-of-living shock",
-   "window": "2021-2023",
-   "measure": "Real median full-time pay, relative to the median occupation",
-   "baseline_median": -0.0439,
+   "label": "After the cost-of-living shock",
+   "window": "2023-2025",
+   "measure": "Real median full-time pay, tax year 2022/23 (peak inflation) to 2024/25, relative to the median occupation",
+   "baseline_median": 0.0378,
    "status": "preliminary",
-   "flags": []
+   "flags": [],
+   "show_on_card": false,
+   "placebo": {
+    "measure": "full-time median pay, two-year log change, occupations with CV at most 10%",
+    "window_robust_sd": 0.0383,
+    "ordinary_robust_sd_median": 0.0315,
+    "ordinary_robust_sd_range": [
+     0.0278,
+     0.0409
+    ],
+    "n_ordinary_windows": 7,
+    "ratio": 1.215,
+    "passes": false,
+    "rule": "Shown on cards only if the spread between careers (robust SD) is at least 1.25x the ordinary-year median"
+   }
   },
   {
    "key": "tech_slump",
-   "label": "Tech hiring slump",
+   "label": "Hiring slump",
    "window": "2022-2024",
-   "measure": "Online job adverts by category, relative to all adverts",
-   "baseline_median": -0.3159,
+   "measure": "Online job adverts by category (de-duplicated), January-June 2022 to January-June 2024, relative to the median occupation's category",
+   "baseline_median": -0.4076,
+   "baseline_all_adverts": -0.3554,
    "status": "preliminary",
    "flags": [
     "category_level"
-   ]
+   ],
+   "show_on_card": true,
+   "placebo": {
+    "passes": null,
+    "note": "Not testable: the advert series starts in 2018, so there are no ordinary two-year windows."
+   }
   },
   {
    "key": "gfc_2008",
    "label": "2008 financial crisis",
    "window": "2008-2009",
-   "measure": "Worse of all-employee jobs change and real full-time pay change (SOC 2000), each relative to the median occupation",
-   "baseline_median": -0.0659,
-   "baseline_real_pay_median": 0.0018,
+   "measure": "Employee jobs (all), SOC 2000, relative to the median occupation",
+   "baseline_median": -0.0613,
+   "baseline_real_pay_median": -0.0133,
    "status": "preliminary",
    "flags": [
     "bridged_soc2000",
     "bridged_soc2010"
-   ]
+   ],
+   "show_on_card": false,
+   "placebo": {
+    "measure": "all-employee jobs, one-year log change, occupations with at least 50,000 jobs",
+    "window_robust_sd": 0.0628,
+    "ordinary_robust_sd_median": 0.0587,
+    "ordinary_robust_sd_range": [
+     0.0524,
+     0.0816
+    ],
+    "n_ordinary_windows": 10,
+    "ratio": 1.069,
+    "passes": false,
+    "rule": "Shown on cards only if the spread between careers (robust SD) is at least 1.25x the ordinary-year median"
+   }
   }
  ]
 }

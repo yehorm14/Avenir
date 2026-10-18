@@ -2,13 +2,13 @@
 
 Owner: **Arsenii** (`z1nare`). Folders: `packages/ml/` (code, scripts, tests, docs) and `snapshots/ml/` (artefacts the app loads).
 - **Team overview, plain English:** [`TEAM_UPDATE.md`](TEAM_UPDATE.md).
-- **Contract:** [`CONTRACTS.md`](CONTRACTS.md) (v1.1).
+- **Contract:** [`CONTRACTS.md`](CONTRACTS.md) (v1.2; its first table lists what changed after the two reviews).
 - **Cluster notes:** [`RUNBOOK.md`](RUNBOOK.md).
 - **Labelling task:** [`eval/LABELLING.md`](eval/LABELLING.md).
 
 ## For teammates: start here
 
-- **Real artefacts are in `snapshots/ml/`** (all 412 UK occupations, status `preliminary`). The 20 demo careers are also in `snapshots/ml/mock/`. Same shapes in both.
+- **Real artefacts are in `snapshots/ml/`** (all 412 UK occupations, status `preliminary`). `snapshots/ml/mock/` has the 20 demo careers plus their hedge candidates (65 occupations). Same shapes in both.
 - **Python** (standard library only, nothing to install):
   ```python
   import sys; sys.path.insert(0, "packages/ml")
@@ -16,27 +16,27 @@ Owner: **Arsenii** (`z1nare`). Folders: `packages/ml/` (code, scripts, tests, do
   ml = ML()                                          # real files, mock fallback per file
   ml.occupation("2134")["metrics"]["pay_median"]     # value, range, source, year, confidence, flags
   ml.match_tags("I like drawing and fixing bikes")   # keyword baseline
-  ml.fit_scores(["maths", "art_drawing"])            # placeholder affinities until the matcher lands
+  ml.fit_scores(["maths", "art_drawing"])            # embedding-derived affinities (preliminary until the team's labels)
   ml.hedges("2451")                                  # related careers, same skill level, with shared skills
   ml.backtest(2014)                                  # "pick a past year"
   ml.status()                                        # real vs mock, for the badges
   ```
-- **Tests:** `PYTHONPATH=packages/ml python -m pytest packages/ml/tests -q` (28 tests: schema checks on mock and real files, plus the loader's behaviour).
-- **The LLM rule:** any sentence the LLM writes about a number must mention that number's `MUST_MENTION` flags; `FLAG_TEXT` gives a plain sentence for each.
+- **Tests:** `python -m pytest packages/ml/tests -q` from the repo root (61 tests; `conftest.py` sets the path). Schema checks on mock and real files, the confidence rule on every value, cross-file references, centred and placebo-gated crises, no look-ahead in the backtest tiers, the keyword tagger, the loader and the matcher service.
+- **The LLM rule, with tooling:** `pathfinder_ml.explain.validate_explanation(draft, occupation)` lists every number in a draft that isn't in the record and every `MUST_MENTION` flag it fails to mention; `template_explanation(occupation)` is the deterministic fallback. Show an LLM draft only when the list is empty.
 
 ## Status of each artefact
 
 | Artefact | Powers in the app | Status |
 | --- | --- | --- |
-| `occupations.json` | The risk and reward card | **Real (preliminary), 412 occupations:** pay level, range and floor/ceiling; real pay change; jobs; demand trends in both coding eras; ILO exposure with DfE cross-check; resilience in COVID, cost of living, tech slump and 2008; under-25 share |
-| `history.json` | Pay and jobs charts | **Real:** pay 2007-2025, jobs 2011-2025, every bridged year flagged |
-| `hedges.json` | The hedge career | **Real:** ESCO skill overlap at the same skill level; checked against O*NET (US) |
-| `fit.json` | Interest checklist and fit | **Real (preliminary):** tag-to-career affinities from the embedding model; evaluated on a synthetic development set only, so the final choice waits for the team's labels (see M1 below) |
+| `occupations.json` | The risk and reward card | **Real (preliminary), 412 occupations:** pay level, range and floor/ceiling; real pay change with a range; jobs; demand relative to the typical occupation in both coding eras; ILO exposure with DfE cross-check; resilience (COVID and tech slump on cards; 2008 and cost of living fail the placebo test); under-25 share |
+| `history.json` | Pay and jobs charts | **Real:** pay 2007-2025, jobs 2011-2025; every bridged year flagged, low-purity and partial-coverage years flagged too |
+| `hedges.json` | The hedge career | **Real:** ESCO skill overlap at the same skill level, with each candidate's exposure difference; checked against O*NET (US) |
+| `fit.json` | Interest checklist and fit | **Real (preliminary):** tag-to-career affinities from the embedding model. On the synthetic dev set it ties the hand-made table at top-3 (0.93 vs 0.90) and loses at top-1 (0.47 vs 0.70); that set is circular for the hand-made table, so the team's labels decide (see M1) |
 | `career_texts.json` | Input for the optional matcher service | **Real:** ESCO texts for the 20 demo careers |
-| `backtest.json` | "Pick a past year" | **Real (preliminary):** windows 2013→18, 2014→19, 2019→24 (pay only) |
-| `crises.json` | Crisis definitions and baselines | **Real:** COVID, cost of living, tech slump, 2008 |
+| `backtest.json` | "Pick a past year" | **Real (preliminary):** simple rules, windows 2013→18, 2014→19, 2015→20, 2019→24 (pay only); tiers from base-year data only |
+| `crises.json` | Crisis definitions and baselines | **Real:** COVID, cost of living, tech slump, 2008, each with `show_on_card` and its placebo result |
 | `sources.json` | Sources page | **Real:** 12 sources with licences |
-| `eval.json` | "How we checked" panel | **Real:** bridge seams, backtest probe, exposure agreement, hedge check; matcher pending |
+| `eval.json` | "How we checked" panel | **Real:** bridge seams (with purity), backtest probe, exposure agreement (overall and within groups), hedge check against the same-group baseline, crisis placebo, matcher |
 
 ## Work packages
 
@@ -101,6 +101,25 @@ The probes (`probe_ashe.py`, `probe_isco.py`, `probe_bridge.py`) reproduce the f
 | Source | Licence |
 | --- | --- |
 | ONS ASHE, CPIH, SOC crosswalks, coding index, online job adverts, APS 2016; DfE | Open Government Licence v3.0 |
-| ILO WP140 exposure index | **To confirm before public release** (the repo is private now) |
+| ILO WP140 exposure index | CC BY 4.0 (© ILO 2025); adapted (averaged over ISCO codes, mapped to SOC), not reviewed or endorsed by the ILO |
 | ESCO | EU open data, with attribution |
 | O*NET | CC BY 4.0 (used only as a reference check) |
+
+## v1.2 review fixes (18 Oct)
+
+Two independent reviews (data and statistics; engineering) found the arithmetic correct and the ASHE parsing exact, but several numbers trusted too much or defined badly. v1.2 fixes, with the evidence:
+
+| Finding | Fix | Result |
+| --- | --- | --- |
+| Bridged pay is wrong where a new code was carved out of a catch-all old code (cyber security: a fake +29% step in 2021) | Purity of each crosswalk link; `bridged_low_purity` below 0.5 | 67 low-purity codes; their seam error is 6.4% median, 23% p90, against 3.6% and 11% for pure codes |
+| April CPIH used for tax-year pay | Tax-year average | Typical 10-year real change -1.2% → +1.4% ("real pay fell since 2011" still holds) |
+| `demand_trend` anchored on 2021, a distorted year | 2022-2025, relative to the typical occupation, CVs in the interval, medium at most | 403 of 412 have a value |
+| Confidence didn't follow the contract (about 500 values) | One rule plus tests | 0 violations |
+| Exposure ranges ignored the ILO's own spread; imputation by sibling average | sqrt(between² + within²); no imputation (missing means missing) | 402 values; 28 high, 325 medium, 49 low |
+| 2008 resilience has no signal; cost of living confounded | Placebo test against ordinary years, threshold 1.25 set before running | COVID 2.02 (on cards), 2008 1.07 (off), cost of living 1.22 (off) |
+| Tech slump: wrong category map, not centred, volatile categories | Reviewed SOC 2020 map (`data/category_map.csv`), de-duplicated adverts, centred, low, volatile categories null | |
+| Hedge evidence one-sided, weak and twin matches | Weaker side, floor 0.05, twins dropped | O*NET agreement 83% vs 76% for "same 3-digit group" on the same 217 occupations (+7 points, 95% CI 3 to 11) |
+| Backtest tiers chosen after dropping occupations with missing outcomes (look-ahead) | `assign_tiers` on base-year data only, with a test | Pay level persists strongly: 93% of top-third careers stay top third |
+| Build overwrote `fit.json` and `eval.json` | Each stage owns its files; eval checks merge | |
+| Keyword tagger false hits and misses | Whole words, `*` stems | "apprenticeship" no longer means coding |
+| Matcher service answered junk with confident careers | Abstains below cosine 0.47 (provisional, from 9 probes) | |

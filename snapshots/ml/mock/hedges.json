@@ -1,948 +1,4583 @@
 {
-  "schema_version": "1.1",
-  "generated_at": "2026-10-17T19:38:01+00:00",
-  "status": "mock",
-  "method": "placeholder: same SOC group first, then lower exposure",
-  "occupations": {
-    "2134": [
-      {
-        "soc2020": "2121",
-        "title": "Civil engineers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2123",
-        "title": "Electrical engineers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2142",
-        "title": "Graphic and multimedia designers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2135",
-        "title": "Cyber security professionals",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2133",
-        "title": "IT business analysts, architects and systems designers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      }
+ "schema_version": "1.2",
+ "generated_at": "2026-10-18T02:17:27+00:00",
+ "status": "preliminary",
+ "method": "esco_skill_jaccard: ESCO skill overlap (IDF-weighted Jaccard), same ONS skill level; checked against O*NET",
+ "occupations": {
+  "1131": [
+   {
+    "soc2020": "2435",
+    "title": "Professional/Chartered company secretaries",
+    "similarity": 0.3425,
+    "shared_skills": [
+     "financial statements",
+     "financial management",
+     "create a financial plan",
+     "strive for company growth",
+     "enforce financial policies",
+     "analyse market financial trends"
     ],
-    "3544": [
-      {
-        "soc2020": "3113",
-        "title": "Engineering technicians",
-        "similarity": 0.6,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "3120",
-        "title": "CAD, drawing and architectural technicians",
-        "similarity": 0.6,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "5241",
-        "title": "Electricians and electrical fitters",
-        "similarity": 0.3,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2254",
-        "title": "Medical radiographers",
-        "similarity": 0.3,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2453",
-        "title": "Quantity surveyors",
-        "similarity": 0.3,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      }
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.03,
+    "lower_exposure": false,
+    "why": "Shares 122 skills, e.g. financial statements, financial management, create a financial plan; estimate from few job-title links"
+   }
+  ],
+  "1137": [
+   {
+    "soc2020": "2131",
+    "title": "IT project managers",
+    "similarity": 0.2291,
+    "shared_skills": [
+     "define technology strategy",
+     "coordinate technological activities",
+     "ICT project management methodologies",
+     "implement ICT risk management",
+     "decision support systems",
+     "ICT project management"
     ],
-    "2133": [
-      {
-        "soc2020": "2121",
-        "title": "Civil engineers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2123",
-        "title": "Electrical engineers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2142",
-        "title": "Graphic and multimedia designers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2135",
-        "title": "Cyber security professionals",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2141",
-        "title": "Web design professionals",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      }
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.034,
+    "lower_exposure": false,
+    "why": "Shares 138 skills, e.g. define technology strategy, coordinate technological activities, ICT project management methodologies; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2133",
+    "title": "IT business analysts, architects and systems designers",
+    "similarity": 0.1712,
+    "shared_skills": [
+     "digital systems",
+     "software architecture models",
+     "systems development life-cycle",
+     "Java (computer programming)",
+     "Ruby (computer programming)",
+     "Python (computer programming)"
     ],
-    "2135": [
-      {
-        "soc2020": "2121",
-        "title": "Civil engineers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2123",
-        "title": "Electrical engineers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2142",
-        "title": "Graphic and multimedia designers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2133",
-        "title": "IT business analysts, architects and systems designers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2141",
-        "title": "Web design professionals",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      }
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.058,
+    "lower_exposure": false,
+    "why": "Shares 95 skills, e.g. digital systems, software architecture models, systems development life-cycle"
+   },
+   {
+    "soc2020": "2124",
+    "title": "Electronics engineers",
+    "similarity": 0.1523,
+    "shared_skills": [
+     "forecast future ICT network needs",
+     "ICT project management methodologies",
+     "Process-based management",
+     "systems development life-cycle",
+     "Scala",
+     "Pascal (computer programming)"
     ],
-    "2141": [
-      {
-        "soc2020": "2121",
-        "title": "Civil engineers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2123",
-        "title": "Electrical engineers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2142",
-        "title": "Graphic and multimedia designers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2135",
-        "title": "Cyber security professionals",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2133",
-        "title": "IT business analysts, architects and systems designers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      }
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.01,
+    "lower_exposure": false,
+    "why": "Shares 55 skills, e.g. forecast future ICT network needs, ICT project management methodologies, Process-based management"
+   },
+   {
+    "soc2020": "2139",
+    "title": "Information technology professionals n.e.c.",
+    "similarity": 0.1446,
+    "shared_skills": [
+     "digital systems",
+     "systems development life-cycle",
+     "optimise choice of ICT solution",
+     "Python (computer programming)",
+     "computer programming",
+     "analyse ICT system"
     ],
-    "2142": [
-      {
-        "soc2020": "2121",
-        "title": "Civil engineers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2123",
-        "title": "Electrical engineers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2135",
-        "title": "Cyber security professionals",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2133",
-        "title": "IT business analysts, architects and systems designers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2141",
-        "title": "Web design professionals",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      }
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.058,
+    "lower_exposure": false,
+    "why": "Shares 110 skills, e.g. digital systems, systems development life-cycle, optimise choice of ICT solution; estimate from few job-title links"
+   }
+  ],
+  "2112": [
+   {
+    "soc2020": "2162",
+    "title": "Other researchers, unspecified discipline",
+    "similarity": 0.4401,
+    "shared_skills": [
+     "life sciences",
+     "biology",
+     "apply scientific methods",
+     "scientific literature",
+     "laboratory techniques",
+     "communicate with a non-scientific audience"
     ],
-    "2451": [
-      {
-        "soc2020": "2453",
-        "title": "Quantity surveyors",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2452",
-        "title": "Chartered architectural technologists, planning officers and consultants",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2454",
-        "title": "Chartered surveyors",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2421",
-        "title": "Chartered and certified accountants",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2433",
-        "title": "Actuaries, economists and statisticians",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      }
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.054,
+    "lower_exposure": false,
+    "why": "Shares 255 skills, e.g. life sciences, biology, apply scientific methods; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2113",
+    "title": "Biochemists and biomedical scientists",
+    "similarity": 0.3892,
+    "shared_skills": [
+     "life sciences",
+     "scientific literature",
+     "molecular biology",
+     "biology",
+     "laboratory techniques",
+     "apply scientific methods"
     ],
-    "2452": [
-      {
-        "soc2020": "2453",
-        "title": "Quantity surveyors",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2451",
-        "title": "Architects",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2454",
-        "title": "Chartered surveyors",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2421",
-        "title": "Chartered and certified accountants",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2433",
-        "title": "Actuaries, economists and statisticians",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      }
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.043,
+    "lower_exposure": false,
+    "why": "Shares 156 skills, e.g. life sciences, scientific literature, molecular biology"
+   },
+   {
+    "soc2020": "2115",
+    "title": "Social and humanities scientists",
+    "similarity": 0.2045,
+    "shared_skills": [
+     "apply scientific methods",
+     "write scientific publications",
+     "communicate with a non-scientific audience",
+     "promote the participation of citizens in scientific and research activities",
+     "conduct research across disciplines",
+     "manage open publications"
     ],
-    "3120": [
-      {
-        "soc2020": "3113",
-        "title": "Engineering technicians",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "3544",
-        "title": "Data analysts",
-        "similarity": 0.6,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "5241",
-        "title": "Electricians and electrical fitters",
-        "similarity": 0.3,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2254",
-        "title": "Medical radiographers",
-        "similarity": 0.3,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2453",
-        "title": "Quantity surveyors",
-        "similarity": 0.3,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      }
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.13,
+    "lower_exposure": false,
+    "why": "Shares 84 skills, e.g. apply scientific methods, write scientific publications, communicate with a non-scientific audience"
+   }
+  ],
+  "2113": [
+   {
+    "soc2020": "2112",
+    "title": "Biological scientists",
+    "similarity": 0.3892,
+    "shared_skills": [
+     "life sciences",
+     "scientific literature",
+     "molecular biology",
+     "biology",
+     "laboratory techniques",
+     "apply scientific methods"
     ],
-    "2121": [
-      {
-        "soc2020": "2123",
-        "title": "Electrical engineers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2142",
-        "title": "Graphic and multimedia designers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2135",
-        "title": "Cyber security professionals",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2133",
-        "title": "IT business analysts, architects and systems designers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2141",
-        "title": "Web design professionals",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      }
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.043,
+    "lower_exposure": false,
+    "why": "Shares 156 skills, e.g. life sciences, scientific literature, molecular biology"
+   },
+   {
+    "soc2020": "2162",
+    "title": "Other researchers, unspecified discipline",
+    "similarity": 0.3696,
+    "shared_skills": [
+     "life sciences",
+     "biology",
+     "apply scientific methods",
+     "scientific literature",
+     "laboratory techniques",
+     "communicate with a non-scientific audience"
     ],
-    "2123": [
-      {
-        "soc2020": "2121",
-        "title": "Civil engineers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2142",
-        "title": "Graphic and multimedia designers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2135",
-        "title": "Cyber security professionals",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2133",
-        "title": "IT business analysts, architects and systems designers",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2141",
-        "title": "Web design professionals",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      }
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.011,
+    "lower_exposure": false,
+    "why": "Shares 193 skills, e.g. life sciences, biology, apply scientific methods; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2115",
+    "title": "Social and humanities scientists",
+    "similarity": 0.2377,
+    "shared_skills": [
+     "apply scientific methods",
+     "communicate with a non-scientific audience",
+     "promote the participation of citizens in scientific and research activities",
+     "conduct research across disciplines",
+     "manage open publications",
+     "integrate gender dimension in research"
     ],
-    "3113": [
-      {
-        "soc2020": "3120",
-        "title": "CAD, drawing and architectural technicians",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "3544",
-        "title": "Data analysts",
-        "similarity": 0.6,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "5241",
-        "title": "Electricians and electrical fitters",
-        "similarity": 0.3,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2254",
-        "title": "Medical radiographers",
-        "similarity": 0.3,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2453",
-        "title": "Quantity surveyors",
-        "similarity": 0.3,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      }
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.087,
+    "lower_exposure": false,
+    "why": "Shares 79 skills, e.g. apply scientific methods, communicate with a non-scientific audience, promote the participation of citizens in scientific and research activities"
+   }
+  ],
+  "2114": [
+   {
+    "soc2020": "2115",
+    "title": "Social and humanities scientists",
+    "similarity": 0.2079,
+    "shared_skills": [
+     "apply scientific methods",
+     "communicate with a non-scientific audience",
+     "promote the participation of citizens in scientific and research activities",
+     "conduct research across disciplines",
+     "manage open publications",
+     "integrate gender dimension in research"
     ],
-    "2453": [
-      {
-        "soc2020": "2452",
-        "title": "Chartered architectural technologists, planning officers and consultants",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2451",
-        "title": "Architects",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2454",
-        "title": "Chartered surveyors",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2421",
-        "title": "Chartered and certified accountants",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2433",
-        "title": "Actuaries, economists and statisticians",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      }
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.08,
+    "lower_exposure": false,
+    "why": "Shares 85 skills, e.g. apply scientific methods, communicate with a non-scientific audience, promote the participation of citizens in scientific and research activities"
+   },
+   {
+    "soc2020": "2162",
+    "title": "Other researchers, unspecified discipline",
+    "similarity": 0.2025,
+    "shared_skills": [
+     "apply scientific methods",
+     "communicate with a non-scientific audience",
+     "promote the participation of citizens in scientific and research activities",
+     "conduct research across disciplines",
+     "manage open publications",
+     "integrate gender dimension in research"
     ],
-    "2454": [
-      {
-        "soc2020": "2453",
-        "title": "Quantity surveyors",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2452",
-        "title": "Chartered architectural technologists, planning officers and consultants",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2451",
-        "title": "Architects",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2421",
-        "title": "Chartered and certified accountants",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2433",
-        "title": "Actuaries, economists and statisticians",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      }
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.004,
+    "lower_exposure": false,
+    "why": "Shares 105 skills, e.g. apply scientific methods, communicate with a non-scientific audience, promote the participation of citizens in scientific and research activities; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2433",
+    "title": "Actuaries, economists and statisticians",
+    "similarity": 0.1962,
+    "shared_skills": [
+     "apply scientific methods",
+     "apply statistical analysis techniques",
+     "communicate with a non-scientific audience",
+     "promote the participation of citizens in scientific and research activities",
+     "conduct research across disciplines",
+     "manage open publications"
     ],
-    "2433": [
-      {
-        "soc2020": "2453",
-        "title": "Quantity surveyors",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2452",
-        "title": "Chartered architectural technologists, planning officers and consultants",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2451",
-        "title": "Architects",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2454",
-        "title": "Chartered surveyors",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2421",
-        "title": "Chartered and certified accountants",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      }
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.151,
+    "lower_exposure": false,
+    "why": "Shares 71 skills, e.g. apply scientific methods, apply statistical analysis techniques, communicate with a non-scientific audience"
+   }
+  ],
+  "2115": [
+   {
+    "soc2020": "2113",
+    "title": "Biochemists and biomedical scientists",
+    "similarity": 0.2377,
+    "shared_skills": [
+     "apply scientific methods",
+     "communicate with a non-scientific audience",
+     "promote the participation of citizens in scientific and research activities",
+     "conduct research across disciplines",
+     "manage open publications",
+     "integrate gender dimension in research"
     ],
-    "2422": [
-      {
-        "soc2020": "2453",
-        "title": "Quantity surveyors",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2452",
-        "title": "Chartered architectural technologists, planning officers and consultants",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2451",
-        "title": "Architects",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2454",
-        "title": "Chartered surveyors",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2421",
-        "title": "Chartered and certified accountants",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      }
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.087,
+    "lower_exposure": true,
+    "why": "Shares 79 skills, e.g. apply scientific methods, communicate with a non-scientific audience, promote the participation of citizens in scientific and research activities"
+   },
+   {
+    "soc2020": "2162",
+    "title": "Other researchers, unspecified discipline",
+    "similarity": 0.2089,
+    "shared_skills": [
+     "apply scientific methods",
+     "communicate with a non-scientific audience",
+     "promote the participation of citizens in scientific and research activities",
+     "conduct research across disciplines",
+     "manage open publications",
+     "develop professional network with researchers and scientists"
     ],
-    "2421": [
-      {
-        "soc2020": "2453",
-        "title": "Quantity surveyors",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2452",
-        "title": "Chartered architectural technologists, planning officers and consultants",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2451",
-        "title": "Architects",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2454",
-        "title": "Chartered surveyors",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2433",
-        "title": "Actuaries, economists and statisticians",
-        "similarity": 0.8,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      }
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.076,
+    "lower_exposure": true,
+    "why": "Shares 99 skills, e.g. apply scientific methods, communicate with a non-scientific audience, promote the participation of citizens in scientific and research activities; estimate from few job-title links"
+   }
+  ],
+  "2121": [
+   {
+    "soc2020": "2452",
+    "title": "Chartered architectural technologists, planning officers and consultants",
+    "similarity": 0.1318,
+    "shared_skills": [
+     "civil engineering",
+     "execute feasibility study",
+     "integrate measures in architectural designs",
+     "advise on building matters",
+     "satisfy technical requirements",
+     "integrate building requirements in the architectural design"
     ],
-    "2254": [
-      {
-        "soc2020": "2453",
-        "title": "Quantity surveyors",
-        "similarity": 0.6,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2121",
-        "title": "Civil engineers",
-        "similarity": 0.6,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2313",
-        "title": "Secondary education teaching professionals",
-        "similarity": 0.6,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2123",
-        "title": "Electrical engineers",
-        "similarity": 0.6,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2452",
-        "title": "Chartered architectural technologists, planning officers and consultants",
-        "similarity": 0.6,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      }
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.066,
+    "lower_exposure": false,
+    "why": "Shares 80 skills, e.g. civil engineering, execute feasibility study, integrate measures in architectural designs; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2453",
+    "title": "Quantity surveyors",
+    "similarity": 0.1129,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "approve engineering design",
+     "engineering processes",
+     "use technical drawing software",
+     "technical drawings"
     ],
-    "5241": [
-      {
-        "soc2020": "2254",
-        "title": "Medical radiographers",
-        "similarity": 0.3,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "3113",
-        "title": "Engineering technicians",
-        "similarity": 0.3,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2453",
-        "title": "Quantity surveyors",
-        "similarity": 0.3,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2121",
-        "title": "Civil engineers",
-        "similarity": 0.3,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2313",
-        "title": "Secondary education teaching professionals",
-        "similarity": 0.3,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      }
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.004,
+    "lower_exposure": false,
+    "why": "Shares 105 skills, e.g. engineering principles, adjust engineering designs, approve engineering design; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2129",
+    "title": "Engineering professionals n.e.c.",
+    "similarity": 0.1107,
+    "shared_skills": [
+     "adjust engineering designs",
+     "engineering principles",
+     "approve engineering design",
+     "engineering processes",
+     "use technical drawing software",
+     "technical drawings"
     ],
-    "2313": [
-      {
-        "soc2020": "2254",
-        "title": "Medical radiographers",
-        "similarity": 0.6,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2453",
-        "title": "Quantity surveyors",
-        "similarity": 0.6,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2121",
-        "title": "Civil engineers",
-        "similarity": 0.6,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2123",
-        "title": "Electrical engineers",
-        "similarity": 0.6,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      },
-      {
-        "soc2020": "2452",
-        "title": "Chartered architectural technologists, planning officers and consultants",
-        "similarity": 0.6,
-        "shared_skills": [],
-        "why": "Placeholder until ESCO skill overlap is computed (M3).",
-        "status": "mock",
-        "evidence": "estimate"
-      }
-    ]
-  }
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.015,
+    "lower_exposure": false,
+    "why": "Shares 99 skills, e.g. adjust engineering designs, engineering principles, approve engineering design"
+   },
+   {
+    "soc2020": "2127",
+    "title": "Engineering project managers and project engineers",
+    "similarity": 0.1083,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "approve engineering design",
+     "engineering processes",
+     "use technical drawing software",
+     "technical drawings"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.04,
+    "lower_exposure": false,
+    "why": "Shares 107 skills, e.g. engineering principles, adjust engineering designs, approve engineering design; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2481",
+    "title": "Quality control and planning engineers",
+    "similarity": 0.1063,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "approve engineering design",
+     "engineering processes",
+     "use technical drawing software",
+     "technical drawings"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.015,
+    "lower_exposure": false,
+    "why": "Shares 106 skills, e.g. engineering principles, adjust engineering designs, approve engineering design; estimate from few job-title links"
+   }
+  ],
+  "2122": [
+   {
+    "soc2020": "2126",
+    "title": "Aerospace engineers",
+    "similarity": 0.3813,
+    "shared_skills": [
+     "engineering processes",
+     "engineering principles",
+     "adjust engineering designs",
+     "use technical drawing software",
+     "approve engineering design",
+     "perform scientific research"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.034,
+    "lower_exposure": false,
+    "why": "Shares 135 skills, e.g. engineering processes, engineering principles, adjust engineering designs"
+   },
+   {
+    "soc2020": "2125",
+    "title": "Production and process engineers",
+    "similarity": 0.1903,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "perform scientific research",
+     "use technical drawing software"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.053,
+    "lower_exposure": false,
+    "why": "Shares 122 skills, e.g. engineering principles, adjust engineering designs, engineering processes"
+   },
+   {
+    "soc2020": "2129",
+    "title": "Engineering professionals n.e.c.",
+    "similarity": 0.1572,
+    "shared_skills": [
+     "adjust engineering designs",
+     "engineering processes",
+     "engineering principles",
+     "approve engineering design",
+     "use technical drawing software",
+     "mechanical engineering"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.006,
+    "lower_exposure": false,
+    "why": "Shares 143 skills, e.g. adjust engineering designs, engineering processes, engineering principles"
+   },
+   {
+    "soc2020": "2453",
+    "title": "Quantity surveyors",
+    "similarity": 0.1512,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "perform scientific research",
+     "use technical drawing software"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.025,
+    "lower_exposure": false,
+    "why": "Shares 180 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2481",
+    "title": "Quality control and planning engineers",
+    "similarity": 0.1494,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "perform scientific research",
+     "use technical drawing software"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.005,
+    "lower_exposure": false,
+    "why": "Shares 181 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   }
+  ],
+  "2123": [
+   {
+    "soc2020": "2126",
+    "title": "Aerospace engineers",
+    "similarity": 0.1448,
+    "shared_skills": [
+     "use technical drawing software",
+     "engineering principles",
+     "perform scientific research",
+     "adjust engineering designs",
+     "approve engineering design",
+     "define technical requirements"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.034,
+    "lower_exposure": false,
+    "why": "Shares 71 skills, e.g. use technical drawing software, engineering principles, perform scientific research"
+   },
+   {
+    "soc2020": "2122",
+    "title": "Mechanical engineers",
+    "similarity": 0.139,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "use technical drawing software",
+     "approve engineering design",
+     "perform scientific research",
+     "automotive engineering"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.0,
+    "lower_exposure": false,
+    "why": "Shares 77 skills, e.g. engineering principles, adjust engineering designs, use technical drawing software"
+   },
+   {
+    "soc2020": "2125",
+    "title": "Production and process engineers",
+    "similarity": 0.1266,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "approve engineering design",
+     "perform scientific research",
+     "use technical drawing software",
+     "automation technology"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.053,
+    "lower_exposure": false,
+    "why": "Shares 70 skills, e.g. engineering principles, adjust engineering designs, approve engineering design"
+   },
+   {
+    "soc2020": "2124",
+    "title": "Electronics engineers",
+    "similarity": 0.1196,
+    "shared_skills": [
+     "define technical requirements",
+     "electricity principles",
+     "use technical drawing software",
+     "execute feasibility study",
+     "Objective-C",
+     "PHP"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.138,
+    "lower_exposure": false,
+    "why": "Shares 87 skills, e.g. define technical requirements, electricity principles, use technical drawing software"
+   },
+   {
+    "soc2020": "2129",
+    "title": "Engineering professionals n.e.c.",
+    "similarity": 0.0949,
+    "shared_skills": [
+     "adjust engineering designs",
+     "approve engineering design",
+     "engineering principles",
+     "use technical drawing software",
+     "perform scientific research",
+     "engineering processes"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.006,
+    "lower_exposure": false,
+    "why": "Shares 88 skills, e.g. adjust engineering designs, approve engineering design, engineering principles"
+   }
+  ],
+  "2124": [
+   {
+    "soc2020": "2133",
+    "title": "IT business analysts, architects and systems designers",
+    "similarity": 0.1784,
+    "shared_skills": [
+     "systems development life-cycle",
+     "define technical requirements",
+     "assess ICT knowledge",
+     "analyse business requirements",
+     "Java (computer programming)",
+     "Ruby (computer programming)"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.048,
+    "lower_exposure": false,
+    "why": "Shares 123 skills, e.g. systems development life-cycle, define technical requirements, assess ICT knowledge"
+   },
+   {
+    "soc2020": "2137",
+    "title": "IT network professionals",
+    "similarity": 0.1693,
+    "shared_skills": [
+     "design computer network",
+     "ICT network routing",
+     "implement a virtual private network",
+     "analyse network bandwidth requirements",
+     "adjust ICT system capacity",
+     "design process"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.063,
+    "lower_exposure": false,
+    "why": "Shares 70 skills, e.g. design computer network, ICT network routing, implement a virtual private network; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2134",
+    "title": "Programmers and software development professionals",
+    "similarity": 0.1562,
+    "shared_skills": [
+     "define technical requirements",
+     "Scala",
+     "Pascal (computer programming)",
+     "COBOL",
+     "Scratch (computer programming)",
+     "MATLAB"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.088,
+    "lower_exposure": false,
+    "why": "Shares 94 skills, e.g. define technical requirements, Scala, Pascal (computer programming)"
+   },
+   {
+    "soc2020": "1137",
+    "title": "Information technology directors",
+    "similarity": 0.1523,
+    "shared_skills": [
+     "forecast future ICT network needs",
+     "ICT project management methodologies",
+     "Process-based management",
+     "systems development life-cycle",
+     "Scala",
+     "Pascal (computer programming)"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.01,
+    "lower_exposure": false,
+    "why": "Shares 55 skills, e.g. forecast future ICT network needs, ICT project management methodologies, Process-based management"
+   },
+   {
+    "soc2020": "2139",
+    "title": "Information technology professionals n.e.c.",
+    "similarity": 0.1309,
+    "shared_skills": [
+     "define technical requirements",
+     "systems development life-cycle",
+     "analyse business requirements",
+     "Python (computer programming)",
+     "computer programming",
+     "ICT project management methodologies"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.048,
+    "lower_exposure": false,
+    "why": "Shares 117 skills, e.g. define technical requirements, systems development life-cycle, analyse business requirements; estimate from few job-title links"
+   }
+  ],
+  "2125": [
+   {
+    "soc2020": "2122",
+    "title": "Mechanical engineers",
+    "similarity": 0.1903,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "perform scientific research",
+     "use technical drawing software"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.053,
+    "lower_exposure": true,
+    "why": "Shares 122 skills, e.g. engineering principles, adjust engineering designs, engineering processes"
+   },
+   {
+    "soc2020": "2453",
+    "title": "Quantity surveyors",
+    "similarity": 0.1895,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "perform scientific research",
+     "use technical drawing software"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.078,
+    "lower_exposure": true,
+    "why": "Shares 251 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2481",
+    "title": "Quality control and planning engineers",
+    "similarity": 0.1886,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "perform scientific research",
+     "use technical drawing software"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.058,
+    "lower_exposure": true,
+    "why": "Shares 254 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2127",
+    "title": "Engineering project managers and project engineers",
+    "similarity": 0.1871,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "perform scientific research",
+     "use technical drawing software"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.034,
+    "lower_exposure": false,
+    "why": "Shares 255 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2129",
+    "title": "Engineering professionals n.e.c.",
+    "similarity": 0.1597,
+    "shared_skills": [
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "engineering principles",
+     "use technical drawing software",
+     "perform scientific research"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.059,
+    "lower_exposure": true,
+    "why": "Shares 197 skills, e.g. adjust engineering designs, engineering processes, approve engineering design"
+   }
+  ],
+  "2126": [
+   {
+    "soc2020": "2122",
+    "title": "Mechanical engineers",
+    "similarity": 0.3813,
+    "shared_skills": [
+     "engineering processes",
+     "engineering principles",
+     "adjust engineering designs",
+     "use technical drawing software",
+     "approve engineering design",
+     "perform scientific research"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.034,
+    "lower_exposure": false,
+    "why": "Shares 135 skills, e.g. engineering processes, engineering principles, adjust engineering designs"
+   },
+   {
+    "soc2020": "2125",
+    "title": "Production and process engineers",
+    "similarity": 0.1499,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "approve engineering design",
+     "engineering processes",
+     "perform scientific research",
+     "use technical drawing software"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.019,
+    "lower_exposure": false,
+    "why": "Shares 79 skills, e.g. engineering principles, adjust engineering designs, approve engineering design"
+   },
+   {
+    "soc2020": "2123",
+    "title": "Electrical engineers",
+    "similarity": 0.1448,
+    "shared_skills": [
+     "use technical drawing software",
+     "engineering principles",
+     "perform scientific research",
+     "adjust engineering designs",
+     "approve engineering design",
+     "define technical requirements"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.034,
+    "lower_exposure": false,
+    "why": "Shares 71 skills, e.g. use technical drawing software, engineering principles, perform scientific research"
+   },
+   {
+    "soc2020": "2129",
+    "title": "Engineering professionals n.e.c.",
+    "similarity": 0.1372,
+    "shared_skills": [
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "engineering principles",
+     "use technical drawing software",
+     "mechanical engineering"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.04,
+    "lower_exposure": false,
+    "why": "Shares 97 skills, e.g. adjust engineering designs, engineering processes, approve engineering design"
+   },
+   {
+    "soc2020": "2453",
+    "title": "Quantity surveyors",
+    "similarity": 0.1157,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "perform scientific research",
+     "use technical drawing software"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.058,
+    "lower_exposure": true,
+    "why": "Shares 108 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   }
+  ],
+  "2127": [
+   {
+    "soc2020": "2453",
+    "title": "Quantity surveyors",
+    "similarity": 0.9274,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "manage engineering project",
+     "perform scientific research"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.044,
+    "lower_exposure": false,
+    "why": "Shares 1014 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2481",
+    "title": "Quality control and planning engineers",
+    "similarity": 0.8955,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "manage engineering project",
+     "perform scientific research"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.025,
+    "lower_exposure": false,
+    "why": "Shares 1015 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2129",
+    "title": "Engineering professionals n.e.c.",
+    "similarity": 0.3109,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "use technical drawing software",
+     "technical drawings"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.025,
+    "lower_exposure": false,
+    "why": "Shares 462 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2125",
+    "title": "Production and process engineers",
+    "similarity": 0.1871,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "perform scientific research",
+     "use technical drawing software"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.034,
+    "lower_exposure": false,
+    "why": "Shares 255 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2122",
+    "title": "Mechanical engineers",
+    "similarity": 0.1493,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "perform scientific research",
+     "use technical drawing software"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.019,
+    "lower_exposure": false,
+    "why": "Shares 185 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   }
+  ],
+  "2129": [
+   {
+    "soc2020": "2453",
+    "title": "Quantity surveyors",
+    "similarity": 0.3157,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "use technical drawing software",
+     "technical drawings"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.019,
+    "lower_exposure": false,
+    "why": "Shares 460 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2127",
+    "title": "Engineering project managers and project engineers",
+    "similarity": 0.3109,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "use technical drawing software",
+     "technical drawings"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.025,
+    "lower_exposure": false,
+    "why": "Shares 462 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2481",
+    "title": "Quality control and planning engineers",
+    "similarity": 0.3054,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "use technical drawing software",
+     "technical drawings"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.001,
+    "lower_exposure": false,
+    "why": "Shares 461 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2125",
+    "title": "Production and process engineers",
+    "similarity": 0.1597,
+    "shared_skills": [
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "engineering principles",
+     "use technical drawing software",
+     "perform scientific research"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.059,
+    "lower_exposure": false,
+    "why": "Shares 197 skills, e.g. adjust engineering designs, engineering processes, approve engineering design"
+   },
+   {
+    "soc2020": "2122",
+    "title": "Mechanical engineers",
+    "similarity": 0.1572,
+    "shared_skills": [
+     "adjust engineering designs",
+     "engineering processes",
+     "engineering principles",
+     "approve engineering design",
+     "use technical drawing software",
+     "mechanical engineering"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.006,
+    "lower_exposure": false,
+    "why": "Shares 143 skills, e.g. adjust engineering designs, engineering processes, engineering principles"
+   }
+  ],
+  "2131": [
+   {
+    "soc2020": "1137",
+    "title": "Information technology directors",
+    "similarity": 0.2291,
+    "shared_skills": [
+     "define technology strategy",
+     "coordinate technological activities",
+     "ICT project management methodologies",
+     "implement ICT risk management",
+     "decision support systems",
+     "ICT project management"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.034,
+    "lower_exposure": false,
+    "why": "Shares 138 skills, e.g. define technology strategy, coordinate technological activities, ICT project management methodologies; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2139",
+    "title": "Information technology professionals n.e.c.",
+    "similarity": 0.1766,
+    "shared_skills": [
+     "systems development life-cycle",
+     "digital systems",
+     "ICT project management methodologies",
+     "ICT market",
+     "legal requirements of ICT products",
+     "optimise choice of ICT solution"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.024,
+    "lower_exposure": false,
+    "why": "Shares 220 skills, e.g. systems development life-cycle, digital systems, ICT project management methodologies; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2133",
+    "title": "IT business analysts, architects and systems designers",
+    "similarity": 0.141,
+    "shared_skills": [
+     "systems development life-cycle",
+     "digital systems",
+     "decision support systems",
+     "ICT project management methodologies",
+     "attack vectors",
+     "information structure"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.024,
+    "lower_exposure": false,
+    "why": "Shares 187 skills, e.g. systems development life-cycle, digital systems, decision support systems; estimate from few job-title links"
+   }
+  ],
+  "2133": [
+   {
+    "soc2020": "2139",
+    "title": "Information technology professionals n.e.c.",
+    "similarity": 0.3888,
+    "shared_skills": [
+     "define technical requirements",
+     "systems development life-cycle",
+     "digital systems",
+     "analyse business requirements",
+     "use an application-specific interface",
+     "resource description framework query language"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.0,
+    "lower_exposure": false,
+    "why": "Shares 346 skills, e.g. define technical requirements, systems development life-cycle, digital systems; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2134",
+    "title": "Programmers and software development professionals",
+    "similarity": 0.2681,
+    "shared_skills": [
+     "define technical requirements",
+     "use an application-specific interface",
+     "create data models",
+     "web programming",
+     "use markup languages",
+     "analyse software specifications"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.04,
+    "lower_exposure": false,
+    "why": "Shares 226 skills, e.g. define technical requirements, use an application-specific interface, create data models"
+   },
+   {
+    "soc2020": "2124",
+    "title": "Electronics engineers",
+    "similarity": 0.1784,
+    "shared_skills": [
+     "systems development life-cycle",
+     "define technical requirements",
+     "assess ICT knowledge",
+     "analyse business requirements",
+     "Java (computer programming)",
+     "Ruby (computer programming)"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.048,
+    "lower_exposure": false,
+    "why": "Shares 123 skills, e.g. systems development life-cycle, define technical requirements, assess ICT knowledge"
+   },
+   {
+    "soc2020": "2137",
+    "title": "IT network professionals",
+    "similarity": 0.1728,
+    "shared_skills": [
+     "analyse business requirements",
+     "use an application-specific interface",
+     "business process modelling",
+     "assess ICT knowledge",
+     "system design",
+     "ICT security legislation"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.015,
+    "lower_exposure": false,
+    "why": "Shares 101 skills, e.g. analyse business requirements, use an application-specific interface, business process modelling; estimate from few job-title links"
+   },
+   {
+    "soc2020": "1137",
+    "title": "Information technology directors",
+    "similarity": 0.1712,
+    "shared_skills": [
+     "digital systems",
+     "software architecture models",
+     "systems development life-cycle",
+     "Java (computer programming)",
+     "Ruby (computer programming)",
+     "Python (computer programming)"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.058,
+    "lower_exposure": true,
+    "why": "Shares 95 skills, e.g. digital systems, software architecture models, systems development life-cycle"
+   }
+  ],
+  "2134": [
+   {
+    "soc2020": "2133",
+    "title": "IT business analysts, architects and systems designers",
+    "similarity": 0.2681,
+    "shared_skills": [
+     "define technical requirements",
+     "use an application-specific interface",
+     "create data models",
+     "web programming",
+     "use markup languages",
+     "analyse software specifications"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.04,
+    "lower_exposure": false,
+    "why": "Shares 226 skills, e.g. define technical requirements, use an application-specific interface, create data models"
+   },
+   {
+    "soc2020": "2139",
+    "title": "Information technology professionals n.e.c.",
+    "similarity": 0.2614,
+    "shared_skills": [
+     "define technical requirements",
+     "use an application-specific interface",
+     "resource description framework query language",
+     "Python (computer programming)",
+     "computer programming",
+     "create data models"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.04,
+    "lower_exposure": false,
+    "why": "Shares 299 skills, e.g. define technical requirements, use an application-specific interface, resource description framework query language; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2137",
+    "title": "IT network professionals",
+    "similarity": 0.1881,
+    "shared_skills": [
+     "use an application-specific interface",
+     "collect customer feedback on applications",
+     "use software design patterns",
+     "analyse software specifications",
+     "debug software",
+     "ICT debugging tools"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.024,
+    "lower_exposure": false,
+    "why": "Shares 110 skills, e.g. use an application-specific interface, collect customer feedback on applications, use software design patterns; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2141",
+    "title": "Web design professionals",
+    "similarity": 0.1844,
+    "shared_skills": [
+     "JavaScript",
+     "JavaScript Framework",
+     "tools for software configuration management",
+     "web programming",
+     "style sheet languages",
+     "use markup languages"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.028,
+    "lower_exposure": false,
+    "why": "Shares 138 skills, e.g. JavaScript, JavaScript Framework, tools for software configuration management"
+   },
+   {
+    "soc2020": "2124",
+    "title": "Electronics engineers",
+    "similarity": 0.1562,
+    "shared_skills": [
+     "define technical requirements",
+     "Scala",
+     "Pascal (computer programming)",
+     "COBOL",
+     "Scratch (computer programming)",
+     "MATLAB"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.088,
+    "lower_exposure": true,
+    "why": "Shares 94 skills, e.g. define technical requirements, Scala, Pascal (computer programming)"
+   }
+  ],
+  "2135": [
+   {
+    "soc2020": "2131",
+    "title": "IT project managers",
+    "similarity": 0.0969,
+    "shared_skills": [
+     "ICT project management",
+     "ICT project management methodologies",
+     "implement ICT risk management",
+     "decision support systems",
+     "monitor technology trends",
+     "utilise decision support system"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.013,
+    "lower_exposure": false,
+    "why": "Shares 80 skills, e.g. ICT project management, ICT project management methodologies, implement ICT risk management; estimate from few job-title links"
+   },
+   {
+    "soc2020": "1137",
+    "title": "Information technology directors",
+    "similarity": 0.0909,
+    "shared_skills": [
+     "attack vectors",
+     "ensure adherence to organisational ICT standards",
+     "decision support systems",
+     "ICT project management methodologies",
+     "maintain plan for continuity of operations",
+     "optimise choice of ICT solution"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.047,
+    "lower_exposure": false,
+    "why": "Shares 46 skills, e.g. attack vectors, ensure adherence to organisational ICT standards, decision support systems"
+   },
+   {
+    "soc2020": "2137",
+    "title": "IT network professionals",
+    "similarity": 0.0882,
+    "shared_skills": [
+     "implement ICT security policies",
+     "implement a firewall",
+     "ensure adherence to organisational ICT standards",
+     "implement a virtual private network",
+     "ICT network security risks",
+     "information security strategy"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.027,
+    "lower_exposure": false,
+    "why": "Shares 44 skills, e.g. implement ICT security policies, implement a firewall, ensure adherence to organisational ICT standards; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2136",
+    "title": "IT quality and testing professionals",
+    "similarity": 0.0736,
+    "shared_skills": [
+     "audit techniques",
+     "ensure adherence to organisational ICT standards",
+     "software anomalies",
+     "ICT process quality models",
+     "ICT security standards",
+     "execute ICT audits"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.041,
+    "lower_exposure": false,
+    "why": "Shares 43 skills, e.g. audit techniques, ensure adherence to organisational ICT standards, software anomalies"
+   },
+   {
+    "soc2020": "2139",
+    "title": "Information technology professionals n.e.c.",
+    "similarity": 0.0721,
+    "shared_skills": [
+     "provide ICT consulting advice",
+     "optimise choice of ICT solution",
+     "legal requirements of ICT products",
+     "computer programming",
+     "ICT project management methodologies",
+     "monitor system performance"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.012,
+    "lower_exposure": false,
+    "why": "Shares 91 skills, e.g. provide ICT consulting advice, optimise choice of ICT solution, legal requirements of ICT products; estimate from few job-title links"
+   }
+  ],
+  "2136": [
+   {
+    "soc2020": "2139",
+    "title": "Information technology professionals n.e.c.",
+    "similarity": 0.1769,
+    "shared_skills": [
+     "systems development life-cycle",
+     "legal requirements of ICT products",
+     "analyse ICT system",
+     "use scripting programming",
+     "ICT security legislation",
+     "software components libraries"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.029,
+    "lower_exposure": false,
+    "why": "Shares 136 skills, e.g. systems development life-cycle, legal requirements of ICT products, analyse ICT system; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2133",
+    "title": "IT business analysts, architects and systems designers",
+    "similarity": 0.1396,
+    "shared_skills": [
+     "ICT security legislation",
+     "software architecture models",
+     "perform ICT security testing",
+     "systems development life-cycle",
+     "software metrics",
+     "levels of software testing"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.029,
+    "lower_exposure": false,
+    "why": "Shares 105 skills, e.g. ICT security legislation, software architecture models, perform ICT security testing"
+   },
+   {
+    "soc2020": "2137",
+    "title": "IT network professionals",
+    "similarity": 0.1197,
+    "shared_skills": [
+     "ensure adherence to organisational ICT standards",
+     "ICT security standards",
+     "ICT security legislation",
+     "improve business processes",
+     "ICT process quality models",
+     "execute ICT audits"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.014,
+    "lower_exposure": false,
+    "why": "Shares 68 skills, e.g. ensure adherence to organisational ICT standards, ICT security standards, ICT security legislation; estimate from few job-title links"
+   },
+   {
+    "soc2020": "1137",
+    "title": "Information technology directors",
+    "similarity": 0.1152,
+    "shared_skills": [
+     "ensure adherence to organisational ICT standards",
+     "software architecture models",
+     "analyse ICT system",
+     "systems development life-cycle",
+     "ICT quality policy",
+     "software components libraries"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.087,
+    "lower_exposure": true,
+    "why": "Shares 60 skills, e.g. ensure adherence to organisational ICT standards, software architecture models, analyse ICT system"
+   },
+   {
+    "soc2020": "2124",
+    "title": "Electronics engineers",
+    "similarity": 0.1117,
+    "shared_skills": [
+     "systems development life-cycle",
+     "approve engineering design",
+     "adjust engineering designs",
+     "use technical drawing software",
+     "engineering principles",
+     "quality assurance methodologies"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.077,
+    "lower_exposure": true,
+    "why": "Shares 92 skills, e.g. systems development life-cycle, approve engineering design, adjust engineering designs"
+   }
+  ],
+  "2137": [
+   {
+    "soc2020": "2134",
+    "title": "Programmers and software development professionals",
+    "similarity": 0.1881,
+    "shared_skills": [
+     "use an application-specific interface",
+     "collect customer feedback on applications",
+     "use software design patterns",
+     "analyse software specifications",
+     "debug software",
+     "ICT debugging tools"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.024,
+    "lower_exposure": false,
+    "why": "Shares 110 skills, e.g. use an application-specific interface, collect customer feedback on applications, use software design patterns; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2139",
+    "title": "Information technology professionals n.e.c.",
+    "similarity": 0.1747,
+    "shared_skills": [
+     "analyse business requirements",
+     "use an application-specific interface",
+     "define technical requirements",
+     "system design",
+     "provide ICT consulting advice",
+     "computer programming"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.015,
+    "lower_exposure": false,
+    "why": "Shares 137 skills, e.g. analyse business requirements, use an application-specific interface, define technical requirements; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2133",
+    "title": "IT business analysts, architects and systems designers",
+    "similarity": 0.1728,
+    "shared_skills": [
+     "analyse business requirements",
+     "use an application-specific interface",
+     "business process modelling",
+     "assess ICT knowledge",
+     "system design",
+     "ICT security legislation"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.015,
+    "lower_exposure": false,
+    "why": "Shares 101 skills, e.g. analyse business requirements, use an application-specific interface, business process modelling; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2124",
+    "title": "Electronics engineers",
+    "similarity": 0.1693,
+    "shared_skills": [
+     "design computer network",
+     "ICT network routing",
+     "implement a virtual private network",
+     "analyse network bandwidth requirements",
+     "adjust ICT system capacity",
+     "design process"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.063,
+    "lower_exposure": true,
+    "why": "Shares 70 skills, e.g. design computer network, ICT network routing, implement a virtual private network; estimate from few job-title links"
+   },
+   {
+    "soc2020": "1137",
+    "title": "Information technology directors",
+    "similarity": 0.1211,
+    "shared_skills": [
+     "ensure adherence to organisational ICT standards",
+     "define technology strategy",
+     "forecast future ICT network needs",
+     "computer programming",
+     "internet governance",
+     "coordinate technological activities"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.074,
+    "lower_exposure": true,
+    "why": "Shares 61 skills, e.g. ensure adherence to organisational ICT standards, define technology strategy, forecast future ICT network needs; estimate from few job-title links"
+   }
+  ],
+  "2139": [
+   {
+    "soc2020": "2133",
+    "title": "IT business analysts, architects and systems designers",
+    "similarity": 0.3888,
+    "shared_skills": [
+     "define technical requirements",
+     "systems development life-cycle",
+     "digital systems",
+     "analyse business requirements",
+     "use an application-specific interface",
+     "resource description framework query language"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.0,
+    "lower_exposure": false,
+    "why": "Shares 346 skills, e.g. define technical requirements, systems development life-cycle, digital systems; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2134",
+    "title": "Programmers and software development professionals",
+    "similarity": 0.2614,
+    "shared_skills": [
+     "define technical requirements",
+     "use an application-specific interface",
+     "resource description framework query language",
+     "Python (computer programming)",
+     "computer programming",
+     "create data models"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.04,
+    "lower_exposure": false,
+    "why": "Shares 299 skills, e.g. define technical requirements, use an application-specific interface, resource description framework query language; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2136",
+    "title": "IT quality and testing professionals",
+    "similarity": 0.1769,
+    "shared_skills": [
+     "systems development life-cycle",
+     "legal requirements of ICT products",
+     "analyse ICT system",
+     "use scripting programming",
+     "ICT security legislation",
+     "software components libraries"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.029,
+    "lower_exposure": false,
+    "why": "Shares 136 skills, e.g. systems development life-cycle, legal requirements of ICT products, analyse ICT system; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2131",
+    "title": "IT project managers",
+    "similarity": 0.1766,
+    "shared_skills": [
+     "systems development life-cycle",
+     "digital systems",
+     "ICT project management methodologies",
+     "ICT market",
+     "legal requirements of ICT products",
+     "optimise choice of ICT solution"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.024,
+    "lower_exposure": false,
+    "why": "Shares 220 skills, e.g. systems development life-cycle, digital systems, ICT project management methodologies; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2137",
+    "title": "IT network professionals",
+    "similarity": 0.1747,
+    "shared_skills": [
+     "analyse business requirements",
+     "use an application-specific interface",
+     "define technical requirements",
+     "system design",
+     "provide ICT consulting advice",
+     "computer programming"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.015,
+    "lower_exposure": false,
+    "why": "Shares 137 skills, e.g. analyse business requirements, use an application-specific interface, define technical requirements; estimate from few job-title links"
+   }
+  ],
+  "2141": [
+   {
+    "soc2020": "2134",
+    "title": "Programmers and software development professionals",
+    "similarity": 0.1844,
+    "shared_skills": [
+     "JavaScript",
+     "JavaScript Framework",
+     "tools for software configuration management",
+     "web programming",
+     "style sheet languages",
+     "use markup languages"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.028,
+    "lower_exposure": false,
+    "why": "Shares 138 skills, e.g. JavaScript, JavaScript Framework, tools for software configuration management"
+   },
+   {
+    "soc2020": "2139",
+    "title": "Information technology professionals n.e.c.",
+    "similarity": 0.1617,
+    "shared_skills": [
+     "analyse business requirements",
+     "define technical requirements",
+     "digital systems",
+     "execute ICT user research activities",
+     "JavaScript",
+     "Scala"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.012,
+    "lower_exposure": false,
+    "why": "Shares 148 skills, e.g. analyse business requirements, define technical requirements, digital systems; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2142",
+    "title": "Graphic and multimedia designers",
+    "similarity": 0.1339,
+    "shared_skills": [
+     "design graphics",
+     "convert into animated object",
+     "graphics editor software",
+     "GIMP (graphics editor software)",
+     "Adobe Photoshop",
+     "provide multimedia content"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.038,
+    "lower_exposure": false,
+    "why": "Shares 85 skills, e.g. design graphics, convert into animated object, graphics editor software"
+   },
+   {
+    "soc2020": "2133",
+    "title": "IT business analysts, architects and systems designers",
+    "similarity": 0.1202,
+    "shared_skills": [
+     "use markup languages",
+     "web programming",
+     "analyse business requirements",
+     "define technical requirements",
+     "JavaScript",
+     "digital systems"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.012,
+    "lower_exposure": false,
+    "why": "Shares 93 skills, e.g. use markup languages, web programming, analyse business requirements"
+   },
+   {
+    "soc2020": "2137",
+    "title": "IT network professionals",
+    "similarity": 0.1095,
+    "shared_skills": [
+     "analyse business requirements",
+     "define technical requirements",
+     "tools for software configuration management",
+     "Jenkins (tools for software configuration management)",
+     "Salt (tools for software configuration management)",
+     "Ansible"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.004,
+    "lower_exposure": false,
+    "why": "Shares 67 skills, e.g. analyse business requirements, define technical requirements, tools for software configuration management; estimate from few job-title links"
+   }
+  ],
+  "2142": [
+   {
+    "soc2020": "2141",
+    "title": "Web design professionals",
+    "similarity": 0.1339,
+    "shared_skills": [
+     "design graphics",
+     "convert into animated object",
+     "graphics editor software",
+     "GIMP (graphics editor software)",
+     "Adobe Photoshop",
+     "provide multimedia content"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.038,
+    "lower_exposure": false,
+    "why": "Shares 85 skills, e.g. design graphics, convert into animated object, graphics editor software"
+   },
+   {
+    "soc2020": "2134",
+    "title": "Programmers and software development professionals",
+    "similarity": 0.0523,
+    "shared_skills": [
+     "develop creative ideas",
+     "migrate existing data",
+     "develop digital content",
+     "graphics editor software",
+     "augmented reality",
+     "design graphics"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.066,
+    "lower_exposure": false,
+    "why": "Shares 68 skills, e.g. develop creative ideas, migrate existing data, develop digital content"
+   },
+   {
+    "soc2020": "2139",
+    "title": "Information technology professionals n.e.c.",
+    "similarity": 0.0507,
+    "shared_skills": [
+     "develop creative ideas",
+     "use scripting programming",
+     "digital communication and collaboration",
+     "emergent technologies",
+     "ICT project management methodologies",
+     "Process-based management"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.027,
+    "lower_exposure": false,
+    "why": "Shares 69 skills, e.g. develop creative ideas, use scripting programming, digital communication and collaboration; estimate from few job-title links"
+   }
+  ],
+  "2162": [
+   {
+    "soc2020": "2112",
+    "title": "Biological scientists",
+    "similarity": 0.4401,
+    "shared_skills": [
+     "life sciences",
+     "biology",
+     "apply scientific methods",
+     "scientific literature",
+     "laboratory techniques",
+     "communicate with a non-scientific audience"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.054,
+    "lower_exposure": true,
+    "why": "Shares 255 skills, e.g. life sciences, biology, apply scientific methods; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2113",
+    "title": "Biochemists and biomedical scientists",
+    "similarity": 0.3696,
+    "shared_skills": [
+     "life sciences",
+     "biology",
+     "apply scientific methods",
+     "scientific literature",
+     "laboratory techniques",
+     "communicate with a non-scientific audience"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.011,
+    "lower_exposure": false,
+    "why": "Shares 193 skills, e.g. life sciences, biology, apply scientific methods; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2115",
+    "title": "Social and humanities scientists",
+    "similarity": 0.2089,
+    "shared_skills": [
+     "apply scientific methods",
+     "communicate with a non-scientific audience",
+     "promote the participation of citizens in scientific and research activities",
+     "conduct research across disciplines",
+     "manage open publications",
+     "develop professional network with researchers and scientists"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.076,
+    "lower_exposure": false,
+    "why": "Shares 99 skills, e.g. apply scientific methods, communicate with a non-scientific audience, promote the participation of citizens in scientific and research activities; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2114",
+    "title": "Physical scientists",
+    "similarity": 0.2025,
+    "shared_skills": [
+     "apply scientific methods",
+     "communicate with a non-scientific audience",
+     "promote the participation of citizens in scientific and research activities",
+     "conduct research across disciplines",
+     "manage open publications",
+     "integrate gender dimension in research"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.004,
+    "lower_exposure": false,
+    "why": "Shares 105 skills, e.g. apply scientific methods, communicate with a non-scientific audience, promote the participation of citizens in scientific and research activities; estimate from few job-title links"
+   }
+  ],
+  "2222": [
+   {
+    "soc2020": "2256",
+    "title": "Podiatrists",
+    "similarity": 0.9443,
+    "shared_skills": [
+     "ensure safety of healthcare users",
+     "apply context specific clinical competences",
+     "interact with healthcare users",
+     "comply with legislation related to health care",
+     "follow clinical guidelines",
+     "comply with quality standards related to healthcare practice"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.0,
+    "lower_exposure": false,
+    "why": "Shares 640 skills, e.g. ensure safety of healthcare users, apply context specific clinical competences, interact with healthcare users; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2259",
+    "title": "Other health professionals n.e.c.",
+    "similarity": 0.168,
+    "shared_skills": [
+     "ensure safety of healthcare users",
+     "apply context specific clinical competences",
+     "interact with healthcare users",
+     "comply with legislation related to health care",
+     "work in multidisciplinary health teams",
+     "follow clinical guidelines"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.036,
+    "lower_exposure": false,
+    "why": "Shares 144 skills, e.g. ensure safety of healthcare users, apply context specific clinical competences, interact with healthcare users; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2254",
+    "title": "Medical radiographers",
+    "similarity": 0.166,
+    "shared_skills": [
+     "interact with healthcare users",
+     "comply with legislation related to health care",
+     "apply context specific clinical competences",
+     "ensure safety of healthcare users",
+     "follow clinical guidelines",
+     "communicate in healthcare"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.034,
+    "lower_exposure": false,
+    "why": "Shares 97 skills, e.g. interact with healthcare users, comply with legislation related to health care, apply context specific clinical competences; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2113",
+    "title": "Biochemists and biomedical scientists",
+    "similarity": 0.1289,
+    "shared_skills": [
+     "biosafety in biomedical laboratory",
+     "perform pathology consultations",
+     "validate biomedical analysis results",
+     "perform cerebrospinal fluid analysis",
+     "manage infection control in the facility",
+     "provide test results to medical staff"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.185,
+    "lower_exposure": false,
+    "why": "Shares 193 skills, e.g. biosafety in biomedical laboratory, perform pathology consultations, validate biomedical analysis results; estimate from few job-title links"
+   }
+  ],
+  "2223": [
+   {
+    "soc2020": "2259",
+    "title": "Other health professionals n.e.c.",
+    "similarity": 0.238,
+    "shared_skills": [
+     "human anatomy",
+     "hygiene in a health care setting",
+     "health care legislation",
+     "human physiology",
+     "contribute to continuity of health care",
+     "apply context specific clinical competences"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.004,
+    "lower_exposure": false,
+    "why": "Shares 79 skills, e.g. human anatomy, hygiene in a health care setting, health care legislation; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2252",
+    "title": "Optometrists",
+    "similarity": 0.1731,
+    "shared_skills": [
+     "manage healthcare users' data",
+     "advise on healthcare users' informed consent",
+     "respond to changing situations in health care",
+     "educate on the prevention of illness",
+     "apply context specific clinical competences",
+     "ensure safety of healthcare users"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.0,
+    "lower_exposure": false,
+    "why": "Shares 45 skills, e.g. manage healthcare users' data, advise on healthcare users' informed consent, respond to changing situations in health care; estimate from few job-title links"
+   }
+  ],
+  "2252": [
+   {
+    "soc2020": "2223",
+    "title": "Speech and language therapists",
+    "similarity": 0.1731,
+    "shared_skills": [
+     "manage healthcare users' data",
+     "advise on healthcare users' informed consent",
+     "respond to changing situations in health care",
+     "educate on the prevention of illness",
+     "apply context specific clinical competences",
+     "ensure safety of healthcare users"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.0,
+    "lower_exposure": false,
+    "why": "Shares 45 skills, e.g. manage healthcare users' data, advise on healthcare users' informed consent, respond to changing situations in health care; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2259",
+    "title": "Other health professionals n.e.c.",
+    "similarity": 0.1512,
+    "shared_skills": [
+     "apply context specific clinical competences",
+     "ensure safety of healthcare users",
+     "comply with quality standards related to healthcare practice",
+     "manage healthcare users' data",
+     "work in multidisciplinary health teams",
+     "advise on healthcare users' informed consent"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.004,
+    "lower_exposure": false,
+    "why": "Shares 45 skills, e.g. apply context specific clinical competences, ensure safety of healthcare users, comply with quality standards related to healthcare practice; estimate from few job-title links"
+   }
+  ],
+  "2254": [
+   {
+    "soc2020": "2222",
+    "title": "Occupational therapists",
+    "similarity": 0.166,
+    "shared_skills": [
+     "interact with healthcare users",
+     "comply with legislation related to health care",
+     "apply context specific clinical competences",
+     "ensure safety of healthcare users",
+     "follow clinical guidelines",
+     "communicate in healthcare"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.034,
+    "lower_exposure": false,
+    "why": "Shares 97 skills, e.g. interact with healthcare users, comply with legislation related to health care, apply context specific clinical competences; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2256",
+    "title": "Podiatrists",
+    "similarity": 0.163,
+    "shared_skills": [
+     "interact with healthcare users",
+     "comply with legislation related to health care",
+     "apply context specific clinical competences",
+     "ensure safety of healthcare users",
+     "comply with quality standards related to healthcare practice",
+     "follow clinical guidelines"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.034,
+    "lower_exposure": false,
+    "why": "Shares 97 skills, e.g. interact with healthcare users, comply with legislation related to health care, apply context specific clinical competences; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2259",
+    "title": "Other health professionals n.e.c.",
+    "similarity": 0.1228,
+    "shared_skills": [
+     "human anatomy",
+     "hygiene in a health care setting",
+     "health care legislation",
+     "contribute to continuity of health care",
+     "human physiology",
+     "communicate in healthcare"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.001,
+    "lower_exposure": false,
+    "why": "Shares 47 skills, e.g. human anatomy, hygiene in a health care setting, health care legislation"
+   },
+   {
+    "soc2020": "2223",
+    "title": "Speech and language therapists",
+    "similarity": 0.1221,
+    "shared_skills": [
+     "manage healthcare users' data",
+     "hygiene in a health care setting",
+     "health care legislation",
+     "contribute to continuity of health care",
+     "respond to changing situations in health care",
+     "health care occupation-specific ethics"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.006,
+    "lower_exposure": false,
+    "why": "Shares 35 skills, e.g. manage healthcare users' data, hygiene in a health care setting, health care legislation; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2252",
+    "title": "Optometrists",
+    "similarity": 0.1091,
+    "shared_skills": [
+     "manage healthcare users' data",
+     "respond to changing situations in health care",
+     "interact with healthcare users",
+     "deal with emergency care situations",
+     "comply with quality standards related to healthcare practice",
+     "comply with legislation related to health care"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.006,
+    "lower_exposure": false,
+    "why": "Shares 36 skills, e.g. manage healthcare users' data, respond to changing situations in health care, interact with healthcare users; estimate from few job-title links"
+   }
+  ],
+  "2256": [
+   {
+    "soc2020": "2222",
+    "title": "Occupational therapists",
+    "similarity": 0.9443,
+    "shared_skills": [
+     "ensure safety of healthcare users",
+     "apply context specific clinical competences",
+     "interact with healthcare users",
+     "comply with legislation related to health care",
+     "follow clinical guidelines",
+     "comply with quality standards related to healthcare practice"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.0,
+    "lower_exposure": false,
+    "why": "Shares 640 skills, e.g. ensure safety of healthcare users, apply context specific clinical competences, interact with healthcare users; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2259",
+    "title": "Other health professionals n.e.c.",
+    "similarity": 0.1678,
+    "shared_skills": [
+     "ensure safety of healthcare users",
+     "apply context specific clinical competences",
+     "interact with healthcare users",
+     "comply with legislation related to health care",
+     "follow clinical guidelines",
+     "comply with quality standards related to healthcare practice"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.036,
+    "lower_exposure": false,
+    "why": "Shares 144 skills, e.g. ensure safety of healthcare users, apply context specific clinical competences, interact with healthcare users; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2254",
+    "title": "Medical radiographers",
+    "similarity": 0.163,
+    "shared_skills": [
+     "interact with healthcare users",
+     "comply with legislation related to health care",
+     "apply context specific clinical competences",
+     "ensure safety of healthcare users",
+     "comply with quality standards related to healthcare practice",
+     "follow clinical guidelines"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.034,
+    "lower_exposure": false,
+    "why": "Shares 97 skills, e.g. interact with healthcare users, comply with legislation related to health care, apply context specific clinical competences; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2113",
+    "title": "Biochemists and biomedical scientists",
+    "similarity": 0.1279,
+    "shared_skills": [
+     "biosafety in biomedical laboratory",
+     "perform pathology consultations",
+     "validate biomedical analysis results",
+     "manage infection control in the facility",
+     "perform cerebrospinal fluid analysis",
+     "medical informatics"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.185,
+    "lower_exposure": false,
+    "why": "Shares 193 skills, e.g. biosafety in biomedical laboratory, perform pathology consultations, validate biomedical analysis results; estimate from few job-title links"
+   }
+  ],
+  "2259": [
+   {
+    "soc2020": "2223",
+    "title": "Speech and language therapists",
+    "similarity": 0.238,
+    "shared_skills": [
+     "human anatomy",
+     "hygiene in a health care setting",
+     "health care legislation",
+     "human physiology",
+     "contribute to continuity of health care",
+     "apply context specific clinical competences"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.004,
+    "lower_exposure": false,
+    "why": "Shares 79 skills, e.g. human anatomy, hygiene in a health care setting, health care legislation; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2222",
+    "title": "Occupational therapists",
+    "similarity": 0.168,
+    "shared_skills": [
+     "ensure safety of healthcare users",
+     "apply context specific clinical competences",
+     "interact with healthcare users",
+     "comply with legislation related to health care",
+     "work in multidisciplinary health teams",
+     "follow clinical guidelines"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.036,
+    "lower_exposure": false,
+    "why": "Shares 144 skills, e.g. ensure safety of healthcare users, apply context specific clinical competences, interact with healthcare users; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2256",
+    "title": "Podiatrists",
+    "similarity": 0.1678,
+    "shared_skills": [
+     "ensure safety of healthcare users",
+     "apply context specific clinical competences",
+     "interact with healthcare users",
+     "comply with legislation related to health care",
+     "follow clinical guidelines",
+     "comply with quality standards related to healthcare practice"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.036,
+    "lower_exposure": false,
+    "why": "Shares 144 skills, e.g. ensure safety of healthcare users, apply context specific clinical competences, interact with healthcare users; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2252",
+    "title": "Optometrists",
+    "similarity": 0.1512,
+    "shared_skills": [
+     "apply context specific clinical competences",
+     "ensure safety of healthcare users",
+     "comply with quality standards related to healthcare practice",
+     "manage healthcare users' data",
+     "work in multidisciplinary health teams",
+     "advise on healthcare users' informed consent"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.004,
+    "lower_exposure": false,
+    "why": "Shares 45 skills, e.g. apply context specific clinical competences, ensure safety of healthcare users, comply with quality standards related to healthcare practice; estimate from few job-title links"
+   }
+  ],
+  "2312": [
+   {
+    "soc2020": "2314",
+    "title": "Primary education teaching professionals",
+    "similarity": 0.5295,
+    "shared_skills": [
+     "bring out performers’ artistic potential",
+     "create a work environment where performers can develop their potential",
+     "maintain safe working conditions in performing arts",
+     "demonstrate when teaching",
+     "guarantee students' safety",
+     "encourage students to acknowledge their achievements"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.093,
+    "lower_exposure": true,
+    "why": "Shares 96 skills, e.g. bring out performers’ artistic potential, create a work environment where performers can develop their potential, maintain safe working conditions in performing arts"
+   },
+   {
+    "soc2020": "2319",
+    "title": "Teaching professionals n.e.c.",
+    "similarity": 0.4484,
+    "shared_skills": [
+     "assess students",
+     "demonstrate when teaching",
+     "adapt teaching to student's capabilities",
+     "apply teaching strategies",
+     "maintain safe working conditions in performing arts",
+     "encourage students to acknowledge their achievements"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.007,
+    "lower_exposure": false,
+    "why": "Shares 82 skills, e.g. assess students, demonstrate when teaching, adapt teaching to student's capabilities"
+   },
+   {
+    "soc2020": "2316",
+    "title": "Special needs education teaching professionals",
+    "similarity": 0.3581,
+    "shared_skills": [
+     "guarantee students' safety",
+     "demonstrate when teaching",
+     "encourage students to acknowledge their achievements",
+     "adapt teaching to student's capabilities",
+     "assess students",
+     "apply teaching strategies"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.058,
+    "lower_exposure": true,
+    "why": "Shares 110 skills, e.g. guarantee students' safety, demonstrate when teaching, encourage students to acknowledge their achievements"
+   },
+   {
+    "soc2020": "2313",
+    "title": "Secondary education teaching professionals",
+    "similarity": 0.233,
+    "shared_skills": [
+     "demonstrate when teaching",
+     "adapt teaching to student's capabilities",
+     "assess students",
+     "apply teaching strategies",
+     "assist students in their learning",
+     "guarantee students' safety"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.051,
+    "lower_exposure": true,
+    "why": "Shares 110 skills, e.g. demonstrate when teaching, adapt teaching to student's capabilities, assess students"
+   },
+   {
+    "soc2020": "2315",
+    "title": "Nursery education teaching professionals",
+    "similarity": 0.2096,
+    "shared_skills": [
+     "demonstrate when teaching",
+     "encourage students to acknowledge their achievements",
+     "adapt teaching to student's capabilities",
+     "guarantee students' safety",
+     "assess students",
+     "apply teaching strategies"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.126,
+    "lower_exposure": true,
+    "why": "Shares 29 skills, e.g. demonstrate when teaching, encourage students to acknowledge their achievements, adapt teaching to student's capabilities; estimate from few job-title links"
+   }
+  ],
+  "2313": [
+   {
+    "soc2020": "2316",
+    "title": "Special needs education teaching professionals",
+    "similarity": 0.2896,
+    "shared_skills": [
+     "guarantee students' safety",
+     "demonstrate when teaching",
+     "adapt teaching to student's capabilities",
+     "curriculum objectives",
+     "assess students",
+     "apply teaching strategies"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.007,
+    "lower_exposure": false,
+    "why": "Shares 158 skills, e.g. guarantee students' safety, demonstrate when teaching, adapt teaching to student's capabilities"
+   },
+   {
+    "soc2020": "2314",
+    "title": "Primary education teaching professionals",
+    "similarity": 0.2799,
+    "shared_skills": [
+     "manage student relationships",
+     "demonstrate when teaching",
+     "guarantee students' safety",
+     "adapt teaching to student's capabilities",
+     "assess students",
+     "apply teaching strategies"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.042,
+    "lower_exposure": false,
+    "why": "Shares 166 skills, e.g. manage student relationships, demonstrate when teaching, guarantee students' safety"
+   },
+   {
+    "soc2020": "2315",
+    "title": "Nursery education teaching professionals",
+    "similarity": 0.2612,
+    "shared_skills": [
+     "maintain students' discipline",
+     "manage student relationships",
+     "demonstrate when teaching",
+     "curriculum objectives",
+     "perform classroom management",
+     "adapt teaching to student's capabilities"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.075,
+    "lower_exposure": true,
+    "why": "Shares 71 skills, e.g. maintain students' discipline, manage student relationships, demonstrate when teaching; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2319",
+    "title": "Teaching professionals n.e.c.",
+    "similarity": 0.2404,
+    "shared_skills": [
+     "assess students",
+     "demonstrate when teaching",
+     "adapt teaching to student's capabilities",
+     "curriculum objectives",
+     "apply teaching strategies",
+     "assist students in their learning"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.044,
+    "lower_exposure": false,
+    "why": "Shares 137 skills, e.g. assess students, demonstrate when teaching, adapt teaching to student's capabilities"
+   },
+   {
+    "soc2020": "2312",
+    "title": "Further education teaching professionals",
+    "similarity": 0.233,
+    "shared_skills": [
+     "demonstrate when teaching",
+     "adapt teaching to student's capabilities",
+     "assess students",
+     "apply teaching strategies",
+     "assist students in their learning",
+     "guarantee students' safety"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.051,
+    "lower_exposure": false,
+    "why": "Shares 110 skills, e.g. demonstrate when teaching, adapt teaching to student's capabilities, assess students"
+   }
+  ],
+  "2314": [
+   {
+    "soc2020": "2312",
+    "title": "Further education teaching professionals",
+    "similarity": 0.5295,
+    "shared_skills": [
+     "bring out performers’ artistic potential",
+     "create a work environment where performers can develop their potential",
+     "maintain safe working conditions in performing arts",
+     "demonstrate when teaching",
+     "guarantee students' safety",
+     "encourage students to acknowledge their achievements"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.093,
+    "lower_exposure": false,
+    "why": "Shares 96 skills, e.g. bring out performers’ artistic potential, create a work environment where performers can develop their potential, maintain safe working conditions in performing arts"
+   },
+   {
+    "soc2020": "2319",
+    "title": "Teaching professionals n.e.c.",
+    "similarity": 0.4564,
+    "shared_skills": [
+     "demonstrate when teaching",
+     "assess students",
+     "adapt teaching to student's capabilities",
+     "apply teaching strategies",
+     "maintain safe working conditions in performing arts",
+     "encourage students to acknowledge their achievements"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.087,
+    "lower_exposure": false,
+    "why": "Shares 120 skills, e.g. demonstrate when teaching, assess students, adapt teaching to student's capabilities"
+   },
+   {
+    "soc2020": "2316",
+    "title": "Special needs education teaching professionals",
+    "similarity": 0.43,
+    "shared_skills": [
+     "guarantee students' safety",
+     "demonstrate when teaching",
+     "encourage students to acknowledge their achievements",
+     "adapt teaching to student's capabilities",
+     "assess students",
+     "apply teaching strategies"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.036,
+    "lower_exposure": false,
+    "why": "Shares 151 skills, e.g. guarantee students' safety, demonstrate when teaching, encourage students to acknowledge their achievements"
+   },
+   {
+    "soc2020": "2315",
+    "title": "Nursery education teaching professionals",
+    "similarity": 0.3163,
+    "shared_skills": [
+     "manage student relationships",
+     "demonstrate when teaching",
+     "guarantee students' safety",
+     "encourage students to acknowledge their achievements",
+     "adapt teaching to student's capabilities",
+     "assess students"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.033,
+    "lower_exposure": false,
+    "why": "Shares 82 skills, e.g. manage student relationships, demonstrate when teaching, guarantee students' safety; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2313",
+    "title": "Secondary education teaching professionals",
+    "similarity": 0.2799,
+    "shared_skills": [
+     "manage student relationships",
+     "demonstrate when teaching",
+     "guarantee students' safety",
+     "adapt teaching to student's capabilities",
+     "assess students",
+     "apply teaching strategies"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.042,
+    "lower_exposure": false,
+    "why": "Shares 166 skills, e.g. manage student relationships, demonstrate when teaching, guarantee students' safety"
+   }
+  ],
+  "2315": [
+   {
+    "soc2020": "2316",
+    "title": "Special needs education teaching professionals",
+    "similarity": 0.3842,
+    "shared_skills": [
+     "guarantee students' safety",
+     "demonstrate when teaching",
+     "encourage students to acknowledge their achievements",
+     "adapt teaching to student's capabilities",
+     "curriculum objectives",
+     "assess students"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.069,
+    "lower_exposure": false,
+    "why": "Shares 84 skills, e.g. guarantee students' safety, demonstrate when teaching, encourage students to acknowledge their achievements; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2314",
+    "title": "Primary education teaching professionals",
+    "similarity": 0.3163,
+    "shared_skills": [
+     "manage student relationships",
+     "demonstrate when teaching",
+     "guarantee students' safety",
+     "encourage students to acknowledge their achievements",
+     "adapt teaching to student's capabilities",
+     "assess students"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.033,
+    "lower_exposure": false,
+    "why": "Shares 82 skills, e.g. manage student relationships, demonstrate when teaching, guarantee students' safety; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2313",
+    "title": "Secondary education teaching professionals",
+    "similarity": 0.2612,
+    "shared_skills": [
+     "maintain students' discipline",
+     "manage student relationships",
+     "demonstrate when teaching",
+     "curriculum objectives",
+     "perform classroom management",
+     "adapt teaching to student's capabilities"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.075,
+    "lower_exposure": false,
+    "why": "Shares 71 skills, e.g. maintain students' discipline, manage student relationships, demonstrate when teaching; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2319",
+    "title": "Teaching professionals n.e.c.",
+    "similarity": 0.2248,
+    "shared_skills": [
+     "assess students",
+     "demonstrate when teaching",
+     "adapt teaching to student's capabilities",
+     "curriculum objectives",
+     "apply teaching strategies",
+     "encourage students to acknowledge their achievements"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.12,
+    "lower_exposure": false,
+    "why": "Shares 56 skills, e.g. assess students, demonstrate when teaching, adapt teaching to student's capabilities; estimate from few job-title links"
+   }
+  ],
+  "2316": [
+   {
+    "soc2020": "2314",
+    "title": "Primary education teaching professionals",
+    "similarity": 0.43,
+    "shared_skills": [
+     "guarantee students' safety",
+     "demonstrate when teaching",
+     "encourage students to acknowledge their achievements",
+     "adapt teaching to student's capabilities",
+     "assess students",
+     "apply teaching strategies"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.036,
+    "lower_exposure": false,
+    "why": "Shares 151 skills, e.g. guarantee students' safety, demonstrate when teaching, encourage students to acknowledge their achievements"
+   },
+   {
+    "soc2020": "2315",
+    "title": "Nursery education teaching professionals",
+    "similarity": 0.3842,
+    "shared_skills": [
+     "guarantee students' safety",
+     "demonstrate when teaching",
+     "encourage students to acknowledge their achievements",
+     "adapt teaching to student's capabilities",
+     "curriculum objectives",
+     "assess students"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.069,
+    "lower_exposure": true,
+    "why": "Shares 84 skills, e.g. guarantee students' safety, demonstrate when teaching, encourage students to acknowledge their achievements; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2312",
+    "title": "Further education teaching professionals",
+    "similarity": 0.3581,
+    "shared_skills": [
+     "guarantee students' safety",
+     "demonstrate when teaching",
+     "encourage students to acknowledge their achievements",
+     "adapt teaching to student's capabilities",
+     "assess students",
+     "apply teaching strategies"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.058,
+    "lower_exposure": false,
+    "why": "Shares 110 skills, e.g. guarantee students' safety, demonstrate when teaching, encourage students to acknowledge their achievements"
+   },
+   {
+    "soc2020": "2319",
+    "title": "Teaching professionals n.e.c.",
+    "similarity": 0.3517,
+    "shared_skills": [
+     "demonstrate when teaching",
+     "adapt teaching to student's capabilities",
+     "assess students",
+     "curriculum objectives",
+     "apply teaching strategies",
+     "encourage students to acknowledge their achievements"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.051,
+    "lower_exposure": false,
+    "why": "Shares 111 skills, e.g. demonstrate when teaching, adapt teaching to student's capabilities, assess students"
+   },
+   {
+    "soc2020": "2313",
+    "title": "Secondary education teaching professionals",
+    "similarity": 0.2896,
+    "shared_skills": [
+     "guarantee students' safety",
+     "demonstrate when teaching",
+     "adapt teaching to student's capabilities",
+     "curriculum objectives",
+     "assess students",
+     "apply teaching strategies"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.007,
+    "lower_exposure": false,
+    "why": "Shares 158 skills, e.g. guarantee students' safety, demonstrate when teaching, adapt teaching to student's capabilities"
+   }
+  ],
+  "2319": [
+   {
+    "soc2020": "2314",
+    "title": "Primary education teaching professionals",
+    "similarity": 0.4564,
+    "shared_skills": [
+     "demonstrate when teaching",
+     "assess students",
+     "adapt teaching to student's capabilities",
+     "apply teaching strategies",
+     "maintain safe working conditions in performing arts",
+     "encourage students to acknowledge their achievements"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.087,
+    "lower_exposure": true,
+    "why": "Shares 120 skills, e.g. demonstrate when teaching, assess students, adapt teaching to student's capabilities"
+   },
+   {
+    "soc2020": "2312",
+    "title": "Further education teaching professionals",
+    "similarity": 0.4484,
+    "shared_skills": [
+     "assess students",
+     "demonstrate when teaching",
+     "adapt teaching to student's capabilities",
+     "apply teaching strategies",
+     "maintain safe working conditions in performing arts",
+     "encourage students to acknowledge their achievements"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.007,
+    "lower_exposure": false,
+    "why": "Shares 82 skills, e.g. assess students, demonstrate when teaching, adapt teaching to student's capabilities"
+   },
+   {
+    "soc2020": "2316",
+    "title": "Special needs education teaching professionals",
+    "similarity": 0.3517,
+    "shared_skills": [
+     "demonstrate when teaching",
+     "adapt teaching to student's capabilities",
+     "assess students",
+     "curriculum objectives",
+     "apply teaching strategies",
+     "encourage students to acknowledge their achievements"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.051,
+    "lower_exposure": true,
+    "why": "Shares 111 skills, e.g. demonstrate when teaching, adapt teaching to student's capabilities, assess students"
+   },
+   {
+    "soc2020": "2313",
+    "title": "Secondary education teaching professionals",
+    "similarity": 0.2404,
+    "shared_skills": [
+     "assess students",
+     "demonstrate when teaching",
+     "adapt teaching to student's capabilities",
+     "curriculum objectives",
+     "apply teaching strategies",
+     "assist students in their learning"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.044,
+    "lower_exposure": false,
+    "why": "Shares 137 skills, e.g. assess students, demonstrate when teaching, adapt teaching to student's capabilities"
+   },
+   {
+    "soc2020": "2315",
+    "title": "Nursery education teaching professionals",
+    "similarity": 0.2248,
+    "shared_skills": [
+     "assess students",
+     "demonstrate when teaching",
+     "adapt teaching to student's capabilities",
+     "curriculum objectives",
+     "apply teaching strategies",
+     "encourage students to acknowledge their achievements"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.12,
+    "lower_exposure": true,
+    "why": "Shares 56 skills, e.g. assess students, demonstrate when teaching, adapt teaching to student's capabilities; estimate from few job-title links"
+   }
+  ],
+  "2421": [
+   {
+    "soc2020": "2435",
+    "title": "Professional/Chartered company secretaries",
+    "similarity": 0.328,
+    "shared_skills": [
+     "financial department processes",
+     "analyse financial performance of a company",
+     "accounting department processes",
+     "financial statements",
+     "evaluate budgets",
+     "explain accounting records"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.115,
+    "lower_exposure": true,
+    "why": "Shares 75 skills, e.g. financial department processes, analyse financial performance of a company, accounting department processes; estimate from few job-title links"
+   },
+   {
+    "soc2020": "1131",
+    "title": "Financial managers and directors",
+    "similarity": 0.1587,
+    "shared_skills": [
+     "financial statements",
+     "analyse financial performance of a company",
+     "liaise with auditors",
+     "enforce financial policies",
+     "evaluate budgets",
+     "follow the statutory obligations"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.085,
+    "lower_exposure": true,
+    "why": "Shares 69 skills, e.g. financial statements, analyse financial performance of a company, liaise with auditors"
+   },
+   {
+    "soc2020": "2423",
+    "title": "Taxation experts",
+    "similarity": 0.1415,
+    "shared_skills": [
+     "tax legislation",
+     "fraud detection",
+     "prepare tax returns forms",
+     "disseminate information on tax legislation",
+     "calculate tax",
+     "conduct financial audits"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.005,
+    "lower_exposure": false,
+    "why": "Shares 28 skills, e.g. tax legislation, fraud detection, prepare tax returns forms"
+   },
+   {
+    "soc2020": "2422",
+    "title": "Finance and investment analysts and advisers",
+    "similarity": 0.096,
+    "shared_skills": [
+     "analyse financial performance of a company",
+     "interpret financial statements",
+     "advise on financial matters",
+     "financial forecasting",
+     "analyse financial risk",
+     "synthesise financial information"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.068,
+    "lower_exposure": false,
+    "why": "Shares 51 skills, e.g. analyse financial performance of a company, interpret financial statements, advise on financial matters"
+   }
+  ],
+  "2422": [
+   {
+    "soc2020": "2435",
+    "title": "Professional/Chartered company secretaries",
+    "similarity": 0.188,
+    "shared_skills": [
+     "analyse financial performance of a company",
+     "interpret financial statements",
+     "analyse market financial trends",
+     "securities",
+     "investment analysis",
+     "financial forecasting"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.182,
+    "lower_exposure": true,
+    "why": "Shares 82 skills, e.g. analyse financial performance of a company, interpret financial statements, analyse market financial trends; estimate from few job-title links"
+   },
+   {
+    "soc2020": "1131",
+    "title": "Financial managers and directors",
+    "similarity": 0.1459,
+    "shared_skills": [
+     "create a financial plan",
+     "analyse market financial trends",
+     "securities",
+     "analyse financial performance of a company",
+     "banking activities",
+     "synthesise financial information"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.153,
+    "lower_exposure": true,
+    "why": "Shares 83 skills, e.g. create a financial plan, analyse market financial trends, securities"
+   },
+   {
+    "soc2020": "2433",
+    "title": "Actuaries, economists and statisticians",
+    "similarity": 0.0977,
+    "shared_skills": [
+     "empirical analysis",
+     "quantitative analysis",
+     "analyse market financial trends",
+     "economics",
+     "actuarial science",
+     "obtain financial information"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.034,
+    "lower_exposure": false,
+    "why": "Shares 58 skills, e.g. empirical analysis, quantitative analysis, analyse market financial trends"
+   },
+   {
+    "soc2020": "2421",
+    "title": "Chartered and certified accountants",
+    "similarity": 0.096,
+    "shared_skills": [
+     "analyse financial performance of a company",
+     "interpret financial statements",
+     "advise on financial matters",
+     "financial forecasting",
+     "analyse financial risk",
+     "synthesise financial information"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.068,
+    "lower_exposure": true,
+    "why": "Shares 51 skills, e.g. analyse financial performance of a company, interpret financial statements, advise on financial matters"
+   },
+   {
+    "soc2020": "2482",
+    "title": "Quality assurance and regulatory professionals",
+    "similarity": 0.0872,
+    "shared_skills": [
+     "perform business analysis",
+     "analyse financial performance of a company",
+     "management consulting",
+     "advise on financial matters",
+     "analyse business plans",
+     "data visualisation software"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.125,
+    "lower_exposure": true,
+    "why": "Shares 65 skills, e.g. perform business analysis, analyse financial performance of a company, management consulting; estimate from few job-title links"
+   }
+  ],
+  "2423": [
+   {
+    "soc2020": "2421",
+    "title": "Chartered and certified accountants",
+    "similarity": 0.1415,
+    "shared_skills": [
+     "tax legislation",
+     "fraud detection",
+     "prepare tax returns forms",
+     "disseminate information on tax legislation",
+     "calculate tax",
+     "conduct financial audits"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.005,
+    "lower_exposure": false,
+    "why": "Shares 28 skills, e.g. tax legislation, fraud detection, prepare tax returns forms"
+   },
+   {
+    "soc2020": "2435",
+    "title": "Professional/Chartered company secretaries",
+    "similarity": 0.1027,
+    "shared_skills": [
+     "tax legislation",
+     "prepare financial auditing reports",
+     "prepare financial statements",
+     "public finance",
+     "advise on tax planning",
+     "conduct financial audits"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.11,
+    "lower_exposure": true,
+    "why": "Shares 25 skills, e.g. tax legislation, prepare financial auditing reports, prepare financial statements; estimate from few job-title links"
+   },
+   {
+    "soc2020": "1131",
+    "title": "Financial managers and directors",
+    "similarity": 0.0544,
+    "shared_skills": [
+     "accounting entries",
+     "prepare tax returns forms",
+     "tax legislation",
+     "monitor financial accounts",
+     "conduct financial audits",
+     "advise on financial matters"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.08,
+    "lower_exposure": true,
+    "why": "Shares 24 skills, e.g. accounting entries, prepare tax returns forms, tax legislation"
+   }
+  ],
+  "2433": [
+   {
+    "soc2020": "2115",
+    "title": "Social and humanities scientists",
+    "similarity": 0.2021,
+    "shared_skills": [
+     "apply scientific methods",
+     "apply statistical analysis techniques",
+     "communicate with a non-scientific audience",
+     "promote the participation of citizens in scientific and research activities",
+     "conduct research across disciplines",
+     "manage open publications"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.071,
+    "lower_exposure": true,
+    "why": "Shares 97 skills, e.g. apply scientific methods, apply statistical analysis techniques, communicate with a non-scientific audience"
+   },
+   {
+    "soc2020": "2114",
+    "title": "Physical scientists",
+    "similarity": 0.1962,
+    "shared_skills": [
+     "apply scientific methods",
+     "apply statistical analysis techniques",
+     "communicate with a non-scientific audience",
+     "promote the participation of citizens in scientific and research activities",
+     "conduct research across disciplines",
+     "manage open publications"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.151,
+    "lower_exposure": true,
+    "why": "Shares 71 skills, e.g. apply scientific methods, apply statistical analysis techniques, communicate with a non-scientific audience"
+   },
+   {
+    "soc2020": "2113",
+    "title": "Biochemists and biomedical scientists",
+    "similarity": 0.1913,
+    "shared_skills": [
+     "apply scientific methods",
+     "communicate with a non-scientific audience",
+     "promote the participation of citizens in scientific and research activities",
+     "conduct research across disciplines",
+     "manage open publications",
+     "integrate gender dimension in research"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.158,
+    "lower_exposure": true,
+    "why": "Shares 90 skills, e.g. apply scientific methods, communicate with a non-scientific audience, promote the participation of citizens in scientific and research activities"
+   },
+   {
+    "soc2020": "2112",
+    "title": "Biological scientists",
+    "similarity": 0.1801,
+    "shared_skills": [
+     "apply scientific methods",
+     "communicate with a non-scientific audience",
+     "promote the participation of citizens in scientific and research activities",
+     "conduct research across disciplines",
+     "manage open publications",
+     "develop professional network with researchers and scientists"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.201,
+    "lower_exposure": true,
+    "why": "Shares 95 skills, e.g. apply scientific methods, communicate with a non-scientific audience, promote the participation of citizens in scientific and research activities"
+   },
+   {
+    "soc2020": "2162",
+    "title": "Other researchers, unspecified discipline",
+    "similarity": 0.1798,
+    "shared_skills": [
+     "apply scientific methods",
+     "communicate with a non-scientific audience",
+     "promote the participation of citizens in scientific and research activities",
+     "conduct research across disciplines",
+     "manage open publications",
+     "integrate gender dimension in research"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.147,
+    "lower_exposure": true,
+    "why": "Shares 96 skills, e.g. apply scientific methods, communicate with a non-scientific audience, promote the participation of citizens in scientific and research activities; estimate from few job-title links"
+   }
+  ],
+  "2435": [
+   {
+    "soc2020": "1131",
+    "title": "Financial managers and directors",
+    "similarity": 0.3425,
+    "shared_skills": [
+     "financial statements",
+     "financial management",
+     "create a financial plan",
+     "strive for company growth",
+     "enforce financial policies",
+     "analyse market financial trends"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.03,
+    "lower_exposure": false,
+    "why": "Shares 122 skills, e.g. financial statements, financial management, create a financial plan; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2421",
+    "title": "Chartered and certified accountants",
+    "similarity": 0.328,
+    "shared_skills": [
+     "financial department processes",
+     "analyse financial performance of a company",
+     "accounting department processes",
+     "financial statements",
+     "evaluate budgets",
+     "explain accounting records"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.115,
+    "lower_exposure": false,
+    "why": "Shares 75 skills, e.g. financial department processes, analyse financial performance of a company, accounting department processes; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2422",
+    "title": "Finance and investment analysts and advisers",
+    "similarity": 0.188,
+    "shared_skills": [
+     "analyse financial performance of a company",
+     "interpret financial statements",
+     "analyse market financial trends",
+     "securities",
+     "investment analysis",
+     "financial forecasting"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.182,
+    "lower_exposure": false,
+    "why": "Shares 82 skills, e.g. analyse financial performance of a company, interpret financial statements, analyse market financial trends; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2423",
+    "title": "Taxation experts",
+    "similarity": 0.1027,
+    "shared_skills": [
+     "tax legislation",
+     "prepare financial auditing reports",
+     "prepare financial statements",
+     "public finance",
+     "advise on tax planning",
+     "conduct financial audits"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.11,
+    "lower_exposure": false,
+    "why": "Shares 25 skills, e.g. tax legislation, prepare financial auditing reports, prepare financial statements; estimate from few job-title links"
+   }
+  ],
+  "2451": [
+   {
+    "soc2020": "2452",
+    "title": "Chartered architectural technologists, planning officers and consultants",
+    "similarity": 0.2831,
+    "shared_skills": [
+     "zoning codes",
+     "architecture regulations",
+     "urban planning",
+     "meet building regulations",
+     "building codes",
+     "design spatial layout of outdoor areas"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.006,
+    "lower_exposure": false,
+    "why": "Shares 107 skills, e.g. zoning codes, architecture regulations, urban planning; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2121",
+    "title": "Civil engineers",
+    "similarity": 0.0987,
+    "shared_skills": [
+     "integrate measures in architectural designs",
+     "integrated design",
+     "satisfy technical requirements",
+     "architectural design",
+     "integrate building requirements in the architectural design",
+     "consider building constraints in architectural designs"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.072,
+    "lower_exposure": true,
+    "why": "Shares 55 skills, e.g. integrate measures in architectural designs, integrated design, satisfy technical requirements"
+   }
+  ],
+  "2452": [
+   {
+    "soc2020": "2451",
+    "title": "Architects",
+    "similarity": 0.2831,
+    "shared_skills": [
+     "zoning codes",
+     "architecture regulations",
+     "urban planning",
+     "meet building regulations",
+     "building codes",
+     "design spatial layout of outdoor areas"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.006,
+    "lower_exposure": false,
+    "why": "Shares 107 skills, e.g. zoning codes, architecture regulations, urban planning; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2121",
+    "title": "Civil engineers",
+    "similarity": 0.1318,
+    "shared_skills": [
+     "civil engineering",
+     "execute feasibility study",
+     "integrate measures in architectural designs",
+     "advise on building matters",
+     "satisfy technical requirements",
+     "integrate building requirements in the architectural design"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.066,
+    "lower_exposure": true,
+    "why": "Shares 80 skills, e.g. civil engineering, execute feasibility study, integrate measures in architectural designs; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2455",
+    "title": "Construction project managers and related professionals",
+    "similarity": 0.1299,
+    "shared_skills": [
+     "urban planning",
+     "study traffic flow",
+     "urban planning law",
+     "environmental policy",
+     "develop urban transport studies",
+     "analyse transport business networks"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.015,
+    "lower_exposure": false,
+    "why": "Shares 61 skills, e.g. urban planning, study traffic flow, urban planning law; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2454",
+    "title": "Chartered surveyors",
+    "similarity": 0.0883,
+    "shared_skills": [
+     "topography",
+     "compare survey computations",
+     "geography",
+     "process collected survey data",
+     "geographic information systems",
+     "surveying methods"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.059,
+    "lower_exposure": false,
+    "why": "Shares 42 skills, e.g. topography, compare survey computations, geography; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2133",
+    "title": "IT business analysts, architects and systems designers",
+    "similarity": 0.0835,
+    "shared_skills": [
+     "execute feasibility study",
+     "provide ICT consulting advice",
+     "ICT project management methodologies",
+     "provide cost benefit analysis reports",
+     "build business relationships",
+     "design open spaces"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.141,
+    "lower_exposure": false,
+    "why": "Shares 140 skills, e.g. execute feasibility study, provide ICT consulting advice, ICT project management methodologies; estimate from few job-title links"
+   }
+  ],
+  "2453": [
+   {
+    "soc2020": "2127",
+    "title": "Engineering project managers and project engineers",
+    "similarity": 0.9274,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "manage engineering project",
+     "perform scientific research"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.044,
+    "lower_exposure": false,
+    "why": "Shares 1014 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2481",
+    "title": "Quality control and planning engineers",
+    "similarity": 0.8948,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "manage engineering project",
+     "perform scientific research"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.019,
+    "lower_exposure": false,
+    "why": "Shares 1014 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2129",
+    "title": "Engineering professionals n.e.c.",
+    "similarity": 0.3157,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "use technical drawing software",
+     "technical drawings"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.019,
+    "lower_exposure": false,
+    "why": "Shares 460 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2125",
+    "title": "Production and process engineers",
+    "similarity": 0.1895,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "perform scientific research",
+     "use technical drawing software"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.078,
+    "lower_exposure": false,
+    "why": "Shares 251 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2122",
+    "title": "Mechanical engineers",
+    "similarity": 0.1512,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "perform scientific research",
+     "use technical drawing software"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.025,
+    "lower_exposure": false,
+    "why": "Shares 180 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   }
+  ],
+  "2454": [
+   {
+    "soc2020": "2452",
+    "title": "Chartered architectural technologists, planning officers and consultants",
+    "similarity": 0.0883,
+    "shared_skills": [
+     "topography",
+     "compare survey computations",
+     "geography",
+     "process collected survey data",
+     "geographic information systems",
+     "surveying methods"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.059,
+    "lower_exposure": true,
+    "why": "Shares 42 skills, e.g. topography, compare survey computations, geography; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2114",
+    "title": "Physical scientists",
+    "similarity": 0.0707,
+    "shared_skills": [
+     "geology",
+     "geography",
+     "design scientific equipment",
+     "geographic information systems",
+     "interpret geophysical data",
+     "provide information on geological characteristics"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.03,
+    "lower_exposure": false,
+    "why": "Shares 49 skills, e.g. geology, geography, design scientific equipment; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2121",
+    "title": "Civil engineers",
+    "similarity": 0.0628,
+    "shared_skills": [
+     "civil engineering",
+     "ensure compliance with safety legislation",
+     "geology",
+     "approve engineering design",
+     "adjust engineering designs",
+     "use technical drawing software"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.125,
+    "lower_exposure": true,
+    "why": "Shares 35 skills, e.g. civil engineering, ensure compliance with safety legislation, geology; estimate from few job-title links"
+   }
+  ],
+  "2455": [
+   {
+    "soc2020": "2452",
+    "title": "Chartered architectural technologists, planning officers and consultants",
+    "similarity": 0.1299,
+    "shared_skills": [
+     "urban planning",
+     "study traffic flow",
+     "urban planning law",
+     "environmental policy",
+     "develop urban transport studies",
+     "analyse transport business networks"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.015,
+    "lower_exposure": false,
+    "why": "Shares 61 skills, e.g. urban planning, study traffic flow, urban planning law; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2131",
+    "title": "IT project managers",
+    "similarity": 0.0959,
+    "shared_skills": [
+     "draft project documentation",
+     "organise project meetings",
+     "manage project changes",
+     "identify legal requirements",
+     "internal risk management policy",
+     "manage project information"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.132,
+    "lower_exposure": false,
+    "why": "Shares 77 skills, e.g. draft project documentation, organise project meetings, manage project changes; estimate from few job-title links"
+   }
+  ],
+  "2481": [
+   {
+    "soc2020": "2127",
+    "title": "Engineering project managers and project engineers",
+    "similarity": 0.8955,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "manage engineering project",
+     "perform scientific research"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.025,
+    "lower_exposure": false,
+    "why": "Shares 1015 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2453",
+    "title": "Quantity surveyors",
+    "similarity": 0.8948,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "manage engineering project",
+     "perform scientific research"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.019,
+    "lower_exposure": false,
+    "why": "Shares 1014 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2129",
+    "title": "Engineering professionals n.e.c.",
+    "similarity": 0.3054,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "use technical drawing software",
+     "technical drawings"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.001,
+    "lower_exposure": false,
+    "why": "Shares 461 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2125",
+    "title": "Production and process engineers",
+    "similarity": 0.1886,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "perform scientific research",
+     "use technical drawing software"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.058,
+    "lower_exposure": false,
+    "why": "Shares 254 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   },
+   {
+    "soc2020": "2122",
+    "title": "Mechanical engineers",
+    "similarity": 0.1494,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "approve engineering design",
+     "perform scientific research",
+     "use technical drawing software"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.005,
+    "lower_exposure": false,
+    "why": "Shares 181 skills, e.g. engineering principles, adjust engineering designs, engineering processes; estimate from few job-title links"
+   }
+  ],
+  "2482": [
+   {
+    "soc2020": "1131",
+    "title": "Financial managers and directors",
+    "similarity": 0.1038,
+    "shared_skills": [
+     "analyse financial performance of a company",
+     "analyse business plans",
+     "enforce financial policies",
+     "liaise with managers",
+     "advise on financial matters",
+     "align efforts towards business development"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.028,
+    "lower_exposure": false,
+    "why": "Shares 95 skills, e.g. analyse financial performance of a company, analyse business plans, enforce financial policies; estimate from few job-title links"
+   }
+  ],
+  "3112": [
+   {
+    "soc2020": "5241",
+    "title": "Electricians and electrical fitters",
+    "similarity": 0.171,
+    "shared_skills": [
+     "electrical equipment regulations",
+     "measure electrical characteristics",
+     "maintain electrical equipment",
+     "electrical wiring diagrams",
+     "troubleshoot",
+     "test electronic units"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.169,
+    "lower_exposure": true,
+    "why": "Shares 104 skills, e.g. electrical equipment regulations, measure electrical characteristics, maintain electrical equipment; estimate from few job-title links"
+   },
+   {
+    "soc2020": "3113",
+    "title": "Engineering technicians",
+    "similarity": 0.1345,
+    "shared_skills": [
+     "adjust engineering designs",
+     "liaise with engineers",
+     "read engineering drawings",
+     "analyse test data",
+     "engineering processes",
+     "troubleshoot"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.083,
+    "lower_exposure": true,
+    "why": "Shares 132 skills, e.g. adjust engineering designs, liaise with engineers, read engineering drawings; estimate from few job-title links"
+   },
+   {
+    "soc2020": "5234",
+    "title": "Aircraft maintenance and related trades",
+    "similarity": 0.1315,
+    "shared_skills": [
+     "read standard blueprints",
+     "electrical engineering",
+     "assemble electrical components",
+     "read engineering drawings",
+     "troubleshoot",
+     "wear appropriate protective gear"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.133,
+    "lower_exposure": true,
+    "why": "Shares 46 skills, e.g. read standard blueprints, electrical engineering, assemble electrical components; estimate from few job-title links"
+   },
+   {
+    "soc2020": "5246",
+    "title": "Electrical service and maintenance mechanics and repairers",
+    "similarity": 0.1216,
+    "shared_skills": [
+     "troubleshoot",
+     "maintain electrical equipment",
+     "electricity",
+     "wear appropriate protective gear",
+     "fasten components",
+     "operate soldering equipment"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.114,
+    "lower_exposure": true,
+    "why": "Shares 75 skills, e.g. troubleshoot, maintain electrical equipment, electricity; estimate from few job-title links"
+   }
+  ],
+  "3113": [
+   {
+    "soc2020": "3112",
+    "title": "Electrical and electronics technicians",
+    "similarity": 0.1345,
+    "shared_skills": [
+     "adjust engineering designs",
+     "liaise with engineers",
+     "read engineering drawings",
+     "analyse test data",
+     "engineering processes",
+     "troubleshoot"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.083,
+    "lower_exposure": false,
+    "why": "Shares 132 skills, e.g. adjust engineering designs, liaise with engineers, read engineering drawings; estimate from few job-title links"
+   },
+   {
+    "soc2020": "5234",
+    "title": "Aircraft maintenance and related trades",
+    "similarity": 0.1013,
+    "shared_skills": [
+     "engineering processes",
+     "engineering principles",
+     "read engineering drawings",
+     "troubleshoot",
+     "adjust engineering designs",
+     "technical drawings"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.05,
+    "lower_exposure": false,
+    "why": "Shares 68 skills, e.g. engineering processes, engineering principles, read engineering drawings; estimate from few job-title links"
+   },
+   {
+    "soc2020": "5245",
+    "title": "Security system installers and repairers",
+    "similarity": 0.1007,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "CAE software",
+     "read engineering drawings",
+     "analyse test data",
+     "engineering processes"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.097,
+    "lower_exposure": false,
+    "why": "Shares 152 skills, e.g. engineering principles, adjust engineering designs, CAE software; estimate from few job-title links"
+   },
+   {
+    "soc2020": "5243",
+    "title": "TV, video and audio servicers and repairers",
+    "similarity": 0.0971,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "engineering processes",
+     "troubleshoot",
+     "record test data",
+     "technical drawings"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.085,
+    "lower_exposure": false,
+    "why": "Shares 81 skills, e.g. engineering principles, adjust engineering designs, engineering processes"
+   },
+   {
+    "soc2020": "3115",
+    "title": "Quality assurance technicians",
+    "similarity": 0.086,
+    "shared_skills": [
+     "analyse test data",
+     "record test data",
+     "collaborate with engineers",
+     "read engineering drawings",
+     "adjust engineering designs",
+     "liaise with engineers"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.005,
+    "lower_exposure": false,
+    "why": "Shares 120 skills, e.g. analyse test data, record test data, collaborate with engineers; estimate from few job-title links"
+   }
+  ],
+  "3115": [
+   {
+    "soc2020": "3112",
+    "title": "Electrical and electronics technicians",
+    "similarity": 0.1055,
+    "shared_skills": [
+     "record test data",
+     "analyse test data",
+     "inspect quality of products",
+     "read engineering drawings",
+     "adjust engineering designs",
+     "liaise with engineers"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.088,
+    "lower_exposure": false,
+    "why": "Shares 108 skills, e.g. record test data, analyse test data, inspect quality of products; estimate from few job-title links"
+   },
+   {
+    "soc2020": "3113",
+    "title": "Engineering technicians",
+    "similarity": 0.086,
+    "shared_skills": [
+     "analyse test data",
+     "record test data",
+     "collaborate with engineers",
+     "read engineering drawings",
+     "adjust engineering designs",
+     "liaise with engineers"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.005,
+    "lower_exposure": false,
+    "why": "Shares 120 skills, e.g. analyse test data, record test data, collaborate with engineers; estimate from few job-title links"
+   }
+  ],
+  "3119": [
+   {
+    "soc2020": "3132",
+    "title": "IT user support technicians",
+    "similarity": 0.2549,
+    "shared_skills": [
+     "keep up to date on product knowledge",
+     "use ICT hardware",
+     "ICT networking hardware",
+     "attack vectors",
+     "procurement of ICT network equipment",
+     "maintain ICT system"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.206,
+    "lower_exposure": false,
+    "why": "Shares 81 skills, e.g. keep up to date on product knowledge, use ICT hardware, ICT networking hardware; estimate from few job-title links"
+   },
+   {
+    "soc2020": "5242",
+    "title": "Telecoms and related network installers and repairers",
+    "similarity": 0.1257,
+    "shared_skills": [
+     "ICT network routing",
+     "operate private branch exchange",
+     "procurement of ICT network equipment",
+     "implement a virtual private network",
+     "perform ICT troubleshooting",
+     "ICT networking hardware"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.094,
+    "lower_exposure": false,
+    "why": "Shares 54 skills, e.g. ICT network routing, operate private branch exchange, procurement of ICT network equipment"
+   }
+  ],
+  "3120": [
+   {
+    "soc2020": "5221",
+    "title": "Metal machining setters and setter-operators",
+    "similarity": 0.1051,
+    "shared_skills": [
+     "use automatic programming",
+     "use CAM software",
+     "trigonometry",
+     "geometry",
+     "manufacturing of jewellery",
+     "use CAD software"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.167,
+    "lower_exposure": true,
+    "why": "Shares 59 skills, e.g. use automatic programming, use CAM software, trigonometry"
+   },
+   {
+    "soc2020": "3132",
+    "title": "IT user support technicians",
+    "similarity": 0.1043,
+    "shared_skills": [
+     "Scala",
+     "Pascal (computer programming)",
+     "COBOL",
+     "Scratch (computer programming)",
+     "MATLAB",
+     "Swift (computer programming)"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.122,
+    "lower_exposure": false,
+    "why": "Shares 42 skills, e.g. Scala, Pascal (computer programming), COBOL; estimate from few job-title links"
+   },
+   {
+    "soc2020": "5242",
+    "title": "Telecoms and related network installers and repairers",
+    "similarity": 0.0862,
+    "shared_skills": [
+     "design process",
+     "Scala",
+     "Pascal (computer programming)",
+     "COBOL",
+     "Scratch (computer programming)",
+     "MATLAB"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.01,
+    "lower_exposure": false,
+    "why": "Shares 48 skills, e.g. design process, Scala, Pascal (computer programming)"
+   },
+   {
+    "soc2020": "3119",
+    "title": "Science, engineering and production technicians n.e.c.",
+    "similarity": 0.0766,
+    "shared_skills": [
+     "Scala",
+     "Pascal (computer programming)",
+     "COBOL",
+     "Scratch (computer programming)",
+     "MATLAB",
+     "Swift (computer programming)"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.084,
+    "lower_exposure": true,
+    "why": "Shares 47 skills, e.g. Scala, Pascal (computer programming), COBOL"
+   },
+   {
+    "soc2020": "5249",
+    "title": "Electrical and electronic trades n.e.c.",
+    "similarity": 0.0609,
+    "shared_skills": [
+     "design process",
+     "design drawings",
+     "adjust engineering designs",
+     "mathematics",
+     "use technical drawing software",
+     "Scala"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.075,
+    "lower_exposure": true,
+    "why": "Shares 54 skills, e.g. design process, design drawings, adjust engineering designs"
+   }
+  ],
+  "3132": [
+   {
+    "soc2020": "3119",
+    "title": "Science, engineering and production technicians n.e.c.",
+    "similarity": 0.2549,
+    "shared_skills": [
+     "keep up to date on product knowledge",
+     "use ICT hardware",
+     "ICT networking hardware",
+     "attack vectors",
+     "procurement of ICT network equipment",
+     "maintain ICT system"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.206,
+    "lower_exposure": true,
+    "why": "Shares 81 skills, e.g. keep up to date on product knowledge, use ICT hardware, ICT networking hardware; estimate from few job-title links"
+   },
+   {
+    "soc2020": "5242",
+    "title": "Telecoms and related network installers and repairers",
+    "similarity": 0.1532,
+    "shared_skills": [
+     "procurement of ICT network equipment",
+     "implement a virtual private network",
+     "ICT system user requirements",
+     "support ICT system users",
+     "ICT network routing",
+     "operate private branch exchange"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.112,
+    "lower_exposure": true,
+    "why": "Shares 63 skills, e.g. procurement of ICT network equipment, implement a virtual private network, ICT system user requirements; estimate from few job-title links"
+   },
+   {
+    "soc2020": "3120",
+    "title": "CAD, drawing and architectural technicians",
+    "similarity": 0.1043,
+    "shared_skills": [
+     "Scala",
+     "Pascal (computer programming)",
+     "COBOL",
+     "Scratch (computer programming)",
+     "MATLAB",
+     "Swift (computer programming)"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.122,
+    "lower_exposure": true,
+    "why": "Shares 42 skills, e.g. Scala, Pascal (computer programming), COBOL; estimate from few job-title links"
+   }
+  ],
+  "3512": [
+   {
+    "soc2020": "5241",
+    "title": "Electricians and electrical fitters",
+    "similarity": 0.159,
+    "shared_skills": [
+     "model electromagnetic products",
+     "artificial lighting systems",
+     "electrical instrumentation engineering",
+     "electronics",
+     "electrical equipment components",
+     "assemble electromechanical systems"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.095,
+    "lower_exposure": true,
+    "why": "Shares 114 skills, e.g. model electromagnetic products, artificial lighting systems, electrical instrumentation engineering"
+   },
+   {
+    "soc2020": "3112",
+    "title": "Electrical and electronics technicians",
+    "similarity": 0.079,
+    "shared_skills": [
+     "adjust engineering designs",
+     "electric motors",
+     "design electric power systems",
+     "electric drives",
+     "electrical wiring diagrams",
+     "electrical equipment regulations"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.075,
+    "lower_exposure": false,
+    "why": "Shares 59 skills, e.g. adjust engineering designs, electric motors, design electric power systems; estimate from few job-title links"
+   },
+   {
+    "soc2020": "5245",
+    "title": "Security system installers and repairers",
+    "similarity": 0.0753,
+    "shared_skills": [
+     "approve engineering design",
+     "adjust engineering designs",
+     "electronics",
+     "use technical drawing software",
+     "engineering principles",
+     "abide by regulations on banned materials"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.088,
+    "lower_exposure": false,
+    "why": "Shares 97 skills, e.g. approve engineering design, adjust engineering designs, electronics; estimate from few job-title links"
+   }
+  ],
+  "3543": [
+   {
+    "soc2020": "3544",
+    "title": "Data analysts",
+    "similarity": 0.2175,
+    "shared_skills": [
+     "compile statistical data for insurance purposes",
+     "apply statistical analysis techniques",
+     "statistical analysis system software",
+     "statistics",
+     "carry out statistical forecasts",
+     "digital data processing"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.012,
+    "lower_exposure": false,
+    "why": "Shares 56 skills, e.g. compile statistical data for insurance purposes, apply statistical analysis techniques, statistical analysis system software; estimate from few job-title links"
+   }
+  ],
+  "3544": [
+   {
+    "soc2020": "3543",
+    "title": "Project support officers",
+    "similarity": 0.2175,
+    "shared_skills": [
+     "compile statistical data for insurance purposes",
+     "apply statistical analysis techniques",
+     "statistical analysis system software",
+     "statistics",
+     "carry out statistical forecasts",
+     "digital data processing"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.012,
+    "lower_exposure": false,
+    "why": "Shares 56 skills, e.g. compile statistical data for insurance purposes, apply statistical analysis techniques, statistical analysis system software; estimate from few job-title links"
+   }
+  ],
+  "5221": [],
+  "5234": [
+   {
+    "soc2020": "3112",
+    "title": "Electrical and electronics technicians",
+    "similarity": 0.1315,
+    "shared_skills": [
+     "read standard blueprints",
+     "electrical engineering",
+     "assemble electrical components",
+     "read engineering drawings",
+     "troubleshoot",
+     "wear appropriate protective gear"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.133,
+    "lower_exposure": false,
+    "why": "Shares 46 skills, e.g. read standard blueprints, electrical engineering, assemble electrical components; estimate from few job-title links"
+   },
+   {
+    "soc2020": "5243",
+    "title": "TV, video and audio servicers and repairers",
+    "similarity": 0.1159,
+    "shared_skills": [
+     "engineering principles",
+     "engineering processes",
+     "aerospace engineering",
+     "troubleshoot",
+     "execute feasibility study",
+     "approve engineering design"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.135,
+    "lower_exposure": false,
+    "why": "Shares 46 skills, e.g. engineering principles, engineering processes, aerospace engineering; estimate from few job-title links"
+   },
+   {
+    "soc2020": "3113",
+    "title": "Engineering technicians",
+    "similarity": 0.1013,
+    "shared_skills": [
+     "engineering processes",
+     "engineering principles",
+     "read engineering drawings",
+     "troubleshoot",
+     "adjust engineering designs",
+     "technical drawings"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.05,
+    "lower_exposure": false,
+    "why": "Shares 68 skills, e.g. engineering processes, engineering principles, read engineering drawings; estimate from few job-title links"
+   }
+  ],
+  "5241": [
+   {
+    "soc2020": "3112",
+    "title": "Electrical and electronics technicians",
+    "similarity": 0.171,
+    "shared_skills": [
+     "electrical equipment regulations",
+     "measure electrical characteristics",
+     "maintain electrical equipment",
+     "electrical wiring diagrams",
+     "troubleshoot",
+     "test electronic units"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.169,
+    "lower_exposure": false,
+    "why": "Shares 104 skills, e.g. electrical equipment regulations, measure electrical characteristics, maintain electrical equipment; estimate from few job-title links"
+   },
+   {
+    "soc2020": "3512",
+    "title": "Ship and hovercraft officers",
+    "similarity": 0.159,
+    "shared_skills": [
+     "model electromagnetic products",
+     "artificial lighting systems",
+     "electrical instrumentation engineering",
+     "electronics",
+     "electrical equipment components",
+     "assemble electromechanical systems"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.095,
+    "lower_exposure": false,
+    "why": "Shares 114 skills, e.g. model electromagnetic products, artificial lighting systems, electrical instrumentation engineering"
+   },
+   {
+    "soc2020": "5246",
+    "title": "Electrical service and maintenance mechanics and repairers",
+    "similarity": 0.1211,
+    "shared_skills": [
+     "maintain electrical equipment",
+     "electrical wiring plans",
+     "electricity",
+     "electronics",
+     "troubleshoot",
+     "replace defect components"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.056,
+    "lower_exposure": false,
+    "why": "Shares 89 skills, e.g. maintain electrical equipment, electrical wiring plans, electricity; estimate from few job-title links"
+   },
+   {
+    "soc2020": "5245",
+    "title": "Security system installers and repairers",
+    "similarity": 0.1074,
+    "shared_skills": [
+     "electricity principles",
+     "abide by regulations on banned materials",
+     "electricity",
+     "electronics",
+     "program firmware",
+     "engineering principles"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.183,
+    "lower_exposure": false,
+    "why": "Shares 113 skills, e.g. electricity principles, abide by regulations on banned materials, electricity; estimate from few job-title links"
+   },
+   {
+    "soc2020": "5243",
+    "title": "TV, video and audio servicers and repairers",
+    "similarity": 0.0954,
+    "shared_skills": [
+     "engineering principles",
+     "design electrical systems",
+     "electricity principles",
+     "solder electronics",
+     "electrical testing methods",
+     "troubleshoot"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.171,
+    "lower_exposure": false,
+    "why": "Shares 69 skills, e.g. engineering principles, design electrical systems, electricity principles"
+   }
+  ],
+  "5242": [
+   {
+    "soc2020": "5249",
+    "title": "Electrical and electronic trades n.e.c.",
+    "similarity": 0.2898,
+    "shared_skills": [
+     "repair overhead power lines",
+     "repair underground power cables",
+     "inspect underground power cables",
+     "inspect overhead power lines",
+     "estimate costs of installing telecommunication devices",
+     "install power lines"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.084,
+    "lower_exposure": true,
+    "why": "Shares 121 skills, e.g. repair overhead power lines, repair underground power cables, inspect underground power cables"
+   },
+   {
+    "soc2020": "3132",
+    "title": "IT user support technicians",
+    "similarity": 0.1532,
+    "shared_skills": [
+     "procurement of ICT network equipment",
+     "implement a virtual private network",
+     "ICT system user requirements",
+     "support ICT system users",
+     "ICT network routing",
+     "operate private branch exchange"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.112,
+    "lower_exposure": false,
+    "why": "Shares 63 skills, e.g. procurement of ICT network equipment, implement a virtual private network, ICT system user requirements; estimate from few job-title links"
+   },
+   {
+    "soc2020": "3119",
+    "title": "Science, engineering and production technicians n.e.c.",
+    "similarity": 0.1257,
+    "shared_skills": [
+     "ICT network routing",
+     "operate private branch exchange",
+     "procurement of ICT network equipment",
+     "implement a virtual private network",
+     "perform ICT troubleshooting",
+     "ICT networking hardware"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.094,
+    "lower_exposure": true,
+    "why": "Shares 54 skills, e.g. ICT network routing, operate private branch exchange, procurement of ICT network equipment"
+   }
+  ],
+  "5243": [
+   {
+    "soc2020": "5249",
+    "title": "Electrical and electronic trades n.e.c.",
+    "similarity": 0.1687,
+    "shared_skills": [
+     "design electronic systems",
+     "use a complex communication system",
+     "electronic test procedures",
+     "log transmitter readings",
+     "types of electronics",
+     "develop electronic test procedures"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.084,
+    "lower_exposure": true,
+    "why": "Shares 70 skills, e.g. design electronic systems, use a complex communication system, electronic test procedures"
+   },
+   {
+    "soc2020": "5245",
+    "title": "Security system installers and repairers",
+    "similarity": 0.1575,
+    "shared_skills": [
+     "engineering principles",
+     "use technical drawing software",
+     "perform scientific research",
+     "approve engineering design",
+     "adjust engineering designs",
+     "electronic test procedures"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.012,
+    "lower_exposure": false,
+    "why": "Shares 128 skills, e.g. engineering principles, use technical drawing software, perform scientific research; estimate from few job-title links"
+   },
+   {
+    "soc2020": "5234",
+    "title": "Aircraft maintenance and related trades",
+    "similarity": 0.1159,
+    "shared_skills": [
+     "engineering principles",
+     "engineering processes",
+     "aerospace engineering",
+     "troubleshoot",
+     "execute feasibility study",
+     "approve engineering design"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.135,
+    "lower_exposure": true,
+    "why": "Shares 46 skills, e.g. engineering principles, engineering processes, aerospace engineering; estimate from few job-title links"
+   },
+   {
+    "soc2020": "3112",
+    "title": "Electrical and electronics technicians",
+    "similarity": 0.1088,
+    "shared_skills": [
+     "adjust engineering designs",
+     "troubleshoot",
+     "record test data",
+     "engineering processes",
+     "calibrate electronic instruments",
+     "design drawings"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.002,
+    "lower_exposure": false,
+    "why": "Shares 63 skills, e.g. adjust engineering designs, troubleshoot, record test data; estimate from few job-title links"
+   }
+  ],
+  "5245": [
+   {
+    "soc2020": "5243",
+    "title": "TV, video and audio servicers and repairers",
+    "similarity": 0.1575,
+    "shared_skills": [
+     "engineering principles",
+     "use technical drawing software",
+     "perform scientific research",
+     "approve engineering design",
+     "adjust engineering designs",
+     "electronic test procedures"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.012,
+    "lower_exposure": false,
+    "why": "Shares 128 skills, e.g. engineering principles, use technical drawing software, perform scientific research; estimate from few job-title links"
+   },
+   {
+    "soc2020": "3112",
+    "title": "Electrical and electronics technicians",
+    "similarity": 0.1206,
+    "shared_skills": [
+     "adjust engineering designs",
+     "read engineering drawings",
+     "electrical engineering",
+     "record test data",
+     "apply soldering techniques",
+     "electricity"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.013,
+    "lower_exposure": false,
+    "why": "Shares 109 skills, e.g. adjust engineering designs, read engineering drawings, electrical engineering; estimate from few job-title links"
+   },
+   {
+    "soc2020": "5241",
+    "title": "Electricians and electrical fitters",
+    "similarity": 0.1074,
+    "shared_skills": [
+     "electricity principles",
+     "abide by regulations on banned materials",
+     "electricity",
+     "electronics",
+     "program firmware",
+     "engineering principles"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.183,
+    "lower_exposure": true,
+    "why": "Shares 113 skills, e.g. electricity principles, abide by regulations on banned materials, electricity; estimate from few job-title links"
+   },
+   {
+    "soc2020": "3113",
+    "title": "Engineering technicians",
+    "similarity": 0.1007,
+    "shared_skills": [
+     "engineering principles",
+     "adjust engineering designs",
+     "CAE software",
+     "read engineering drawings",
+     "analyse test data",
+     "engineering processes"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.097,
+    "lower_exposure": true,
+    "why": "Shares 152 skills, e.g. engineering principles, adjust engineering designs, CAE software; estimate from few job-title links"
+   },
+   {
+    "soc2020": "5249",
+    "title": "Electrical and electronic trades n.e.c.",
+    "similarity": 0.0957,
+    "shared_skills": [
+     "electricity",
+     "electronic test procedures",
+     "design electronic systems",
+     "develop electronic test procedures",
+     "electricity principles",
+     "environmental threats"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.096,
+    "lower_exposure": true,
+    "why": "Shares 106 skills, e.g. electricity, electronic test procedures, design electronic systems; estimate from few job-title links"
+   }
+  ],
+  "5246": [
+   {
+    "soc2020": "3112",
+    "title": "Electrical and electronics technicians",
+    "similarity": 0.1216,
+    "shared_skills": [
+     "troubleshoot",
+     "maintain electrical equipment",
+     "electricity",
+     "wear appropriate protective gear",
+     "fasten components",
+     "operate soldering equipment"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.114,
+    "lower_exposure": false,
+    "why": "Shares 75 skills, e.g. troubleshoot, maintain electrical equipment, electricity; estimate from few job-title links"
+   },
+   {
+    "soc2020": "5241",
+    "title": "Electricians and electrical fitters",
+    "similarity": 0.1211,
+    "shared_skills": [
+     "maintain electrical equipment",
+     "electrical wiring plans",
+     "electricity",
+     "electronics",
+     "troubleshoot",
+     "replace defect components"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": -0.056,
+    "lower_exposure": true,
+    "why": "Shares 89 skills, e.g. maintain electrical equipment, electrical wiring plans, electricity; estimate from few job-title links"
+   }
+  ],
+  "5249": [
+   {
+    "soc2020": "5242",
+    "title": "Telecoms and related network installers and repairers",
+    "similarity": 0.2898,
+    "shared_skills": [
+     "repair overhead power lines",
+     "repair underground power cables",
+     "inspect underground power cables",
+     "inspect overhead power lines",
+     "estimate costs of installing telecommunication devices",
+     "install power lines"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.084,
+    "lower_exposure": false,
+    "why": "Shares 121 skills, e.g. repair overhead power lines, repair underground power cables, inspect underground power cables"
+   },
+   {
+    "soc2020": "5243",
+    "title": "TV, video and audio servicers and repairers",
+    "similarity": 0.1687,
+    "shared_skills": [
+     "design electronic systems",
+     "use a complex communication system",
+     "electronic test procedures",
+     "log transmitter readings",
+     "types of electronics",
+     "develop electronic test procedures"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": 0.084,
+    "lower_exposure": false,
+    "why": "Shares 70 skills, e.g. design electronic systems, use a complex communication system, electronic test procedures"
+   },
+   {
+    "soc2020": "5245",
+    "title": "Security system installers and repairers",
+    "similarity": 0.0957,
+    "shared_skills": [
+     "electricity",
+     "electronic test procedures",
+     "design electronic systems",
+     "develop electronic test procedures",
+     "electricity principles",
+     "environmental threats"
+    ],
+    "evidence": "estimate",
+    "status": "preliminary",
+    "exposure_delta": 0.096,
+    "lower_exposure": false,
+    "why": "Shares 106 skills, e.g. electricity, electronic test procedures, design electronic systems; estimate from few job-title links"
+   },
+   {
+    "soc2020": "5241",
+    "title": "Electricians and electrical fitters",
+    "similarity": 0.0907,
+    "shared_skills": [
+     "electricity",
+     "ensure safety in electrical power operations",
+     "power engineering",
+     "design electrical systems",
+     "electricity principles",
+     "electrical testing methods"
+    ],
+    "evidence": "title",
+    "status": "preliminary",
+    "exposure_delta": -0.087,
+    "lower_exposure": true,
+    "why": "Shares 51 skills, e.g. electricity, ensure safety in electrical power operations, power engineering"
+   }
+  ]
+ }
 }

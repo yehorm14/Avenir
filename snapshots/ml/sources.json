@@ -1,6 +1,6 @@
 {
- "schema_version": "1.1",
- "generated_at": "2026-10-17T20:26:08+00:00",
+ "schema_version": "1.2",
+ "generated_at": "2026-10-18T02:17:27+00:00",
  "status": "preliminary",
  "sources": {
   "ons_ashe_t14": {
@@ -8,26 +8,29 @@
    "publisher": "ONS",
    "url": "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/occupation4digitsoc2010ashetable14",
    "licence": "Open Government Licence v3.0",
-   "coverage": "UK employees; excludes self-employed",
-   "years": "2007-2025",
+   "attribution": "Contains public sector information licensed under the Open Government Licence v3.0.",
+   "coverage": "UK employees on adult rates who have been in the same job for over a year; excludes self-employed",
+   "years": "2007-2025 (tax years ending 5 April)",
    "status": "loaded",
-   "notes": "SOC 2000 to 2010, SOC 2010 2011-2020, SOC 2020 from 2021; 2018 and 2025 provisional"
+   "notes": "SOC 2000 to 2010, SOC 2010 2011-2020, SOC 2020 from 2021. 2018 and 2025 editions are provisional. ONS says job counts are indicative, not accurate estimates, and that 2021-22 are affected by occupation miscoding."
   },
   "ons_cpih": {
    "name": "CPIH index (L522)",
    "publisher": "ONS",
    "url": "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/l522/mm23",
    "licence": "Open Government Licence v3.0",
+   "attribution": "Contains public sector information licensed under the Open Government Licence v3.0.",
    "coverage": "UK",
    "years": "1988-2026",
    "status": "loaded",
-   "notes": "April values, the ASHE reference month"
+   "notes": "Tax-year means (April to March) deflate annual pay, matching the ASHE reference period"
   },
   "ons_soc_crosswalk": {
    "name": "Relationship between SOC 2010 and SOC 2020 (July 2021)",
    "publisher": "ONS",
    "url": "https://www.ons.gov.uk/methodology/classificationsandstandards/standardoccupationalclassificationsoc/soc2020/therelationshipbetweenstandardoccupationalclassification2010andstandardoccupationalclassification2020",
    "licence": "Open Government Licence v3.0",
+   "attribution": "Contains public sector information licensed under the Open Government Licence v3.0.",
    "coverage": "LFS 2014-16 and Census 2011 dual coding",
    "years": "2021",
    "status": "loaded",
@@ -38,6 +41,7 @@
    "publisher": "ONS",
    "url": "https://www.ons.gov.uk/methodology/classificationsandstandards/standardoccupationalclassificationsoc/soc2010",
    "licence": "Open Government Licence v3.0",
+   "attribution": "Contains public sector information licensed under the Open Government Licence v3.0.",
    "coverage": "LFS Jan-Mar 2007 and Census 2001 dual coding",
    "years": "2010",
    "status": "loaded",
@@ -48,6 +52,7 @@
    "publisher": "ONS",
    "url": "https://www.ons.gov.uk/methodology/classificationsandstandards/standardoccupationalclassificationsoc/soc2020/soc2020volume2codingrulesandconventions",
    "licence": "Open Government Licence v3.0",
+   "attribution": "Contains public sector information licensed under the Open Government Licence v3.0.",
    "coverage": "About 32,000 UK job titles",
    "years": "2026",
    "status": "loaded",
@@ -57,17 +62,19 @@
    "name": "Generative AI and Jobs: A Refined Global Index of Occupational Exposure (Working Paper 140)",
    "publisher": "ILO",
    "url": "https://webapps.ilo.org/static/english/intserv/working-papers/wp140/index.html",
-   "licence": "To confirm before public release",
+   "licence": "CC BY 4.0 (© ILO 2025)",
+   "attribution": "Adapted from ILO Working Paper 140 (2025), CC BY 4.0. Scores were averaged over the international codes a UK occupation maps to; this adaptation was not reviewed or endorsed by the ILO.",
    "coverage": "427 ISCO-08 occupations",
    "years": "2025",
    "status": "loaded",
-   "notes": "Mean task exposure and its spread"
+   "notes": "Mean task exposure and its spread per occupation"
   },
   "dfe_ai_uk_2023": {
    "name": "The impact of AI on UK jobs and training, Annex 1",
    "publisher": "Department for Education",
    "url": "https://www.gov.uk/government/publications/the-impact-of-ai-on-uk-jobs-and-training",
    "licence": "Open Government Licence v3.0",
+   "attribution": "Contains public sector information licensed under the Open Government Licence v3.0.",
    "coverage": "365 SOC 2010 occupations (AIOE, LLM exposure)",
    "years": "2023",
    "status": "loaded",
@@ -78,16 +85,18 @@
    "publisher": "ONS",
    "url": "https://www.ons.gov.uk/economy/economicoutputandproductivity/output/datasets/onlinejobadvertestimates",
    "licence": "Open Government Licence v3.0",
-   "coverage": "28 job-advert categories, weekly",
+   "attribution": "Contains public sector information licensed under the Open Government Licence v3.0. Underlying adverts: Adzuna.",
+   "coverage": "28 job-advert categories, weekly, de-duplicated series",
    "years": "2018-2024",
    "status": "loaded",
-   "notes": "Discontinued October 2024; category level only"
+   "notes": "Discontinued October 2024; category level only; ONS flags Education, Marketing/PR, Transport and Travel as inconsistent in 2023"
   },
   "ons_aps_2016_age": {
    "name": "4-digit occupation by age bands, Annual Population Survey 2016 (ad hoc 006998)",
    "publisher": "ONS",
    "url": "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/adhocs/0069984digitoccupationsocand4digitindustrysicbyagebands",
    "licence": "Open Government Licence v3.0",
+   "attribution": "Contains public sector information licensed under the Open Government Licence v3.0.",
    "coverage": "UK, includes self-employed",
    "years": "2016",
    "status": "loaded",
@@ -98,16 +107,18 @@
    "publisher": "European Commission",
    "url": "https://esco.ec.europa.eu/",
    "licence": "EU open data (attribution)",
-   "coverage": "3,043 occupations, 13,939 skills",
+   "attribution": "ESCO © European Union, 2025. Used under the ESCO terms of use.",
+   "coverage": "3,039 occupations, 13,939 skills",
    "years": "2025",
    "status": "loaded",
-   "notes": "Skills for hedges"
+   "notes": "Skills for hedges and the matcher's career texts"
   },
   "onet": {
    "name": "O*NET 31.0 related occupations and the ESCO to O*NET-SOC crosswalk",
    "publisher": "US Department of Labor (O*NET)",
    "url": "https://www.onetcenter.org/database.html",
    "licence": "CC BY 4.0",
+   "attribution": "This product uses the O*NET 31.0 database by the U.S. Department of Labor, Employment and Training Administration (USDOL/ETA), under CC BY 4.0. O*NET is a trademark of USDOL/ETA.",
    "coverage": "US occupations",
    "years": "2026",
    "status": "loaded",
@@ -118,6 +129,7 @@
    "publisher": "ONS / NRS",
    "url": "https://www.nomisweb.co.uk/",
    "licence": "Open Government Licence v3.0",
+   "attribution": "Contains public sector information licensed under the Open Government Licence v3.0.",
    "coverage": "Includes self-employed",
    "years": "2011, 2021/2022",
    "status": "pending",
