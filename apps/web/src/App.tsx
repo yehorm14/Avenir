@@ -14,9 +14,7 @@ import {
 } from "./planDocument";
 import MyPlan from "./MyPlan";
 import Guides from "./Guides";
-import DecisionReview from "./DecisionReview";
 import Landing from "./Landing";
-import { LogoMark } from "./Logo";
 import Jobs from "./Jobs";
 import Discovery, { type DiscoveryResult } from "./Discovery";
 import CareerDashboard from "./CareerDashboard";
@@ -362,21 +360,13 @@ export default function App() {
       </a>
       <header className="topbar">
         <nav className="top-links" aria-label="Main navigation">
-          <button
-            className="brand-link"
-            onClick={() => go("discover")}
-            aria-label="Aventier home"
-          >
-            <LogoMark size={26} />
-            <span>Aventier</span>
-          </button>
           {(
             [
               ["discover", "Home"],
               ["quiz", "Quiz"],
               ["jobs", "Jobs"],
-              ["guides", "Career guide"],
               ["overview", "My plan"],
+              ["guides", "Chatbot"],
             ] as const
           ).map(([id, label]) => {
             // The subject dashboards live under Jobs, so Jobs stays active inside them.
@@ -403,9 +393,7 @@ export default function App() {
       >
         {showShell &&
           primary &&
-          ["overview", "matches", "path", "opportunities", "evidence"].includes(
-            page,
-          ) && (
+          ["matches", "path", "opportunities", "evidence"].includes(page) && (
             <nav className="plan-navigation" aria-label="Plan navigation">
               {[...nav, { id: "evidence" as const, icon: "chart" }]
                 .filter((n) => n.id !== "matches" || prefs.completed)
@@ -509,7 +497,7 @@ export default function App() {
               />
             )}
             {page === "quiz" && (
-              <Quiz prefs={prefs} update={update} finish={finish} go={go} />
+              <Quiz prefs={prefs} update={update} finish={finish} />
             )}
             {page === "jobs" && (
               <Jobs
@@ -529,11 +517,7 @@ export default function App() {
             {page === "matches" &&
               (prefs.completed ? (
                 <>
-                  <PageHeading
-                    label="Your matches"
-                    title="Three careers to explore."
-                    description="Three careers connected to what you shared. Explore the work, compare your priorities, and choose your first, second, and third."
-                  />
+                  <PageHeading title="Three careers to explore." />
                   {prefs.discovery?.summary && (
                     <section className="discovery-result-summary">
                       <Icon name="chat" size={22} />
@@ -558,18 +542,6 @@ export default function App() {
                   )}
                   <div className="results-layout">
                     <section className="match-list" aria-busy={ranking}>
-                      <div className="list-toolbar">
-                        <span>
-                          {ranking
-                            ? "Balancing your priorities…"
-                            : "Your three careers"}
-                        </span>
-                        <span className="subtle-badge">
-                          {data.data_status.fit === "mock"
-                            ? "Sample interest matching"
-                            : "Preliminary interest model"}
-                        </span>
-                      </div>
                       {matchError && (
                         <div className="inline-error" role="alert">
                           {matchError}
@@ -642,24 +614,6 @@ export default function App() {
                                 </b>
                               </div>
                             </div>
-                            <div className="match-provenance">
-                              <External href="https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/occupation4digitsoc2010ashetable14">
-                                ONS ASHE
-                              </External>{" "}
-                              Pay {c.metrics.pay_median?.as_of}; employee-job
-                              trend {c.metrics.demand_trend?.as_of}
-                              {isRelativeDemand(c.metrics.demand_trend)
-                                ? ", relative to the typical occupation"
-                                : ""}
-                              .
-                              {c.metrics.demand_trend?.flags.includes(
-                                "imputed_parent",
-                              )
-                                ? " Trend estimated from a wider occupation group."
-                                : ""}{" "}
-                              Interest and balance are comparison indices, not
-                              probabilities.
-                            </div>
                             <div className="match-row-footer">
                               <button
                                 className="text-button"
@@ -701,14 +655,6 @@ export default function App() {
                           </article>
                         ))
                       )}
-                      <p className="fine-print">
-                        Pay and employment: ONS ASHE, UK; source periods are
-                        shown for each role. Preliminary. Pay covers full-time
-                        employees; employment coverage varies by occupation. The
-                        pay range and all evidence are available under “Why this
-                        could fit”. Scores are comparison indices, not
-                        probabilities.
-                      </p>
                     </section>
                     <aside className="priorities-panel">
                       <section className="priorities">
@@ -783,11 +729,6 @@ export default function App() {
                             <small>{w.detail}</small>
                           </label>
                         ))}
-                        <p className="fine-print">
-                          Need reflects a historical research signal, not an LLM
-                          prediction or a guarantee of future jobs. Weights are
-                          normalised; all zero uses equal weights.
-                        </p>
                         <button
                           className="text-button muted"
                           onClick={() => update({ weights: initial.weights })}
@@ -868,50 +809,19 @@ export default function App() {
               ))}
             {page === "overview" &&
               (primary ? (
-                <>
-                  <MyPlan
-                    careers={selected}
-                    prefs={prefs}
-                    update={update}
-                    go={go}
-                    onEditChoices={() =>
-                      go(
-                        ["2134", "3544", "2133", "2135"].includes(primary.soc)
-                          ? "computer-science"
-                          : ["2422", "2421", "2433"].includes(primary.soc)
-                            ? "finance"
-                            : "jobs",
-                      )
-                    }
-                    onExport={exportPlan}
-                    onReset={() => {
-                      setPrefs(structuredClone(initial));
-                      setMatches([]);
-                      go("discover");
-                      setToast("Saved plan cleared from this browser.");
-                    }}
-                  />
-                  {prefs.completed && (
-                    <DecisionReview
-                      tags={
-                        prefs.discovery?.tags ?? tagsFromAnswers(prefs.answers)
-                      }
-                      firstIdea={
-                        careers.find(
-                          (c) =>
-                            c.soc ===
-                            (prefs.discovery?.referenceSoc ??
-                              prefs.discovery?.targetSoc),
-                        )?.title ?? primary.title
-                      }
-                      nation={prefs.nation}
-                      onInspect={(soc) => {
-                        const career = careers.find((c) => c.soc === soc);
-                        if (career) setInspect(career);
-                      }}
-                    />
-                  )}
-                </>
+                <MyPlan
+                  careers={selected}
+                  prefs={prefs}
+                  update={update}
+                  go={go}
+                  onExport={exportPlan}
+                  onReset={() => {
+                    setPrefs(structuredClone(initial));
+                    setMatches([]);
+                    go("discover");
+                    setToast("Saved plan cleared from this browser.");
+                  }}
+                />
               ) : prefs.completed ? (
                 <NeedChoices go={go} />
               ) : (
@@ -1129,9 +1039,9 @@ function PageHeading({
   description,
   action,
 }: {
-  label: string;
+  label?: string;
   title: string;
-  description: string;
+  description?: string;
   action?: React.ReactNode;
 }) {
   return (
@@ -1139,7 +1049,7 @@ function PageHeading({
       <div>
         {label && <p className="page-context">{label}</p>}
         <h1>{title}</h1>
-        <p className="page-description">{description}</p>
+        {description && <p className="page-description">{description}</p>}
       </div>
       {action}
     </header>
@@ -1169,28 +1079,32 @@ function Quiz({
   prefs,
   update,
   finish,
-  go,
 }: {
   prefs: Preferences;
   update: (p: Partial<Preferences>) => void;
   finish: () => void;
-  go: (p: Page) => void;
 }) {
   // A finished quiz stores the end position. Reopening it should let the
   // learner review their answers from the start, rather than strand them.
   const step = prefs.step < questions.length ? prefs.step : 0,
     q = questions[step];
   const answered = prefs.answers[q.id];
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    headingRef.current?.focus({ preventScroll: true });
+    window.scrollTo(0, 0);
+  }, [step]);
   return (
     <section className="quiz-container" key={q.id}>
       <div className="quiz-progress">
-        <button
-          className="text-button"
-          onClick={() => (step ? update({ step: step - 1 }) : go("discover"))}
-        >
-          <Icon name="back" size={16} />{" "}
-          {step ? "Previous question" : "Back to discovery"}
-        </button>
+        {step > 0 && (
+          <button
+            className="text-button"
+            onClick={() => update({ step: step - 1 })}
+          >
+            <Icon name="back" size={16} /> Previous question
+          </button>
+        )}
         <span>
           Question {step + 1} of {questions.length}
         </span>
@@ -1198,9 +1112,9 @@ function Quiz({
       <div className="progress-track">
         <i style={{ width: `${((step + 1) / questions.length) * 100}%` }} />
       </div>
-      <span className="quiz-theme">{q.theme}</span>
-      <h1>{q.title}</h1>
-      <p className="quiz-hint">{q.hint}</p>
+      <h1 ref={headingRef} tabIndex={-1}>
+        {q.title}
+      </h1>
       <div className="quiz-options" role="radiogroup" aria-label={q.title}>
         {q.options.map((o, i) => (
           <button
@@ -1241,7 +1155,6 @@ function Quiz({
         ))}
       </div>
       <div className="quiz-footer">
-        <span className="muted">Choose one answer</span>
         <button
           className="button primary"
           disabled={answered === undefined}

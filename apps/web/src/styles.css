@@ -417,8 +417,7 @@ main:focus {
   font-size: 11px;
   margin-bottom: 25px;
 }
-.welcome-note > span,
-.status-dot {
+.welcome-note > span {
   display: inline-block;
   background: var(--green);
   height: 6px;

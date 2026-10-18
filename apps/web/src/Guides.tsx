@@ -124,9 +124,6 @@ export default function Guides({ careers }: { careers: Career[] }) {
       <header className="page-heading">
         <div>
           <h1 id="guide-page-title">Chatbot</h1>
-          <p className="page-description">
-            Explore the work, study routes and evidence behind your options.
-          </p>
         </div>
       </header>
       {career ? (
@@ -271,39 +268,17 @@ export function CareerGuide({
   const [sending, setSending] = useState(false);
   const [failed, setFailed] = useState<PendingQuestion | null>(null);
   const [error, setError] = useState("");
-  const [speaking, setSpeaking] = useState(false);
   const request = useRef<AbortController | null>(null);
-  const speech = useRef<SpeechSynthesisUtterance | null>(null);
   const transcript = useRef<HTMLDivElement>(null);
   const composer = useRef<HTMLTextAreaElement>(null);
   const inputId = `guide-question-${career.soc}`;
-  const introduction = `Ask about the day-to-day work, pay, skills, study routes or automation research for ${career.title.toLowerCase()}. Responses use prepared information and the career evidence available in Aventier.`;
-  const latestReply =
-    messages.filter((message) => message.role === "guide").slice(-1)[0]?.text ??
-    introduction;
-  const canReadAloud =
-    typeof window.speechSynthesis !== "undefined" &&
-    typeof SpeechSynthesisUtterance !== "undefined";
-
-  function stopReading() {
-    if (speech.current) {
-      speech.current.onend = null;
-      speech.current.onerror = null;
-      speech.current = null;
-    }
-    window.speechSynthesis?.cancel();
-    setSpeaking(false);
-  }
+  const introduction =
+    "Ask about career options, pay, skills, study routes or how technology may shape the work. Replies draw on the career information and sources available here.";
 
   useEffect(() => {
     return () => {
       request.current?.abort();
       request.current = null;
-      if (speech.current) {
-        speech.current.onend = null;
-        speech.current.onerror = null;
-      }
-      window.speechSynthesis?.cancel();
     };
   }, []);
 
@@ -321,7 +296,6 @@ export function CareerGuide({
     if (request.current) return;
     const controller = new AbortController();
     request.current = controller;
-    stopReading();
     setSending(true);
     setFailed(null);
     setError("");
@@ -390,10 +364,8 @@ export function CareerGuide({
       {!embedded && (
         <header className="evidence-guide-header">
           <div>
-            <h2 id="guide-career-title">{career.title}</h2>
-            <p>{career.sector}</p>
+            <h2 id="guide-career-title">Career chatbot</h2>
           </div>
-          <span className="subtle-badge">Prepared evidence guide</span>
         </header>
       )}
       {(!embedded || messages.length > 0 || sending) && (
@@ -401,7 +373,7 @@ export function CareerGuide({
           className="evidence-guide-transcript"
           ref={transcript}
           role="log"
-          aria-label={`Questions and answers about ${career.title}`}
+          aria-label="Chatbot conversation"
           aria-live="polite"
           aria-relevant="additions text"
           aria-busy={sending}
@@ -409,7 +381,7 @@ export function CareerGuide({
         >
           {!embedded && (
             <article className="evidence-guide-message">
-              {!compact && <h3>Explore {career.title.toLowerCase()}</h3>}
+              {!compact && <h3>Explore career options</h3>}
               <p>{introduction}</p>
               <p className="evidence-guide-note">
                 Use this as a starting point. Check sources and current entry
@@ -506,12 +478,12 @@ export function CareerGuide({
                         ))}
                       </ul>
                     </div>
-                  ) : (
+                  ) : !message.extras?.links.length ? (
                     <p className="evidence-guide-note">
                       No source links are available for this reply. Check
                       details with the relevant course provider or employer.
                     </p>
-                  ))}
+                  ) : null)}
               </article>
             );
           })}
@@ -562,11 +534,7 @@ export function CareerGuide({
           composer.current?.focus();
         }}
       >
-        <label htmlFor={inputId}>
-          {embedded
-            ? "Ask a question"
-            : `Ask about ${career.title.toLowerCase()}`}
-        </label>
+        <label htmlFor={inputId}>Ask a question</label>
         <div>
           <textarea
             id={inputId}
@@ -575,7 +543,6 @@ export function CareerGuide({
             maxLength={questionLimit}
             rows={2}
             placeholder="What would you like to understand?"
-            aria-describedby={`${inputId}-hint`}
             onChange={(event) => setInput(event.target.value)}
             onKeyDown={(event) => {
               if (
@@ -597,44 +564,7 @@ export function CareerGuide({
             <span>Send</span> <Icon name="arrow" size={18} />
           </button>
         </div>
-        <p id={`${inputId}-hint`} className={embedded ? "sr-only" : undefined}>
-          Enter to send. Shift + Enter for a new line.{" "}
-          {input.length.toLocaleString("en-GB")} / 2,000
-        </p>
       </form>
-      {!embedded && (
-        <footer className="evidence-guide-footer">
-          <p>Exploratory guidance. This conversation is not saved.</p>
-          {canReadAloud && (
-            <button
-              type="button"
-              aria-pressed={speaking}
-              onClick={() => {
-                if (speaking) {
-                  stopReading();
-                  return;
-                }
-                stopReading();
-                const utterance = new SpeechSynthesisUtterance(latestReply);
-                utterance.lang = "en-GB";
-                const finish = () => {
-                  if (speech.current === utterance) {
-                    speech.current = null;
-                    setSpeaking(false);
-                  }
-                };
-                utterance.onend = finish;
-                utterance.onerror = finish;
-                speech.current = utterance;
-                setSpeaking(true);
-                window.speechSynthesis.speak(utterance);
-              }}
-            >
-              {speaking ? "Stop reading" : "Read latest response aloud"}
-            </button>
-          )}
-        </footer>
-      )}
     </section>
   );
 }

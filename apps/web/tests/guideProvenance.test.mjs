@@ -43,3 +43,9 @@ test('a fallback check shows the neutral note and keeps the prepared badge', () 
   assert.deepEqual(view.basedOn, []);
   assert.equal(guideProvenance({ checks: 'passed' }).fallbackNote, null);
 });
+
+test('no configured model is not described as a failed model reply', () => {
+  const view = guideProvenance({ mode: 'prepared_demo', checks: 'fallback: no model configured' });
+  assert.equal(view.badge, PREPARED_BADGE);
+  assert.equal(view.fallbackNote, null);
+});

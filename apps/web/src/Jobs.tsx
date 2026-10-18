@@ -493,8 +493,8 @@ function JobProfile({
           <p>No verified occupation-specific outlook is included.</p>
         )}
       </section>
-      <section className="job-sources">
-        <h2>Sources</h2>
+      <details className="job-sources">
+        <summary>Sources</summary>
         <ol>
           {sources.map((source) => (
             <li key={source.url}>
@@ -511,7 +511,7 @@ function JobProfile({
           Observations marked provisional may be revised. Historical occupation
           mappings and the 2021 code break are marked in the chart.
         </p>
-      </section>
+      </details>
       {!career.match_supported && (
         <p className="jobs-coverage">
           Personalised matching currently covers 20 careers. This profile is

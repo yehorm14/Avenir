@@ -1,5 +1,13 @@
 # Integration tasks
 
+- [x] [codex] Remove the selected “Explore first / Change career” row from My plan and make Job profile Sources a closed-by-default disclosure. `make check` 716 passed/3 optional skipped; Chrome verified both states at 390px. Pushed commit `c4297f4` to codex/final-delivery only; main untouched.
+
+- [x] [codex] Apply six Chatbot annotations on codex/final-delivery: remove page intro, prepared-guide badge, read-aloud control, footer notice and composer hint; generalize the chat copy while preserving career evidence context. `make check` 716 passed/3 optional skipped; isolated Chrome mobile check at 390px confirms all marked UI removed, full copy visible, no overflow or console messages. Pushed and verified `c34b640` on this branch only; latest fetch could not resolve github.com.
+
+- [x] [codex] Apply the eight My matches copy/source removals and remove the Aventier header mark/name on codex/final-delivery. Preserve the five main routes and selected career cards; full check 716 passed/3 optional skipped, production browser build checked; merge latest origin/main 0120e72 and push only this branch.
+
+- [x] [codex] Integrate origin/main eaf0740 into codex/final-delivery, preserve the five-item navigation and simple My plan, restore the simplified quiz, and correct misleading Chatbot fallback notes. Full check 716 passed/3 optional skipped; Chrome smoke passed; pushed only codex/final-delivery.
+
 - [x] [codex] Simplify My plan on final-delivery: no secondary tabs or repeated comparison tables. Career, chat, monthly actions, download and direct edit/pathway links remain. Desktop/mobile checks and independent review passed; full gate672 passed/3 optional skips. Publish only final-delivery.
 
 - [x] [codex] On codex/final-delivery, merge the latest plan cleanup and simplify Main navigation to Home, Quiz, Jobs, My plan and Chatbot. Current design and routes preserved; five destinations, active states, chat reply/deep link and mobile/desktop layout checked. Full gate 672 passed/3 optional skips and independent review passed; publication targets this branch only.

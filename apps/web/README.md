@@ -11,11 +11,13 @@ node scripts/run-app.mjs --production
 
 Open http://127.0.0.1:4175. One service serves the UI, the experience API and the team's canonical `/api/v1` API using the shared envelope. `/docs`, `/openapi.json` and `/health` are on the same origin. No credentials are required. Use the launcher without `--production` for Vite development; both modes expose the same API format.
 
-The primary menu is Home, Quiz, Jobs, My plan and Chatbot. Home retains the Computer Science and Finance dashboards. Chatbot opens the existing prepared career conversation at `#/guides`; career-specific links such as `#/guides/2134` still work. The current visual design and secondary plan navigation are preserved.
+The primary menu is Home, Quiz, Jobs, My plan and Chatbot. Home retains the Computer Science and Finance dashboards. Chatbot opens a general career conversation at `#/guides`; career-specific links such as `#/guides/2134` still use that career's evidence context. The current visual design and secondary plan navigation are preserved.
 
 The user journey is known-direction or exploring conversation → three weighted options → three ranked choices → My plan. The plan shows the selected career, key figures, a career chat and a collapsible monthly checklist. Routes, completed actions and saved links persist in this browser; previously saved personal notes remain in the downloadable plan. Plans export as source-linked HTML for sharing or printing. Jobs independently browses 412 supplied evidence profiles; 20 roles have calibrated interest affinities and curated detailed pathways. Broader profiles clearly state missing route/matching coverage.
 
-My plan is a single overview with no inner tabs or repeated comparison tables: the chosen career, key figures, chat and monthly checklist. Change career and View pathway provide direct access to editing and detailed routes. Saved opportunities and plan download remain available. Comparison tools remain on the Home dashboards; Jobs profiles and the pathway's evidence view retain detailed sources.
+My plan is a single overview with no inner tabs or repeated comparison tables: the chosen career, key figures, chat and monthly checklist. View pathway opens the detailed routes. Saved opportunities and plan download remain available. Comparison tools remain on the Home dashboards; Jobs profiles and the pathway's evidence view retain detailed sources.
+
+Job profile sources and attribution are available in a collapsed Sources disclosure at the bottom of each profile.
 
 The plan uses the same prepared guide as Chatbot, with source links on evidence replies, connection recovery and cancellation when leaving the page. Related pathway exercises are labelled as examples rather than presenting a borrowed career family's skill list as occupation-specific requirements.
 

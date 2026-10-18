@@ -1,4 +1,5 @@
 .aventier-landing {
+  --gutter: clamp(38px, 4vw, 76px);
   color: var(--foreground);
   background: var(--canvas);
 }
@@ -20,36 +21,6 @@
   font-size: 19px;
   margin-top: 18px;
   line-height: 1.6;
-}
-.amira-journey {
-  border: 1px solid var(--line);
-  padding: 32px;
-  margin-bottom: 56px;
-  max-width: 760px;
-}
-.amira-kicker {
-  color: var(--muted);
-  font-size: 12px;
-}
-.amira-journey h2 {
-  margin-top: 6px;
-  font-size: 30px;
-  font-weight: 500;
-}
-.amira-journey p {
-  margin: 12px 0 22px;
-  font-size: 15px;
-  line-height: 1.7;
-}
-.amira-journey .amira-error {
-  margin: 14px 0 0;
-  font-size: 13px;
-}
-.other-journey-heading {
-  margin-bottom: 20px;
-  font-size: 15px;
-  font-weight: 450;
-  color: var(--muted);
 }
 .subject-choices {
   display: grid;
@@ -206,9 +177,9 @@
   color: var(--muted);
 }
 .explain-section {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 56px 40px 8px;
+  max-width: none;
+  margin: 0;
+  padding: 40px var(--gutter);
   border-top: 1px solid var(--line);
 }
 .explain-section:last-child {
@@ -219,18 +190,27 @@
   font-weight: 500;
   letter-spacing: -0.03em;
 }
+#what-heading {
+  font-size: clamp(26px, 2.6vw, 34px);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: #fff;
+}
 .explain-lead {
-  margin-top: 16px;
-  max-width: 72ch;
-  font-size: 16px;
-  line-height: 1.75;
+  margin-top: 12px;
+  max-width: none;
+  font-size: clamp(15px, 1.2vw, 17px);
+  font-weight: 400;
+  line-height: 1.6;
+  color: #e6ebf1;
 }
 .explain-note {
-  margin-top: 14px;
-  max-width: 72ch;
-  font-size: 13px;
-  line-height: 1.75;
-  color: var(--muted);
+  margin-top: 16px;
+  max-width: none;
+  font-size: clamp(15px, 1.2vw, 17px);
+  line-height: 1.6;
+  color: #e6ebf1;
 }
 .explain-steps {
   display: grid;
@@ -318,7 +298,7 @@
 }
 @media (max-width: 600px) {
   .explain-section {
-    padding: 44px 22px 4px;
+    padding: 32px 22px;
   }
   .explain-steps,
   .explain-grid {
@@ -700,7 +680,7 @@
 .hero.editorial {
   background: #fff;
   color: #000;
-  padding: 118px 30px 0;
+  padding: 118px var(--gutter) 0;
   border-bottom: 0;
   overflow: visible;
 }
@@ -711,7 +691,8 @@
   display: flex;
   justify-content: flex-end;
   align-items: baseline;
-  gap: 0.3em;
+  gap: 0.2em;
+  padding-right: 8px;
   font-size: 11px;
   line-height: 1.5;
   text-transform: uppercase;
@@ -731,16 +712,30 @@
   text-transform: uppercase;
   letter-spacing: inherit;
   cursor: pointer;
-  text-align: right;
+  text-align: left;
 }
 .ed-meta select:last-of-type {
   text-align: left;
 }
+.ed-meta select {
+  padding: 3px 6px;
+  box-sizing: content-box;
+  margin: -3px -6px;
+  border-radius: 8px;
+  transition:
+    background-color 0.15s,
+    box-shadow 0.15s;
+}
+.ed-meta select:hover,
 .ed-meta select:focus-visible {
-  outline: 1px solid #000;
-  outline-offset: 3px;
+  background: rgba(0, 0, 0, 0.06);
+  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.06);
+  outline: none;
 }
 .ed-meta select option {
+  font-size: 15px;
+  line-height: 2.2;
+  padding: 8px 14px;
   color: #000;
   background: #fff;
   text-transform: none;
@@ -760,8 +755,8 @@
   text-align-last: left;
   text-transform: uppercase;
   font-weight: 800;
-  font-size: clamp(32px, 7.5vw, 112px);
-  line-height: 0.94;
+  font-size: clamp(32px, 6.6vw, 98px);
+  line-height: 1.08;
   letter-spacing: -0.045em;
   color: #000;
 }
@@ -837,7 +832,7 @@
 }
 .ed-ticker {
   display: flex;
-  margin: 64px -30px 0;
+  margin: 64px calc(var(--gutter) * -1) 0;
   background: #000;
   color: #fff;
   font-family: inherit;
@@ -848,7 +843,7 @@
 }
 .ed-ticker-label {
   flex: none;
-  padding: 18px 22px;
+  padding: 18px 22px 18px var(--gutter);
   border-right: 1px solid #333;
   color: #7fd8b5;
   white-space: nowrap;
@@ -919,12 +914,11 @@
   }
 }
 @media (max-width: 800px) {
-  .hero.editorial {
-    padding: 128px 18px 0;
+  .aventier-landing {
+    --gutter: 22px;
   }
-  .ed-ticker {
-    margin-left: -18px;
-    margin-right: -18px;
+  .hero.editorial {
+    padding: 128px var(--gutter) 0;
   }
   .ed-meta {
     grid-template-columns: repeat(2, auto);
@@ -947,4 +941,187 @@
   .hero.editorial .ed-title {
     text-align: left;
   }
+}
+.ed-meta .ed-sep {
+  align-self: center;
+  width: 1px;
+  height: 11px;
+  margin: 0 8px;
+  background: #000;
+}
+
+.step-timeline {
+  margin-top: 24px;
+}
+.step-track {
+  position: relative;
+  height: 28px;
+  margin: 0 14px 0 0;
+  cursor: ew-resize;
+  touch-action: none;
+}
+.step-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 13px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+}
+.step-line.fill {
+  right: auto;
+  height: 1px;
+  background: #fff;
+  transition: width 0.25s ease;
+}
+.step-dot {
+  position: absolute;
+  top: 7px;
+  width: 14px;
+  height: 14px;
+  margin-left: 0;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 50%;
+  background: #0b0b0c;
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    background-color 0.2s,
+    border-color 0.2s;
+}
+.step-dot.done {
+  border-color: #fff;
+  background: #fff;
+}
+.step-dot.on {
+  border-color: #fff;
+  background: #fff;
+  transform: scale(1.35);
+}
+.step-dot:focus-visible {
+  outline: 1px solid #fff;
+  outline-offset: 5px;
+}
+.step-out {
+  margin-top: 16px;
+  min-height: 0;
+}
+.step-out h3 {
+  font-size: 20px;
+  font-weight: 500;
+  color: #fff;
+}
+.step-out p {
+  margin-top: 8px;
+  max-width: 80ch;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #e6ebf1;
+}
+
+.explain-section:has(#how-heading) {
+  background: #fff;
+  color: #000;
+  border-top-color: transparent;
+}
+.explain-section:has(#how-heading) h2,
+.explain-section:has(#how-heading) .step-out h3 {
+  color: #000;
+}
+.explain-section:has(#how-heading) .step-out p {
+  color: #333;
+}
+.explain-section:has(#how-heading) .step-line {
+  background: rgba(0, 0, 0, 0.2);
+}
+.explain-section:has(#how-heading) .step-line.fill {
+  background: #000;
+}
+.explain-section:has(#how-heading) .step-dot {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.45);
+}
+.explain-section:has(#how-heading) .step-dot.done,
+.explain-section:has(#how-heading) .step-dot.on {
+  background: #000;
+  border-color: #000;
+}
+.explain-section:has(#how-heading) .step-dot:focus-visible {
+  outline-color: #000;
+}
+
+#what-heading,
+.explain-section:has(#what-heading) .explain-lead,
+.explain-section:has(#what-heading) .explain-note {
+  text-align: center;
+}
+
+.explain-section:has(#what-heading) .explain-lead,
+.explain-section:has(#what-heading) .explain-note {
+  max-width: 80ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mission-section.subjects-section {
+  max-width: none;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+.subjects-heading {
+  text-align: center;
+}
+.subjects-heading p {
+  max-width: 80ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.subject-choice {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.subject-choice .role-explainer {
+  align-self: stretch;
+  flex: 1;
+}
+
+/* Amira 'Start here' card and journey heading (restored from main, team demo #22) */
+.amira-journey {
+  border: 1px solid var(--line);
+  padding: 32px;
+  margin-bottom: 56px;
+  max-width: 760px;
+}
+
+.amira-kicker {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.amira-journey h2 {
+  margin-top: 6px;
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.amira-journey p {
+  margin: 12px 0 22px;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.amira-journey .amira-error {
+  margin: 14px 0 0;
+  font-size: 13px;
+}
+
+.other-journey-heading {
+  margin-bottom: 20px;
+  font-size: 15px;
+  font-weight: 450;
+  color: var(--muted);
 }

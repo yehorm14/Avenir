@@ -43,8 +43,10 @@ export function guideProvenance(reply: unknown): GuideProvenance {
         )
       : [],
     checks,
-    fallbackNote: checks?.toLowerCase().startsWith("fallback")
-      ? FALLBACK_NOTE
-      : null,
+    fallbackNote:
+      checks?.toLowerCase().startsWith("fallback") &&
+      checks.toLowerCase() !== "fallback: no model configured"
+        ? FALLBACK_NOTE
+        : null,
   };
 }

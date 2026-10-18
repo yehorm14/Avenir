@@ -61,12 +61,8 @@
 .decision-main > p {
   max-width: 65ch;
 }
-.decision-status {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  color: var(--muted);
-  font-size: 13px;
+.decision-pathway {
+  margin-top: 20px;
 }
 .decision-evidence {
   display: grid;
@@ -305,12 +301,6 @@
 .reset-confirm .button {
   margin: 8px 12px 0 0;
 }
-.match-provenance {
-  font-size: 11px;
-  line-height: 1.7;
-  color: var(--muted);
-  padding-top: 10px;
-}
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
@@ -487,18 +477,79 @@ summary:focus-visible,
     gap: 18px;
   }
 }
+.decision-grid.decision-grid--simple {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+.decision-chat {
+  margin-top: 24px;
+}
+.decision-chat-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+}
+.decision-chat-heading h3 {
+  font-size: 18px;
+  font-weight: 500;
+}
+.decision-chat-heading > span {
+  color: var(--muted);
+  font-size: 11px;
+}
+.decision-actions.decision-actions--compact {
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--white);
+  overflow: hidden;
+}
+.decision-actions--compact > summary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  list-style: none;
+  cursor: pointer;
+}
+.decision-actions--compact > summary::-webkit-details-marker {
+  display: none;
+}
+.decision-actions--compact > summary strong {
+  font-size: 17px;
+  font-weight: 500;
+}
+.decision-actions--compact > summary span {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 12px;
+}
+.decision-actions--compact > summary svg {
+  color: var(--muted);
+}
+.decision-actions--compact[open] > summary svg {
+  transform: rotate(90deg);
+}
+.decision-actions--compact > summary:focus-visible {
+  outline: 2px solid #6da2f8;
+  outline-offset: -3px;
+  border-radius: 12px;
+}
+.decision-action-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 20px 8px;
+}
+.decision-actions--compact .task-check {
+  padding: 14px 0;
+  font-size: 14px;
+}
+.decision-action-list li:last-child .task-check {
+  border-bottom: 0;
+}
 
 .jobs-sections {
   margin: 4px 0 22px;
-}
-
-.top-links > .brand-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  margin-right: 10px;
-  padding: 4px 14px 4px 6px;
-  font-weight: 600;
-  font-size: 14px;
-  color: var(--foreground);
 }

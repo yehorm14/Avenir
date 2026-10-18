@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useRef, useState } from "react";
 import type { Career } from "./types";
 import { SalaryChart, money, percent } from "./Charts";
 import { getCareerContent } from "./content";
@@ -68,20 +68,77 @@ const steps = [
   {
     title: "Look at the evidence",
     text: "Open a subject and see real UK figures for each job: pay, how many people are employed, how employment has been changing, and how exposed its tasks are to automation.",
+    detail:
+      "Start in Jobs. Each occupation shows its pay, the number of employee jobs and how employment has changed, next to an estimate of how exposed its tasks are to automation. Every figure names its source, and the page says plainly when something is history rather than a forecast.",
   },
   {
     title: "Weigh what matters to you",
     text: "Compare careers by balancing pay against the recent employment trend. There is no single right balance, so you set it and see how the order changes.",
+    detail:
+      "Move the priorities to say how much pay matters compared with the recent employment trend. The list of careers re-orders as you move them, so you can see which careers stay near the top whatever you choose and which only rise under one balance. The weighting is yours, not ours.",
   },
   {
     title: "Choose a first role to explore",
     text: "Pick the role you want to look at first. You can also take a short quiz or a guided conversation if you are not sure where to begin.",
+    detail:
+      "Pick a role to read about in depth. If you are not sure where to begin, the short quiz or the guided conversation helps you narrow things down. Neither one decides for you: they point you to roles worth looking at first.",
   },
   {
     title: "Plan your next step",
     text: "Get a route in (university or earn-and-learn), the skills to practise, example courses, and opportunities to try the work. Your plan is saved in your browser.",
+    detail:
+      "Turn your choice into a plan: ways in (such as university or earn-and-learn), the skills to practise, example courses and opportunities to try the work. Your plan stays in your browser, so you can come back to it and change it as you learn more.",
   },
 ];
+
+function StepTimeline() {
+  const [active, setActive] = useState(0);
+  const track = useRef<HTMLDivElement>(null);
+  const pick = (clientX: number) => {
+    const box = track.current?.getBoundingClientRect();
+    if (!box) return;
+    const ratio = Math.min(1, Math.max(0, (clientX - box.left) / box.width));
+    setActive(Math.round(ratio * (steps.length - 1)));
+  };
+  return (
+    <div className="step-timeline">
+      <div
+        className="step-track"
+        ref={track}
+        onPointerDown={(e) => {
+          e.currentTarget.setPointerCapture(e.pointerId);
+          pick(e.clientX);
+        }}
+        onPointerMove={(e) => {
+          if (e.buttons === 1) pick(e.clientX);
+        }}
+      >
+        <span className="step-line" aria-hidden="true" />
+        <span
+          className="step-line fill"
+          aria-hidden="true"
+          style={{ width: `${(active / (steps.length - 1)) * 100}%` }}
+        />
+        {steps.map((step, index) => (
+          <button
+            key={step.title}
+            type="button"
+            className={`step-dot${index === active ? " on" : ""}${index < active ? " done" : ""}`}
+            style={{ left: `${(index / (steps.length - 1)) * 100}%` }}
+            aria-label={`Step ${index + 1}: ${step.title}`}
+            aria-pressed={index === active}
+            onMouseEnter={() => setActive(index)}
+            onFocus={() => setActive(index)}
+          ></button>
+        ))}
+      </div>
+      <div className="step-out" aria-live="polite">
+        <h3>{steps[active].title}</h3>
+        <p>{steps[active].detail}</p>
+      </div>
+    </div>
+  );
+}
 
 const evidence = [
   [
@@ -205,7 +262,7 @@ export default function Landing({
   careers: Career[];
   onChoose: (mode: "known" | "explore") => void;
   onDashboard: (area: "cs" | "finance") => void;
-  onAmira: () => void;
+  onAmira?: () => void;
   amiraBusy?: boolean;
   amiraError?: string;
   onJobs: () => void;
@@ -221,22 +278,8 @@ export default function Landing({
       <section className="hero editorial" aria-labelledby="mission-heading">
         <div className="ed-meta">
           <select
-            aria-label="Country"
-            style={{ width: `${nation.length + 1}ch` }}
-            value={nation}
-            onChange={(e) => {
-              onNation(e.target.value);
-              onLocation(cities[e.target.value]?.[0] ?? "");
-            }}
-          >
-            {Object.keys(cities).map((name) => (
-              <option key={name}>{name}</option>
-            ))}
-          </select>
-          <span aria-hidden="true">,</span>
-          <select
             aria-label="City"
-            style={{ width: `${location.length + 1}ch` }}
+            style={{ width: `${location.length * 1.1 + 1}ch` }}
             value={location}
             onChange={(e) => onLocation(e.target.value)}
           >
@@ -247,10 +290,23 @@ export default function Landing({
               <option key={name}>{name}</option>
             ))}
           </select>
+          <span aria-hidden="true" className="ed-sep" />
+          <select
+            aria-label="Country"
+            style={{ width: `${nation.length * 1.1 + 1}ch` }}
+            value={nation}
+            onChange={(e) => {
+              onNation(e.target.value);
+              onLocation(cities[e.target.value]?.[0] ?? "");
+            }}
+          >
+            {Object.keys(cities).map((name) => (
+              <option key={name}>{name}</option>
+            ))}
+          </select>
         </div>
         <p className="ed-label">( AVENTIER )</p>
         <h1 id="mission-heading" className="ed-title">
-          <span className="ed-dot" aria-hidden="true" />
           <span className="serif">Explore your</span> <b>career choices,</b>{" "}
           <span className="serif">see clear</span> <b>path</b>{" "}
           <span className="serif">and</span> <b>opportunities</b>
@@ -296,15 +352,7 @@ export default function Landing({
       </section>
       <section className="explain-section" aria-labelledby="how-heading">
         <h2 id="how-heading">How it works</h2>
-        <ol className="explain-steps">
-          {steps.map((step, index) => (
-            <li key={step.title}>
-              <span className="step-number">{index + 1}</span>
-              <h3>{step.title}</h3>
-              <p>{step.text}</p>
-            </li>
-          ))}
-        </ol>
+        <StepTimeline />
       </section>
       <section
         className="mission-section subjects-section"
@@ -392,7 +440,7 @@ export default function Landing({
           example occupations, not graduate earnings.
         </p>
         <div className="other-directions">
-          <span>Or start with your own idea</span>
+          <span>Explore other careers</span>
           <div>
             <button onClick={() => onChoose("known")}>Explore career</button>
             <button onClick={() => onChoose("explore")}>Find careers</button>

@@ -308,6 +308,17 @@ dl.job-facts > div {
   padding-top: 36px;
   border-top: 1px solid var(--line, #303540);
 }
+.job-sources > summary {
+  color: var(--foreground, #dae0e7);
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.35;
+}
+.job-sources[open] > summary {
+  margin-bottom: 18px;
+}
 .outlook-columns {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

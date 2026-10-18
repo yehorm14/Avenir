@@ -1,4 +1,26 @@
-# Final CS/Finance delivery verification — 18 October 2026
+# Current `codex/final-delivery` verification — 18 October 2026
+
+## My plan row and Jobs sources disclosure
+
+Removed the selected “Explore first / Change career” status row from My plan. Converted Job profile Sources into a native, closed-by-default disclosure; source links, attribution and explanatory notes remain available when expanded. `make check` exited 0: **716 passed, 3 optional skipped** (477 core, 146 API/integration/scripts, 39 prototype, 54 web); Ruff, Prettier, TypeScript/Vite build and tracked-file secret scan passed. Isolated Chrome verified the My plan row is gone and Jobs Sources is collapsed on load; expanding it reveals all 12 citations/attribution links. At 390px the page has no horizontal overflow or console messages. Actual user storage was not touched. Commit `c4297f4` is pushed to `origin/codex/final-delivery`.
+
+## Chatbot copy cleanup
+
+Applied the six Chatbot annotations: removed the page subtitle, prepared-guide badge, read-aloud control, unsaved-conversation footer and keyboard/length helper. Replaced the career-specific panel title and ask label with generic Chatbot copy. Replies still use the selected career's evidence context. `make check` exited 0: **716 passed, 3 optional skipped** (477 core, 146 API/integration/scripts, 39 prototype, 54 web); Ruff, Prettier, TypeScript/Vite build and tracked-file secret scan passed. Chrome checked the rebuilt `/guides/2433` route at 390px: generic labels, all requested elements absent, full intro visible, no page overflow and no console messages. Review was done in an isolated context; the user's Chatbot tab and stored state were not touched. Commit `c34b640` is pushed to `origin/codex/final-delivery`; remote head verified.
+
+## Matches cleanup and latest attribution sync
+
+Fetched and merged `origin/main` through `0120e72` (the 18 October attribution licence update) before applying the eight My matches annotations. Removed the redundant page eyebrow and intro, list label/model badge, per-card repeated source caveats, list footer note and priority disclaimer. Removed the Aventier header icon and wordmark while keeping Home, Quiz, Jobs, My plan and Chatbot and the selected career cards. The route's secondary workspace navigation remains available.
+
+`PATH="$PWD/.venv/bin:$PATH" make check` exited 0: **716 passed, 3 optional skipped** (477 core, 146 API/integration/scripts, 39 prototype, 54 web); Ruff, Prettier, TypeScript/Vite production build and tracked-file secret scan passed. After the build, isolated Chrome smoke confirmed the five primary links and zero header brand nodes. Match markup was checked against all eight requested targets. No user storage was changed.
+
+## Latest `main` integration
+
+Fetched `origin/main` through `eaf0740` and merged it into `codex/final-delivery`. This includes the upstream Amira/architect Home journey, Jobs demand directory updates, grounded Chatbot API, BlackRock evidence card and quality fixes. Kept the requested Home, Quiz, Jobs, My plan and Chatbot primary menu, the current Inter-based design, and the single-view My plan. Restored the quiz's prior simplified labels and heading focus after the upstream merge reintroduced removed UI. No change to `main`.
+
+Fresh `PATH="$PWD/.venv/bin:$PATH" make check` exited 0: **716 passed, 3 optional skipped** (477 core, 146 API/integration/scripts, 39 prototype, 54 web), with Ruff, formatting, TypeScript/Vite production build and tracked-file secret scan passed. The remaining warnings are existing FastAPI/Starlette deprecations.
+
+Chrome DevTools checked the five menu labels, 412-role Jobs catalogue, Amira Home and employer pulse, Chatbot response with structured route/evidence links, and My plan with zero inner tabs/tables and the career chat. First quiz screen has no Back to discovery, theme, hint or Choose one answer text; question focus works. The guide no longer claims an unconfigured model failed or says there are no sources when it renders links. No console errors or warnings. Checks used an isolated QA browser context; the user's saved plan was not touched. Local app is running at http://127.0.0.1:4175.
 
 ## Single-page My plan
 

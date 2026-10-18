@@ -13,7 +13,6 @@ export default function MyPlan({
   go,
   onExport,
   onReset,
-  onEditChoices,
 }: {
   careers: Career[];
   prefs: Preferences;
@@ -21,7 +20,6 @@ export default function MyPlan({
   go: (page: Page) => void;
   onExport: () => void;
   onReset: () => void;
-  onEditChoices?: () => void;
 }) {
   const [confirmReset, setConfirmReset] = useState(false);
   const primary = careers[0];
@@ -31,11 +29,6 @@ export default function MyPlan({
     prefs.checked.includes(`${primary.soc}-${i}`),
   ).length;
   const saved = allOpportunities.filter((o) => prefs.saved.includes(o.id));
-  const editChoices = () => {
-    if (prefs.completed) go("matches");
-    else if (onEditChoices) onEditChoices();
-    else go("jobs");
-  };
   const metric = (c: Career, key: string) => {
     const m = c.metrics[key];
     return !m || m.status === "pending" || m.flags?.includes("suppressed")
@@ -57,12 +50,6 @@ export default function MyPlan({
       </header>
       <div className="decision-grid decision-grid--simple">
         <section className="decision-main">
-          <div className="decision-status">
-            <span className="status-dot" /> Explore first
-            <button className="text-button" onClick={editChoices}>
-              Change career
-            </button>
-          </div>
           <h2>{primary.title}</h2>
           <div className="decision-evidence">
             <div>

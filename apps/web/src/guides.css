@@ -18,7 +18,8 @@
 }
 
 .evidence-guide-single .evidence-guide-transcript {
-  height: 160px;
+  height: auto;
+  max-height: 220px;
   padding: 18px 22px;
 }
 
@@ -32,10 +33,6 @@
 
 .evidence-guide-single .evidence-guide-composer {
   padding: 16px 22px 12px;
-}
-
-.evidence-guide-single .evidence-guide-footer {
-  padding: 0 22px 12px;
 }
 
 .evidence-guide-careers,
@@ -335,34 +332,6 @@
   font-size: 13px;
 }
 
-.evidence-guide-composer > p {
-  margin-top: 9px;
-  font-size: 12px;
-  line-height: 1.6;
-}
-
-.evidence-guide-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 6px 18px;
-  padding: 0 24px 20px;
-}
-
-.evidence-guide-footer p,
-.evidence-guide-footer button {
-  font-size: 12px;
-  line-height: 1.7;
-}
-
-.evidence-guide-footer button {
-  min-height: 36px;
-  color: #a9c8fc;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
 .evidence-guide button:focus-visible,
 .evidence-guide a:focus-visible,
 .evidence-guide textarea:focus-visible,
@@ -421,10 +390,6 @@
 
   .evidence-guide-composer .button {
     margin-left: auto;
-  }
-
-  .evidence-guide-footer {
-    padding: 0 20px 18px;
   }
 
   .evidence-guide-error {
