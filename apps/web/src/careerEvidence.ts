@@ -257,7 +257,7 @@ const entry = (
   demandReason:
     demand[soc] === "Not in high demand"
       ? "The official 2025 assessment classifies this occupation as “Not in high demand”. This does not mean there are no opportunities or no future shortages."
-      : "The official 2025 assessment combines labour-market indicators for this occupation. It describes current demand pressure, not guaranteed employment or a live vacancy count.",
+      : "The official 2025 assessment combines labour-market indicators for this occupation. It describes current demand pressure, not guaranteed employment or a live vacancy count. This classification is separate from the historical ASHE employment trend.",
   demandSource,
   outlook,
   ...(pay ? { salary: pay } : {}),

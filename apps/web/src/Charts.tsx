@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Career } from "./types";
 import { historySegments } from "./historySegments";
+import { evidencePriceLabel } from "./planDocument";
 export const money = (v: number | null | undefined) =>
   v == null
     ? "Not available"
@@ -28,6 +29,16 @@ export function SalaryChart({
         ? "pay_median"
         : "jobs_k";
   const all = careers.flatMap((c) => c.history || []);
+  const priceLabel = evidencePriceLabel(careers[0]);
+  const priceBase = careers[0]?.evidence_metadata?.price_base;
+  const lowPurityPay = careers.some((career) =>
+    career.history?.some((point) => point.flags.includes("bridged_low_purity")),
+  );
+  const indicativeCounts = careers.some(
+    (career) =>
+      career.metrics.jobs?.flags.includes("ons_indicative_counts") ||
+      career.jobs_observation?.flags.includes("ons_indicative_counts"),
+  );
   const years = [...new Set(all.map((p) => p.year))].sort();
   const values = all
     .map((p) => p[key])
@@ -55,7 +66,7 @@ export function SalaryChart({
     mode === "jobs"
       ? "Full-time employee jobs, thousands"
       : mode === "real"
-        ? "Annual median pay in April 2025 prices"
+        ? `Annual median pay in ${priceLabel}`
         : "Annual median pay in money of the year";
   const chosen = hover ?? y1;
   return (
@@ -65,7 +76,7 @@ export function SalaryChart({
           <h3>{mode === "jobs" ? "Employment over time" : "Pay history"}</h3>
           <p>
             {mode === "real"
-              ? "Inflation-adjusted. April 2025 prices."
+              ? `Inflation-adjusted. ${priceLabel}.`
               : mode === "nominal"
                 ? "Published annual pay. No inflation adjustment."
                 : "Full-time employee jobs. Not vacancies."}
@@ -191,7 +202,7 @@ export function SalaryChart({
               />
             )),
           )}
-          {mode === "jobs" && (
+          {(mode === "jobs" || lowPurityPay) && (
             <>
               <line
                 x1={x(2020.5)}
@@ -235,7 +246,10 @@ export function SalaryChart({
         excludes self-employment.{" "}
         {mode === "jobs"
           ? "The 2021 occupation-code change breaks the series; compare trends within each period."
-          : "Pre-2021 occupation mappings are estimates. 2020 includes COVID distortions; 2025 is provisional. Real pay uses ONS CPIH, April 2025 prices."}
+          : `Pre-2021 occupation mappings are estimates. ${lowPurityPay ? "For low-purity mappings the older occupation group mixed several jobs, so the pay line breaks at 2021. " : ""}2020 includes COVID distortions; 2025 is provisional. Real pay uses ${priceBase || "ONS CPIH, April 2025 prices"}.`}
+        {mode === "jobs" &&
+          indicativeCounts &&
+          " ONS says its job counts are indicative, not accurate estimates."}
       </p>
       {!compact && (
         <details className="data-table">

@@ -18,6 +18,11 @@ export type HistoryPoint = {
   jobs_k: number | null;
   flags: string[];
 };
+export type EvidenceMetadata = {
+  schema_version?: string;
+  price_base?: string;
+  price_label?: string;
+};
 export type Career = {
   soc: string;
   title: string;
@@ -27,6 +32,7 @@ export type Career = {
   skills: string[];
   metrics: Record<string, Metric>;
   history: HistoryPoint[];
+  evidence_metadata?: EvidenceMetadata;
   hedges: {
     soc2020: string;
     title: string;
@@ -55,6 +61,7 @@ export type CareerSummary = {
 export type Weights = { pay: number; interest: number; need: number };
 export type Bootstrap = {
   careers: Career[];
+  evidence_metadata?: EvidenceMetadata;
   tags: unknown;
   sources: unknown;
   backtest: Record<string, unknown>;

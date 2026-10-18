@@ -19,6 +19,48 @@ export function resolvePlanRoute(
   );
 }
 
+export function isRelativeDemand(metric?: Metric): boolean {
+  return Object.prototype.hasOwnProperty.call(
+    metric?.extra ?? {},
+    "typical_occupation_trend",
+  );
+}
+
+export function demandTrendLabel(metric?: Metric): string {
+  return isRelativeDemand(metric)
+    ? "Employment trend vs typical"
+    : "Employment trend";
+}
+
+export function evidencePriceLabel(
+  career?: Pick<Career, "evidence_metadata">,
+): string {
+  return career?.evidence_metadata?.price_label || "April 2025 prices";
+}
+
+export function planPrioritySummary(
+  prefs: Pick<Preferences, "completed" | "weights">,
+): string {
+  if (!prefs.completed && prefs.weights.interest !== 0)
+    return "No personal interest profile applied.";
+  const entries = Object.entries(prefs.weights).filter(
+    ([key]) => prefs.completed || key !== "interest",
+  );
+  const total = entries.reduce((sum, [, value]) => sum + value, 0);
+  const summary = entries
+    .map(([key, value]) => {
+      const label =
+        key === "need"
+          ? prefs.completed
+            ? "Historical demand"
+            : "Historical employment trend"
+          : key[0].toUpperCase() + key.slice(1);
+      return `${label} ${Math.round(total ? (value / total) * 100 : 100 / entries.length)}%`;
+    })
+    .join(" · ");
+  return prefs.completed ? summary : `${summary} · No interest profile used`;
+}
+
 export function metricCaveats(metric?: Metric): string {
   if (!metric) return "";
   const notes: Record<string, string> = {
@@ -31,6 +73,13 @@ export function metricCaveats(metric?: Metric): string {
     sources_disagree: "Research sources disagree; the range is wider.",
     multi_isco:
       "Several international job codes are combined; inspect the research range.",
+    bridged_low_purity:
+      "The older occupation code mixed several jobs; pre-2021 estimates may not describe this job well.",
+    ons_indicative_counts:
+      "ONS says its job counts are indicative, not accurate estimates.",
+    partial_sources: "Part of the source data is missing; confidence is lower.",
+    fallback_all_employees:
+      "Full-time figures were sparse; this uses all employees (full- and part-time).",
   };
   return (
     metric.flags
@@ -55,20 +104,14 @@ const link = (label: string, url?: string) => {
 
 export function buildPlanDocument(plan: PlanDocumentInput): string {
   const { preferences: prefs } = plan;
-  const total = Object.values(prefs.weights).reduce((a, b) => a + b, 0);
-  const priorities = Object.entries(prefs.weights)
-    .map(
-      ([key, val]) =>
-        `${key === "need" ? "Historical demand" : key[0].toUpperCase() + key.slice(1)} ${Math.round(total ? (val / total) * 100 : 100 / 3)}%`,
-    )
-    .join(" · ");
+  const priorities = planPrioritySummary(prefs);
   const careers = plan.careers
     .map((c, i) => {
       const content = plan.content[c.soc];
       const metrics = (
         [
           ["pay_median", "Median annual pay"],
-          ["demand_trend", "Historical employment trend"],
+          ["demand_trend", demandTrendLabel(c.metrics.demand_trend)],
           ["exposure", "Automation task exposure"],
         ] as const
       )
@@ -79,15 +122,23 @@ export function buildPlanDocument(plan: PlanDocumentInput): string {
             m.value == null ||
             m.status === "pending" ||
             m.flags?.includes("suppressed");
-          const number = missing
-            ? "Not available"
-            : key === "pay_median"
-              ? `£${Math.round(m.value!).toLocaleString("en-GB")}`
+          const format = (value: number) =>
+            key === "pay_median"
+              ? `£${Math.round(value).toLocaleString("en-GB")}`
               : key === "demand_trend"
-                ? `${(m.value! * 100).toFixed(1)}% / year`
-                : `${(m.value! * 100).toFixed(0)} / 100`;
+                ? `${(value * 100).toFixed(1)}% / year`
+                : `${(value * 100).toFixed(0)} / 100`;
+          const number = missing ? "Not available" : format(m.value!);
+          const range =
+            !missing && m.low != null && m.high != null
+              ? `<br>Supplied range: ${escape(format(m.low))} to ${escape(format(m.high))}.`
+              : "";
+          const relative =
+            key === "demand_trend" && isRelativeDemand(m)
+              ? " Change relative to the typical occupation; not absolute job growth."
+              : "";
           const source = m ? plan.sources[m.source] : undefined;
-          return `<li><strong>${escape(label)}: ${escape(number)}</strong>${m ? `<br><small>${link(source?.name ?? m.source, source?.url)} · ${escape(m.as_of)} · ${escape(m.status)}<br>${escape(m.note)} ${escape(metricCaveats(m))}</small>` : ""}</li>`;
+          return `<li><strong>${escape(label)}: ${escape(number)}</strong>${m ? `<br><small>${link(source?.name ?? m.source, source?.url)} · ${escape(m.as_of)} · ${escape(m.status)}${m.confidence ? ` · ${escape(m.confidence)} confidence` : ""}${range}<br>${escape(m.note)}${escape(relative)} ${escape(metricCaveats(m))}</small>` : ""}</li>`;
         })
         .join("");
       const steps = (content?.firstSteps ?? [])

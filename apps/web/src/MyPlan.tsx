@@ -3,7 +3,13 @@ import type { Career, Page, Preferences } from "./types";
 import { allOpportunities, getCareerContent } from "./content";
 import { money, percent } from "./Charts";
 import { Icon } from "./icons";
-import { metricCaveats, resolvePlanRoute } from "./planDocument";
+import {
+  demandTrendLabel,
+  isRelativeDemand,
+  metricCaveats,
+  planPrioritySummary,
+  resolvePlanRoute,
+} from "./planDocument";
 
 export default function MyPlan({
   careers,
@@ -50,6 +56,9 @@ export default function MyPlan({
           <p className="page-description">
             Your current direction, the alternatives, and what to try next.
           </p>
+          {!prefs.completed && (
+            <p className="fine-print">{planPrioritySummary(prefs)}</p>
+          )}
         </div>
         <button className="button secondary" onClick={onExport}>
           <Icon name="download" size={17} /> Download plan
@@ -75,7 +84,7 @@ export default function MyPlan({
               </small>
             </div>
             <div>
-              <span>Employment trend</span>
+              <span>{demandTrendLabel(primary.metrics.demand_trend)}</span>
               <strong>
                 {percent(metric(primary, "demand_trend"))}
                 <small> / year</small>
@@ -83,7 +92,9 @@ export default function MyPlan({
               <small>
                 {primary.metrics.demand_trend?.as_of}
                 <br />
-                Historical evidence, not a forecast
+                {isRelativeDemand(primary.metrics.demand_trend)
+                  ? "Relative to the typical occupation; not absolute growth"
+                  : "Historical evidence, not a forecast"}
                 <br />
                 {metricCaveats(primary.metrics.demand_trend)}
               </small>
@@ -219,7 +230,7 @@ export default function MyPlan({
               <tr>
                 <th>Choice</th>
                 <th>Median annual pay</th>
-                <th>Employment trend</th>
+                <th>{demandTrendLabel(primary.metrics.demand_trend)}</th>
                 <th>Task exposure</th>
               </tr>
             </thead>
@@ -244,6 +255,8 @@ export default function MyPlan({
                     {percent(metric(c, "demand_trend"))}
                     <small>
                       {c.metrics.demand_trend?.as_of}; per year
+                      {isRelativeDemand(c.metrics.demand_trend) &&
+                        " vs typical occupation"}
                       <br />
                       {metricCaveats(c.metrics.demand_trend)}
                     </small>
@@ -252,7 +265,11 @@ export default function MyPlan({
                     {metric(c, "exposure") == null
                       ? "Not available"
                       : `${Math.round(metric(c, "exposure")! * 100)} / 100`}
-                    <small>Research estimate</small>
+                    <small>
+                      Research estimate · {c.metrics.exposure?.as_of}
+                      <br />
+                      {metricCaveats(c.metrics.exposure)}
+                    </small>
                   </td>
                 </tr>
               ))}

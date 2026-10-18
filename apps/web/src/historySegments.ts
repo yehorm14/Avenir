@@ -15,7 +15,11 @@ export function historySegments(
     if (typeof point[key] !== "number" || point.year === 2021) {
       if (current.length) segments.push(current);
       current =
-        key !== "jobs_k" && point.year === 2021 && current.length
+        key !== "jobs_k" &&
+        point.year === 2021 &&
+        current.length &&
+        !current[current.length - 1].flags.includes("bridged_low_purity") &&
+        !point.flags.includes("bridged_low_purity")
           ? [current[current.length - 1]]
           : [];
     }

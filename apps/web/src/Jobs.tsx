@@ -3,6 +3,7 @@ import type { Career, CareerSummary, Metric } from "./types";
 import { api } from "./store";
 import { money, SalaryChart } from "./Charts";
 import { careerEvidence } from "./careerEvidence";
+import { demandTrendLabel, isRelativeDemand } from "./planDocument";
 import "./jobs.css";
 
 const work: Record<string, string> = {
@@ -62,7 +63,7 @@ function metric(career: Career, key: string) {
 }
 function observation(m?: Metric) {
   if (!m) return "No observation";
-  return `${m.as_of || "Year unavailable"}${m.flags.includes("historical_observation") ? " · last available" : ""}${m.flags.includes("provisional") ? " · provisional" : ""}${m.flags.includes("imputed_parent") ? " · wider-group estimate" : ""}`;
+  return `${m.as_of || "Year unavailable"}${m.flags.includes("historical_observation") ? " · last available" : ""}${m.flags.includes("provisional") ? " · provisional" : ""}${m.flags.includes("imputed_parent") ? " · wider-group estimate" : ""}${m.flags.includes("ons_indicative_counts") ? " · indicative" : ""}`;
 }
 const number = (n: number | null | undefined) =>
   n == null ? "Not available" : Math.round(n).toLocaleString("en-GB");
@@ -324,7 +325,8 @@ export default function Jobs({
         Pay is the annual median for full-time employees, not a starting salary.
         Employee-job estimates exclude self-employment. Each figure shows its
         own observation year. Older employee-job counts are marked last
-        available; missing and suppressed figures stay unavailable.{" "}
+        available; missing and suppressed figures stay unavailable. ONS
+        describes ASHE job counts as indicative, not accurate estimates.{" "}
         <Source source={ashe} />.
       </p>
       <p className="jobs-source-note">
@@ -424,6 +426,11 @@ function JobProfile({
           <dt>Employee jobs, {observation(jobs)}</dt>
           <dd>{number(employeeJobs == null ? null : employeeJobs * 1000)}</dd>
           <small>{jobs?.note || "Employees only. Not vacancies."}</small>
+          {jobs?.flags.includes("ons_indicative_counts") && (
+            <small>
+              ONS says these counts are indicative, not accurate estimates.
+            </small>
+          )}
         </div>
         <div>
           <dt>Demand{evidence ? `, ${evidence.demandYear}` : ""}</dt>
@@ -652,7 +659,7 @@ const flagNotes: Record<string, string> = {
   cv_high:
     "This estimate has a sampling error of 10 to 20 percent; treat it with caution.",
   multi_isco:
-    "This occupation spans several international job codes; the score is their weighted average and the range shows how much they differ.",
+    "This occupation spans several international job codes; the score is their weighted average. Inspect the supplied research range for uncertainty.",
   imputed_parent:
     "No direct figure exists; this is estimated from the wider occupation group.",
   pending_source: "The data source for this figure has not been loaded yet.",
@@ -661,6 +668,13 @@ const flagNotes: Record<string, string> = {
     "Measured for a broad job-advert category, not for this exact occupation.",
   sources_disagree:
     "Two independent research estimates disagree for this job, so the range is wider.",
+  bridged_low_purity:
+    "The older occupation code mixed several different jobs, so the pre-2021 estimates may not describe this job well. The pay chart breaks at 2021.",
+  ons_indicative_counts:
+    "ONS says its job counts are indicative, not accurate estimates.",
+  partial_sources: "Part of the source data is missing; confidence is lower.",
+  fallback_all_employees:
+    "Full-time figures were too sparse, so this uses all employees (full- and part-time).",
 };
 function metricDisplay(m: Metric, value = metricValue(m)): string {
   if (value == null) return "Not available";
@@ -675,7 +689,11 @@ function EvidenceMeasure({ name, measure }: { name: string; measure: Metric }) {
   return (
     <div className="job-evidence-measure">
       <dt>
-        {metricLabels[name] ?? name.replaceAll("_", " ")}{" "}
+        {name === "demand_trend"
+          ? demandTrendLabel(measure)
+          : name === "demand_trend_2011_19" && isRelativeDemand(measure)
+            ? "Earlier employment trend vs typical"
+            : (metricLabels[name] ?? name.replaceAll("_", " "))}{" "}
         <span>{observation(measure)}</span>
       </dt>
       <dd>{metricDisplay(measure)}</dd>
@@ -688,7 +706,10 @@ function EvidenceMeasure({ name, measure }: { name: string; measure: Metric }) {
           </p>
         )}
       <p>{measure.note}</p>
-      {measure.status === "preliminary" && <p>Preliminary estimate.</p>}
+      <p>
+        {measure.status === "preliminary" && "Preliminary estimate. "}
+        {measure.confidence} confidence.
+      </p>
       {flags.map((note) => (
         <p className="job-evidence-caveat" key={note}>
           {note}
@@ -708,6 +729,8 @@ function PublishedEvidence({ career }: { career: Career }) {
       <p className="jobs-source-note">
         Observed employment trends describe the past. AI exposure describes
         tasks that technology could affect; it is not a forecast of job losses.
+        {isRelativeDemand(career.metrics.demand_trend) &&
+          " Trend values compare with the typical occupation; a positive value does not by itself establish absolute job growth."}
       </p>
       <dl className="job-evidence-grid">
         {headline.map((key) =>

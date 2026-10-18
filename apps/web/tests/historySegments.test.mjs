@@ -20,3 +20,15 @@ test('pay retains a bridge only when both adjacent observations exist', () => {
   assert.deepEqual(years([point(2020), point(2021), point(2022)]), [[2020], [2020, 2021, 2022]]);
   assert.deepEqual(years([point(2019), point(2021), point(2022)]), [[2019], [2021, 2022]]);
 });
+
+test('low-purity occupation mappings break both pay series at 2021', () => {
+  const old = { ...point(2020), flags: ['bridged_soc2010', 'bridged_low_purity'] };
+  for (const key of ['pay_median', 'pay_median_real']) {
+    assert.deepEqual(years([old, point(2021), point(2022)], key), [[2020], [2021, 2022]]);
+  }
+});
+
+test('a low-purity flag does not create gaps within the same coding era', () => {
+  const old = (year) => ({ ...point(year), flags: ['bridged_low_purity'] });
+  assert.deepEqual(years([old(2018), old(2019), old(2020)]), [[2018, 2019, 2020]]);
+});
