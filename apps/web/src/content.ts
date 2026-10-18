@@ -187,7 +187,7 @@ const opportunities = {
     nation: "England",
     url: "https://codebar.io/london",
     description:
-      "Explore supportive programming workshops. Read the student guide and eligibility criteria before registering; beginners can start with the linked tutorials.",
+      "London programming workshops with eligibility criteria set by codebar. Read the student guide before registering; the linked tutorials are another way to get started if you cannot attend.",
   },
   cyber: {
     id: "ncsc-cyber-skills",
@@ -297,27 +297,27 @@ const opportunities = {
     nation: "UK",
     url: "https://www.springpod.com/virtual-work-experience",
     description:
-      "Try a virtual introduction to an industry before committing to it. Browse the current catalogue and check age, registration and programme-specific requirements.",
+      "Browse virtual work-experience programmes by industry. Check each listing’s age, registration and availability requirements before signing up.",
   },
   internships: {
     id: "bright-network-internships",
-    title: "Explore internship programmes",
+    title: "Bright Network internship directory",
     kind: "Internship",
-    location: "UK-wide / London / online",
+    location: "UK-wide / employer-specific",
     nation: "UK",
     url: "https://www.brightnetwork.co.uk/internships/?sort_by=deadline",
     description:
-      "A discovery directory for students ready to explore internships. Many employers require university enrolment; check the employer’s own listing and current deadline.",
+      "Many internships require university enrolment. Check the employer’s study-year requirements, location and deadline; this directory does not confirm school-leaver eligibility or an available place.",
   },
   scottishApprenticeships: {
     id: "scottish-apprenticeships",
-    title: "Scottish apprenticeship discovery",
+    title: "Scottish apprenticeship routes",
     kind: "Programme",
     location: "Scotland",
     nation: "Scotland",
     url: "https://www.apprenticeships.scot/",
     description:
-      "Compare Foundation, Modern and Graduate Apprenticeship routes and search employers. This is a discovery portal; a place or vacancy is not guaranteed.",
+      "Compare Foundation, Modern and Graduate Apprenticeships in Scotland and search employers. Check the entry requirements and availability on each listing before applying.",
   },
   sectt: {
     id: "sectt-electrical",
@@ -363,7 +363,7 @@ const opportunities = {
 
 const computing: CareerContent = {
   intro:
-    "Turn a real problem into a reliable digital tool. Software work combines careful reasoning, creative choices and regular conversations with the people using what you build.",
+    "Software developers write and maintain applications. The work includes coding, testing changes, investigating failures and reviewing work with teammates.",
   dayToDay: [
     "Break a user need into small, testable tasks.",
     "Build and test a feature, then investigate why it behaves unexpectedly.",
@@ -390,14 +390,14 @@ const computing: CareerContent = {
     courses.imperialComputing,
   ],
   opportunities: [
-    opportunities.codebar,
     opportunities.springpod,
     opportunities.scottishApprenticeships,
+    opportunities.codebar,
   ],
   firstSteps: [
-    "Build one small tool for a problem you actually have, and ask someone to try it.",
-    "Keep a short record of what failed, how you debugged it and what you changed.",
-    "Compare a broad computing degree with a software apprenticeship and speak to a student on each route.",
+    "Build a small app that saves and edits a list, then ask someone to try it.",
+    "Add one automated test and write down a bug you found, how you investigated it and what fixed it.",
+    "Compare computing course modules with a software apprenticeship’s training plan, including projects, entry requirements and time spent at work.",
   ],
 };
 
@@ -969,7 +969,7 @@ export const careerContent: Record<string, CareerContent> = {
   "2422": {
     ...finance,
     intro:
-      "Investigate organisations, markets or investments and explain the evidence behind a decision. This path can involve deep research, quantitative analysis and careful communication about uncertainty.",
+      "Financial analysts examine accounts, company performance and economic data, build financial models and explain the risks behind a recommendation. This occupation group also includes financial advisers, whose work focuses on clients’ financial choices.",
     dayToDay: [
       "Research an organisation, sector or economic question.",
       "Compare financial scenarios and test the assumptions in a model.",
@@ -983,8 +983,12 @@ export const careerContent: Record<string, CareerContent> = {
     ],
     opportunities: [
       opportunities.springpod,
-      opportunities.internships,
-      opportunities.rss,
+      opportunities.scottishApprenticeships,
+    ],
+    firstSteps: [
+      "Choose a company’s annual report. Explain its revenue, operating profit and cash flow, then list two risks that could change its results.",
+      "Build a spreadsheet comparing two scenarios. Label the assumptions and check how changing one affects your conclusion.",
+      "Compare a finance degree with school-leaver and apprenticeship routes. Check which roles they lead to and what professional training each requires.",
     ],
   },
   "2421": {

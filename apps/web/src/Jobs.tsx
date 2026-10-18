@@ -188,7 +188,7 @@ export default function Jobs({
     >
       <header className="jobs-heading">
         <h1>Jobs</h1>
-        <small>Browse the supplied UK occupation catalogue</small>
+        <small>Compare UK pay, employment and demand evidence</small>
       </header>
       <div className="jobs-controls">
         <label className="search">
@@ -222,7 +222,7 @@ export default function Jobs({
         </div>
       ) : !catalogue ? (
         <p className="jobs-message" role="status">
-          Loading the occupation catalogue…
+          Loading careers…
         </p>
       ) : (
         <>
@@ -332,8 +332,8 @@ export default function Jobs({
         identified by the Migration Advisory Committee. Demand classifications
         measure recruitment pressure, not vacancies or guaranteed employment.{" "}
         <Source source={demandSource} />. Personalised matching covers 20
-        careers; all supplied occupations are available here for evidence
-        browsing.
+        careers; you can browse pay and employment evidence for every occupation
+        listed here.
       </p>
     </section>
   );
@@ -433,9 +433,9 @@ function JobProfile({
           </small>
         </div>
         <div>
-          <dt>Two-year pay</dt>
+          <dt>Your pay scenario</dt>
           <dd>{nominal == null ? "Enter salary" : money(nominal)}</dd>
-          <small>Planning estimate · assumptions below</small>
+          <small>Calculated from your assumptions</small>
         </div>
       </dl>
       <section className="job-demand-section">
@@ -459,8 +459,8 @@ function JobProfile({
       <SalaryChart careers={[career]} />
       <section className="job-scenario">
         <div className="scenario-header">
-          <h2>Two-year pay estimate</h2>
-          <span>Scenario, not an earnings statistic</span>
+          <h2>Your pay scenario</h2>
+          <span>Two years after paid work begins</span>
         </div>
         {evidence?.salary ? (
           <p>
@@ -539,7 +539,7 @@ function JobProfile({
         )}
       </section>
       <section className="job-outlook">
-        <h2>2026–2031 outlook</h2>
+        <h2>Sector outlook</h2>
         {evidence ? (
           <>
             <h3>{evidence.outlook.title}</h3>
@@ -571,10 +571,9 @@ function JobProfile({
           <p>No verified occupation-specific outlook is included.</p>
         )}
         <p className="jobs-source-note">
-          This is a qualitative outlook for the next five years. Published
-          projections retain their original dates and coverage; none is extended
-          to 2031. Employment totals, net growth and replacement hiring are
-          different measures; none is a count of vacancies available to a new
+          Published scenarios retain their original dates and geographic
+          coverage. Employment totals, net growth and replacement hiring measure
+          different things; none is a count of vacancies available to a new
           applicant.
         </p>
       </section>
