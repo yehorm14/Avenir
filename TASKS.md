@@ -1,5 +1,11 @@
 # Integration tasks
 
+- [x] [codex] Simplify My plan on final-delivery: no secondary tabs or repeated comparison tables. Career, chat, monthly actions, download and direct edit/pathway links remain. Desktop/mobile checks and independent review passed; full gate672 passed/3 optional skips. Publish only final-delivery.
+
+- [x] [codex] On codex/final-delivery, merge the latest plan cleanup and simplify Main navigation to Home, Quiz, Jobs, My plan and Chatbot. Current design and routes preserved; five destinations, active states, chat reply/deep link and mobile/desktop layout checked. Full gate 672 passed/3 optional skips and independent review passed; publication targets this branch only.
+
+- [x] [codex] Apply 21 annotated My plan changes: compact task dropdown, career chat and simplified evidence/comparison. Preserve saved state, correct borrowed-family skill advice and integrate upstream main 255487d. Full gate 672 passed/3 optional skips; desktop/mobile checks and independent review passed.
+
 - [x] [codex] Publish the latest final delivery to main at the user’s explicit request. Verified main ancestry, clean tracked tree, independent sanity review and fresh make check645 passed/3 optional skips. Fast-forward push6695e58→9e5dffb succeeded without rewriting remote history.
 
 - [x] [codex] Remove the four marked quiz elements, retain previous-question navigation, fix question focus and Jobs history/deep links. Search/sort/empty/retry/mobile browser checks pass;645 tests pass/3 optional skips. Latest final delivery is the integration target and the assembled v1.2 app now runs on4175.

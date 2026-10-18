@@ -77,9 +77,41 @@ curl -sS http://127.0.0.1:8015/api/v1/recommendations \
   Related-pathway bridges are disclosed. Course earnings remain null so
   illustrative prototype values do not replace occupation evidence. Unsupported
   routes return HTTP 404.
+- `GET /api/careers/{soc}/evidence-pack`: one compact, display-ready object per
+  role with the statistics from the ML analysis: pay (median and middle half),
+  employee jobs, the 2022-2025 employment trend against the typical occupation,
+  automation exposure with its research range, history for 2011/2015/2019/2022
+  and the latest year (real and nominal pay, jobs, price base and the 2021
+  recoding caveat), the top three hedge careers, this role's results in the
+  historical rule checks, each crisis check with its placebo result, fit tags,
+  sources and `allowed_numbers`. Each metric carries its source, year, status,
+  flags and the exact caveat sentences the app shows. Missing data stays `null`
+  with a one-line reason.
 - `POST /api/guide`: `{ "soc": "2134", "message": "What skills can I build?",
-  "history": [] }` returns prepared, source-linked guidance and explicitly
-  identifies its mode. Broader profiles disclose unavailable detailed routes.
+  "history": [] }` returns source-linked guidance and explicitly identifies its
+  mode (`llm_grounded` or `prepared_demo`), `ai_written`, `model`, `based_on`
+  (the stat lines the pack supplied) and `checks` (`passed` or
+  `fallback: <reason>`). Broader profiles disclose unavailable detailed routes.
+
+## Grounded guide
+
+With no model configured the guide is the prepared template. When a model is
+configured, the reply is written by the model from the role's evidence pack only
+(the pack minus `allowed_numbers`, the last six turns and the question), with a
+system prompt that forbids numbers outside the pack, forecasts, probabilities of
+job loss, graduate salaries and "you should". Configuration uses the LLM
+writer's variables, `LLM_ENABLED`, `LLM_BASE_URL`, `LLM_API_KEY`, `LLM_MODEL`
+(OpenAI-compatible chat completions), or `ANTHROPIC_API_KEY` with
+`LLM_BASE_URL` empty for the Anthropic Messages API (`LLM_MODEL` or
+`claude-sonnet-5-5`, 600 output tokens). The repo-root `.env` is loaded at app
+start by the adapter registry without overriding real environment variables.
+Before a reply is accepted, every number in it must appear in the pack's
+`allowed_numbers`, it must avoid the banned phrases ("you should", "don't",
+"guarantee", "will earn", "probability"), be non-empty and be under 1,200
+characters. Any failed check, timeout (20 s), HTTP error or exception falls back
+to the prepared reply with the reason in `checks`; logs and responses never
+carry the key, the URL or the prompt. Only the evidence pack is cached (per
+SOC); nothing from a conversation is kept.
 
 The canonical API also provides `/api/v1/tags`, `/api/v1/careers`,
 `/api/v1/profile`, `/api/v1/recommendations`, history, hedges, routes, sources and

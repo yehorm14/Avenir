@@ -11,7 +11,7 @@ sources:
   - id: esco
     name: ESCO v1.2 classification (occupations, skills, occupation-skill relations)
     how: browser
-    url: https://esco.ec.europa.eu/en/use-esco/download   # (verify path) needs the download form
+    url: https://esco.ec.europa.eu/en/use-esco/download   # page checked 18 Oct: download form, link by email, current v1.2.1; it states no licence
     instructions: >
       Choose version v1.2.x, language English, format CSV, type "classification".
       The link arrives by email. Unzip into data/raw/esco/.
@@ -86,7 +86,7 @@ sources:
       are an alternative (verify their SOC level).
     path: data/raw/aps/
     coverage: UK
-    licence: Open Government Licence v3.0 (Nomis terms, verify)
+    licence: 'Open Government Licence, Crown copyright; credit "Source: Office for National Statistics"'  # Nomis copyright page (nomisweb.co.uk/home/copyright.asp) names the OGL without a version; v3.0 (verify)
     licence_checked_by: ""
     used_by: [M4 demand trend, M5 backtest]
 
@@ -100,16 +100,32 @@ sources:
       data/curated/ilo_exposure.csv. A human spot-checks every row used and fills verified_by.
     path: data/raw/ilo/
     coverage: International (ISCO-08)
-    licence: ILO publication terms, cite Gmyrek et al. 2025  # (verify)
+    doi: https://doi.org/10.54394/HETP0387
+    pdf: https://www.ilo.org/sites/default/files/2025-05/WP140_web.pdf
+    licence: CC BY 4.0 (c) ILO 2025  # stated on the PDF's copyright page (checked 18 Oct 2026); the publication page states no licence
+    # Names in ASCII here (the fetch scripts read this file with the platform encoding);
+    # docs/data-sources.md has the full spelling.
+    attribution: >
+      Gmyrek, P., Berg, J., Kaminski, K., Konopczynski, F., Ladna, A., Nafradi, B., Roslaniec, K.,
+      Troszynski, M. Generative AI and Jobs: A Refined Global Index of Occupational Exposure.
+      ILO Working Paper 140. Geneva: International Labour Office, 2025. (c) ILO.
+      https://doi.org/10.54394/HETP0387. Licensed under CC BY 4.0. Changed by Avenir: scores
+      averaged over the ISCO-08 codes each UK occupation maps to, then mapped to SOC 2020.
+    disclaimer: >
+      This is an adaptation of a copyrighted work of the International Labour Organization (ILO).
+      This adaptation has not been prepared, reviewed or endorsed by the ILO and should not be
+      considered an official ILO adaptation. The ILO disclaims all responsibility for its content
+      and accuracy. Responsibility rests solely with the author(s) of the adaptation.
     licence_checked_by: ""
     used_by: [disruption risk, M2 calibration]
 
   - id: oid_2025
     name: Skills England / DfE Occupations in Demand 2025 (plus 2024 original and revised)
-    how: browser
+    how: script
     url: https://explore-education-statistics.service.gov.uk/find-statistics/occupations-in-demand/2025/data-guidance
     instructions: >
-      Use "Download all data (ZIP)". The supporting file "Occupations by demand" (CSV) has
+      `python scripts/fetch/oid_demand.py` downloads "Download all data (ZIP)" to data/raw/oid/
+      and regenerates apps/web/src/occupationDemand.ts. The supporting file "Occupations by demand" (CSV) has
       demand level, demand index, worker numbers, uncertainty and imputation flags per
       4-digit SOC 2020. Data guidance says the index covers the UK labour market (ASHE-based
       indicators are GB only); the spec labelled it England, so check and label correctly.
@@ -138,7 +154,7 @@ sources:
   - id: ashe_2007_2010
     name: ONS ASHE Table 14, 2007 to 2010 (SOC 2000 coding), earlier editions of ashe_t14
     how: browser
-    url: https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/occupation4digitsoc2010ashetable14   # (verify) 2007-2010 editions are SOC 2000 coded; may be a different ONS page
+    url: https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/occupation4digitsoc2010ashetable14   # checked 18 Oct 2026: same page lists the 2007, 2008, 2009 and 2010 editions; it labels 2011 provisional "based on SOC 2000"; licence OGL v3.0 stated on the page
     instructions: >
       The same ONS page as ashe_t14 holds the 2007 to 2010 editions (SOC 2000 codes). Keep only
       Table 14.7a (annual gross pay) and 14.7b (sampling error, CV). Employees only. Bridged to
@@ -152,7 +168,7 @@ sources:
   - id: soc2000_soc2010
     name: ONS relationship tables SOC 2000 and SOC 2010
     how: browser
-    url: ""   # (verify) Arsenii's SOURCE.md has no URL
+    url: https://www.ons.gov.uk/methodology/classificationsandstandards/standardoccupationalclassificationsoc/soc2010   # checked 18 Oct 2026: "Related downloads" lists "Relationship between SOC2010 and SOC2000" (zip); licence OGL v3.0 stated on the page
     instructions: >
       Built from people coded to both systems (LFS Jan to Mar 2007, Census 2001 where the LFS
       base is empty). ONS lists only destinations above a threshold, so weights are renormalised.
@@ -166,7 +182,7 @@ sources:
   - id: cpih
     name: ONS CPIH index (series L522, 2015 = 100, dataset MM23)
     how: browser
-    url: ""   # (verify) Arsenii's SOURCE.md has no URL
+    url: https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/l522/mm23   # checked 18 Oct 2026: "CPIH INDEX 00: ALL ITEMS 2015=100", series L522, dataset MM23; licence OGL v3.0 stated on the page
     instructions: >
       Series L522, 2015 = 100, 1988 to 2026. Used to turn nominal pay into real pay in 2025
       prices. ASHE annual pay is for the tax year ending 5 April, so use the tax-year average of
@@ -180,7 +196,7 @@ sources:
   - id: soc2020_coding_index
     name: ONS SOC 2020 Volume 2 coding index (version of 27 Aug 2026)
     how: browser
-    url: ""   # (verify) Arsenii's SOURCE.md has no URL
+    url: https://www.ons.gov.uk/methodology/classificationsandstandards/standardoccupationalclassificationsoc/soc2020/soc2020volume2codingrulesandconventions   # checked 18 Oct 2026: file soc2020volume2thecodingindexexcel20260827v2.xlsx, with ISCO-08 codes; licence OGL v3.0 stated on the page
     instructions: >
       About 32,000 UK job titles, each with a SOC 2020 code and an ISCO-08 code. This is how a
       SOC 2020 -> ISCO-08 map with shares is built (crosswalk_build.py), so ISCO-08 sources such
@@ -194,7 +210,7 @@ sources:
   - id: dfe_ai_annex
     name: DfE "The impact of AI on UK jobs and training", Annex 1 (2023)
     how: browser
-    url: ""   # (verify) Arsenii's SOURCE.md has no URL
+    url: https://www.gov.uk/government/publications/the-impact-of-ai-on-uk-jobs-and-training   # checked 18 Oct 2026: DfE, 28 Nov 2023, attachment "Annex 1 ... data sources" (xlsx); licence OGL v3.0 stated on the page
     instructions: >
       Annex 1 gives exposure for 365 SOC 2010 occupations. Used as a percentile rank to
       cross-check the ILO exposure score, never as the headline number.
@@ -207,7 +223,7 @@ sources:
   - id: ons_job_adverts
     name: "ONS online job advert estimates (source: Adzuna), 28 categories, weekly"
     how: browser
-    url: ""   # (verify) Arsenii's SOURCE.md has no URL
+    url: https://www.ons.gov.uk/economy/economicoutputandproductivity/output/datasets/onlinejobadvertestimates   # checked 18 Oct 2026: "Source: Adzuna", no updates after 24 Oct 2024; licence OGL v3.0 stated on the page
     instructions: >
       Weekly estimates for 28 job-advert categories, 2018 to 2024, republished by ONS from
       Adzuna. The series was discontinued in Oct 2024. Category level only, never occupation
@@ -221,7 +237,7 @@ sources:
   - id: aps_2016_age_bands
     name: ONS APS 2016 age bands by 4-digit occupation (ad hoc request 006998)
     how: browser
-    url: ""   # (verify) Arsenii's SOURCE.md has no URL
+    url: https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/adhocs/0069984digitoccupationsocand4digitindustrysicbyagebands   # checked 18 Oct 2026: ref 006998, released 5 May 2017, licence OGL v3.0 stated on the page; the page says "JD 2016" and does not name the survey, so APS is (verify)
     instructions: >
       ONS ad hoc request 006998. UK, 2016, includes self-employed, SOC 2010 codes, small cells
       suppressed. Gives young_worker_share (people aged 16 to 24 in the job).
@@ -234,7 +250,7 @@ sources:
   - id: onet
     name: O*NET 31.0 related occupations and the ESCO to O*NET-SOC crosswalk
     how: browser
-    url: ""   # (verify) Arsenii's SOURCE.md has no URL
+    url: https://www.onetcenter.org/database.html   # checked 18 Oct 2026: O*NET 31.0, CC BY 4.0 (onetcenter.org/license_db.html); the ESCO to O*NET-SOC crosswalk's own licence is (verify)
     instructions: >
       US Department of Labor. Reference check of hedge careers only; never a training signal
       and never shown to users as a UK number.
@@ -243,6 +259,21 @@ sources:
     licence: CC BY 4.0
     licence_checked_by: ""
     used_by: [M3 hedge careers (reference check)]
+
+  - id: ncs_job_profiles
+    name: National Careers Service job profiles (starter and experienced salary guide per role)
+    how: manual
+    url: https://nationalcareers.service.gov.uk/job-profiles/plumber   # one page per role; this one checked 18 Oct 2026, it shows starter and experienced salaries and its footer states OGL v3.0
+    instructions: >
+      One NCS job-profile page per role (job-profiles/<slug>), linked from the career page. The
+      starter and experienced salary figures sit next to that link in
+      apps/web/src/careerEvidence.ts (salary(slug, role, low, high)); see docs/data-sources.md
+      for how the pay scenario uses them.
+    path: apps/web/src/careerEvidence.ts
+    coverage: England (NCS is England's careers service, per the design spec)  # (verify) the pages do not state the salaries' geography
+    licence: Open Government Licence v3.0
+    licence_checked_by: ""
+    used_by: [starting pay guide on career pages]
 
   - id: routes_curated
     name: Routes into each demo career by nation (degree, graduate apprenticeship, apprenticeship, college)

@@ -1,0 +1,211 @@
+/* Statistics for this role (evidence pack); matches careerDashboard.css */
+.dashboard-stats {
+  padding-top: 26px;
+  margin-top: 30px;
+  border-top: 1px solid #303540;
+}
+.dashboard-stats h2 {
+  font-size: 21px;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.35;
+}
+.dashboard-stats > p,
+.dashboard-stats-section > p {
+  color: #acb6c3;
+  font-size: 13px;
+  line-height: 1.8;
+  margin-top: 10px;
+  max-width: 76ch;
+}
+.dashboard-stats-skeleton {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+.dashboard-stats-skeleton span {
+  display: block;
+  height: 12px;
+  border-radius: 6px;
+  background: #303540;
+  width: 72%;
+}
+.dashboard-stats-skeleton span:nth-child(2) {
+  width: 54%;
+}
+.dashboard-stats-skeleton span:nth-child(3) {
+  width: 63%;
+}
+.dashboard-stats-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px 24px;
+  margin: 16px 0 0;
+}
+.dashboard-stats-metrics dt {
+  color: #acb6c3;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.dashboard-stats-metrics dd {
+  margin: 0;
+}
+.dashboard-stats-metrics dd > span {
+  display: block;
+  color: #dae0e7;
+  font-size: 20px;
+  font-weight: 450;
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
+  margin: 4px 0 2px;
+}
+.dashboard-stats-section {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid #303540;
+}
+.dashboard-stats-section h3 {
+  color: #dae0e7;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: -0.015em;
+}
+.dashboard-stats small,
+.dashboard-stats-source {
+  display: block;
+  color: #96a1b1;
+  font-size: 12px;
+  line-height: 1.7;
+  margin-top: 8px;
+}
+.dashboard-stats-hedges {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+}
+.dashboard-stats-hedges li {
+  border: 1px solid #303540;
+  border-radius: 10px;
+  padding: 12px 14px;
+  min-width: 0;
+}
+.dashboard-stats-hedges strong {
+  display: block;
+  color: #dae0e7;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.dashboard-stats-hedges span {
+  display: block;
+  color: #a9c8fc;
+  font-size: 12px;
+  line-height: 1.6;
+  font-variant-numeric: tabular-nums;
+  margin-top: 4px;
+}
+.dashboard-stats-hedges p {
+  color: #acb6c3;
+  font-size: 12px;
+  line-height: 1.7;
+  margin-top: 8px;
+}
+.dashboard-stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 12px;
+  line-height: 1.6;
+  font-variant-numeric: tabular-nums;
+}
+.dashboard-stats-table th,
+.dashboard-stats-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 7px 12px 7px 0;
+  border-bottom: 1px solid #303540;
+  color: #dae0e7;
+}
+.dashboard-stats-table thead th {
+  color: #acb6c3;
+  font-weight: 400;
+}
+.dashboard-stats-table tbody th {
+  font-weight: 500;
+}
+.dashboard-stats-table td small {
+  margin-top: 2px;
+}
+.dashboard-stats-table tr.is-excluded th,
+.dashboard-stats-table tr.is-excluded td {
+  color: #7e8ba0;
+}
+.dashboard-stats-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+}
+.dashboard-stats-chips li {
+  border: 1px solid #303540;
+  border-radius: 999px;
+  color: #dae0e7;
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 4px 11px;
+}
+.dashboard-stats-caveats {
+  color: #acb6c3;
+  font-size: 12px;
+  line-height: 1.8;
+  margin: 10px 0 0;
+  padding-left: 17px;
+}
+.dashboard-stats-caveats li {
+  margin-bottom: 6px;
+}
+@media (max-width: 520px) {
+  .dashboard-stats-table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+/* Reply provenance in the career guide: how the answer was produced */
+.evidence-guide-provenance {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  margin-top: 12px;
+}
+.evidence-guide-provenance small {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.evidence-guide-based-on {
+  margin-top: 10px;
+}
+.evidence-guide-based-on summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.evidence-guide-based-on ul {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+  margin: 8px 0 0;
+  padding-left: 18px;
+}
+.evidence-guide-based-on li {
+  margin-bottom: 4px;
+}

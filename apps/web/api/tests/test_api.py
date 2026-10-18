@@ -115,6 +115,38 @@ def test_grouped_quantitative_guide_routes_do_not_claim_a_software_entry_route(c
     assert "related data scientist or statistician pathway example" in text
 
 
+def test_grouped_quantitative_guide_skills_offer_a_relevant_exercise_instead_of_software_family_requirements(client):
+    response = client.post("/api/guide", json={"soc": "2433", "message": "Which skills should I try?"})
+    assert response.status_code == 200
+    answer = response.json()
+    text = answer["text"].lower()
+    assert "open dataset" in text and "charts" in text
+    assert "programming in depth" not in text
+    assert "security and systems basics" not in text
+    assert "related data scientist or statistician pathway example" in text
+    assert "check requirements for the exact career" in text
+    assert answer["mode"] == "prepared_demo"
+    assert answer["sources"] == []  # Curated practice exercise, not a new sourced requirement.
+
+
+@pytest.mark.parametrize("soc", ["3544", "2133", "2141", "2142", "2452", "3120", "3113", "2454"])
+def test_bridged_guide_skill_exercises_disclose_the_related_pathway(client, soc):
+    response = client.post("/api/guide", json={"soc": soc, "message": "What should I practise learning?"})
+    assert response.status_code == 200
+    text = response.json()["text"].lower()
+    assert "related " in text and "pathway example" in text
+    assert "check requirements for the exact career" in text
+
+
+def test_unbridged_guide_keeps_its_curated_skill_projects(client):
+    response = client.post("/api/guide", json={"soc": "2134", "message": "Which skills should I try?"})
+    assert response.status_code == 200
+    text = response.json()["text"].lower()
+    assert "programming in depth" in text
+    assert "build three real projects" in text
+    assert "related " not in text
+
+
 @pytest.mark.parametrize(
     ("soc", "unrelated_claim"),
     [

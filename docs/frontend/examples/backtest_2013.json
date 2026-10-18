@@ -1,6 +1,6 @@
 {
   "caveats": [
-    "These are simple rules, not the app's Ambitious, Balanced and Safe picks; there is no simple-rule version of Balanced.",
+    "These are simple rules tested on past data, not the app's own recommendations. The app's Balanced choice has no simple-rule version.",
     "Historical tiers use market data only: no historical AI exposure index exists.",
     "Windows overlap, so they are not independent.",
     "Only occupations with data at both ends are scored (larger occupations); n_base_occupations and n_scored say how many dropped out.",

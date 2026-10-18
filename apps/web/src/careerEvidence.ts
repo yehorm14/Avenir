@@ -2,6 +2,8 @@
  * Outlooks are qualitative planning context, not 2031 employment forecasts.
  * NCS salary bands describe starter to experienced roles, never a two-year outcome.
  */
+import { occupationDemand } from "./occupationDemand";
+
 type Source = { label: string; url: string };
 export type CareerEvidence = {
   demand:
@@ -54,31 +56,6 @@ const constructionSource: Source = {
 const shortageSource: Source = {
   label: "Migration Advisory Committee: Temporary Shortage List, July 2026",
   url: "https://www.gov.uk/government/publications/temporary-shortage-list-stage-2-report/temporary-shortage-list-stage-2-report-accessible",
-};
-
-// Exact classifications from the release's "Occupations by demand" data table.
-const demand: Record<string, CareerEvidence["demand"]> = {
-  "2133": "Critical",
-  "2254": "Critical",
-  "3544": "Critical",
-  "3120": "Critical",
-  "3113": "Critical",
-  "2422": "Elevated",
-  "2121": "Elevated",
-  "2134": "Elevated",
-  "5241": "Elevated",
-  "2123": "Elevated",
-  "2135": "Elevated",
-  "2453": "Elevated",
-  "2454": "Elevated",
-  "2313": "Elevated",
-  "2452": "Elevated",
-  "2433": "Not in high demand",
-  "5315": "Not in high demand",
-  "2421": "Not in high demand",
-  "2142": "Not in high demand",
-  "2141": "Not in high demand",
-  "2451": "Not in high demand",
 };
 
 const software: CareerEvidence["outlook"] = {
@@ -246,19 +223,36 @@ const salary = (
     url: `https://nationalcareers.service.gov.uk/job-profiles/${slug}`,
   },
 });
+export type DemandEvidence = Pick<
+  CareerEvidence,
+  "demand" | "demandYear" | "demandReason" | "demandSource"
+>;
+/** Official 2025 classification for any 4-digit SOC the release covers. */
+export const demandEvidence = (soc: string): DemandEvidence | undefined => {
+  const demand = occupationDemand[soc];
+  if (!demand) return undefined;
+  return {
+    demand,
+    demandYear: "2025",
+    demandReason:
+      demand === "Not in high demand"
+        ? "The official 2025 assessment classifies this occupation as “Not in high demand”. This does not mean there are no opportunities or no future shortages."
+        : "The official 2025 assessment combines labour-market indicators for this occupation. It describes current demand pressure, not guaranteed employment or a live vacancy count. This classification is separate from the historical ASHE employment trend.",
+    demandSource,
+  };
+};
 const entry = (
   soc: string,
   outlook: CareerEvidence["outlook"],
   pay?: CareerEvidence["salary"],
   shortage?: CareerEvidence["shortage"],
 ): CareerEvidence => ({
-  demand: demand[soc] ?? "Not assessed",
+  demand: "Not assessed",
   demandYear: "2025",
   demandReason:
-    demand[soc] === "Not in high demand"
-      ? "The official 2025 assessment classifies this occupation as “Not in high demand”. This does not mean there are no opportunities or no future shortages."
-      : "The official 2025 assessment combines labour-market indicators for this occupation. It describes current demand pressure, not guaranteed employment or a live vacancy count. This classification is separate from the historical ASHE employment trend.",
+    "The official 2025 assessment does not classify this occupation.",
   demandSource,
+  ...demandEvidence(soc),
   outlook,
   ...(pay ? { salary: pay } : {}),
   ...(shortage ? { shortage } : {}),

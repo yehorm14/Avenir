@@ -11,7 +11,7 @@ import re
 import sys
 from functools import lru_cache
 from pathlib import Path
-from typing import Literal
+from typing import Annotated, Literal
 
 from fastapi import FastAPI, HTTPException
 from fastapi import Path as ApiPath
@@ -24,12 +24,24 @@ for module_dir in (REPO_ROOT / "packages/ml", REPO_ROOT / "prototypes/pathfinder
 
 from app.data import get_store  # noqa: E402
 from app.path import build_plan  # noqa: E402
-from pathfinder_ml import FLAG_TEXT, ML, MUST_MENTION  # noqa: E402
+from pathfinder_ml import ML  # noqa: E402
 
 from .catalogue import detail as catalogue_detail  # noqa: E402
 from .catalogue import summaries as catalogue_summaries  # noqa: E402
 from .discovery import DiscoveryRequest, discover  # noqa: E402
 from .evidence_metadata import demand_comparison, evidence_metadata  # noqa: E402
+from .evidence_pack import build_evidence_pack, metric_caveats  # noqa: E402
+from .guide_llm import config_from_env, grounded_reply  # noqa: E402
+from .guide_profile import (  # noqa: E402
+    COMPARE_COUNT,
+    career_path,
+    compact_pack,
+    path_text,
+    preference_sentence,
+    preference_words,
+    role_links,
+    wants_path,
+)
 from .ranking import rank_careers  # noqa: E402
 
 app = FastAPI(title="Avenir app API", version="1.0.0")
@@ -101,11 +113,22 @@ class GuideTurn(BaseModel):
     content: str = Field(max_length=4000)
 
 
+class GuideProfile(BaseModel):
+    """What the quiz gathered (or the student stated in chat); sent only when the frontend has it."""
+
+    model_config = ConfigDict(extra="forbid")
+    tags: list[Annotated[str, Field(max_length=64)]] = Field(default_factory=list, max_length=32)
+    weights: Weights = Field(default_factory=Weights)
+    selected: list[Annotated[str, Field(pattern=r"^\d{4}$")]] = Field(default_factory=list, max_length=5)
+    free_text: str | None = Field(default=None, max_length=500)
+
+
 class GuideRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
     soc: str = Field(pattern=r"^\d{4}$")
     message: str = Field(min_length=1, max_length=2000)
     history: list[GuideTurn] = Field(default_factory=list, max_length=30)
+    profile: GuideProfile | None = None
 
 
 @lru_cache(maxsize=1)
@@ -176,6 +199,16 @@ def _career(soc: str) -> dict:
     return found
 
 
+@lru_cache(maxsize=512)
+def evidence_pack(soc: str) -> dict:
+    """The role's display-ready statistics pack; cached per SOC (it holds no user data)."""
+    return build_evidence_pack(ml(), _career(soc))
+
+
+def guide_mode() -> str:
+    return "llm_grounded" if config_from_env() else "prepared_demo"
+
+
 @app.get("/api/catalogue")
 def catalogue() -> list[dict]:
     return catalogue_summaries(ml(), _careers())
@@ -186,9 +219,20 @@ def career_detail(soc: str = ApiPath(pattern=r"^\d{4}$")) -> dict:
     return _career(soc)
 
 
+@app.get("/api/careers/{soc}/evidence-pack")
+def career_evidence_pack(soc: str = ApiPath(pattern=r"^\d{4}$")) -> dict:
+    return copy.deepcopy(evidence_pack(soc))
+
+
 @app.get("/api/health")
 def health() -> dict:
-    return {"status": "ok", "careers": len(_careers()), "ml_mode": ml().status()["mode"], "guide_mode": "prepared_demo"}
+    return {
+        "status": "ok",
+        "careers": len(_careers()),
+        "ml_mode": ml().status()["mode"],
+        "guide_mode": guide_mode(),
+        "guide_accepts_profile": True,
+    }
 
 
 @app.get("/api/bootstrap")
@@ -211,7 +255,8 @@ def bootstrap() -> dict:
             "fit_evaluation": fit.get("evaluation"),
             "hedges": ml()._load("hedges")["status"],
             "pathways": "curated_demo",
-            "guide": "prepared_demo",
+            "guide": guide_mode(),
+            "guide_accepts_profile": True,
             "note": (
                 "Career evidence and matching use Arsenii's committed dataset and supplied affinities. "
                 "The matching method and evaluation limits are supplied alongside its status. "
@@ -289,34 +334,41 @@ def _source_refs(keys: list[str]) -> list[dict]:
 
 
 def _evidence_note(metric: dict) -> str:
-    """Keep the supplied status and applicable data caveats visible in replies."""
-    notes = []
-    if metric.get("status") == "preliminary":
-        notes.append("The supplied estimate is preliminary.")
-    for flag in metric.get("flags", []):
-        if flag == "provisional":
-            years = re.findall(r"\b20\d{2}\b", metric.get("as_of", ""))
-            label = f"The {years[-1]} figure" if years else "This figure"
-            notes.append(f"{label} is an ONS provisional estimate and may be revised.")
-        elif flag in MUST_MENTION or flag in ("multi_isco", "sources_disagree", "category_level"):
-            if flag in FLAG_TEXT:
-                notes.append(FLAG_TEXT[flag])
-            if flag == "category_level" and metric.get("extra", {}).get("adverts_category"):
-                notes.append("The broad job-advert category is " + metric["extra"]["adverts_category"] + ".")
+    """Keep the supplied status and applicable data caveats visible in replies (same sentences as the evidence pack)."""
+    notes = metric_caveats(metric)
     return " " + " ".join(notes) if notes else ""
 
 
-def _guide_reply(career: dict, message: str, history: list[GuideTurn]) -> tuple[str, list[str]]:
+INJECTION_REPLY = (
+    "I can help explore this career: the work, pay, skills, study routes and automation evidence. "
+    "Try asking what to learn first or how salaries compare after inflation."
+)
+GENERIC_REPLY = (
+    "This prepared guide focuses on your career choice. Ask about the work, pay, skills, "
+    "study routes, demand or automation evidence."
+)
+
+
+def _guide_reply(
+    career: dict, message: str, history: list[GuideTurn], path_data: dict | None = None, words: dict | None = None
+) -> tuple[str, list[str]]:
+    """The prepared reply; a path question also gets the short walk through the structured path."""
+    text, keys = _prepared_reply(career, message, history)
+    if path_data is None or text == INJECTION_REPLY:
+        return text, keys
+    if text == GENERIC_REPLY:
+        return path_text(career["title"], path_data, words), keys
+    first_step = path_data["first_step"][:40] not in text
+    return text + " " + path_text(career["title"], path_data, words, first_step=first_step), keys
+
+
+def _prepared_reply(career: dict, message: str, history: list[GuideTurn]) -> tuple[str, list[str]]:
     lower = message.lower()
     # A prepared guide does not interpret instructions or generate arbitrary content.
     if re.search(
         r"ignore (all |previous |your )|system prompt|write .*(poem|story|code)|politic|recipe|weather|football|malware", lower
     ):
-        return (
-            "I can help explore this career: the work, pay, skills, study routes and automation evidence. "
-            "Try asking what to learn first or how salaries compare after inflation.",
-            [],
-        )
+        return INJECTION_REPLY, []
     if re.fullmatch(r"(and |what about )?(that|it|more|why)[?.! ]*", lower):
         previous = next((turn.content for turn in reversed(history) if turn.role == "user"), "")
         lower += " " + previous.lower()
@@ -392,6 +444,10 @@ def _guide_reply(career: dict, message: str, history: list[GuideTurn]) -> tuple[
         )
     plan = path(career["soc"])
     if any(word in lower for word in ("skill", "learn", "good at", "practice", "project")):
+        # A bridged plan borrows a whole teaching family. Its skill list is not
+        # occupation-specific guidance for the requested career.
+        if plan.get("related_pathway_soc"):
+            return "Try this exploration exercise: " + plan["first_step"] + " " + plan["demo_note"], []
         skills = plan.get("hard_skills", [])[:3]
         text = "Build evidence of skill through small projects: " + "; ".join(
             f"{item['skill']}: {item['how']}" for item in skills
@@ -435,20 +491,98 @@ def _guide_reply(career: dict, message: str, history: list[GuideTurn]) -> tuple[
         return career["summary"] + " " + plan[
             "first_step"
         ] + " Ask me about pay, skills, study routes, demand or automation evidence.", []
-    return (
-        "This prepared guide focuses on your career choice. Ask about the work, pay, skills, "
-        "study routes, demand or automation evidence.",
-        [],
-    )
+    return GENERIC_REPLY, []
+
+
+PREPARED_NOTE = "Prepared demo guide using the supplied data and curated pathways; no live language model is connected."
+
+
+def _career_path(career: dict) -> dict:
+    """The structured path from the API's own data (curated plan when available, ESCO skills from the pack)."""
+    plan = None
+    if career.get("pathway_available"):
+        try:
+            plan = path(career["soc"])
+        except HTTPException:
+            plan = None
+    return career_path(career, plan, list(evidence_pack(career["soc"]).get("skills", [])))
+
+
+def _compared_packs(profile: GuideProfile | None, soc: str) -> list[dict]:
+    """Compact packs (metrics and hedges) for up to COMPARE_COUNT other selected roles."""
+    packs: list[dict] = []
+    for other in profile.selected if profile else []:
+        if other == soc or len(packs) >= COMPARE_COUNT or any(p["soc"] == other for p in packs):
+            continue
+        try:
+            packs.append(compact_pack(evidence_pack(other)))
+        except HTTPException:
+            continue
+    return packs
 
 
 @app.post("/api/guide")
 def guide(request: GuideRequest) -> dict:
-    text, keys = _guide_reply(_career(request.soc), request.message, request.history)
+    """Model-written from the role's evidence pack when a model is configured and the reply passes the hard
+    checks; otherwise the prepared template. Opinions are tied to the quiz profile when one is sent; links and
+    the career path are always built by the API, never by the model. Nothing from the conversation is cached."""
+    career = _career(request.soc)
+    pack = evidence_pack(request.soc)
+    compared = _compared_packs(request.profile, request.soc)
+    words = None
+    if request.profile is not None:
+        titles = {item["soc"]: item["title"] for item in _careers()}
+        labels = {tag["id"]: tag.get("label", tag["id"]) for tag in ml().tags()}
+        words = preference_words(request.profile.model_dump(), titles, labels)
+    links = role_links(pack, compared)
+    path_data = _career_path(career) if wants_path(request.message) else None
+    extras = {
+        "links": links,
+        "path": path_data,
+        "profile_used": words is not None,
+        "compared": [item["soc"] for item in compared],
+    }
+    config = config_from_env()
+    if config is not None:
+        text, checks = grounded_reply(
+            config,
+            pack,
+            request.message,
+            request.history,
+            preferences=words,
+            compared=compared,
+            link_labels=[link["label"] for link in links],
+            path=path_data,
+        )
+        if text is not None:
+            return {
+                "text": text,
+                "mode": "llm_grounded",
+                "ai_written": True,
+                "model": config.model,
+                "sources": _source_refs([source["id"] for source in pack["sources"]]),
+                "note": (
+                    "AI-written from this role's evidence pack; every number was checked against the pack. "
+                    "Check the source."
+                ),
+                "based_on": list(pack["based_on"]),
+                "checks": checks,
+                **extras,
+            }
+        note = PREPARED_NOTE.replace("no live language model is connected", "the configured model's reply was not used")
+    else:
+        checks, note = "fallback: no model configured", PREPARED_NOTE
+    text, keys = _guide_reply(career, request.message, request.history, path_data, words)
+    if words is not None and path_data is None:
+        text += " " + preference_sentence(words)
     return {
         "text": text,
         "mode": "prepared_demo",
         "ai_written": False,
+        "model": None,
         "sources": _source_refs(keys),
-        "note": "Prepared demo guide using the supplied data and curated pathways; no live language model is connected.",
+        "note": note,
+        "based_on": list(pack["based_on"]),
+        "checks": checks,
+        **extras,
     }

@@ -3,13 +3,8 @@ import type { Career, Page, Preferences } from "./types";
 import { allOpportunities, getCareerContent } from "./content";
 import { money, percent } from "./Charts";
 import { Icon } from "./icons";
-import {
-  demandTrendLabel,
-  isRelativeDemand,
-  metricCaveats,
-  planPrioritySummary,
-  resolvePlanRoute,
-} from "./planDocument";
+import { CareerGuide } from "./Guides";
+import { demandTrendLabel, planPrioritySummary } from "./planDocument";
 
 export default function MyPlan({
   careers,
@@ -35,7 +30,6 @@ export default function MyPlan({
   const done = steps.filter((_, i) =>
     prefs.checked.includes(`${primary.soc}-${i}`),
   ).length;
-  const route = resolvePlanRoute(content, prefs.routes[primary.soc]);
   const saved = allOpportunities.filter((o) => prefs.saved.includes(o.id));
   const editChoices = () => {
     if (prefs.completed) go("matches");
@@ -53,9 +47,6 @@ export default function MyPlan({
       <header className="page-heading">
         <div>
           <h1>My plan</h1>
-          <p className="page-description">
-            Your current direction, the alternatives, and what to try next.
-          </p>
           {!prefs.completed && (
             <p className="fine-print">{planPrioritySummary(prefs)}</p>
           )}
@@ -64,24 +55,19 @@ export default function MyPlan({
           <Icon name="download" size={17} /> Download plan
         </button>
       </header>
-      <div className="decision-grid">
+      <div className="decision-grid decision-grid--simple">
         <section className="decision-main">
           <div className="decision-status">
             <span className="status-dot" /> Explore first
+            <button className="text-button" onClick={editChoices}>
+              Change career
+            </button>
           </div>
           <h2>{primary.title}</h2>
-          <p>{content.intro}</p>
           <div className="decision-evidence">
             <div>
               <span>Median annual pay</span>
               <strong>{money(metric(primary, "pay_median"))}</strong>
-              <small>
-                ONS ASHE {primary.metrics.pay_median?.as_of}
-                <br />
-                Full-time employees; not starting pay
-                <br />
-                {metricCaveats(primary.metrics.pay_median)}
-              </small>
             </div>
             <div>
               <span>{demandTrendLabel(primary.metrics.demand_trend)}</span>
@@ -89,208 +75,62 @@ export default function MyPlan({
                 {percent(metric(primary, "demand_trend"))}
                 <small> / year</small>
               </strong>
-              <small>
-                {primary.metrics.demand_trend?.as_of}
-                <br />
-                {isRelativeDemand(primary.metrics.demand_trend)
-                  ? "Relative to the typical occupation; not absolute growth"
-                  : "Historical evidence, not a forecast"}
-                <br />
-                {metricCaveats(primary.metrics.demand_trend)}
-              </small>
             </div>
           </div>
-          <label className="decision-note">
-            <span>Why is this worth exploring for you?</span>
-            <textarea
-              maxLength={2000}
-              rows={3}
-              value={prefs.notes[primary.soc] ?? ""}
-              onChange={(e) =>
-                update({
-                  notes: { ...prefs.notes, [primary.soc]: e.target.value },
-                })
-              }
-              placeholder="What attracts you? What would you like to find out before deciding?"
-            />
-          </label>
-          <div className="decision-route">
-            <h3>Route to explore</h3>
-            <div className="segmented">
-              <button
-                aria-pressed={route === "university"}
-                onClick={() =>
-                  update({
-                    routes: { ...prefs.routes, [primary.soc]: "university" },
-                  })
-                }
-              >
-                University
-              </button>
-              <button
-                aria-pressed={route === "apprenticeship"}
-                onClick={() =>
-                  update({
-                    routes: {
-                      ...prefs.routes,
-                      [primary.soc]: "apprenticeship",
-                    },
-                  })
-                }
-              >
-                Earn & learn
-              </button>
+          <div className="decision-chat">
+            <div className="decision-chat-heading">
+              <h3>Why explore this career?</h3>
+              <span>Prepared guide</span>
             </div>
-            <p>
-              {route === "apprenticeship"
-                ? "Compare paid training routes and their entry requirements. Availability varies by career and nation."
-                : content.broadDegree}
-            </p>
-          </div>
-          <div className="decision-buttons">
-            <button className="button primary" onClick={() => go("path")}>
-              Explore pathway <Icon name="arrow" size={17} />
-            </button>
-            <button className="text-button" onClick={editChoices}>
-              {prefs.completed ? "Revisit choices" : "Change career"}
-            </button>
+            <CareerGuide key={primary.soc} career={primary} embedded />
           </div>
         </section>
-        <section className="decision-actions">
-          <div className="section-header">
-            <h2>This month</h2>
+        <details className="decision-actions decision-actions--compact">
+          <summary>
+            <strong>This month</strong>
             <span>
               {done} of {steps.length} done
             </span>
-          </div>
-          <p>Try the work before committing to the title.</p>
-          <div
-            className="decision-progress"
-            role="progressbar"
-            aria-label="Next actions completed"
-            aria-valuemin={0}
-            aria-valuemax={steps.length}
-            aria-valuenow={done}
-          >
-            <span style={{ width: `${(done / steps.length) * 100}%` }} />
-          </div>
-          {steps.map((s, i) => {
-            const id = `${primary.soc}-${i}`,
-              checked = prefs.checked.includes(id);
-            return (
-              <label
-                className={`task-check ${checked ? "is-done" : ""}`}
-                key={id}
-              >
-                <input
-                  type="checkbox"
-                  checked={checked}
-                  onChange={() =>
-                    update({
-                      checked: checked
-                        ? prefs.checked.filter((k) => k !== id)
-                        : [...prefs.checked, id],
-                    })
-                  }
-                />
-                <span>{s}</span>
-              </label>
-            );
-          })}
-          <button className="text-button" onClick={() => go("opportunities")}>
-            Find a place to start <Icon name="chevron" size={15} />
-          </button>
-          <label className="decision-nation">
-            <span>Plan routes for</span>
-            <select
-              value={prefs.nation}
-              onChange={(e) => update({ nation: e.target.value })}
-            >
-              <option>Scotland</option>
-              <option>England</option>
-              <option>Wales</option>
-              <option>Northern Ireland</option>
-            </select>
-          </label>
-        </section>
+            <Icon name="chevron" size={16} />
+          </summary>
+          <ul className="decision-action-list">
+            {steps.map((s, i) => {
+              const id = `${primary.soc}-${i}`,
+                checked = prefs.checked.includes(id);
+              return (
+                <li key={id}>
+                  <label className={`task-check ${checked ? "is-done" : ""}`}>
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={() =>
+                        update({
+                          checked: checked
+                            ? prefs.checked.filter((k) => k !== id)
+                            : [...prefs.checked, id],
+                        })
+                      }
+                    />
+                    <span>{s}</span>
+                  </label>
+                </li>
+              );
+            })}
+          </ul>
+        </details>
       </div>
-      <section className="decision-alternatives">
-        <div className="section-header">
-          <h2>Keep your alternatives in view</h2>
-          <button className="text-button" onClick={editChoices}>
-            {prefs.completed ? "Edit ranking" : "Change career"}
-          </button>
-        </div>
-        <div className="decision-comparison table-scroll">
-          <table>
-            <caption className="sr-only">
-              Your ranked career choices and evidence
-            </caption>
-            <thead>
-              <tr>
-                <th>Choice</th>
-                <th>Median annual pay</th>
-                <th>{demandTrendLabel(primary.metrics.demand_trend)}</th>
-                <th>Task exposure</th>
-              </tr>
-            </thead>
-            <tbody>
-              {careers.map((c, i) => (
-                <tr key={c.soc}>
-                  <th scope="row">
-                    <span className="tiny">
-                      {i === 0 ? "First choice" : `Alternative ${i}`}
-                    </span>
-                    <strong>{c.title}</strong>
-                  </th>
-                  <td>
-                    {money(metric(c, "pay_median"))}
-                    <small>
-                      {c.metrics.pay_median?.as_of}
-                      <br />
-                      {metricCaveats(c.metrics.pay_median)}
-                    </small>
-                  </td>
-                  <td>
-                    {percent(metric(c, "demand_trend"))}
-                    <small>
-                      {c.metrics.demand_trend?.as_of}; per year
-                      {isRelativeDemand(c.metrics.demand_trend) &&
-                        " vs typical occupation"}
-                      <br />
-                      {metricCaveats(c.metrics.demand_trend)}
-                    </small>
-                  </td>
-                  <td>
-                    {metric(c, "exposure") == null
-                      ? "Not available"
-                      : `${Math.round(metric(c, "exposure")! * 100)} / 100`}
-                    <small>
-                      Research estimate · {c.metrics.exposure?.as_of}
-                      <br />
-                      {metricCaveats(c.metrics.exposure)}
-                    </small>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p className="fine-print">
-          ONS ASHE earnings and employment; ILO task exposure. Pay excludes
-          self-employed workers. Exposure is not a probability of job loss. Open
-          the evidence to inspect coverage, uncertainty and historical results.
-        </p>
-        <button className="text-button" onClick={() => go("evidence")}>
-          Inspect the evidence <Icon name="chevron" size={15} />
-        </button>
-      </section>
-      <section className="decision-saved">
-        <div className="section-header">
-          <h2>Saved opportunities</h2>
-          <span>{saved.length} saved</span>
-        </div>
-        {saved.length ? (
+      <button
+        className="text-button decision-pathway"
+        onClick={() => go("path")}
+      >
+        View pathway <Icon name="chevron" size={15} />
+      </button>
+      {saved.length > 0 && (
+        <section className="decision-saved">
+          <div className="section-header">
+            <h2>Saved opportunities</h2>
+            <span>{saved.length} saved</span>
+          </div>
           <ul>
             {saved.map((o) => (
               <li key={o.id}>
@@ -314,17 +154,8 @@ export default function MyPlan({
               </li>
             ))}
           </ul>
-        ) : (
-          <p>
-            Save a workshop, community or work experience organiser to keep it
-            with your plan.
-          </p>
-        )}
-        <p className="fine-print">
-          Check dates, eligibility and availability with the organiser. These
-          are discovery links, not bookings or confirmed openings.
-        </p>
-      </section>
+        </section>
+      )}
       <details className="decision-storage">
         <summary>About your saved plan</summary>
         <p>

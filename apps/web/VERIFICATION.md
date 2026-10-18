@@ -1,5 +1,29 @@
 # Final CS/Finance delivery verification — 18 October 2026
 
+## Single-page My plan
+
+Removed the secondary tab row from overview and both repeated comparison tables, including the appended canonical DecisionReview. Kept the career, actual key figures, embedded chat, monthly checklist, download, saved opportunities and safe-reset details. Change career retains the previous edit routing; View pathway opens the detailed route directly. Other workspace routes and the primary five-item menu are unchanged. No storage, export, backend, contract or ML edits.
+
+Fresh make check exited 0: **672 passed, 3 optional skipped** (477 core, 130 API/integration/scripts, 39 prototype, 26 web), with lint, formatting, production build and secret scan passed. Log: `/private/tmp/aventier-plan-single-check.log`. Independent source review found no actionable issue and confirmed the existing checklist, saved-item, reset, chat and preference logic is unchanged.
+
+Chrome verified zero overview tabs/tables/comparison sections, View pathway→the correct career route→My plan, direct-plan Change career→Finance→My plan, a real chat reply and the three-item checklist with its existing 1/3 completion. At 390px there is no page overflow or console warning/error. Desktop inspection used 1280px. A background read-only preview of the user's completed plan also has no tabs/tables and retains its actual 0/3 progress. [Simplified plan screenshot](artifacts/my-plan-simple.png). Publication is final-delivery only; main is untouched. Earlier records below describe the previous layouts.
+
+## Final-delivery navigation
+
+On `codex/final-delivery`, fast-forwarded the latest plan cleanup checkpoint 1ca1014 and changed the primary menu to exactly Home, Quiz, Jobs, My plan and Chatbot. The standalone conversation heading is Chatbot. No CSS, saved-state, API or internal route changes; Home's CS/Finance dashboards and secondary plan tools remain available.
+
+Fresh `make check` exited 0: **672 passed, 3 optional skipped** (477 core, 130 API/integration/scripts, 39 prototype, 26 web); Ruff, formatting, TypeScript/Vite build and tracked-file secret scan passed. Log: `/private/tmp/aventier-final-navigation-check.log`. Independent read-only review found no actionable issue. Chrome opened every menu destination at 390px with the correct active state and no page overflow or console warnings/errors. Chatbot returned a pay answer with two source links, and `#/guides/2134` opened Software developer with the correct Chatbot heading/active tab at 1280px. The user's actual tab was refreshed to the new menu. This follow-up is published only to final-delivery; main is untouched. [Menu screenshot](artifacts/final-navigation.png).
+
+## Annotated My plan simplification
+
+Follow-up branch: `codex/plan-simplify`, based on the published final delivery. The changes were pushed to this separate branch and `codex/final-delivery`; main was not updated. Its protected-branch rule rejected an earlier atomic push, and the user then explicitly requested branch-only publication. All 21 annotations were checked independently against the source. Removed the marked descriptions, primary-card source footnotes, note/route editor, evidence shortcut, empty saved-opportunity copy and comparison explanations/hedge/details. Replaced the monthly panel with a native collapsible checklist and added a compact career chat. Numeric comparison rendering, units, confidence and differences remain unchanged; evidence views and stored plan fields remain available.
+
+Chrome verified the embedded chat with a career-specific pay reply and ONS links, offline failure and retry without a duplicate question, navigation away during a throttled request, a fresh empty chat on return, and 390px layout without page overflow. The standalone Career guide retains its introduction, suggested questions, composer hints and read-aloud control. A background read-only preview of the user's existing completed plan retained 3/3 tasks after refresh and displayed the simplified comparison. No fixture overwrite or automated quiz completion was used for these checks. [Plan screenshot](artifacts/plan-simplified.png).
+
+Browser testing also reproduced a pre-existing content error: the grouped quantitative career inherited software/security skills from its related prototype pathway. Ten regression tests now cover the relevant exercise and honest bridge label for all nine bridges, plus unchanged direct-career guidance. The actual restarted service returns the data/chart exercise for 2433; fresh mobile inspection reports no console warnings/errors.
+
+Integrated teammate main commit 255487d, preserving its prototype containment and like-for-like exposure-percentile confidence fixes, with the exact owner ML v1.2 files unchanged. Final `make check` exited 0: **672 passed, 3 optional skipped** (477 core, 130 API/integration/scripts, 39 prototype, 26 web), plus Ruff, Prettier, TypeScript/Vite and tracked-file secret scan. Existing FastAPI/Starlette deprecation warnings remain. Log: `/private/tmp/aventier-plan-final-check.log`. A second upstream release commit 076cdbe added shared attribution on Jobs and the CS/Finance dashboards and scrubbed prototype wording. Those changes are preserved; its addition inside the explicitly removed comparison details stays removed. The merged release was checked again with the same totals in `/private/tmp/aventier-plan-upstream-final-check.log`. The updated assembled application runs at 4175. Earlier test totals and Lighthouse scores below describe their recorded checkpoints.
+
 Release branch: `codex/final-delivery`. The quiz/Jobs cleanup is based on its latest `5ec744f` checkpoint, developed on `codex/final-quiz-jobs`. The assembled ML v1.2 app now runs at http://127.0.0.1:4175; the earlier release remains preserved in Git. The original dirty checkout is untouched. The user subsequently requested publication to main; the verified delivery was fast-forwarded from6695e58 to9e5dffb. No public hosting deployment occurred.
 
 ## Main publication
@@ -58,6 +82,43 @@ The final ZIP is rebuilt from the delivery commit. The final historical-stat fon
 ## Scope and limits
 
 The primary demo is the CS/Finance evidence → explicit priority comparison → chosen route and next action. The broader20-role interest matcher and412-profile directory are secondary. Affinities and mappings remain preliminary; historical checks do not validate personalised outcomes. Source redistribution rights and human catalogue verification still need review before a public release. Docker is unavailable here, so container execution remains unverified. There are no accounts, cross-device sync or live vacancies. The source README and launch handoff map the six core requirements and all17 checklist items without inventing judging scores or promising a win.
+
+## Windows verification (Arsenii, 18 Oct)
+
+Environment: Windows 11, Node 24, npm 11, Python 3.13, PowerShell, a Git worktree on `arsenii/final-local` at `c8810a6` (the final delivery branch plus the npm lock fix `392911b` and the symlink-test skip `c8810a6`), no `.env` and no API keys. Docker is not available on this machine, so the container was not run. `make` is not on the PATH here, so the `make check` gate was run command by command.
+
+Setup and run, from the repository root:
+
+```powershell
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -e ".[dev]"
+npm --prefix apps/web ci
+npm --prefix apps/web run build
+node scripts/run-app.mjs --production
+```
+
+`npm ci` failed on the original branch with npm 11: `apps/web/package-lock.json` lacked five optional `@rollup/rollup-*` platform entries (darwin-x64, linux-ppc64-musl, linux-x64-musl, openbsd-x64, openharmony-arm64). `npm install` regenerated the lock, committed as `392911b`; `npm ci` and the production build (under one second) then passed. npm 11 warns that it did not run the `esbuild` postinstall script; the build, the web tests and the app work without it. The production launcher served http://127.0.0.1:4175; Home, the Computer Science dashboard and Compare careers were exercised in a browser with no errors. Node prints a `DEP0190` deprecation warning because the launcher spawns with `shell: true` on Windows; the app runs normally.
+
+Checks at `c8810a6`:
+
+| Check                                            | Command                                                                                                                  | Result                                 |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | -------------------------------------- |
+| Ruff                                             | `.venv\Scripts\python.exe -m ruff check .`                                                                               | All checks passed                      |
+| Core ML/contracts/decision/ETL/API               | `.venv\Scripts\python.exe -m pytest -p no:cacheprovider -W ignore`                                                       | 467 passed, 3 skipped                  |
+| App API, integration and scripts                 | `.venv\Scripts\python.exe -m pytest -p no:cacheprovider -W ignore apps/web/api/tests scripts/integration scripts/tests` | 117 passed, 3 skipped                  |
+| Preserved prototype backend                      | `pytest prototypes/pathfinder-game/backend/tests` with `PYTHONPATH=prototypes/pathfinder-game/backend`                   | 32 passed                              |
+| Web state, notices, routes, export and chart gaps | `npm --prefix apps/web test`                                                                                             | 26 passed                              |
+| Prettier                                         | `npm --prefix apps/web run format:check`                                                                                 | Fails on line endings only (see below) |
+| TypeScript/Vite production build                 | `npm --prefix apps/web run build`                                                                                        | Passed                                 |
+| Tracked-file secret scan                         | `.venv\Scripts\python.exe scripts/check_secrets.py`                                                                      | Passed                                 |
+
+**642 tests passed, 6 skipped, 0 failed.** The three core skips are optional on every platform: `test_backtest_tiers.py` needs `scipy`, which is not a declared dependency and is not installed here; `test_service.py` needs `PATHFINDER_SLOW_TESTS=1` to load the real model; `test_freeze.py` needs `AVENIR_FREEZE=1`.
+
+The three app-suite skips are the symlink tests: `test_symlinks_outside_repository_are_not_read` and `test_replaced_parent_symlink_cannot_escape_repository` in `scripts/tests/test_check_secrets.py`, and `test_bundle_symlink_cannot_export_an_external_file` in `scripts/tests/test_package_submission.py`. On the original branch they failed with `WinError 1314` (a required privilege is not held by the client) because this Windows account cannot create symlinks; that needs Developer Mode or an administrator shell. Commit `c8810a6` makes them skip with that reason on such accounts instead of failing. They still run on macOS, Linux and Windows accounts with symlink rights; the symlink protection itself is unchanged and was not exercised here.
+
+`format:check` reports 33 files on this checkout because Git's `core.autocrlf=true` converts the committed LF files to CRLF on checkout and Prettier's default `endOfLine` is `lf`; `git status` is clean and the committed files are LF. `npx prettier --check --end-of-line auto src index.html vite.config.ts` from `apps/web` passes, so there are no formatting differences apart from line endings. Check out with LF line endings (`core.autocrlf` set to `false` or `input`) to run the gate as written.
+
+Not run on Windows: `scripts/setup.sh`, `scripts/check-setup.sh`, `pull_the_plug.py`, the packager and Lighthouse. The browser evidence above is a manual check in one browser, not an audited run.
 
 ---
 

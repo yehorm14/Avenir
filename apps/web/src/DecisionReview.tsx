@@ -1,5 +1,4 @@
 import { useEffect, useId, useState } from "react";
-import { Attributions } from "./Attributions";
 import "./decisionReview.css";
 
 type Confidence = "high" | "medium" | "low";
@@ -14,43 +13,22 @@ type Components = Record<ComponentKey, ComponentScore>;
 type EvidenceCareer = {
   soc2020: string;
   title: string;
-  metrics: Record<string, { value: number | null; status: string }>;
 };
 type Pick = {
   tier: "ambitious" | "safe" | "balanced";
   career: EvidenceCareer;
   components: Components;
   vs_first_idea: Record<string, number | null>;
-  reasons: string[];
 };
 type Recommendation = {
   first_idea: EvidenceCareer | null;
-  first_idea_candidates?: { soc2020: string; title: string }[];
   first_idea_components: Components | null;
   picks: Pick[];
-  hedge: {
-    for_soc: string;
-    career: EvidenceCareer;
-    shared_skills: string[];
-    why: string | null;
-    evidence?: string | null;
-    risk_delta: number | null;
-    status: string;
-  } | null;
-  notices: string[];
-  explanation?: { text: string; ai_written: boolean };
-};
-type SourceStatus = {
-  name: string;
-  status: "live" | "snapshot" | "mock" | "missing";
-  quality?: string | null;
-  as_of?: string | null;
 };
 type Envelope = {
   ok: boolean;
   data: Recommendation | null;
   error?: { message?: string } | null;
-  meta?: { sources?: SourceStatus[]; as_of?: string | null };
 };
 type Result = {
   key: string;
@@ -89,25 +67,6 @@ const measures: { key: ComponentKey; label: string; direction: string }[] = [
     direction: "Lower ranks lower exposure",
   },
 ];
-const sourceNames: Record<string, string> = {
-  ml_occupations: "Occupation evidence",
-  ml_history: "Pay and employment history",
-  ml_hedges: "Shared skills evidence",
-  ml_fit: "Interest affinities",
-  ml_backtest: "Historical checks",
-  ml_crises: "Crisis measures",
-  ml_sources: "Source registry",
-  ml_eval: "Evaluation evidence",
-  catalogue: "Career catalogue",
-  routes: "Training routes",
-  adzuna: "Adzuna job adverts",
-};
-const sourceStates = {
-  live: "Live",
-  snapshot: "Snapshot",
-  mock: "Sample data",
-  missing: "Unavailable",
-};
 const number = (value: number) =>
   value.toLocaleString("en-GB", { maximumFractionDigits: 1 });
 
@@ -213,39 +172,11 @@ export default function DecisionReview({
   // A changed profile hides the previous response immediately, before the effect runs.
   const current = result?.key === requestKey ? result : null;
   const data = current?.envelope?.data;
-  const sources = current?.envelope?.meta?.sources ?? [];
-  const evidenceCareers = data
-    ? [
-        data.first_idea,
-        ...data.picks.map((pick) => pick.career),
-        data.hedge?.career,
-      ].filter((career): career is EvidenceCareer => !!career)
-    : [];
-  const metrics = evidenceCareers.flatMap((career) =>
-    Object.values(career.metrics ?? {}),
-  );
-  const hasSample =
-    sources.some((source) => source.status === "mock") ||
-    metrics.some((metric) => metric.status === "mock");
-  const hasMissing =
-    sources.some((source) => source.status === "missing") ||
-    metrics.some(
-      (metric) => metric.value == null || metric.status === "pending",
-    );
-  const hasPreliminary =
-    sources.some((source) => source.quality === "preliminary") ||
-    metrics.some((metric) => metric.status === "preliminary");
 
   return (
     <section className="decision-review" aria-labelledby={headingId}>
       <header className="decision-review__heading">
         <h2 id={headingId}>Compare the trade-offs</h2>
-        <p>
-          Fixed rules compare earnings, risk and interest fit using the supplied
-          evidence. These indices help you compare options; they are not
-          forecasts or probabilities. Lower risk does not guarantee a secure
-          career.
-        </p>
       </header>
       {!reference ? (
         <p className="decision-review__state" role="status">
@@ -268,30 +199,6 @@ export default function DecisionReview({
         </p>
       ) : (
         <>
-          <div className="decision-review__context">
-            <p>
-              {data.first_idea
-                ? `First idea: ${data.first_idea.title}. Differences below are index points against this reference.`
-                : data.first_idea_candidates?.length
-                  ? `“${reference}” matches several careers. A first-idea comparison is unavailable until the role is specific.`
-                  : `No exact reference match for “${reference}”. First-idea comparisons are unavailable.`}
-            </p>
-            {!tags.length && (
-              <p>Select interests to make the fit comparison more personal.</p>
-            )}
-            {(hasSample || hasMissing || hasPreliminary) && (
-              <p className="decision-review__quality">
-                {[
-                  hasSample && "Sample evidence included",
-                  hasMissing && "Some inputs unavailable",
-                  hasPreliminary && "Preliminary evidence",
-                ]
-                  .filter(Boolean)
-                  .join(" · ")}
-                . See sources and method below.
-              </p>
-            )}
-          </div>
           {data.picks.length > 0 ? (
             <div
               className="decision-review__table-wrap"
@@ -300,10 +207,6 @@ export default function DecisionReview({
               aria-label="Career comparison table; scroll horizontally if needed"
             >
               <table className="decision-review__table">
-                <caption>
-                  Indices from 0 to 100 within the model’s career collection.
-                  Differences are against your first idea.
-                </caption>
                 <thead>
                   <tr>
                     <th scope="col">Evidence index</th>
@@ -384,135 +287,6 @@ export default function DecisionReview({
               not met.
             </p>
           )}
-          <div className="decision-review__hedge">
-            <h3>Related alternative</h3>
-            {data.hedge ? (
-              <>
-                <button
-                  type="button"
-                  className="decision-review__career-link"
-                  onClick={() => onInspect(data.hedge!.career.soc2020)}
-                >
-                  {data.hedge.career.title}
-                </button>
-                <span className="decision-review__hedge-status">
-                  {data.hedge.status === "mock"
-                    ? "Sample data"
-                    : data.hedge.status}
-                  {data.hedge.evidence === "estimate"
-                    ? " · estimated skills link"
-                    : ""}
-                </span>
-                {data.hedge.risk_delta != null && (
-                  <p>
-                    Risk index difference: {number(data.hedge.risk_delta)}{" "}
-                    points against{" "}
-                    {data.picks.find(
-                      (pick) => pick.career.soc2020 === data.hedge!.for_soc,
-                    )?.career.title ?? "the lead option"}
-                    . A lower index is not a guarantee of employment.
-                  </p>
-                )}
-                <p>
-                  {data.hedge.shared_skills.length
-                    ? `Shared skills: ${data.hedge.shared_skills.join(", ")}.`
-                    : "No shared skills are listed in the supplied evidence."}
-                </p>
-                {data.hedge.why && <p>{data.hedge.why}</p>}
-              </>
-            ) : (
-              <p>
-                No related alternative with a lower risk index was found in the
-                available evidence.
-              </p>
-            )}
-          </div>
-          <div className="decision-review__details">
-            {data.picks.length > 0 && (
-              <details>
-                <summary>Why these options?</summary>
-                <div className="decision-review__detail-body">
-                  {data.picks.map((pick) => (
-                    <div key={pick.career.soc2020}>
-                      <h3>{pick.career.title}</h3>
-                      {pick.reasons.length ? (
-                        <ul>
-                          {pick.reasons.map((reason, index) => (
-                            <li key={`${index}:${reason}`}>{reason}</li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p>No additional reasons were supplied.</p>
-                      )}
-                    </div>
-                  ))}
-                  {data.explanation?.text && (
-                    <div>
-                      <h3>Explanation</h3>
-                      <p>{data.explanation.text}</p>
-                      {data.explanation.ai_written && (
-                        <p>AI-written, check the source.</p>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </details>
-            )}
-            <details>
-              <summary>Sources and method</summary>
-              <div className="decision-review__detail-body">
-                <p>
-                  The engine first chooses the highest earnings index among
-                  eligible careers, then the lowest risk index from the
-                  remaining careers, then a balanced comparison. Its fit
-                  threshold can leave fewer than three options. These are
-                  distinct comparisons, not a ranking of guaranteed outcomes.
-                </p>
-                <p>
-                  Earnings combines current pay and historical real pay. Risk
-                  combines historical demand, crisis resilience, shortages and
-                  researched AI task exposure. Missing inputs are excluded, and
-                  confidence accompanies each index. Automation concern is held
-                  at the midpoint; no qualifications were supplied for this
-                  comparison. Check exact entry requirements separately.
-                </p>
-                {sources.length ? (
-                  <ul className="decision-review__sources">
-                    {sources.map((source, index) => (
-                      <li key={`${index}:${source.name}`}>
-                        <span>
-                          {sourceNames[source.name] ??
-                            source.name.replace(/_/g, " ")}
-                        </span>
-                        <span>
-                          {sourceStates[source.status]}
-                          {source.quality ? ` · ${source.quality}` : ""}
-                          {source.as_of ? ` · ${source.as_of}` : ""}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p>Source statuses were not supplied for this response.</p>
-                )}
-                <Attributions
-                  adzuna={sources.some(
-                    (s) => s.name === "adzuna" && s.status !== "missing",
-                  )}
-                />
-                {data.notices.length > 0 && (
-                  <div>
-                    <h3>Evidence caveats</h3>
-                    <ul>
-                      {data.notices.map((notice, index) => (
-                        <li key={`${index}:${notice}`}>{notice}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            </details>
-          </div>
         </>
       )}
     </section>

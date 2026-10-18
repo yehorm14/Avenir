@@ -12,7 +12,7 @@
 | ONS SOC 2010 → ISCO-08 | Script | `python scripts/fetch/ons_files.py soc2010_isco08` | The only official ISCO file (see below) |
 | APS employment by occupation | Script (Nomis API, no key) | `python scripts/fetch/nomis_aps.py NM_218_1 --describe` then fetch | Two datasets, see below |
 | ILO GenAI exposure 2025 | Browser (PDF), then hand-extract | ILO WP140 publication page | No CSV found; Annex Table A1 |
-| Occupations in Demand 2025 | Browser, "Download all data (ZIP)" | Explore Education Statistics | Covers the UK, not just England (see below) |
+| Occupations in Demand 2025 | Script: `scripts/fetch/oid_demand.py` | Explore Education Statistics | Covers the UK, not just England (see below) |
 | Adzuna | Script on a laptop, keys in `.env` | `make adzuna` | Not needed on the cluster |
 
 Then `make data-check` on both machines and compare `data/manifest.lock.json`.
@@ -59,10 +59,23 @@ Then `make data-check` on both machines and compare `data/manifest.lock.json`.
 - [ILO Working Paper 140](https://www.ilo.org/publications/generative-ai-and-jobs-refined-global-index-occupational-exposure) and [WP140 web page](https://webapps.ilo.org/static/english/intserv/working-papers/wp140/index.html)
 - [Occupations in Demand 2025 data guidance](https://explore-education-statistics.service.gov.uk/find-statistics/occupations-in-demand/2025/data-guidance)
 
+## ILO Working Paper 140: attribution and disclaimer
+
+Checked 18 Oct 2026 against the copyright page of the [WP140 PDF](https://www.ilo.org/sites/default/files/2025-05/WP140_web.pdf); the publication page itself states no licence.
+
+- **Licence:** Creative Commons Attribution 4.0 International ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)), © International Labour Organization 2025.
+- **Citation:** Gmyrek, P., Berg, J., Kamiński, K., Konopczyński, F., Ładna, A., Nafradi, B., Rosłaniec, K., Troszyński, M. *Generative AI and Jobs: A Refined Global Index of Occupational Exposure.* ILO Working Paper 140. Geneva: International Labour Office, 2025. © ILO. https://doi.org/10.54394/HETP0387
+- **What we changed:** Avenir's exposure score is an adaptation. ILO occupation scores are averaged over the ISCO-08 codes that each UK occupation maps to, then mapped to SOC 2020 (`packages/ml/README.md`, M2).
+- **Disclaimer the licence requires with any adaptation:**
+
+  > This is an adaptation of a copyrighted work of the International Labour Organization (ILO). This adaptation has not been prepared, reviewed or endorsed by the ILO and should not be considered an official ILO adaptation. The ILO disclaims all responsibility for its content and accuracy. Responsibility rests solely with the author(s) of the adaptation.
+
+- The same page says the ILO emblem, name and logo may not be used in connection with adaptations: credit the source as above, but do not put the ILO logo or emblem next to Avenir's adapted score.
+
 
 ## Jobs evidence added 18 October 2026
 
-- Skills England, Occupations in Demand 2025: latest release, updated 8 January 2026; next release December 2026. Exact categories are in apps/web/src/careerEvidence.ts. The index measures demand pressure, not proof of a worker shortage. https://explore-education-statistics.service.gov.uk/find-statistics/occupations-in-demand/2025
+- Skills England, Occupations in Demand 2025: latest release, updated 8 January 2026; next release December 2026. Exact categories for every rated SOC code are generated into apps/web/src/occupationDemand.ts by scripts/fetch/oid_demand.py. The index measures demand pressure, not proof of a worker shortage. https://explore-education-statistics.service.gov.uk/find-statistics/occupations-in-demand/2025
 - Migration Advisory Committee, Temporary Shortage List Stage 2, 23 July 2026: relatively strong historical shortage evidence for electricians; mixed historical evidence and future shortage risk for plumbers. https://www.gov.uk/government/publications/temporary-shortage-list-stage-2-report/temporary-shortage-list-stage-2-report-accessible
 - National Careers Service: starter-to-experienced salary guides, linked per role. No official two-year salary statistic is claimed. The editable scenario compounds starting pay with assumed annual increases and inflation; the default 5%/2% values are illustrative assumptions.
 - Outlooks: Skills England's 2030 assessment and 2026 sector assessments; CITB's 2026–2030 construction outlook; explicitly labelled NHS and DfE sources. Published dates, horizons and geography remain visible. No forecast is extended to 2031. https://www.gov.uk/government/publications/assessment-of-priority-skills-to-2030/assessment-of-priority-skills-to-2030

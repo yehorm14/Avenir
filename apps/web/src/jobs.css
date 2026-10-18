@@ -38,8 +38,7 @@
   color: var(--muted, #acb6c3);
 }
 .jobs-controls input[type="search"],
-.jobs-controls select,
-.scenario-inputs input[type="number"] {
+.jobs-controls select {
   appearance: none;
   font: inherit;
   color: var(--foreground, #dae0e7);
@@ -66,8 +65,7 @@
   padding-right: 16px;
 }
 .jobs-controls input:focus,
-.jobs-controls select:focus,
-.scenario-inputs input:focus {
+.jobs-controls select:focus {
   background: #1a1d23;
   border-color: #6da2f8b3;
   box-shadow: 0 0 0 3px #6da2f814;
@@ -159,20 +157,17 @@
   line-height: 1.55;
   font-weight: 450;
 }
-.demand-subtitle {
-  display: block;
-  color: var(--muted, #acb6c3);
-  font-size: 11px;
-  line-height: 1.65;
-  margin-top: 4px;
-  max-width: 30ch;
+.demand-label.demand-high {
+  color: #5fd38d;
 }
-.jobs-table td:nth-child(n + 3) small {
-  display: block;
+.demand-label.demand-medium {
+  color: #f2a54a;
+}
+.demand-label.demand-low {
+  color: #f17c6f;
+}
+.demand-label.demand-none {
   color: var(--muted, #acb6c3);
-  font-size: 10px;
-  line-height: 1.6;
-  margin-top: 3px;
 }
 .jobs-source-note {
   color: var(--muted, #acb6c3);
@@ -238,16 +233,14 @@ dl.job-facts {
 dl.job-facts > div {
   min-width: 0;
 }
-.job-facts dt,
-.scenario-results dt {
+.job-facts dt {
   color: var(--muted, #acb6c3);
   font-size: 11px;
   font-weight: 400;
   line-height: 1.65;
   margin-bottom: 10px;
 }
-.job-facts dd,
-.scenario-results dd {
+.job-facts dd {
   color: var(--foreground, #dae0e7);
   font-size: 25px;
   font-variant-numeric: tabular-nums;
@@ -256,8 +249,7 @@ dl.job-facts > div {
   line-height: 1.35;
   margin: 0;
 }
-.job-facts small,
-.scenario-results small {
+.job-facts small {
   display: block;
   color: var(--muted, #acb6c3);
   font-size: 11px;
@@ -265,7 +257,6 @@ dl.job-facts > div {
   margin-top: 9px;
 }
 .job-demand-section,
-.job-scenario,
 .job-outlook,
 .job-sources {
   margin-top: 54px;
@@ -286,7 +277,6 @@ dl.job-facts > div {
   margin: 22px 0 10px;
 }
 .job-demand-section p,
-.job-scenario p,
 .job-outlook p {
   max-width: 85ch;
   color: var(--muted, #acb6c3);
@@ -306,63 +296,17 @@ dl.job-facts > div {
   color: #c2d7fb;
   text-decoration-color: currentColor;
 }
-.job-demand-section > small,
-.job-scenario > small {
+.job-demand-section > small {
   display: block;
   color: var(--muted, #acb6c3);
   font-size: 11px;
   line-height: 1.8;
   margin-top: 16px;
 }
-.job-scenario,
 .job-outlook,
 .job-sources {
   padding-top: 36px;
   border-top: 1px solid var(--line, #303540);
-}
-.scenario-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 26px;
-}
-.scenario-header > span,
-.scenario-header > small {
-  color: var(--muted, #acb6c3);
-  font-size: 11px;
-}
-.scenario-inputs {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
-  max-width: 800px;
-  margin-top: 25px;
-}
-.scenario-inputs label {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  color: var(--muted, #acb6c3);
-  font-size: 12px;
-  line-height: 1.6;
-}
-.scenario-inputs input[type="number"] {
-  width: 100%;
-  font-size: 15px;
-  font-variant-numeric: tabular-nums;
-  appearance: auto;
-}
-.scenario-results {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 40px;
-  max-width: 800px;
-  margin-top: 32px;
-  padding-top: 25px;
-  border-top: 1px solid #ffffff12;
-}
-.scenario-results dl {
-  margin: 0;
 }
 .outlook-columns {
   display: grid;
@@ -550,17 +494,9 @@ dl.job-facts > div {
   .job-facts dd {
     font-size: 22px;
   }
-  .scenario-header {
-    flex-direction: column;
-    gap: 0;
-  }
-  .scenario-inputs,
   .outlook-columns,
   .job-evidence-grid {
     grid-template-columns: 1fr;
-    gap: 22px;
-  }
-  .scenario-results {
     gap: 22px;
   }
 }

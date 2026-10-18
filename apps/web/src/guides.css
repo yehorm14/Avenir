@@ -442,3 +442,30 @@
     transition: none;
   }
 }
+.evidence-guide-chat.evidence-guide-chat--embedded {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.evidence-guide-chat--embedded .evidence-guide-composer {
+  padding: 16px 0 0;
+  border-top: 0;
+  background: transparent;
+}
+.evidence-guide-chat--embedded .evidence-guide-transcript {
+  height: auto;
+  max-height: 300px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+.evidence-guide-chat--embedded .evidence-guide-message {
+  max-width: none;
+}
+.evidence-guide-chat--embedded .evidence-guide-error {
+  margin: 14px 0 0;
+}
+.evidence-guide-chat--embedded
+  :is(button, a, textarea, [tabindex="0"]):focus-visible {
+  outline: 2px solid #6da2f8;
+  outline-offset: 4px;
+}

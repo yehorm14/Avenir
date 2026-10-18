@@ -10,6 +10,7 @@ import {
 } from "./planDocument";
 import ScopedComparison from "./ScopedComparison";
 import DashboardNextSteps from "./DashboardNextSteps";
+import EvidenceStats from "./EvidenceStats";
 import "./careerDashboard.css";
 
 type Area = "cs" | "finance";
@@ -437,6 +438,12 @@ export default function CareerDashboard({ area, careers, ...actions }: Props) {
                   </small>
                 </section>
               )}
+
+              <EvidenceStats
+                key={career.soc}
+                soc={career.soc}
+                priceLabel={career.evidence_metadata?.price_label}
+              />
             </div>
 
             <aside

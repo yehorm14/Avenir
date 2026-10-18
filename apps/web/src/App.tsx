@@ -16,6 +16,7 @@ import MyPlan from "./MyPlan";
 import Guides from "./Guides";
 import DecisionReview from "./DecisionReview";
 import Landing from "./Landing";
+import { LogoMark } from "./Logo";
 import Jobs from "./Jobs";
 import Discovery, { type DiscoveryResult } from "./Discovery";
 import CareerDashboard from "./CareerDashboard";
@@ -40,6 +41,8 @@ const nav: { id: Page; icon: string }[] = [
   { id: "path", icon: "path" },
   { id: "opportunities", icon: "calendar" },
 ];
+// Pages shown under the Jobs tab: the full directory and the two subject dashboards.
+const jobsSection: Page[] = ["jobs", "computer-science", "finance"];
 const directPlanSocs = ["2134", "3544", "2133", "2135", "2422", "2421", "2433"];
 // Amira, 17, S6 in Glasgow (AGENTS.md section 1): the primary demo journey.
 const amiraAnswers: Record<string, string> = {
@@ -359,26 +362,37 @@ export default function App() {
       </a>
       <header className="topbar">
         <nav className="top-links" aria-label="Main navigation">
+          <button
+            className="brand-link"
+            onClick={() => go("discover")}
+            aria-label="Aventier home"
+          >
+            <LogoMark size={26} />
+            <span>Aventier</span>
+          </button>
           {(
             [
               ["discover", "Home"],
-              ["computer-science", "Computer Science"],
-              ["finance", "Finance"],
               ["quiz", "Quiz"],
               ["jobs", "Jobs"],
               ["guides", "Career guide"],
               ["overview", "My plan"],
             ] as const
-          ).map(([id, label]) => (
-            <button
-              key={id}
-              onClick={() => go(id)}
-              className={page === id ? "active" : ""}
-              aria-current={page === id ? "page" : undefined}
-            >
-              {label}
-            </button>
-          ))}
+          ).map(([id, label]) => {
+            // The subject dashboards live under Jobs, so Jobs stays active inside them.
+            const current =
+              page === id || (id === "jobs" && jobsSection.includes(page));
+            return (
+              <button
+                key={id}
+                onClick={() => go(id)}
+                className={current ? "active" : ""}
+                aria-current={current ? "page" : undefined}
+              >
+                {label}
+              </button>
+            );
+          })}
         </nav>
       </header>
       <main
@@ -425,6 +439,7 @@ export default function App() {
           </div>
         ) : (
           <>
+            {jobsSection.includes(page) && <JobsTabs page={page} go={go} />}
             {page === "discover" && (
               <Landing
                 careers={careers}
@@ -432,6 +447,12 @@ export default function App() {
                 onAmira={startAmira}
                 amiraBusy={amiraBusy}
                 amiraError={amiraError}
+                onJobs={() => go("jobs")}
+                onPlan={() => go("overview")}
+                nation={prefs.nation}
+                location={prefs.location}
+                onNation={(nation) => update({ nation })}
+                onLocation={(location) => update({ location })}
                 onDashboard={(area) =>
                   go(area === "cs" ? "computer-science" : "finance")
                 }
@@ -488,7 +509,7 @@ export default function App() {
               />
             )}
             {page === "quiz" && (
-              <Quiz prefs={prefs} update={update} finish={finish} />
+              <Quiz prefs={prefs} update={update} finish={finish} go={go} />
             )}
             {page === "jobs" && (
               <Jobs
@@ -1079,6 +1100,29 @@ export default function App() {
   );
 }
 
+function JobsTabs({ page, go }: { page: Page; go: (p: Page) => void }) {
+  return (
+    <nav className="content-tabs jobs-sections" aria-label="Jobs sections">
+      {(
+        [
+          ["jobs", "All jobs"],
+          ["computer-science", "Computer Science"],
+          ["finance", "Finance"],
+        ] as const
+      ).map(([id, label]) => (
+        <button
+          key={id}
+          className={page === id ? "active" : ""}
+          aria-current={page === id ? "page" : undefined}
+          onClick={() => go(id)}
+        >
+          {label}
+        </button>
+      ))}
+    </nav>
+  );
+}
+
 function PageHeading({
   label,
   title,
@@ -1125,32 +1169,28 @@ function Quiz({
   prefs,
   update,
   finish,
+  go,
 }: {
   prefs: Preferences;
   update: (p: Partial<Preferences>) => void;
   finish: () => void;
+  go: (p: Page) => void;
 }) {
   // A finished quiz stores the end position. Reopening it should let the
   // learner review their answers from the start, rather than strand them.
   const step = prefs.step < questions.length ? prefs.step : 0,
     q = questions[step];
   const answered = prefs.answers[q.id];
-  const headingRef = useRef<HTMLHeadingElement>(null);
-  useEffect(() => {
-    headingRef.current?.focus({ preventScroll: true });
-    window.scrollTo(0, 0);
-  }, [step]);
   return (
     <section className="quiz-container" key={q.id}>
       <div className="quiz-progress">
-        {step > 0 && (
-          <button
-            className="text-button"
-            onClick={() => update({ step: step - 1 })}
-          >
-            <Icon name="back" size={16} /> Previous question
-          </button>
-        )}
+        <button
+          className="text-button"
+          onClick={() => (step ? update({ step: step - 1 }) : go("discover"))}
+        >
+          <Icon name="back" size={16} />{" "}
+          {step ? "Previous question" : "Back to discovery"}
+        </button>
         <span>
           Question {step + 1} of {questions.length}
         </span>
@@ -1158,15 +1198,14 @@ function Quiz({
       <div className="progress-track">
         <i style={{ width: `${((step + 1) / questions.length) * 100}%` }} />
       </div>
-      <h1 ref={headingRef} tabIndex={-1}>
-        {q.title}
-      </h1>
+      <span className="quiz-theme">{q.theme}</span>
+      <h1>{q.title}</h1>
+      <p className="quiz-hint">{q.hint}</p>
       <div className="quiz-options" role="radiogroup" aria-label={q.title}>
         {q.options.map((o, i) => (
           <button
             role="radio"
             aria-checked={answered === i}
-            tabIndex={i === (answered ?? 0) ? 0 : -1}
             key={o.text}
             className={`quiz-option ${answered === i ? "is-selected" : ""}`}
             onClick={() => update({ answers: { ...prefs.answers, [q.id]: i } })}
@@ -1180,8 +1219,8 @@ function Quiz({
                 const next =
                   (i +
                     (e.key === "ArrowUp" || e.key === "ArrowLeft" ? -1 : 1) +
-                    q.options.length) %
-                  q.options.length;
+                    4) %
+                  4;
                 update({ answers: { ...prefs.answers, [q.id]: next } });
                 (
                   e.currentTarget.parentElement?.children[next] as HTMLElement
@@ -1201,6 +1240,7 @@ function Quiz({
         ))}
       </div>
       <div className="quiz-footer">
+        <span className="muted">Choose one answer</span>
         <button
           className="button primary"
           disabled={answered === undefined}
@@ -2007,7 +2047,7 @@ function Evidence({ data, selected }: { data: Bootstrap; selected: Career[] }) {
           <>
             <div className="backtest-groups">
               {w.groups
-                ?.filter((g): g is HistoricalGroup => g !== null)
+                ?.filter((g): g is HistoricalGroup => g !== null && g.n > 0)
                 .map((g) => (
                   <BacktestGroup key={g.key} group={g} />
                 ))}
@@ -2015,7 +2055,7 @@ function Evidence({ data, selected }: { data: Bootstrap; selected: Career[] }) {
             <p className="fine-print">
               Source: supplied historical test · Preliminary. Historical tiers
               are based on market data only; they do not test the personalised
-              quiz or the three priority sliders.
+              quiz or the pay and employment priorities you set.
             </p>
           </>
         ) : (

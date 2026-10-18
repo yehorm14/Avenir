@@ -487,3 +487,18 @@ summary:focus-visible,
     gap: 18px;
   }
 }
+
+.jobs-sections {
+  margin: 4px 0 22px;
+}
+
+.top-links > .brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-right: 10px;
+  padding: 4px 14px 4px 6px;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--foreground);
+}

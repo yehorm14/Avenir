@@ -719,7 +719,7 @@ def main() -> None:
                        "tags": [{"id": t, "label": lbl, "keywords": kws} for t, lbl, kws in TAGS], "affinity": AFFINITY}
     method = ("Simple rules, not the app's picks. Ambitious: top third by pay at the base year. Safe: top third by jobs growth before the base year. "
               "Outcomes 5 years later; real pay deflated by tax-year CPIH. The rules were fixed before these windows were scored, but earlier probes had looked at 2013-2019.")
-    caveats = ["These are simple rules, not the app's Ambitious, Balanced and Safe picks; there is no simple-rule version of Balanced.",
+    caveats = ["These are simple rules tested on past data, not the app's own recommendations. The app's Balanced choice has no simple-rule version.",
                "Historical tiers use market data only: no historical AI exposure index exists.",
                "Windows overlap, so they are not independent.",
                "Only occupations with data at both ends are scored (larger occupations); n_base_occupations and n_scored say how many dropped out.",

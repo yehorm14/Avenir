@@ -7,7 +7,7 @@
   "split": "dev",
   "n": 30,
   "universe_size": 20,
-  "note": "Development split only (synthetic profiles); the shipped choice is provisional until the team's held-out labels are scored once.",
+  "note": "Matcher scores were checked on a development split of synthetic profiles only. No real learner labels have been scored yet, so the matcher is preliminary.",
   "methods": {
    "keyword_tags": {
     "n": 30,

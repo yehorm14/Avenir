@@ -11,6 +11,16 @@ from pathlib import Path
 
 import pytest
 
+
+def _symlink_or_skip(link: Path, target: Path, *, target_is_directory: bool = False) -> None:
+    """Windows needs Developer Mode or admin rights to create symlinks; skip there instead of failing."""
+    try:
+        link.symlink_to(target, target_is_directory=target_is_directory)
+    except OSError as exc:
+        if sys.platform == "win32":
+            pytest.skip(f"cannot create symlinks on this Windows account ({exc}); enable Developer Mode to run")
+        raise
+
 SCRIPT = Path(__file__).resolve().parents[1] / "package_submission.py"
 
 
@@ -103,7 +113,7 @@ def test_dirty_tracked_source_requires_checkpoint(release: Path, tmp_path: Path)
 def test_bundle_symlink_cannot_export_an_external_file(release: Path, tmp_path: Path):
     external = tmp_path / "outside.txt"
     external.write_text("not part of project")
-    (release / "apps/web/dist/assets/outside.txt").symlink_to(external)
+    _symlink_or_skip(release / "apps/web/dist/assets/outside.txt", external)
     output = tmp_path / "submission.zip"
     result = package(release, output)
     assert result.returncode != 0

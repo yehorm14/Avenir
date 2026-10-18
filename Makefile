@@ -23,7 +23,8 @@ data:
 	$(PY) scripts/fetch/ons_ashe.py --years 2011-2025
 	$(PY) scripts/fetch/nomis_aps.py NM_218_1 --describe
 	$(PY) scripts/fetch/nomis_aps.py NM_168_1 --describe
-	@echo "Next: browser downloads for ESCO, ILO WP140 and Occupations in Demand (see data/manifest.yaml),"
+	$(PY) scripts/fetch/oid_demand.py
+	@echo "Next: browser downloads for ESCO and ILO WP140 (see data/manifest.yaml),"
 	@echo "then the Nomis data pulls with the dimension codes printed above."
 
 data-dry:

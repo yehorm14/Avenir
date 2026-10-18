@@ -1,0 +1,81 @@
+{
+  "employer": "BlackRock",
+  "as_of": "2026-10-18",
+  "facts": [
+    {
+      "label": "Employees worldwide",
+      "value": "25,000",
+      "source": "Levels.fyi company profile",
+      "url": "https://www.levels.fyi/en-gb/companies/blackrock"
+    },
+    {
+      "label": "Founded",
+      "value": "1988",
+      "source": "Levels.fyi company profile",
+      "url": "https://www.levels.fyi/en-gb/companies/blackrock"
+    },
+    {
+      "label": "Open jobs in the UK",
+      "value": "45",
+      "source": "Glassdoor UK, BlackRock jobs",
+      "url": "https://www.glassdoor.co.uk/Jobs/BlackRock-Jobs-E9331.htm",
+      "note": "Listings on 18 Oct 2026; not a hiring plan"
+    }
+  ],
+  "share": {
+    "ticker": "BLK",
+    "price_usd": 1134.38,
+    "change_5y_usd": 219.41,
+    "change_5y_pct": 23.98,
+    "source": "TradingView quote shown on Levels.fyi",
+    "url": "https://www.tradingview.com/symbols/BLK/",
+    "note": "Share price, not pay. Past five years; not a forecast."
+  },
+  "career_ladder_uk": {
+    "source": "Glassdoor UK, self-reported salaries (base pay ranges)",
+    "url": "https://www.glassdoor.co.uk/Salary/BlackRock-Salaries-E9331.htm",
+    "note": "Self-reported by employees; ranges, not offers. UK, all locations.",
+    "levels": [
+      { "level": "Summer analyst (intern)", "low": 38000, "high": 55000, "reports": 92 },
+      { "level": "Analyst", "low": 43000, "high": 66000, "reports": 389 },
+      { "level": "Associate", "low": 62000, "high": 96000, "reports": 527 },
+      { "level": "Vice President", "low": 95000, "high": 145000, "reports": 387 },
+      { "level": "Director", "low": 160000, "high": 235000, "reports": 201 },
+      { "level": "Managing Director", "low": 211000, "high": 448000, "reports": 29 }
+    ]
+  },
+  "roles_uk": {
+    "source": "Glassdoor UK, self-reported salaries",
+    "url": "https://www.glassdoor.co.uk/Salary/BlackRock-Salaries-E9331.htm",
+    "roles": [
+      { "title": "Software Engineer", "low": 65000, "high": 95000, "reports": 59 },
+      { "title": "Investment Analyst", "low": 44000, "high": 100000, "reports": 21 },
+      { "title": "Business Analyst", "low": 38000, "high": 56000, "reports": 23 },
+      { "title": "Portfolio Manager", "low": 100000, "high": 225000, "reports": 43 }
+    ]
+  },
+  "entry_routes": {
+    "source": "Glassdoor UK job listings",
+    "url": "https://www.glassdoor.co.uk/Jobs/BlackRock-Jobs-E9331.htm",
+    "items": [
+      "2027 Summer Internship Program - EMEA (London)",
+      "2027 Off-cycle Internship Program - EMEA (London)",
+      "2027 Quantitative Masters Internship Programme - Investments (London)",
+      "Full Stack Software Engineer, Associate - Preqin Engineering (London)"
+    ]
+  },
+  "uk_offices": {
+    "source": "Glassdoor salary reports by city",
+    "url": "https://www.glassdoor.co.uk/Salary/BlackRock-Salaries-E9331.htm",
+    "items": [
+      { "city": "London", "reports": 2428 },
+      { "city": "Edinburgh", "reports": 744 }
+    ]
+  },
+  "compensation_rating": {
+    "value": 3.5,
+    "out_of": 5,
+    "source": "Glassdoor UK",
+    "url": "https://www.glassdoor.co.uk/Salary/BlackRock-Salaries-E9331.htm"
+  }
+}

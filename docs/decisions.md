@@ -29,3 +29,6 @@ One line per decision, newest at the bottom. Agents: read this before undoing an
 - 18 Oct Codex final delivery: Integrate Arsenii’s exact MLv1.2 release atomically with metadata-aware UI/API labels, purity gaps and exact fixture regeneration; exclude failed-placebo crisis inputs at the production boundary while preserving raw evidence. Add a transparent subject-scoped priority comparison and a checksummed prebuilt submission, keeping the timed demo to CS/Finance and human-controlled next actions.
 
 - 18 Oct, team (Yehor): the primary demo is Amira with first idea architect (AGENTS.md section 1); CS/Finance stays a secondary journey.
+- 18 Oct Codex plan cleanup: Apply the user's 21 annotations to My plan with a compact monthly dropdown and prepared career chat; preserve stored notes/routes and the numeric comparison while keeping detailed evidence on its separate view.
+- 18 Oct Codex final navigation: On final-delivery, use the user's exact Home, Quiz, Jobs, My plan and Chatbot menu; retain the current design and Home dashboard entry points, preserve guide URLs, and publish only this branch.
+- 18 Oct Codex single-page plan: At the user's request, remove the overview's inner tabs and repeated comparison tables; keep one career/chat/action view with direct Change career and View pathway links, preserving saved data and detailed workspace routes.

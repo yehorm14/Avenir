@@ -2,7 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import type { Career, CareerSummary, Metric } from "./types";
 import { api } from "./store";
 import { money, SalaryChart } from "./Charts";
-import { careerEvidence } from "./careerEvidence";
+import {
+  careerEvidence,
+  demandEvidence,
+  type CareerEvidence,
+  type DemandEvidence,
+} from "./careerEvidence";
 import { demandTrendLabel, isRelativeDemand } from "./planDocument";
 import { Attributions } from "./Attributions";
 import "./jobs.css";
@@ -73,7 +78,7 @@ const priority = (career: { soc: string }) => {
   // remains the source's actual classification, including negative findings.
   if (career.soc === "5241") return 0;
   if (career.soc === "5315") return 1;
-  const status = careerEvidence[career.soc]?.demand;
+  const status = demandFor(career.soc)?.demand;
   return status === "Critical"
     ? 2
     : status === "Elevated"
@@ -82,6 +87,24 @@ const priority = (career: { soc: string }) => {
         ? 4
         : 5;
 };
+// Featured careers carry extra context; every other occupation still gets the
+// official Occupations in Demand classification when the release covers it.
+const demandFor = (
+  soc: string,
+): (DemandEvidence & Partial<CareerEvidence>) | undefined =>
+  careerEvidence[soc] ?? demandEvidence(soc);
+// Colour the UK demand label: green = strong need for workers, orange = moderate, red = low.
+const demandTone = (evidence?: ReturnType<typeof demandFor>) => {
+  if (!evidence) return "demand-none";
+  if (evidence.shortage?.label === "Shortage evidence") return "demand-high";
+  if (evidence.shortage) return "demand-medium";
+  if (evidence.demand === "Critical") return "demand-high";
+  if (evidence.demand === "Elevated" || evidence.demand === "Sector priority")
+    return "demand-medium";
+  if (evidence.demand === "Not in high demand") return "demand-low";
+  return "demand-none";
+};
+
 const selectedCareerFromHash = () =>
   /^#\/jobs\/(\d{4})\/?$/.exec(window.location.hash)?.[1] ?? null;
 
@@ -275,7 +298,7 @@ export default function Jobs({
                   </thead>
                   <tbody>
                     {rows.map((career) => {
-                      const evidence = careerEvidence[career.soc];
+                      const evidence = demandFor(career.soc);
                       const jobs = metricValue(career.jobs);
                       return (
                         <tr
@@ -296,28 +319,17 @@ export default function Jobs({
                             <small>{career.sector}</small>
                           </th>
                           <td>
-                            <span className="demand-label">
+                            <span
+                              className={`demand-label ${demandTone(evidence)}`}
+                            >
                               {evidence?.shortage?.label ??
                                 (evidence?.demand === "Not in high demand"
                                   ? "Not high"
                                   : (evidence?.demand ?? "Not assessed"))}
                             </span>
-                            <small className="demand-subtitle">
-                              {evidence
-                                ? evidence.shortage
-                                  ? "MAC 2026"
-                                  : "Skills England 2025"
-                                : "No classification supplied"}
-                            </small>
                           </td>
-                          <td>
-                            {money(metricValue(career.pay))}
-                            <small>{observation(career.pay)}</small>
-                          </td>
-                          <td>
-                            {number(jobs == null ? null : jobs * 1000)}
-                            <small>{observation(career.jobs)}</small>
-                          </td>
+                          <td>{money(metricValue(career.pay))}</td>
+                          <td>{number(jobs == null ? null : jobs * 1000)}</td>
                         </tr>
                       );
                     })}
@@ -341,11 +353,10 @@ export default function Jobs({
       )}
       <p className="jobs-source-note">
         Pay is the annual median for full-time employees, not a starting salary.
-        Employee-job estimates exclude self-employment. Each figure shows its
-        own observation year. Older employee-job counts are marked last
-        available; missing and suppressed figures stay unavailable. ONS
-        describes ASHE job counts as indicative, not accurate estimates.{" "}
-        <Source source={ashe} />.
+        Employee-job estimates exclude self-employment. Open a career to see
+        each figure's observation year; missing and suppressed figures stay
+        unavailable. ONS describes ASHE job counts as indicative, not accurate
+        estimates. <Source source={ashe} />.
       </p>
       <p className="jobs-source-note">
         Electricians and plumbers appear first because of infrastructure needs
@@ -369,29 +380,7 @@ function JobProfile({
   onExplore: () => void;
 }) {
   const evidence = careerEvidence[career.soc];
-  const [startingPay, setStartingPay] = useState(
-    evidence?.salary?.low?.toString() ?? "",
-  );
-  const [increase, setIncrease] = useState("5");
-  const [inflation, setInflation] = useState("2");
-  const start = Number(startingPay),
-    growth = Number(increase),
-    prices = Number(inflation);
-  const valid =
-    startingPay.trim() !== "" &&
-    increase.trim() !== "" &&
-    inflation.trim() !== "" &&
-    Number.isFinite(start) &&
-    start > 0 &&
-    start <= 1000000 &&
-    Number.isFinite(growth) &&
-    growth >= -20 &&
-    growth <= 30 &&
-    Number.isFinite(prices) &&
-    prices >= 0 &&
-    prices <= 20;
-  const nominal = valid ? start * (1 + growth / 100) ** 2 : null;
-  const real = nominal == null ? null : nominal / (1 + prices / 100) ** 2;
+  const demand = demandFor(career.soc);
   const jobs = career.jobs_observation ?? career.metrics.jobs;
   const employeeJobs = metricValue(jobs);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -406,7 +395,7 @@ function JobProfile({
     })),
     ashe,
     cpih,
-    evidence?.demandSource,
+    demand?.demandSource,
     evidence?.shortage?.source,
     evidence?.salary?.source,
     evidence?.outlook.source,
@@ -443,24 +432,13 @@ function JobProfile({
         <div>
           <dt>Employee jobs, {observation(jobs)}</dt>
           <dd>{number(employeeJobs == null ? null : employeeJobs * 1000)}</dd>
-          <small>{jobs?.note || "Employees only. Not vacancies."}</small>
-          {jobs?.flags.includes("ons_indicative_counts") && (
-            <small>
-              ONS says these counts are indicative, not accurate estimates.
-            </small>
-          )}
         </div>
         <div>
-          <dt>Demand{evidence ? `, ${evidence.demandYear}` : ""}</dt>
-          <dd>{evidence?.demand ?? "Not assessed"}</dd>
+          <dt>Demand{demand ? `, ${demand.demandYear}` : ""}</dt>
+          <dd>{demand?.demand ?? "Not assessed"}</dd>
           <small>
-            {evidence ? "Skills England index" : "No classification supplied"}
+            {demand ? "Skills England index" : "No classification supplied"}
           </small>
-        </div>
-        <div>
-          <dt>Your pay scenario</dt>
-          <dd>{nominal == null ? "Enter salary" : money(nominal)}</dd>
-          <small>Calculated from your assumptions</small>
         </div>
       </dl>
       <section className="job-demand-section">
@@ -475,94 +453,13 @@ function JobProfile({
           </>
         )}
         <p>
-          {evidence?.demandReason ??
-            "No verified demand classification is included for this occupation."}{" "}
-          {evidence && <Source source={evidence.demandSource} />}
+          {demand?.demandReason ??
+            "Skills England's 2025 assessment does not classify this occupation."}{" "}
+          {demand && <Source source={demand.demandSource} />}
         </p>
       </section>
       <PublishedEvidence career={career} />
       <SalaryChart careers={[career]} />
-      <section className="job-scenario">
-        <div className="scenario-header">
-          <h2>Your pay scenario</h2>
-          <span>Two years after paid work begins</span>
-        </div>
-        {evidence?.salary ? (
-          <p>
-            {evidence.salary.role}: {money(evidence.salary.low)} starter to{" "}
-            {money(evidence.salary.high)} experienced.{" "}
-            <Source
-              source={{
-                ...evidence.salary.source,
-                label: "National Careers Service",
-              }}
-            />
-            . This range does not specify years of experience.
-          </p>
-        ) : (
-          <p>
-            Enter a starting salary to calculate a scenario. No verified
-            entry-pay range is included for this occupation.
-          </p>
-        )}
-        <div className="scenario-inputs">
-          <label>
-            Starting salary (£)
-            <input
-              type="number"
-              min="1"
-              max="1000000"
-              step="500"
-              value={startingPay}
-              onChange={(event) => setStartingPay(event.target.value)}
-            />
-          </label>
-          <label>
-            Annual pay increase (%)
-            <input
-              type="number"
-              min="-20"
-              max="30"
-              step="0.5"
-              value={increase}
-              onChange={(event) => setIncrease(event.target.value)}
-            />
-          </label>
-          <label>
-            Annual inflation (%)
-            <input
-              type="number"
-              min="0"
-              max="20"
-              step="0.5"
-              value={inflation}
-              onChange={(event) => setInflation(event.target.value)}
-            />
-          </label>
-        </div>
-        <div className="scenario-results">
-          <dl>
-            <dt>Nominal, after 2 years</dt>
-            <dd>{money(nominal)}</dd>
-          </dl>
-          <dl>
-            <dt>In today’s money</dt>
-            <dd>{money(real)}</dd>
-          </dl>
-        </div>
-        <p className="jobs-source-note">
-          Starting pay × (1 + annual increase)²; real pay also divides by (1 +
-          inflation)². The default 5% increase and 2% inflation are assumptions,
-          not forecasts. Two years starts when paid work begins; training and
-          apprenticeship pay can differ. Figures are before tax.
-        </p>
-        {!valid && (
-          <p role="status" className="jobs-source-note">
-            Enter a positive salary, a pay increase from −20% to 30%, and
-            inflation from 0% to 20%.
-          </p>
-        )}
-      </section>
       <section className="job-outlook">
         <h2>Sector outlook</h2>
         {evidence ? (
@@ -595,12 +492,6 @@ function JobProfile({
         ) : (
           <p>No verified occupation-specific outlook is included.</p>
         )}
-        <p className="jobs-source-note">
-          Published scenarios retain their original dates and geographic
-          coverage. Employment totals, net growth and replacement hiring measure
-          different things; none is a count of vacancies available to a new
-          applicant.
-        </p>
       </section>
       <section className="job-sources">
         <h2>Sources</h2>
@@ -747,12 +638,6 @@ function PublishedEvidence({ career }: { career: Career }) {
   return (
     <section className="job-evidence">
       <h2>What the evidence shows</h2>
-      <p className="jobs-source-note">
-        Observed employment trends describe the past. AI exposure describes
-        tasks that technology could affect; it is not a forecast of job losses.
-        {isRelativeDemand(career.metrics.demand_trend) &&
-          " Trend values compare with the typical occupation; a positive value does not by itself establish absolute job growth."}
-      </p>
       <dl className="job-evidence-grid">
         {headline.map((key) =>
           career.metrics[key] ? (

@@ -9,6 +9,6 @@ Reference: https://www.quant-soc.com, inspected 17 October 2026 across its homep
 - The public entry is one screen: Aventier name and mission, followed immediately by two options. “Explore career” opens the known-career conversation; “Find careers” opens discovery. Remove the top-left logo and generic slogans. Keep visible action labels to two words where possible. Preserve conversation → three matches → ranked choices → pathway. No reference-site logos, copy, illustrations or proprietary assets are reused.
 - Respect reduced motion and keyboard focus. This pass prioritizes desktop, as requested.
 
-- Primary navigation: Home, Quiz, Jobs, Chatbot. No account/profile menu, lock or privacy slogan. Jobs browses careers; Chatbot can be used without completing discovery.
+- Primary navigation: Home, Quiz, Jobs, My plan, Chatbot. No account/profile menu, lock or privacy slogan. Jobs browses careers; Chatbot can be used without completing discovery. Computer Science and Finance remain accessible from Home rather than separate top-level tabs.
 
 - Jobs uses a searchable, sortable text directory with thin rules and directly selectable career names. No decorative career icons, generic tagline or Details buttons. Apple’s model comparison (https://www.apple.com/mac/compare/), IBM’s product directory (https://www.ibm.com/products) and Porsche’s model overview (https://www.porsche.com/uk/models/) inform the information hierarchy. Keep the established charcoal palette.

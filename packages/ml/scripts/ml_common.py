@@ -89,7 +89,7 @@ SOURCES = {
     "ilo_wp140": {"name": "Generative AI and Jobs: A Refined Global Index of Occupational Exposure (Working Paper 140)", "publisher": "ILO",
                   "url": "https://webapps.ilo.org/static/english/intserv/working-papers/wp140/index.html",
                   "licence": "CC BY 4.0 (© ILO 2025)",
-                  "attribution": "Adapted from ILO Working Paper 140 (2025), CC BY 4.0. Scores were averaged over the international codes a UK occupation maps to; this adaptation was not reviewed or endorsed by the ILO.",
+                  "attribution": "Adapted from ILO Working Paper 140, Gmyrek et al. (2025), https://doi.org/10.54394/HETP0387, CC BY 4.0. Changes made: scores were averaged over the international codes a UK occupation maps to. This is an adaptation of a copyrighted work of the International Labour Organization (ILO). This adaptation has not been prepared, reviewed or endorsed by the ILO and should not be considered an official ILO adaptation. The ILO disclaims all responsibility for its content and accuracy. Responsibility rests solely with the author(s) of the adaptation.",
                   "coverage": "427 ISCO-08 occupations", "years": "2025", "status": "loaded", "notes": "Mean task exposure and its spread per occupation"},
     "dfe_ai_uk_2023": {"name": "The impact of AI on UK jobs and training, Annex 1", "publisher": "Department for Education",
                        "url": "https://www.gov.uk/government/publications/the-impact-of-ai-on-uk-jobs-and-training",

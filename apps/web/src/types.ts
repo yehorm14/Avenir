@@ -50,6 +50,80 @@ export type Career = {
   match_supported?: boolean;
   pathway_available?: boolean;
 };
+/** `GET /api/careers/{soc}/evidence-pack`. Every field is optional: the UI reads it defensively. */
+export type EvidencePackMetric = Partial<Metric> & {
+  label?: string;
+  display?: string;
+  caveats?: string[];
+};
+export type EvidencePackHedge = {
+  soc?: string;
+  title?: string;
+  pay_display?: string;
+  trend_display?: string;
+  evidence?: string;
+};
+export type EvidencePackCrisis = {
+  name?: string;
+  period?: string;
+  placebo_passed?: boolean;
+  excluded_from_recommendations?: boolean;
+  result?: string | null;
+};
+export type EvidencePackHistoryPoint = {
+  year?: number;
+  pay_real?: number | null;
+  pay_nominal?: number | null;
+  jobs_k?: number | null;
+};
+export type EvidencePackSource = {
+  key?: string;
+  name?: string;
+  url?: string;
+  as_of?: string;
+  licence?: string;
+};
+export type EvidencePack = {
+  title?: string;
+  summary?: string;
+  metrics?: Record<string, EvidencePackMetric | undefined>;
+  history?: EvidencePackHistoryPoint[];
+  history_note?: string;
+  hedges?: EvidencePackHedge[];
+  backtest?: { summary?: string; tiers?: unknown } | null;
+  backtest_note?: string;
+  crises?: EvidencePackCrisis[];
+  fit_tags?: string[] | null;
+  demand?: unknown;
+  starting_pay?: unknown;
+  sources?: EvidencePackSource[];
+};
+/** `POST /api/guide` provenance fields; all optional for older backends. */
+export type GuideProvenanceFields = {
+  mode?: "llm_grounded" | "prepared_demo" | string;
+  ai_written?: boolean;
+  model?: string | null;
+  based_on?: string[];
+  checks?: string;
+  note?: string;
+};
+/** A link the API built for a guide reply: an in-app `#/...` route or a source URL. */
+export type GuideLink = { label: string; href: string };
+/** The career path the API builds from its own data when a question asks for one. */
+export type GuidePath = {
+  routes: { label: string; summary: string }[];
+  courses: { label: string; href?: string }[];
+  skills: string[];
+  grades_note: string;
+  first_step: string;
+};
+/** The quiz profile sent with a guide question (only when the backend accepts it). */
+export type GuideProfile = {
+  tags: string[];
+  weights: Weights;
+  selected: string[];
+  free_text: string | null;
+};
 export type CareerSummary = {
   soc: string;
   title: string;

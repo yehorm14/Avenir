@@ -9,6 +9,16 @@ from pathlib import Path
 
 import pytest
 
+
+def _symlink_or_skip(link: Path, target: Path, *, target_is_directory: bool = False) -> None:
+    """Windows needs Developer Mode or admin rights to create symlinks; skip there instead of failing."""
+    try:
+        link.symlink_to(target, target_is_directory=target_is_directory)
+    except OSError as exc:
+        if sys.platform == "win32":
+            pytest.skip(f"cannot create symlinks on this Windows account ({exc}); enable Developer Mode to run")
+        raise
+
 SCANNER = Path(__file__).resolve().parents[1] / "check_secrets.py"
 
 
@@ -142,7 +152,7 @@ def test_symlinks_outside_repository_are_not_read(repository: Path, tmp_path: Pa
     outside = tmp_path.parent / (tmp_path.name + "-outside")
     outside.mkdir()
     (outside / "key.txt").write_text("sk-" + "A" * 48, encoding="utf-8")
-    (repository / "external.txt").symlink_to(outside / "key.txt")
+    _symlink_or_skip(repository / "external.txt", outside / "key.txt")
     subprocess.run(
         ["git", "-C", str(repository), "add", "--", "external.txt"], check=True, capture_output=True
     )
@@ -161,7 +171,7 @@ def test_replaced_parent_symlink_cannot_escape_repository(repository: Path, tmp_
     outside = tmp_path.parent / (tmp_path.name + "-outside")
     outside.mkdir()
     (outside / "settings.txt").write_text("sk-" + "A" * 48, encoding="utf-8")
-    (repository / "config").symlink_to(outside, target_is_directory=True)
+    _symlink_or_skip(repository / "config", outside, target_is_directory=True)
 
     result = scan(repository)
 

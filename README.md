@@ -26,7 +26,7 @@ node scripts/run-app.mjs --production
 
 Open [Aventier](http://127.0.0.1:4175). The production launcher serves the UI and both API layers from one process. No API keys, database, cloud account or external font service are required. Set `AVENIR_PYTHON` to use another Python environment; `AVENIR_PORT` changes the production port. Ctrl+C stops the service.
 
-On Windows, create the environment with `py -3.13 -m venv .venv`, install with `.venv\Scripts\python.exe -m pip install -e ".[dev]"`, then use the same npm and Node commands.
+On Windows, create the environment with `python -m venv .venv` (Python 3.12 or newer; `py -3.13 -m venv .venv` if you use the Python launcher), install with `.venv\Scripts\python.exe -m pip install -e ".[dev]"`, then run the same npm and Node commands. `npm ci` needs the lock file to include npm's optional platform packages (added for npm 11 on 18 Oct); if it still fails, `npm --prefix apps/web install` is the fallback. `node scripts/run-app.mjs --production` works on Windows (checked on Windows 11 with Node 24, npm 11 and Python 3.13; see [VERIFICATION.md](apps/web/VERIFICATION.md)). Node may print a `DEP0190` deprecation warning from the launcher; the app still runs.
 
 For development, use `node scripts/run-app.mjs`: Vite runs on 4175 and proxies the combined API on 8015. `--preview` is an alias for the single-process production launcher after building.
 
@@ -67,7 +67,9 @@ Interest affinities and occupation mappings are preliminary. Matcher development
 
 Codex helped integrate code, write editorial guidance, review changes and run verification. The runtime guide uses prepared source-based responses. Production explicitly uses template explanations, keyword suggestions and snapshot ads, so it remains functional without a live AI provider. The learner chooses priorities, career ranking, route and next actions. These choices are stored in the browser; there is no account, tracking or cross-device sync.
 
-Source attribution: ONS (Open Government Licence); Skills England / DfE (OGL); ILO Working Paper 140 (Gmyrek et al., 2025); ESCO (European Commission); HESA / Discover Uni (CC BY 4.0), where used. The [source registry](snapshots/ml/sources.json) and [data manifest](data/manifest.yaml) retain coverage and licence notes. Optional Adzuna integrations retain Jobs by Adzuna attribution.
+Source attribution: ONS (Open Government Licence); Skills England / DfE (OGL); ILO Working Paper 140 (Gmyrek et al., 2025, https://doi.org/10.54394/HETP0387, CC BY 4.0, © ILO; our exposure score adapts it, full citation in [docs/data-sources.md](docs/data-sources.md)); ESCO (European Commission); HESA / Discover Uni (CC BY 4.0), where used. The [source registry](snapshots/ml/sources.json) and [data manifest](data/manifest.yaml) retain coverage and licence notes. Optional Adzuna integrations retain Jobs by Adzuna attribution.
+
+> This is an adaptation of a copyrighted work of the International Labour Organization (ILO). This adaptation has not been prepared, reviewed or endorsed by the ILO and should not be considered an official ILO adaptation. The ILO disclaims all responsibility for its content and accuracy. Responsibility rests solely with the author(s) of the adaptation.
 
 ## Verify and demonstrate
 

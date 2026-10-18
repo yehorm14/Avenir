@@ -38,6 +38,31 @@ Owner: **Arsenii** (`z1nare`). Folders: `packages/ml/` (code, scripts, tests, do
 | `sources.json` | Sources page | **Real:** 12 sources with licences |
 | `eval.json` | "How we checked" panel | **Real:** bridge seams (with purity), backtest probe, exposure agreement (overall and within groups), hedge check against the same-group baseline, crisis placebo, matcher |
 
+## Backtest groups: what `group_then` and `other` mean
+
+`backtest.json` scores two simple rules fixed in advance, not the app's picks. In each window, `assign_tiers` (`scripts/ml_common.py`) builds the tiers from base-year data only, over every occupation that has both base-year inputs:
+
+```python
+"ambitious": base.pay >= base.pay.quantile(2 / 3),
+"safe": base.prior >= base.prior.quantile(2 / 3),
+```
+
+- `pay`: ASHE full-time median pay in the base year (native SOC 2010 windows 2013, 2014, 2015); real pay in 2019, bridged to SOC 2020, for the 2019→2024 window.
+- `prior`: change in ASHE full-time job counts from 2011 to the base year (native windows); from 2015 to 2019 (2019 window).
+- Both tiers include ties at the cutoff, and they overlap: one occupation can be in both.
+
+Each row in `occupations` carries `in_groups` (every tier it is in) and one label, `group_then`. The rule in `scripts/build_artefacts.py` is `ing[0] if ing else "other"` with `ing` in the order ambitious, safe (native windows), and `"ambitious" if amb[s] else "safe" if safe[s] else "other"` (2019 window):
+
+| `group_then` | Meaning |
+| --- | --- |
+| `ambitious` | At or above the base-year pay cutoff (top third by pay then), whether or not it is also in the safe tier |
+| `safe` | At or above the prior jobs-growth cutoff (top third by jobs growth then) and not in the ambitious tier |
+| `other` | Scored in this window but in neither tier: below both cutoffs. It is not missing data, not a third rule and not the Balanced pick; it has no group summary of its own (these rows count only in `all`) |
+
+`group_then` is never `balanced` or `all`; those are keys in `groups`, the summaries. `ambitious` and `safe` summarise the two (overlapping) tiers; `all` is every occupation scored in the window ("All occupations with complete data"); `balanced` is always `n: 0` with null stats ("No simple-rule version"), because the Balanced pick rule needs automation exposure, which has no history. Nazar's answer on #9 keeps it empty; the API contract also allows a group to be `null`, and the frontend skips null groups.
+
+Rows exist only for occupations with data at both ends of the window. An occupation with a gap gets no row; it is never labelled `other`. In native windows each SOC 2020 row takes the tier and outcomes of its main SOC 2010 source code (the largest crosswalk weight), so several rows can share one source. Group `n` counts SOC 2010 occupations at the time, so it does not match the row counts. Example, 2013→2018 in `snapshots/ml/backtest.json`: 302 rows (104 `ambitious`, 65 `safe`, 133 `other`; 43 rows in both tiers), against group `n` of 85 ambitious, 88 safe and 253 all. The ML contract is [`CONTRACTS.md`](CONTRACTS.md) section 4.5.
+
 ## Work packages
 
 Rule for every package: **the simplest version first, measured on data it never saw, and the next step ships only if it beats the previous one.**
@@ -101,9 +126,15 @@ The probes (`probe_ashe.py`, `probe_isco.py`, `probe_bridge.py`) reproduce the f
 | Source | Licence |
 | --- | --- |
 | ONS ASHE, CPIH, SOC crosswalks, coding index, online job adverts, APS 2016; DfE | Open Government Licence v3.0 |
-| ILO WP140 exposure index | CC BY 4.0 (© ILO 2025); adapted (averaged over ISCO codes, mapped to SOC), not reviewed or endorsed by the ILO |
-| ESCO | EU open data, with attribution |
+| ILO WP140 exposure index | CC BY 4.0 (© ILO 2025), https://doi.org/10.54394/HETP0387; adapted (averaged over ISCO codes, mapped to SOC), so the ILO's adaptation disclaimer below applies |
+| ESCO | EU open data, with attribution (verify: the ESCO download page states no licence) |
 | O*NET | CC BY 4.0 (used only as a reference check) |
+
+ILO citation, as the WP140 licence page asks: Gmyrek, P., Berg, J., Kamiński, K., Konopczyński, F., Ładna, A., Nafradi, B., Rosłaniec, K., Troszyński, M. *Generative AI and Jobs: A Refined Global Index of Occupational Exposure.* ILO Working Paper 140. Geneva: International Labour Office, 2025. © ILO. https://doi.org/10.54394/HETP0387. The required disclaimer for our adaptation:
+
+> This is an adaptation of a copyrighted work of the International Labour Organization (ILO). This adaptation has not been prepared, reviewed or endorsed by the ILO and should not be considered an official ILO adaptation. The ILO disclaims all responsibility for its content and accuracy. Responsibility rests solely with the author(s) of the adaptation.
+
+Details and the other source URLs: `docs/data-sources.md` and `data/manifest.yaml`.
 
 ## v1.2 review fixes (18 Oct)
 

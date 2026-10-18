@@ -53,7 +53,19 @@ bash scripts/setup.sh
 node scripts/run-app.mjs --production
 ```
 
-Open [the local app](http://127.0.0.1:4175). Setup creates `.venv` when absent, installs locked web dependencies and Python development dependencies, builds the frontend and checks both API layers with committed real evidence. No API key, database or cloud account is required. `AVENIR_SETUP_PYTHON` selects the Python executable for setup; `AVENIR_PYTHON` selects an already-prepared runtime. `AVENIR_PORT` changes the production port. Windows manual commands are in the [root README](../../README.md#run-the-complete-product).
+Open [the local app](http://127.0.0.1:4175). Setup creates `.venv` when absent, installs locked web dependencies and Python development dependencies, builds the frontend and checks both API layers with committed real evidence. No API key, database or cloud account is required. `AVENIR_SETUP_PYTHON` selects the Python executable for setup; `AVENIR_PYTHON` selects an already-prepared runtime. `AVENIR_PORT` changes the production port.
+
+On Windows, the setup script is not used (it is a bash script and was not tested there); run the manual commands from the repository root instead:
+
+```powershell
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -e ".[dev]"
+npm --prefix apps/web ci
+npm --prefix apps/web run build
+node scripts/run-app.mjs --production
+```
+
+Python must be 3.12 or newer; use `py -3.13 -m venv .venv` if you use the Python launcher. `npm ci` needs the lock file to include npm's optional platform packages (added for npm 11 on 18 Oct); `npm --prefix apps/web install` is the fallback. The production launcher works on Windows (checked on Windows 11 with Node 24, npm 11 and Python 3.13; the recorded checks are in [VERIFICATION.md](../../apps/web/VERIFICATION.md)). The same commands are in the [root README](../../README.md#run-the-complete-product).
 
 ```sh
 bash scripts/check-setup.sh

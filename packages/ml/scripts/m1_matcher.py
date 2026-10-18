@@ -309,8 +309,8 @@ def cmd_build_fit(args) -> None:
     status = "final" if ev.get("split") == "test" else "preliminary"
     payload = {"schema_version": SCHEMA_VERSION, "status": status, "generated_at": NOW, "method": method,
                "evaluation": {"split": ev["split"], "n": ev["methods"]["bm25"]["n"], "universe_size": ev["universe_size"],
-                              "note": ("Development split only (synthetic profiles); the shipped choice is provisional until the team's "
-                                       "held-out labels are scored once." if ev["split"] != "test" else "Scored once on the held-out team labels."),
+                              "note": ("Matcher scores were checked on a development split of synthetic profiles only. No real "
+                                       "learner labels have been scored yet, so the matcher is preliminary." if ev["split"] != "test" else "Scored once on the held-out team labels."),
                               "methods": ev["methods"], "paired_vs_bm25": ev["paired_vs_bm25"], "paired_vs_embed": ev.get("paired_vs_embed", {})},
                "tags": [{"id": t, "label": lbl, "keywords": kws} for t, lbl, kws in TAGS], "affinity": aff}
     # The matcher service needs the career texts (ESCO-derived, open licence); ship the demo subset.

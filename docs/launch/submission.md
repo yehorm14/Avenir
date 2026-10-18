@@ -15,7 +15,7 @@ cd apps/web
 ../../.venv/bin/python -m uvicorn api.application:app --host 127.0.0.1 --port 4175
 ```
 
-Open http://127.0.0.1:4175. On Windows, create the environment with `py -3.13 -m venv .venv`, install with `.venv\Scripts\python.exe -m pip install -e .`, then run `..\..\.venv\Scripts\python.exe -m uvicorn api.application:app --host 127.0.0.1 --port 4175` from `apps\web`.
+Open http://127.0.0.1:4175. On Windows, create the environment with `python -m venv .venv` (Python 3.12 or newer; `py -3.13 -m venv .venv` if you use the Python launcher), install with `.venv\Scripts\python.exe -m pip install -e .`, then run `..\..\.venv\Scripts\python.exe -m uvicorn api.application:app --host 127.0.0.1 --port 4175` from `apps\web`. This is the same Uvicorn command that `node scripts/run-app.mjs --production` runs from a source checkout, which was checked on Windows 11 with Python 3.13.
 
 After installation, the core flow uses local snapshots and prepared guidance. External course, learning and source websites require internet. The editable plan stays in this browser. Use a dedicated browser profile for a clean stage rehearsal.
 
