@@ -39,7 +39,7 @@
     "change_5y_pct": 23.98,
     "source": "TradingView quote shown on Levels.fyi",
     "url": "https://www.tradingview.com/symbols/BLK/",
-    "note": "Share price, not pay. Past five years; not a forecast."
+    "note": "Past five years; not a forecast."
   },
   "career_ladder_uk": {
     "source": "Glassdoor UK, self-reported salaries (base pay ranges)",
@@ -186,7 +186,7 @@
       {
         "label": "Smart Start",
         "value": "An early-career pathway for school leavers aged 16 to 24, an alternative to higher education.",
-        "tag": "Described in 2023; check current availability",
+        "tag": "(2023)",
         "source": "gpg_2023",
         "page": "p.6",
         "date": "2023"
@@ -285,7 +285,7 @@
       {
         "label": "Technology (Aladdin)",
         "value": "Technology services revenue $2.0 billion, up 24%",
-        "note": "360,000+ users across Aladdin, Preqin and eFront. Technology is a real career route at an investment firm.",
+        "note": "360,000+ users across Aladdin, Preqin and eFront.",
         "source": "ar_2025",
         "page": "pp.24, 4",
         "date": "2025"
@@ -293,7 +293,6 @@
       {
         "label": "Market value",
         "value": "Market cap $175.68B · share price $1,134.38",
-        "note": "Share price, not pay.",
         "source": "ir_site",
         "date": "16 Oct 2026 close"
       }

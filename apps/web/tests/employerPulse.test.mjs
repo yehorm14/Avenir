@@ -254,7 +254,7 @@ test("facts and share tile carry their values, notes and sources", () => {
   const share = buildShare(employerData);
   assert.equal(share.headline, "BLK $1,134.38 · +23.98% over five years");
   assert.equal(share.changeUsd, "+$219.41");
-  assert.match(share.note, /^Share price, not pay\./);
+  assert.doesNotMatch(share.note, /share price, not pay/i);
   assert.match(share.note, /not a forecast/);
   assert.equal(share.source.href, "https://www.tradingview.com/symbols/BLK/");
   assert.equal(share.attribution.href, "https://www.levels.fyi");
@@ -343,10 +343,7 @@ test("official BlackRock facts parse, and each names a known source with page or
   );
   assert.equal(byLabel["Assets under management"].page, "p.18");
   assert.match(byLabel.Revenue.note, /\$24,216m.*\$20,407m/);
-  assert.match(
-    byLabel["Technology (Aladdin)"].note,
-    /technology is a real career route/i,
-  );
+  assert.match(byLabel["Technology (Aladdin)"].note, /users across Aladdin/);
   assert.equal(byLabel["Outside the United States"].page, "pp.20, 31");
   const broken = structuredClone(employerRaw);
   broken.official.company[0].source = "nowhere";
@@ -372,7 +369,7 @@ test("Ways in for you comes first, with the official routes and the degree rule"
   const [smartStart, analyst, later] = view.official.waysIn;
   assert.equal(smartStart.label, "Smart Start");
   assert.match(smartStart.value, /school leavers aged 16 to 24/);
-  assert.equal(smartStart.tag, "Described in 2023; check current availability");
+  assert.equal(smartStart.tag, "(2023)");
   assert.equal(
     smartStart.cite,
     "BlackRock UK Gender Pay Gap Report 2023, p.6, 2023",
@@ -494,4 +491,36 @@ test("no invented or illustrative content remains in the model", async () => {
   const model = buildEmployerPulse(careers, "data", employerData);
   assert.doesNotMatch(JSON.stringify(model), /illustrative/i);
   assert.equal(model.illustrative, undefined);
+});
+
+test("the card copy has no challenge, partner or most-wanted text, and every figure has a source", async () => {
+  const text = JSON.stringify(view);
+  assert.doesNotMatch(text, /challenge|partner|most wanted|hackathon|guts/i);
+  for (const file of [
+    "../src/EmployerPulse.tsx",
+    "../src/employerPulseModel.ts",
+  ]) {
+    const source = await readFile(new URL(file, import.meta.url), "utf8");
+    assert.doesNotMatch(
+      source,
+      /challenge partner|most wanted|hackathon|GUTS/i,
+      file,
+    );
+    assert.doesNotMatch(
+      source,
+      /BlackRock title|Listings change and close/,
+      file,
+    );
+  }
+  for (const fact of view.facts) assert.ok(fact.source.href, fact.label);
+  for (const fact of [
+    ...view.official.waysIn,
+    ...view.official.company,
+    ...view.official.payWorks,
+    ...view.official.benefits,
+    view.official.medianPay,
+    view.ladder.story,
+  ])
+    assert.ok(fact.source.href, fact.label);
+  assert.ok(view.ladder.source.href && view.share.source.href);
 });

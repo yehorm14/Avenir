@@ -40,6 +40,12 @@
   letter-spacing: -0.03em;
   line-height: 1.25;
 }
+.pulse-tag-note {
+  margin-left: 4px;
+  color: var(--muted);
+  font-size: 10px;
+}
+.pulse-brand small,
 .pulse-brand p {
   margin-top: 3px;
   color: var(--muted);

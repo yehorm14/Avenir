@@ -149,26 +149,16 @@ function CareerLadder({ ladder }: { ladder: EmployerView["ladder"] }) {
   return (
     <figure className="pulse-ladder" aria-labelledby="pulse-ladder-title">
       <h3 id="pulse-ladder-title">{ladder.title}</h3>
-      <p className="pulse-ladder-sub">
-        Base pay ranges by level, £k a year, with the number of salary reports
-        behind each range.
-      </p>
       <div className="pulse-ladder-chart">
         <ol className="pulse-ladder-rows">
           {ladder.rows.map((row) => (
             <li
               key={row.level}
               className={row.missing ? "is-missing" : undefined}
+              title={row.reports || undefined}
               aria-label={`${row.level}: ${row.range}${row.reports ? `, ${row.reports}` : ""}`}
             >
-              <span className="pulse-ladder-level">
-                {row.level}
-                {row.official ? (
-                  <i className="pulse-official-mark" title="BlackRock title">
-                    BlackRock title
-                  </i>
-                ) : null}
-              </span>
+              <span className="pulse-ladder-level">{row.level}</span>
               <svg
                 className="pulse-ladder-track"
                 width="100%"
@@ -199,7 +189,6 @@ function CareerLadder({ ladder }: { ladder: EmployerView["ladder"] }) {
               </svg>
               <span className="pulse-ladder-figures">
                 {row.missing ? <small>{row.range}</small> : <b>{row.range}</b>}
-                {row.reports ? <small>{row.reports}</small> : null}
               </span>
             </li>
           ))}
@@ -217,8 +206,8 @@ function CareerLadder({ ladder }: { ladder: EmployerView["ladder"] }) {
         </div>
       </div>
       <figcaption>
-        Pay: <Source link={ladder.source} />. {ladder.note} Job titles as
-        BlackRock names them: <Source link={ladder.titlesSource} />.
+        {ladder.note} <Source link={ladder.source} /> ·{" "}
+        <Source link={ladder.titlesSource} />
       </figcaption>
       <p className="pulse-story">
         <b>{ladder.story.label}:</b> {ladder.story.value}{" "}
@@ -276,16 +265,16 @@ function WaysInForYou({
                 way.label
               )}
             </b>
-            {way.tag ? <span className="pulse-tag">{way.tag}</span> : null}
-            <span>{way.value}</span>
-            {way.details.length ? (
-              <ul>
-                {way.details.map((detail) => (
-                  <li key={detail}>{detail}</li>
-                ))}
-              </ul>
-            ) : null}
+            <span> — {way.value}</span>
+            {way.details
+              .filter((detail) => /^Deadlines/.test(detail))
+              .map((detail) => (
+                <span key={detail}> — {detail}</span>
+              ))}{" "}
             <Cite fact={way} />
+            {way.tag ? (
+              <small className="pulse-tag-note">{way.tag}</small>
+            ) : null}
           </li>
         ))}
         <li>
@@ -300,17 +289,10 @@ function WaysInForYou({
             ))}
           </ul>
           <small className="pulse-cite">
-            <Source link={glassdoor.source} />, listed on {employer.asOf}.
-            Listings change and close.
+            <Source link={glassdoor.source} />
           </small>
         </li>
       </ol>
-      <p className="pulse-degree">
-        <b>
-          {official.degreeSubject.label}: {official.degreeSubject.value}
-        </b>{" "}
-        <Cite fact={official.degreeSubject} />
-      </p>
     </section>
   );
 }
@@ -490,11 +472,8 @@ export default function EmployerPulse({ careers }: { careers: Career[] }) {
             BlackRock
           </span>
           <div>
-            <h2 id="employer-pulse-title">Employer pulse</h2>
-            <p>
-              Challenge partner · most wanted employer
-              {employer ? ` · figures as of ${employer.asOf}` : ""}
-            </p>
+            <h2 id="employer-pulse-title">Careers at BlackRock, in numbers</h2>
+            {employer ? <small>As of {employer.asOf}</small> : null}
           </div>
         </div>
         {employer ? <ShareTile share={employer.share} /> : null}
