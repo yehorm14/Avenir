@@ -7,26 +7,18 @@ catalogue metrics and unreviewed route examples from the decision engine.
 
 from pathfinder_ml import ML
 
-from avenir_contracts import Metric, SourceStatus, load_data
+from avenir_contracts import SourceStatus, load_data
 
 
 def product_data():
     data = load_data()
     evidence = ML()
-    input_sources = {"shortage": "oid_2025", "wellbeing": "aps_occupation", "stress": "hse_stress", "ads_now": "adzuna"}
     for soc, career in data.careers.items():
         occupation = evidence.occupation(soc)
-        metrics = {
-            key: Metric.missing(
-                metric.unit,
-                input_sources.get(key, metric.source),
-                granularity=metric.granularity,
-                note="Reviewed evidence for this input is not available; sample values are excluded.",
-            )
-            if metric.status == "mock"
-            else metric
-            for key, metric in career.metrics.items()
-        }
+        # No reviewed catalogue observation exists for sample-only fields. An
+        # absent input participates in the engine's confidence penalty; marking
+        # it pending would incorrectly opt it out of that calculation.
+        metrics = {key: metric for key, metric in career.metrics.items() if not metric.is_mock}
         data.careers[soc] = career.model_copy(
             update={
                 "title": (occupation.get("short_title") or occupation["title"]) if occupation else career.official_title,

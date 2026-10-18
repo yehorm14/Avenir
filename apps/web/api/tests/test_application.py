@@ -72,3 +72,19 @@ def test_production_static_ui_is_served_after_api_routes(tmp_path):
     assert "Aventier production" in client.get("/").text
     assert client.get("/api/health").json()["data"]["status"] == "ok"
     assert client.get("/health").json()["data"]["status"] == "ok"
+
+
+def test_excluded_sample_inputs_lower_decision_confidence_without_changing_real_metrics(client):
+    from pathfinder_ml import ML
+
+    from avenir_contracts import ProfileIn
+    from avenir_decision import score_components
+
+    data = client.app.state.data
+    evidence = ML()
+    scores = score_components(ProfileIn(interests=["computers_coding"]), list(data.careers.values()), data.affinity)
+    assert scores["2134"].market_risk.confidence == "low"
+    for soc, career in data.careers.items():
+        for key, metric in evidence.occupation(soc)["metrics"].items():
+            assert career.metrics[key].value == metric["value"]
+        assert not any(metric.is_mock for metric in career.metrics.values())

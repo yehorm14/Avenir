@@ -49,3 +49,9 @@ Default prepared guidance avoids requiring a live-model call for every interacti
 | Can the service operate sustainably?                      | Measured delivery/support costs, resolved redistribution rights and tested pricing.                                  |
 
 The next business milestone is an agreed pilot with a measurable decision rule. Funding a larger product would require evidence of repeat use and a paying buyer, alongside responsible handling of learners and demonstrably useful recommendations.
+
+## Proposed next funding milestone
+
+Ask for an eight-week pilot grant of £15,000 and introductions to two school careers leads. This is a proposed request, not committed funding: budget £7,000 for product/data maintenance, £4,000 for adviser research and learner sessions, £2,000 for source-rights/accessibility review and £2,000 for hosting, onboarding and contingency. Validate these costs before contracting.
+
+Recruit two schools and 40 consenting learners, with adviser review of every completed plan. Proposed go/no-go thresholds, to agree with partners before collection: at least 75% finish a plan with an adviser-rated feasible next action, at least 80% correctly explain the pay/exposure limitations, at least 50% complete one action within four weeks, and at least one budget owner agrees to a paid follow-on pilot. Record accessibility failures, unsafe recommendations, attrition and delivery time alongside these rates. These thresholds are hypotheses, not results; failures determine what to change before expansion.

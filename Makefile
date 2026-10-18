@@ -1,6 +1,6 @@
 PY ?= python
 
-.PHONY: help run openapi data data-dry data-check data-sync adzuna check lint test secrets
+.PHONY: help run openapi data data-dry data-check data-sync adzuna check lint test web-check secrets
 
 help:
 	@echo "make run         start the API on :8000 with reload"
@@ -44,9 +44,17 @@ lint:
 	ruff check .
 
 test:
-	@if ls packages/*/tests services/*/tests 2>/dev/null | grep -q .; then pytest -q; else echo "no tests yet"; fi
+	$(PY) -m pytest
+	$(PY) -m pytest apps/web/api/tests scripts/integration scripts/tests
+	PYTHONPATH=prototypes/pathfinder-game/backend $(PY) -m pytest prototypes/pathfinder-game/backend/tests
+
+web-check:
+	npm --prefix apps/web test
+	npm --prefix apps/web run format:check
+	npm --prefix apps/web run build
 
 secrets:
-	@command -v gitleaks >/dev/null && gitleaks detect --no-banner --redact || echo "gitleaks not installed; pre-commit runs it"
+	$(PY) scripts/check_secrets.py
+	@if command -v gitleaks >/dev/null; then gitleaks detect --no-banner --redact; fi
 
-check: lint test secrets
+check: lint test web-check secrets

@@ -738,7 +738,14 @@ export default function App() {
                     tags={
                       prefs.discovery?.tags ?? tagsFromAnswers(prefs.answers)
                     }
-                    firstIdea={primary.title}
+                    firstIdea={
+                      careers.find(
+                        (c) =>
+                          c.soc ===
+                          (prefs.discovery?.referenceSoc ??
+                            prefs.discovery?.targetSoc),
+                      )?.title ?? primary.title
+                    }
                     nation={prefs.nation}
                     onInspect={(soc) => {
                       const career = careers.find((c) => c.soc === soc);

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import type { Career, HistoryPoint } from "./types";
+import type { Career } from "./types";
+import { historySegments } from "./historySegments";
 export const money = (v: number | null | undefined) =>
   v == null
     ? "Not available"
@@ -20,7 +21,7 @@ export function SalaryChart({
 }) {
   const [mode, setMode] = useState<"real" | "nominal" | "jobs">("real");
   const [hover, setHover] = useState<number | null>(null);
-  const key: keyof HistoryPoint =
+  const key: "pay_median_real" | "pay_median" | "jobs_k" =
     mode === "real"
       ? "pay_median_real"
       : mode === "nominal"
@@ -57,22 +58,6 @@ export function SalaryChart({
         ? "Annual median pay in April 2025 prices"
         : "Annual median pay in money of the year";
   const chosen = hover ?? y1;
-  const segment = (points: HistoryPoint[]) => {
-    const out: HistoryPoint[][] = [];
-    let s: HistoryPoint[] = [];
-    for (const p of points) {
-      if (typeof p[key] !== "number" || p.year === 2021) {
-        if (s.length) out.push(s);
-        s =
-          mode !== "jobs" && p.year === 2021 && s.length
-            ? [s[s.length - 1]]
-            : [];
-      }
-      if (typeof p[key] === "number") s.push(p);
-    }
-    if (s.length) out.push(s);
-    return out;
-  };
   return (
     <section className={`chart-module ${compact ? "compact" : ""}`}>
       <div className="chart-top">
@@ -187,7 +172,7 @@ export function SalaryChart({
               </text>
             ))}
           {careers.map((c, i) =>
-            segment(c.history || []).map((s, j) => (
+            historySegments(c.history || [], key).map((s, j) => (
               <polyline
                 key={`${c.soc}-${j}`}
                 points={s

@@ -15,7 +15,7 @@ from starlette.middleware.gzip import GZipMiddleware
 from avenir_api.app import create_app
 from avenir_api.envelope import ok
 from avenir_api.routes_read import ERROR_RESPONSES
-from avenir_contracts import Envelope
+from avenir_contracts import Envelope, KeywordSuggester, SnapshotAds, TemplateExplanation
 
 from .main import app as experience
 from .product_data import product_data
@@ -32,7 +32,7 @@ def _experience_endpoint(endpoint, sources):
 
 
 def create_application(web_dir: Path | None = None):
-    app = create_app(data=product_data())
+    app = create_app(data=product_data(), ads=SnapshotAds(), writer=TemplateExplanation(), suggester=KeywordSuggester())
     app.title = "Aventier API"
     app.version = "1.1.0"
     app.description = "Career discovery, sourced evidence and deterministic decision comparisons. No API key is required."

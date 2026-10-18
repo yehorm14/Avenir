@@ -42,7 +42,7 @@ npm --prefix apps/web run build
 node scripts/run-app.mjs --preview
 ```
 
-The release owner must confirm the final same-origin production startup and port when integrating the container. The [Compose configuration](../../docker-compose.yml) must start the complete UI/API stack with empty optional provider credentials before one-command deployment is claimed:
+The production command is `node scripts/run-app.mjs --production` on port 4175; `--preview` is an alias. It serves UI and both API layers from one origin. The [Compose configuration](../../docker-compose.yml) defines the same complete app. Docker execution is unverified on this machine because Docker is not installed:
 
 ```sh
 docker compose up --build
