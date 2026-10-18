@@ -1,5 +1,7 @@
 # Integration tasks
 
+- [x] [codex] Completion audit: integrate Arsenii's separate ML-summary corrections, verify remaining upstream patches are already present or superseded, and reconcile the challenge evidence with the final release. The only outstanding workflow item is draft PR creation below.
+
 - [x] [codex] Release follow-up on codex/hackathon-release: repair alternate API startup, add reproducible setup/check commands, verify a fresh installation and real HTTP demo without keys, resolve inherited npm advisories, review and push. Final release gate: 588 passed, 2 optional skipped; npm audit: 0 vulnerabilities.
 
 - [x] [codex] Execute hackathon launch plan: latest backend/ML integration, full evidence directory, durable decision plan, source/a11y fixes, reproducible serving, independent review and pushed checkpoints. See docs/superpowers/plans/2026-10-18-hackathon-launch.md.
