@@ -8,6 +8,8 @@ from __future__ import annotations
 
 from pathfinder_ml import ML
 
+from .evidence_metadata import evidence_metadata
+
 SOC_SECTORS = {
     "1": "Managers, directors and senior officials",
     "2": "Professional occupations",
@@ -92,6 +94,7 @@ def detail(evidence: ML, soc: str, curated: list[dict]) -> dict | None:
     source_ids = {measure["source"] for measure in occupation["metrics"].values()} | {"ons_cpih"}
     return {
         **context,
+        "evidence_metadata": evidence_metadata(evidence),
         "sources": [registry[key] for key in sorted(source_ids) if key in registry],
         "metrics": occupation["metrics"],
         "jobs_observation": jobs_observation(evidence, occupation),

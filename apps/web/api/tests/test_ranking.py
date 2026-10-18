@@ -67,3 +67,17 @@ def test_matching_preserves_supplied_fit_status():
     assert results[0]["fit_status"] == "preliminary"
     fallback = rank_careers([career("0001", 100, 0.1)], [], {"interest": 1}, {})
     assert fallback[0]["fit_status"] == "mock"
+
+
+def test_need_reason_preserves_supplied_period_and_relative_basis():
+    from api.ranking import rank_careers
+
+    option = career("2134", 56914, 0.0262)
+    option["metrics"]["demand_trend"].update(
+        as_of="2022-2025", extra={"absolute_trend": 0.0681, "typical_occupation_trend": 0.0342}
+    )
+    ranked = rank_careers([option], [], {"need": 1}, {})
+    reasons = " ".join(ranked[0]["reasons"])
+    assert "2022-2025" in reasons
+    assert "relative to the typical occupation" in reasons
+    assert "2021" not in reasons

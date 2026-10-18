@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from math import isfinite
 
+from .evidence_metadata import demand_comparison
+
 
 def _value(career: dict, key: str) -> float | None:
     metric = career.get("metrics", {}).get(key, {})
@@ -35,7 +37,7 @@ def rank_careers(
     """Return all careers with 0–100 component scores and a weighted score.
 
     Pay and need are percentile ranks across available career values. Need uses
-    historical 2021–2025 demand, not a forecast. Missing inputs stay null and are
+    the supplied historical demand measure, not a forecast. Missing inputs stay null and are
     omitted from the weighted mean. Mean affinity uses the supplied fit model;
     no interests means a neutral 50. Zero weights use equal importance.
     """
@@ -68,7 +70,12 @@ def rank_careers(
         if pay[soc] is not None:
             reasons.append("Pay compares the published median with other careers in this collection.")
         if need[soc] is not None:
-            reasons.append("Need reflects the observed 2021–2025 employment trend; it is not a prediction.")
+            trend = career["metrics"]["demand_trend"]
+            period = trend.get("as_of") or "supplied period"
+            reasons.append(
+                f"Need reflects the observed {period} employee-job trend{demand_comparison(trend)}; "
+                "it is not a prediction."
+            )
         results.append(
             {
                 **career,

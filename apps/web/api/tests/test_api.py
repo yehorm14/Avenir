@@ -33,6 +33,30 @@ def test_bootstrap_passes_through_actual_arsenii_metrics_and_history(client):
     assert set(data["sources"]) == set(ML().sources())
 
 
+def test_price_metadata_reaches_bootstrap_and_every_full_career_profile(client):
+    data = client.get("/api/bootstrap").json()
+    expected = {
+        "schema_version": "1.2",
+        "price_base": "CPIH, tax year 2024/25 average",
+        "price_label": "2024/25 prices",
+    }
+    assert data["evidence_metadata"] == expected
+    assert all(career["evidence_metadata"] == expected for career in data["careers"])
+    for soc in ("2134", "1111"):
+        assert client.get(f"/api/careers/{soc}").json()["evidence_metadata"] == expected
+
+
+def test_guide_uses_supplied_tax_year_price_base_and_relative_demand_definition(client):
+    pay = client.post("/api/guide", json={"soc": "2134", "message": "Explain salary and inflation"}).json()["text"]
+    assert "2024/25 prices" in pay
+    assert "April 2025" not in pay
+    demand = client.post("/api/guide", json={"soc": "2134", "message": "Explain demand"}).json()["text"]
+    assert "+2.62%" in demand
+    assert "2022-2025" in demand
+    assert "relative to the typical occupation" in demand
+    assert "indicative, not accurate estimates" in demand
+
+
 def test_match_endpoint_validates_profile_and_returns_every_career(client):
     unknown = client.post("/api/matches", json={"tags": ["not-real"], "weights": {"pay": 1, "interest": 1, "need": 1}})
     assert unknown.status_code == 422
@@ -138,7 +162,7 @@ def test_ai_guide_discloses_preliminary_estimate_and_multi_code_range(client):
     assert "preliminary" in answer.lower()
     assert "several international job codes" in answer
     assert "weighted average" in answer
-    assert "0.5126–0.5762" in answer
+    assert "0.4604–0.6284" in answer
 
 
 def test_pay_and_demand_guide_disclose_employee_coverage_and_provisional_year(client):

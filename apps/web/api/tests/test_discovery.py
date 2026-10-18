@@ -138,6 +138,31 @@ def test_explicit_dislike_is_not_treated_as_an_interest(client):
     assert negative_only.status_code == 422
 
 
+@pytest.mark.parametrize(
+    ("interests", "tag"),
+    [("I enjoy maths", "maths"), ("I enjoy drawing", "art_drawing"), ("I enjoy explaining", "teaching_explaining")],
+)
+def test_stem_keywords_match_positive_activities_without_counting_salary_priorities(client, interests, tag):
+    response = client.post(
+        "/api/discovery",
+        json={"mode": "explore", "answers": {"interests": interests, "values": "Money and business pay matter"}},
+    )
+    assert response.status_code == 200
+    tags = response.json()["tags"]
+    assert tag in tags
+    assert "money_business" not in tags
+
+
+def test_negated_stem_keyword_does_not_reenter_through_the_matcher(client):
+    response = client.post(
+        "/api/discovery",
+        json={"mode": "explore", "answers": {"interests": "I dislike drawing, but enjoy maths"}},
+    )
+    assert response.status_code == 200
+    assert "maths" in response.json()["tags"]
+    assert "art_drawing" not in response.json()["tags"]
+
+
 def test_known_civil_engineer_resolves_exact_reference(client):
     response = client.post(
         "/api/discovery",

@@ -29,6 +29,7 @@ from pathfinder_ml import FLAG_TEXT, ML, MUST_MENTION  # noqa: E402
 from .catalogue import detail as catalogue_detail  # noqa: E402
 from .catalogue import summaries as catalogue_summaries  # noqa: E402
 from .discovery import DiscoveryRequest, discover  # noqa: E402
+from .evidence_metadata import demand_comparison, evidence_metadata  # noqa: E402
 from .ranking import rank_careers  # noqa: E402
 
 app = FastAPI(title="Avenir app API", version="1.0.0")
@@ -121,6 +122,7 @@ def _careers() -> list[dict]:
     store = get_store()
     output = []
     occupations = ml().occupations(demo_only=True)
+    metadata = evidence_metadata(ml())
     plumber = ml().occupation("5315")
     if plumber is not None and all(occupation["soc2020"] != "5315" for occupation in occupations):
         occupations.append(plumber)
@@ -147,6 +149,7 @@ def _careers() -> list[dict]:
         output.append(
             {
                 "soc": soc,
+                "evidence_metadata": metadata,
                 "title": title,
                 "summary": summary,
                 "sector": DISPLAY_SECTORS.get(soc, "Career exploration"),
@@ -194,6 +197,7 @@ def bootstrap() -> dict:
     fit = ml()._load("fit")
     return {
         "careers": _careers(),
+        "evidence_metadata": evidence_metadata(ml()),
         "tags": ml().tags(),
         "sources": ml().sources(),
         "backtest": ml()._load("backtest"),
@@ -240,7 +244,8 @@ def matches(request: MatchRequest) -> dict:
 @app.post("/api/discovery")
 def discovery(request: DiscoveryRequest) -> dict:
     try:
-        return discover(request, _match_careers(), ml().match_tags(request.answers.text(), top_k=16), ml()._load("fit"))
+        matches = ml().match_tags(request.answers.positive_activity_text(), top_k=16)
+        return discover(request, _match_careers(), matches, ml()._load("fit"))
     except ValueError as error:
         raise HTTPException(422, str(error)) from error
 
@@ -331,7 +336,10 @@ def _guide_reply(career: dict, message: str, history: list[GuideTurn]) -> tuple[
                 f" The middle half of full-time employees earn £{pay['low']:,.0f}–£{pay['high']:,.0f}; "
                 "this is not a starting-salary promise."
             )
-        text += " Use the inflation-adjusted chart to compare purchasing power in April 2025 prices."
+        text += (
+            " Use the inflation-adjusted chart to compare purchasing power in "
+            + career["evidence_metadata"]["price_label"] + "."
+        )
         text += _evidence_note(pay)
         return text, ["ons_ashe_t14", "ons_cpih"]
     if any(word in lower for word in (" ai", "ai ", "automation", "robot", "replace", "exposure")) or lower == "ai":
@@ -361,8 +369,8 @@ def _guide_reply(career: dict, message: str, history: list[GuideTurn]) -> tuple[
                 ["ons_ashe_t14"],
             )
         return (
-            f"The observed employee-job trend was {100 * demand['value']:+.2f}% per year "
-            f"over {demand.get('as_of', '2021–2025')}. This is a historical signal, "
+            f"The observed employee-job trend{demand_comparison(demand)} was {100 * demand['value']:+.2f}% per year "
+            f"over {demand.get('as_of') or 'the supplied period'}. This is a historical signal, "
             "not a prediction or a promise of a vacancy. Compare it with your interest "
             "in the day-to-day work and build skills that transfer between roles. "
             + demand.get("note", "") + _evidence_note(demand),

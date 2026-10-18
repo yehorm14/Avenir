@@ -59,7 +59,9 @@ curl -sS http://127.0.0.1:8015/api/v1/recommendations \
 
 - `GET /api/health`: status, curated-career count, ML mode and guide mode.
 - `GET /api/bootstrap`: 21 curated profiles (20 matched careers plus plumber),
-  tags, original source registry, backtest, crises and data status.
+  tags, original source registry, backtest, crises, evidence metadata and data status.
+  `evidence_metadata` carries the source schema version, CPIH price base and a
+  readable price label; full career profiles retain it for charts and exports.
 - `GET /api/catalogue`: 412 lightweight occupation summaries for Jobs. Pay and
   employee-job counts retain their source and observation year; any older count
   is explicitly marked as the last available historical observation.
@@ -83,13 +85,16 @@ The canonical API also provides `/api/v1/tags`, `/api/v1/careers`,
 `/api/v1/profile`, `/api/v1/recommendations`, history, hedges, routes, sources and
 backtests. Inspect `/docs` or `/openapi.json` for their exact input/output models.
 Canonical ranking excludes unreviewed sample catalogue metrics and route rows;
-missing inputs reduce evidence coverage and confidence.
+missing inputs reduce evidence coverage and confidence. Production scoring also
+withholds crisis measures whose supplied `show_on_card` policy is false, including
+the 2008 and cost-of-living measures that failed the placebo check. The raw
+bootstrap and career evidence retain these observations and their crisis checks
+for inspection. The decision engine itself is unchanged.
 
 ## Evidence and matching coverage
 
-The imported ML evidence revision is Arsenii's
-`a17aebbd7188c86ae01f521e89f7ba59855fd3e8` (contract v1.1). Later local matcher
-reliability fixes are recorded in this repository's Git history. Evidence covers
+The imported ML evidence revision is Arsenii's `41a55f4` (contract v1.2), with
+tax-year CPIH, relative demand, purity flags and revised uncertainty. Evidence covers
 412 occupations; histories span 2007–2025 with employee-job counts from 2011.
 The 2021 occupation-code break, older-code bridges, wider-group estimates,
 provisional values and missing observations retain their supplied flags and
@@ -100,7 +105,8 @@ The experience matcher uses the 20-career affinity set. Fit is the mean supplied
 tag affinity; pay and need use available median-pay and observed-demand
 percentile ranks. Scores run 0–100. Missing inputs are excluded from the weighted
 mean and all-zero weights use equal importance. Demand describes historical
-employment, rather than predicting future vacancies. Fit/hedge status, method,
+employee-job change relative to the typical occupation over the supplied period,
+rather than predicting future vacancies. Fit/hedge status, method,
 evaluation limits and real/mock origin are reported in the payload. Unknown tags
 return HTTP 422. Curated study routes, university examples and opportunities retain
 their coverage notes; they are not a live calendar or university ranking.

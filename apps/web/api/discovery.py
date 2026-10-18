@@ -24,6 +24,9 @@ class DiscoveryAnswers(BaseModel):
     def activity_text(self) -> str:
         return "\n".join((self.direction, self.interests, self.subjects, self.skills))
 
+    def positive_activity_text(self) -> str:
+        return _positive_clauses(self.activity_text())
+
 
 class DiscoveryRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -138,19 +141,14 @@ def _weights(values: str) -> tuple[dict[str, int], str | None]:
 
 
 def discover(request: DiscoveryRequest, careers: list[dict], tag_matches: list[dict], fit: dict) -> dict:
-    """Build three comparisons from already loaded evidence and ML keyword matches."""
+    """Build comparisons from evidence and ML matches on positive activity text."""
     if len(careers) < 3:
         raise ValueError("At least three career profiles are needed to compare options.")
     affinity = fit["affinity"]
-    activity = _positive_clauses(request.answers.activity_text())
-    # Match_tags receives the entire conversation. Value-only salary preferences
-    # affect weights, rather than being mistaken for an interest in finance.
-    selected = {
-        match["tag"]
-        for match in tag_matches
-        if match["tag"] in affinity
-        and any(re.search(r"\b" + re.escape(keyword.lower()), activity) for keyword in match.get("matched", []))
-    }
+    activity = request.answers.positive_activity_text()
+    # The ML matcher owns its keyword/stem syntax. It receives only positive
+    # activities; value-only salary preferences affect weights, not interests.
+    selected = {match["tag"] for match in tag_matches if match["tag"] in affinity}
     for tag, pattern in SYNONYMS.items():
         if tag in affinity and re.search(pattern, activity):
             selected.add(tag)

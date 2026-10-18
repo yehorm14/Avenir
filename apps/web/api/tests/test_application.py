@@ -64,6 +64,24 @@ def test_openapi_describes_both_api_layers_and_consistent_envelopes(client):
     assert "Envelope" in response["content"]["application/json"]["schema"]["$ref"]
 
 
+def test_failed_placebo_crises_are_withheld_from_production_scoring_but_raw_evidence_survives(client):
+    raw = client.get("/api/bootstrap").json()["data"]
+    raw_software = next(career for career in raw["careers"] if career["soc"] == "2134")
+    scored = client.app.state.data.careers["2134"].metrics
+    canonical = client.get("/api/v1/careers/2134").json()["data"]["metrics"]
+    for key in ("resilience_2008", "resilience_cost_of_living"):
+        assert key not in scored
+        assert key not in canonical
+        assert raw_software["metrics"][key]["value"] is not None
+    for key in ("pay_median", "demand_trend", "resilience_covid"):
+        assert scored[key].value == raw_software["metrics"][key]["value"]
+        assert canonical[key]["value"] == raw_software["metrics"][key]["value"]
+    crisis = {crisis["key"]: crisis for crisis in raw["crises"]}
+    assert crisis["gfc_2008"]["show_on_card"] is False
+    assert crisis["cost_of_living"]["show_on_card"] is False
+    assert crisis["covid"]["show_on_card"] is True
+
+
 def test_production_static_ui_is_served_after_api_routes(tmp_path):
     from api.application import create_application
 
@@ -86,5 +104,8 @@ def test_excluded_sample_inputs_lower_decision_confidence_without_changing_real_
     assert scores["2134"].market_risk.confidence == "low"
     for soc, career in data.careers.items():
         for key, metric in evidence.occupation(soc)["metrics"].items():
-            assert career.metrics[key].value == metric["value"]
+            if key in {"resilience_2008", "resilience_cost_of_living"}:
+                assert key not in career.metrics
+            else:
+                assert career.metrics[key].value == metric["value"]
         assert not any(metric.is_mock for metric in career.metrics.values())
