@@ -12,9 +12,12 @@ import DecisionReview from "./DecisionReview";
 import Landing from "./Landing";
 import Jobs from "./Jobs";
 import Discovery, { type DiscoveryResult } from "./Discovery";
+import CareerDashboard from "./CareerDashboard";
 
 const pageNames: Record<Page, string> = {
   discover: "Discover",
+  "computer-science": "Computer Science",
+  finance: "Finance",
   conversation: "Your conversation",
   quiz: "Quiz",
   jobs: "Jobs",
@@ -78,6 +81,9 @@ function External({
 export default function App() {
   const [prefs, setPrefs] = usePreferences();
   const [page, setPage] = useState<Page>(route);
+  const [guideSoc, setGuideSoc] = useState<string | null>(
+    () => window.location.hash.split("/")[2] ?? null,
+  );
   const [data, setData] = useState<Bootstrap | null>(null);
   const [loadError, setLoadError] = useState("");
   const [reload, setReload] = useState(0);
@@ -87,15 +93,17 @@ export default function App() {
   const [toast, setToast] = useState("");
   const [inspect, setInspect] = useState<Career | null>(null);
   const mainRef = useRef<HTMLElement>(null);
-  const go = (p: Page) => {
+  const go = (p: Page, soc?: string) => {
     setPage(p);
-    window.location.hash = `/${p}`;
+    setGuideSoc(p === "guides" ? (soc ?? null) : null);
+    window.location.hash = `/${p}${p === "guides" && soc ? `/${soc}` : ""}`;
     window.scrollTo(0, 0);
     setTimeout(() => mainRef.current?.focus({ preventScroll: true }), 0);
   };
   useEffect(() => {
     const fn = () => {
       setPage(route());
+      setGuideSoc(window.location.hash.split("/")[2] ?? null);
       window.scrollTo(0, 0);
     };
     window.addEventListener("hashchange", fn);
@@ -175,6 +183,7 @@ export default function App() {
     )
     .filter((c): c is Career => !!c);
   const primary = selected[0];
+  const guideCareer = careers.find((career) => career.soc === guideSoc);
   const topCareers = matches.slice(0, 3);
   const choose = (c: Career) => {
     if (prefs.selected.includes(c.soc)) {
@@ -225,6 +234,17 @@ export default function App() {
     go("matches");
   };
   const showShell = !["discover", "quiz", "conversation"].includes(page);
+  const useCareer = (career: Career, destination: Page) => {
+    // Subject exploration does not imply a completed quiz or a personal match.
+    setPrefs((current) => ({
+      ...current,
+      selected: [
+        career.soc,
+        ...current.selected.filter((soc) => soc !== career.soc),
+      ].slice(0, 3),
+    }));
+    go(destination);
+  };
   const exportPlan = () => {
     if (!primary || !data) return;
     const body = buildPlanDocument({
@@ -277,6 +297,8 @@ export default function App() {
           {(
             [
               ["discover", "Home"],
+              ["computer-science", "Computer Science"],
+              ["finance", "Finance"],
               ["quiz", "Quiz"],
               ["jobs", "Jobs"],
               ["guides", "Career guide"],
@@ -301,20 +323,22 @@ export default function App() {
         className={`main-content ${showShell ? "workspace" : ""}`}
       >
         {showShell &&
-          prefs.completed &&
+          primary &&
           ["overview", "matches", "path", "opportunities", "evidence"].includes(
             page,
           ) && (
             <nav className="plan-navigation" aria-label="Plan navigation">
-              {[...nav, { id: "evidence" as const, icon: "chart" }].map((n) => (
-                <button
-                  key={n.id}
-                  onClick={() => go(n.id)}
-                  aria-current={page === n.id ? "page" : undefined}
-                >
-                  {pageNames[n.id]}
-                </button>
-              ))}
+              {[...nav, { id: "evidence" as const, icon: "chart" }]
+                .filter((n) => n.id !== "matches" || prefs.completed)
+                .map((n) => (
+                  <button
+                    key={n.id}
+                    onClick={() => go(n.id)}
+                    aria-current={page === n.id ? "page" : undefined}
+                  >
+                    {pageNames[n.id]}
+                  </button>
+                ))}
             </nav>
           )}
         {loadError ? (
@@ -338,11 +362,39 @@ export default function App() {
           <>
             {page === "discover" && (
               <Landing
+                careers={careers}
                 onChoose={start}
+                onDashboard={(area) =>
+                  go(area === "cs" ? "computer-science" : "finance")
+                }
                 resume={
                   primary
                     ? { title: primary.title, onResume: () => go("overview") }
                     : undefined
+                }
+              />
+            )}
+            {(page === "computer-science" || page === "finance") && (
+              <CareerDashboard
+                key={page}
+                area={page === "computer-science" ? "cs" : "finance"}
+                careers={careers}
+                sourceRegistry={
+                  data.sources as Record<
+                    string,
+                    { name?: string; url?: string }
+                  >
+                }
+                onPlan={(career) => useCareer(career, "path")}
+                onGuide={(career) => go("guides", career.soc)}
+                saved={prefs.saved}
+                onToggleSave={(id) =>
+                  setPrefs((current) => ({
+                    ...current,
+                    saved: current.saved.includes(id)
+                      ? current.saved.filter((savedId) => savedId !== id)
+                      : [...current.saved, id],
+                  }))
                 }
               />
             )}
@@ -726,6 +778,15 @@ export default function App() {
                     prefs={prefs}
                     update={update}
                     go={go}
+                    onEditChoices={() =>
+                      go(
+                        ["2134", "3544", "2133", "2135"].includes(primary.soc)
+                          ? "computer-science"
+                          : ["2422", "2421", "2433"].includes(primary.soc)
+                            ? "finance"
+                            : "jobs",
+                      )
+                    }
                     onExport={exportPlan}
                     onReset={() => {
                       setPrefs(structuredClone(initial));
@@ -791,7 +852,16 @@ export default function App() {
                 <NeedChoices go={go} />
               ))}
             {page === "guides" && careers.length > 0 && (
-              <Guides careers={selected.length ? selected : careers} />
+              <Guides
+                key={guideCareer?.soc ?? "all"}
+                careers={
+                  guideCareer
+                    ? [guideCareer]
+                    : selected.length
+                      ? selected
+                      : careers
+                }
+              />
             )}
             {page === "evidence" && (
               <Evidence
@@ -952,15 +1022,19 @@ function PageHeading({
 function NeedChoices({ go }: { go: (p: Page) => void }) {
   return (
     <div className="empty-state">
-      <Icon name="path" size={40} />
-      <h2>Give your future a starting point.</h2>
-      <p>
-        Rank three career matches to build your pathway, meet your guide, and
-        discover relevant opportunities.
-      </p>
-      <button className="button primary" onClick={() => go("matches")}>
-        Choose your careers <Icon name="arrow" />
-      </button>
+      <h2>Choose a career to plan</h2>
+      <p>Open a dashboard, then select “Build my plan”.</p>
+      <div className="decision-buttons">
+        <button
+          className="button primary"
+          onClick={() => go("computer-science")}
+        >
+          Computer Science
+        </button>
+        <button className="button secondary" onClick={() => go("finance")}>
+          Finance
+        </button>
+      </div>
     </div>
   );
 }
@@ -1250,9 +1324,9 @@ function Pathway({
   return (
     <>
       <PageHeading
-        label="Your first choice, brought to life"
-        title={`Your ${career.title.toLowerCase()} pathway.`}
-        description="The big picture, a few open doors, and practical steps to make it yours."
+        label="Career pathway"
+        title={career.title}
+        description="Compare study routes, practise the skills and choose a next step."
         action={
           <button className="button secondary" onClick={onExport}>
             <Icon name="download" size={16} /> Save my plan
@@ -1277,7 +1351,7 @@ function Pathway({
           ["plan", "Your route"],
           ["skills", "Skills to build"],
           ["study", "Universities & study"],
-          ["reality", "The real picture"],
+          ["reality", "Pay and employment"],
         ].map(([id, label]) => (
           <button
             key={id}
@@ -1294,7 +1368,7 @@ function Pathway({
           <div className="path-layout">
             <section>
               <div className="section-header">
-                <h2>Make space for possibility.</h2>
+                <h2>Study and training routes</h2>
               </div>
               <div className="broad-degree">
                 <Icon name="book" size={24} />
@@ -1418,7 +1492,7 @@ function Pathway({
             </section>
             <aside className="path-aside">
               <section className="everyday">
-                <h3>A day in this world</h3>
+                <h3>Typical tasks</h3>
                 {content.dayToDay.map((s) => (
                   <p key={s}>
                     <Icon name="check" size={16} />
@@ -1453,7 +1527,7 @@ function Pathway({
       )}
       {tab === "skills" && (
         <section className="skills-section">
-          <h2>Build skills. Keep the doors open.</h2>
+          <h2>Skills to practise</h2>
           <p>
             Explore these through a project, a class, or a small piece of real
             experience.
@@ -1495,7 +1569,7 @@ function Pathway({
       )}
       {tab === "study" && (
         <section className="study-section">
-          <h2>Find a place to grow.</h2>
+          <h2>Course examples</h2>
           <p>
             Established universities and course routes to explore. These are
             examples, not a league table or a statement of eligibility.
@@ -1600,7 +1674,6 @@ function Opportunities({
   const [kind, setKind] = useState("All");
   const [scope, setScope] = useState("nearby");
   const [onlySaved, setOnlySaved] = useState(false);
-  const [refreshed, setRefreshed] = useState("");
   const relevant = careers
     .flatMap((c) => getCareerContent(c.soc, c.family).opportunities)
     .filter((o, i, a) => a.findIndex((x) => x.url === o.url) === i);
@@ -1619,27 +1692,9 @@ function Opportunities({
   return (
     <>
       <PageHeading
-        label="A reason to keep exploring"
-        title="Find your next opportunity."
-        description={`Communities, experience, and events relevant to your three directions. Start close to ${prefs.location || "home"}, or look a little further.`}
-        action={
-          <button
-            className="button secondary"
-            onClick={() => {
-              setRefreshed(
-                new Date().toLocaleTimeString("en-GB", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                }),
-              );
-              notify(
-                "Directory refreshed. Open an organiser's site to check current dates and places.",
-              );
-            }}
-          >
-            <Icon name="refresh" size={15} /> Refresh
-          </button>
-        }
+        label="Opportunities"
+        title="Learning and work experience"
+        description={`Links for your selected careers. Showing ${prefs.nation} and online options by default.`}
       />
       <div className="opportunities-toolbar">
         <div className="filter-pills" aria-label="Opportunity type">
@@ -1669,10 +1724,7 @@ function Opportunities({
         </label>
       </div>
       <div className="directory-meta">
-        <span>
-          {visible.length} places to explore
-          {refreshed ? ` · Refreshed ${refreshed}` : ""}
-        </span>
+        <span>{visible.length} links</span>
         <label>
           <input
             type="checkbox"
@@ -1754,8 +1806,7 @@ function Opportunities({
         <p>
           This is a curated discovery directory, not a live vacancy feed. Dates,
           places, costs, age limits, and availability change. Check each
-          organiser before making plans. Refresh checks this saved directory; it
-          doesn't fetch new listings.
+          organiser before making plans.
         </p>
       </div>
     </>

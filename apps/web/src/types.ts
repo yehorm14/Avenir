@@ -92,6 +92,8 @@ export type Preferences = {
 };
 export type Page =
   | "discover"
+  | "computer-science"
+  | "finance"
   | "conversation"
   | "quiz"
   | "jobs"

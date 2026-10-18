@@ -1,72 +1,80 @@
+import type { Career } from "./types";
+import { money } from "./Charts";
 import "./landing.css";
 
+const subjects = [
+  {
+    area: "cs" as const,
+    name: "Computer Science",
+    soc: "2134",
+    description: "Software development, data analysis and cyber security.",
+    action: "Explore CS",
+  },
+  {
+    area: "finance" as const,
+    name: "Finance",
+    soc: "2422",
+    description: "Investment analysis, accountancy and quantitative work.",
+    action: "Explore finance",
+  },
+];
+
 export default function Landing({
+  careers,
   onChoose,
+  onDashboard,
   resume,
 }: {
+  careers: Career[];
   onChoose: (mode: "known" | "explore") => void;
+  onDashboard: (area: "cs" | "finance") => void;
   resume?: { title: string; onResume: () => void };
 }) {
   return (
     <div className="aventier-landing">
       <section className="mission-section" aria-labelledby="mission-heading">
-        <svg
-          className="mission-waves"
-          viewBox="0 0 1440 900"
-          preserveAspectRatio="xMidYMid slice"
-          aria-hidden="true"
-        >
-          <defs>
-            <linearGradient
-              id="aventier-wave-light"
-              x1="0"
-              y1="0"
-              x2="1"
-              y2="0"
-            >
-              <stop stopColor="#f4e4bc" stopOpacity="0" />
-              <stop offset=".3" stopColor="#f4e4bc" stopOpacity=".8" />
-              <stop offset=".7" stopColor="#e0bf77" />
-              <stop offset="1" stopColor="#f4e4bc" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          <g fill="none" stroke="url(#aventier-wave-light)" strokeWidth=".75">
-            {Array.from({ length: 30 }, (_, i) => (
-              <path
-                key={i}
-                d={`M -160 ${605 + i * 7} C 180 ${295 + i * 5}, 430 ${1060 - i * 8}, 775 ${655 + i * 2} S 1190 ${190 + i * 10}, 1600 ${415 + i * 8}`}
-                opacity={0.18 + i * 0.009}
-              />
-            ))}
-          </g>
-        </svg>
-        <div className="mission-wordmark" aria-label="Aventier">
-          AVENTIER
+        <header className="mission-heading">
+          <h1 id="mission-heading">Aventier</h1>
+          <p>Compare careers. Choose a route. Plan your next step.</p>
+        </header>
+        <div className="subject-choices" aria-label="Career dashboards">
+          {subjects.map((subject) => {
+            const career = careers.find((item) => item.soc === subject.soc);
+            const pay = career?.metrics.pay_median;
+            const available =
+              pay?.status !== "pending" && !pay?.flags.includes("suppressed");
+            return (
+              <article className="subject-choice" key={subject.area}>
+                <h2>{subject.name}</h2>
+                <p>{subject.description}</p>
+                <div className="subject-role">
+                  <span>Example career</span>
+                  <h3>{career?.title ?? "Career evidence unavailable"}</h3>
+                  <strong>{money(available ? pay?.value : null)}</strong>
+                  <small>
+                    Median annual pay · {pay?.as_of ?? "Year unavailable"} · UK
+                  </small>
+                </div>
+                <button
+                  className="mission-cta mission-cta-primary"
+                  onClick={() => onDashboard(subject.area)}
+                >
+                  {subject.action}
+                </button>
+              </article>
+            );
+          })}
         </div>
-        <h1 id="mission-heading">
-          Helping students decide and plan their future.
-        </h1>
-        <div className="direction-choices" aria-label="Choose how to start">
-          <article className="direction-choice">
-            <h2>I have a career in mind.</h2>
-            <p>Explore that career and compare your options.</p>
-            <button
-              className="mission-cta mission-cta-primary"
-              onClick={() => onChoose("known")}
-            >
-              Explore career
-            </button>
-          </article>
-          <article className="direction-choice">
-            <h2>I’m still deciding.</h2>
-            <p>Answer a few questions to find three career options.</p>
-            <button
-              className="mission-cta mission-cta-secondary"
-              onClick={() => onChoose("explore")}
-            >
-              Find careers
-            </button>
-          </article>
+        <p className="subject-source">
+          ONS ASHE · Full-time employee pay, provisional. Figures describe the
+          example occupations, not graduate earnings.
+        </p>
+        <div className="other-directions">
+          <span>Explore other careers</span>
+          <div>
+            <button onClick={() => onChoose("known")}>Explore career</button>
+            <button onClick={() => onChoose("explore")}>Find careers</button>
+          </div>
         </div>
         {resume && (
           <div className="resume-plan">

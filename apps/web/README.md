@@ -13,9 +13,11 @@ Open http://127.0.0.1:4175. One service serves the UI, the experience API and th
 
 The user journey is known-direction or exploring conversation → three weighted options → three ranked choices → My plan. Route, personal note, completed actions and saved links persist in this browser. Plans export as source-linked HTML for sharing or printing. Jobs independently browses 412 supplied evidence profiles; 20 roles have calibrated interest affinities and curated detailed pathways. Broader profiles clearly state missing route/matching coverage.
 
+The focused hackathon entry now opens `#/computer-science` or `#/finance` directly. Each dashboard switches between supported occupations, preserves the chosen role in the URL, and places observed pay/employment charts beside starting-pay guidance and practical next steps. “Build my plan” saves the selected career without claiming the user completed discovery; “Ask career guide” opens that career's guidance without changing the plan. Source details retain the API's publisher registry. The original quiz and full Jobs directory remain available. See the [three-minute demo](../../docs/launch/cs-finance-demo.md).
+
 `api/main.py` contains the internal experience endpoints; `api/application.py` assembles the served production application and wraps them in the canonical envelope. Low-level API tests preserve the original payload checks; assembled application tests exercise the real served envelope, both API layers, validation, no-key decisions and static UI. `api/product_data.py` excludes unreviewed sample catalogue inputs from ranking and lowers confidence for that absence. It preserves genuine ML observations.
 
-The UI follows the user-selected QuantSoc direction in [docs/design.md](../../docs/design.md): local Inter, charcoal and silver, blue evidence accents and original gold signal paths. No external fonts, copied assets, decorative quotations or cursive typefaces are used.
+The UI follows the user-selected QuantSoc direction in [docs/design.md](../../docs/design.md): local Inter, charcoal and silver, blue evidence accents and a restrained desktop layout. No external fonts, copied assets, decorative quotations or cursive typefaces are used.
 
 ```sh
 npm --prefix apps/web test

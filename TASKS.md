@@ -1,5 +1,7 @@
 # Integration tasks
 
+- [x] [codex, local changes] Improve the desktop Computer Science and Finance demos: direct role-linked dashboards, evidence-first composition, starting-pay guides, practical next steps and concise copy. Three specialist agents plus integration; full check 588 passed/2 optional skipped, desktop browser regressions and independent visual/code reviews passed. Isolated on codex/cs-finance-demo; preview4186, prior release4175 preserved. No push or public deployment.
+
 - [x] [codex] Completion audit: integrate Arsenii's separate ML-summary corrections, verify remaining upstream patches are already present or superseded, and reconcile the challenge evidence with the final release. The only outstanding workflow item is draft PR creation below.
 
 - [x] [codex] Release follow-up on codex/hackathon-release: repair alternate API startup, add reproducible setup/check commands, verify a fresh installation and real HTTP demo without keys, resolve inherited npm advisories, review and push. Final release gate: 588 passed, 2 optional skipped; npm audit: 0 vulnerabilities.
