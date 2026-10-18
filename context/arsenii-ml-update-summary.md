@@ -19,10 +19,9 @@ Yehor asked for an explicit written summary of everything done in the ML slice. 
 - Matcher labels from 2 or 3 people; confirm the 20 demo careers.
 
 ## Marked (verify)
-- ILO WP140 licence (CC BY 4.0 per the saved page; not re-checked on the live page).
 - Test count for the uncommitted `test_explain.py`.
 - Whether queued v1.2 items (coverage tracking, loader robustness, pay ceiling fallback, title lookup, 2015 window, in-house exposure rerun) get done before the freeze.
-- Revised ASHE 2025 release date.
+- Revised ASHE 2025: not published as of 17 Oct (ONS expects October or November 2026).
 
 ## Next step
 Arsenii pushes the real artefacts (v1.1 plus matcher plus v1.2) to Avenir as one PR, then fixes the lint findings PR #2 reported.

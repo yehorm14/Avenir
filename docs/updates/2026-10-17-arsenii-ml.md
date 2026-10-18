@@ -10,11 +10,11 @@
 
 ## 1. Read this first
 
-1. **The evidence layer exists for all 412 UK occupations:** pay, real pay path since 2007, demand, AI exposure, crisis resilience, hedge careers, track record and interest fit. Everything is `preliminary`. The 20 demo careers are the same files in `snapshots/ml/mock/`.
+1. **The evidence layer exists for all 412 UK occupations:** pay, real pay path since 2007, demand, AI exposure, crisis resilience and hedge careers. The track record covers about 300 occupations per window, and interest fit covers the 20 demo careers only. Everything is `preliminary`. The 20 demo careers are the same files in `snapshots/ml/mock/`.
 2. **Most of it is not in Avenir yet.** Avenir `main` has contract v1.0, the loader and the mocks (PR #1). The real artefacts (contract v1.1), the matcher, the matcher service and the explanation checker are in KATYATA only. I will push them to Avenir myself, as a separate PR from this one. PR #4 (open) raises the per-file limit for `snapshots/ml/` to 5 MB for this.
-3. **Two independent reviews of my slice are done** (data and statistics; engineering). They found the arithmetic correct (ASHE parsing re-checked cell by cell, 0 mismatches) but found many numbers that were trusted too much, defined badly or labelled with too much confidence. Section 8 lists every finding in plain English.
-4. **A fix pass, "ML v1.2", is running now.** Some fixes are done, some are in progress (section 8.3). **The v1.2 artefacts are not pushed yet and will come as a follow-up PR.** The file shapes stay compatible with contract v1.1, so nothing you build against the mocks breaks.
-5. **What I need from the team** (section 10): 30 minutes of matcher labels from 2 or 3 people, confirmation of the 20 demo careers, and five decisions (2008 crisis, cost-of-living window, pull the plug, track-record label, hedge wording).
+3. **Two independent reviews of my slice are done** (data and statistics; engineering). They found the arithmetic correct (ASHE parsing re-checked cell by cell, 0 mismatches) but found many numbers that were trusted too much, defined badly or labelled with too much confidence. Section 8 lists every finding in plain English (minor ones grouped).
+4. **A fix pass, "ML v1.2", is running now.** Much of the v1.2 code is already written in my working copy, but the artefacts are not rebuilt yet (section 8.3). **The v1.2 artefacts are not pushed yet and will come as a follow-up PR.** v1.2 is a minor version (`schema_version` 1.2): additions only and the same 14 metric keys, so nothing you build against the mocks breaks. Two new fields need a line in Avenir's contract or the API drops them (section 8.4).
+5. **What I need from the team** (section 10): 30 minutes of matcher labels from 2 or 3 people, confirmation of the 20 demo careers, and four decisions (2008 crisis, cost-of-living window, pull the plug, track-record label).
 6. **Say these out loud if asked** (section 9): pay is for experienced adult employees, not starting pay; ONS calls its job counts indicative; AI exposure is a research estimate, not job loss; hedges mean "closest skills", not proven lower risk; the track record shows how simple rules held up, not how our picks did; the interest matcher has only been scored on a small synthetic set.
 
 ### 1.1 Where each piece lives today
@@ -22,7 +22,7 @@
 | Piece | Where | In Avenir? |
 | --- | --- | --- |
 | Contract v1.0, JSON Schemas, stdlib loader `pathfinder_ml`, 8 mock files, data pipeline v1.0 and probes | Avenir `main` (PR #1, merged) | Yes |
-| Same content as a draft import | Avenir PR #2 | Open and stale; Yehor wants it closed. Its description notes that imported ML code fails Avenir's lint (139 findings, almost all line length). I will fix the style in my next push |
+| Same content as a draft import | Avenir PR #2 | Open and stale; Yehor's context file (`yehor/context`) asks to close it. Its description notes that imported ML code fails Avenir's lint (139 findings, almost all line length). I will fix the style in my next push |
 | Contract v1.1 and real artefacts for 412 occupations (`03fb482`) | KATYATA `arsenii/ml-data` | **No** |
 | Matcher, real `fit.json`, matcher service, `origin` in `status()` (`cb9e169`) | KATYATA `arsenii/ml-data` | **No** |
 | v1.2 fix pass (confidence rule, purity gate, new demand window, centred crises, and so on) | My working copy, not committed | **No** |
@@ -50,7 +50,7 @@ All times are Saturday 17 Oct 2026, local time (from the commit log).
 
 ### 3.1 Loaded and used
 
-All raw files live in a git-ignored `data/` folder on my machine. They are not committed. Each folder has a `SOURCE.md` with its licence; 7 of the 10 have no URL yet (**verify** and fix before the sources page goes public).
+All raw files live in a git-ignored `data/` folder on my machine. They are not committed. Each source folder has a `SOURCE.md` with the licence, except the Census folder (ASHE has one per year folder). 7 of the 10 top-level ones and all 19 ASHE ones have no URL; section 3.4 lists a checked URL for each.
 
 | Source | Publisher | Years and coverage | Licence | Used for |
 | --- | --- | --- | --- | --- |
@@ -59,7 +59,7 @@ All raw files live in a git-ignored `data/` folder on my machine. They are not c
 | Relationship tables SOC 2010 and SOC 2020 (July 2021) | ONS | Built from people coded to both systems (LFS 2014 to 2016, Census 2011) | OGL v3.0 | Bridging 2011 to 2020 data onto SOC 2020 codes |
 | Relationship tables SOC 2000 and SOC 2010 | ONS | LFS Jan to Mar 2007 and Census 2001 dual coding | OGL v3.0 | Bridging 2007 to 2010 data (second step) |
 | SOC 2020 Volume 2 coding index (version of 27 Aug 2026) | ONS | About 32,000 UK job titles, each with a SOC 2020 code and an ISCO-08 code | OGL v3.0 | SOC 2020 to ISCO-08 map (with shares); UK job titles for the ESCO links |
-| ILO Working Paper 140, "Generative AI and Jobs: A Refined Global Index of Occupational Exposure" (Gmyrek et al., 2025) | ILO | 427 ISCO-08 occupations; mean task exposure and its spread; read from the paper's web version on 17 Oct 2026 | CC BY 4.0 according to the copyright note on the saved page (**verify**; `sources.json` in `03fb482` still says "to confirm before public release") | The headline exposure score |
+| ILO Working Paper 140, "Generative AI and Jobs: A Refined Global Index of Occupational Exposure" (Gmyrek et al., 2025) | ILO | 427 ISCO-08 occupations; mean task exposure and its spread; read from the paper's web version on 17 Oct 2026 | CC BY 4.0 (© ILO 2025), confirmed on the live page on 17 Oct 2026. An adaptation must credit the ILO, say what was changed, not use the ILO name, emblem or logo, and carry the ILO's adaptation disclaimer word for word (`sources.json` in `03fb482` still says "to confirm") | The headline exposure score |
 | "The impact of AI on UK jobs and training", Annex 1 | DfE | 2023; 365 SOC 2010 occupations | OGL v3.0 | Cross-check of exposure, used as a percentile rank |
 | Online job advert estimates (source: Adzuna), as republished by ONS | ONS | 28 job-advert categories, weekly, 2018 to 2024; discontinued Oct 2024 | OGL v3.0 | Tech-slump crisis, at category level only |
 | APS 2016 age bands by 4-digit occupation (ad hoc request 006998) | ONS | UK, 2016, includes self-employed; SOC 2010; small cells suppressed | OGL v3.0 | `young_worker_share` |
@@ -78,15 +78,15 @@ Models and AI services used (none of them decides anything shown to a user):
 | Wanted | What happened | Why | What replaces it |
 | --- | --- | --- | --- |
 | Adzuna live job-ad API | Dropped from the ML slice | It is a paid service | The free ONS advert series (above) for the tech slump. Avenir's own live adapter (Yehor, PR #5) is separate; the ML artefacts do not depend on it |
-| ELM model access for bulk LLM jobs | Not used | The key needs a supervisor's approval and was not approved | Gemini free tier on public or synthetic text, plus a local model on my laptop GPU. A GPU cluster was prepared but nothing needed it |
-| Census occupation counts, including self-employed | Not used in any artefact | Only broad-group files are downloaded so far (2021, England and Wales, 10 broad occupation groups by area, plus one small-area total). Four-digit counts, 2011 counts and Scotland are not loaded | An "employees only" caveat on every ASHE number. Census is a stretch goal |
+| ELM model access for bulk LLM jobs | Not used | The key needs a supervisor's approval, which we have not had | Gemini free tier on public or synthetic text, plus a local model on my laptop GPU. A GPU cluster was prepared but nothing needed it |
+| Census occupation counts, including self-employed | Not used in any artefact | Only broad-group files are downloaded so far (2021, England and Wales, the 9 major occupation groups (plus "does not apply") by local authority, plus one small-area total). Four-digit counts, 2011 counts and Scotland are not loaded | An "employees only" caveat on every ASHE number. Census is a stretch goal |
 | Early-career (entry) pay | Field `pay_early` dropped from the design spec | ASHE publishes pay by age only for broad occupation groups, not for individual occupations. I have not loaded that table | Pay is described as "typical pay of adult employees who have held the job over a year". It might return at group level |
 | Occupations in Demand (shortage flag), wellbeing, stress | Not ML | Owned by the ETL slice (Yehor) | n/a |
 | Projected pay growth | Dropped (decision, section 11) | High-pay careers grew more slowly in 2013 to 2019, so projections would mislead | "Truthful return": current pay with its range, plus the real pay path |
-| Strict ISCO code linking between UK jobs and ESCO | Replaced | ONS and ESCO file 678 shared job titles under different ISCO codes | Exact job-title matching with rules (section 5.5) |
+| Strict ISCO code linking between UK jobs and ESCO | Replaced | ONS and ESCO file 678 shared job titles under different ISCO codes | Exact job-title matching with rules (section 4.5) |
 | Track record kept inside SOC 2010 only | Replaced | The team wants recent years and crisis behaviour | Bridging to SOC 2020, with every bridged value flagged |
 | In-house AI-exposure scores as a second number on cards | Not shown | One headline number is clearer | ILO is the headline; the in-house check (when it runs) is only a validation in `eval.json` |
-| Revised 2018 ASHE edition | Not used | I used the provisional 2018 edition. The ONS page lists both | Swap when I rerun. The revised 2025 edition is due this month, so rerun then **(verify)** |
+| Revised 2018 ASHE edition | Not used | I used the provisional 2018 edition. The ONS page lists both | Swap when I rerun. The revised 2025 edition is not published yet (ONS page checked 17 Oct; it expects October or November 2026), so the headline numbers stay on provisional 2025 |
 | Any licensed or paid dataset | None used | n/a | n/a |
 
 ### 3.3 Gaps between this list and Avenir's `data/manifest.yaml` (for Yehor)
@@ -94,6 +94,26 @@ Models and AI services used (none of them decides anything shown to a user):
 `data/manifest.yaml` lists ESCO, ASHE 2011 to 2025, the SOC 2010 and 2020 tables, SOC 2010 to ISCO-08, APS, ILO, Occupations in Demand and Adzuna. It does **not** list these sources that my pipeline uses: ASHE 2007 to 2010, the SOC 2000 and 2010 tables, CPIH, the SOC 2020 coding index, the DfE annex, the ONS job adverts, APS 2016 age bands, and O*NET. Licences are in the table above, so you can add them. AGENTS.md section 6 says every source must be in the manifest.
 
 One correction to `docs/data-sources.md` item 3 ("no SOC 2020 to ISCO-08 file exists"): the ONS coding index gives each job title both a SOC 2020 and an ISCO-08 code. I use that to build a SOC 2020 to ISCO-08 map with shares (`crosswalk_build.py`).
+
+### 3.4 Where each source lives (checked 17 Oct 2026)
+
+Each URL below was opened and matched to the dataset on 17 Oct. These are landing pages; the file names in my `SOURCE.md` notes say which download on each page I used.
+
+| Source | Official page | Note |
+| --- | --- | --- |
+| ASHE Table 14 | https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/occupation4digitsoc2010ashetable14 | Editions 1997 to 2025; 2025 is provisional only. A 19 Dec 2025 correction suppresses some police officer pay figures |
+| CPIH (L522, MM23) | https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/l522/mm23 | Next release 21 Oct 2026 |
+| SOC 2010 and 2020 relationship tables | https://www.ons.gov.uk/methodology/classificationsandstandards/standardoccupationalclassificationsoc/soc2020/therelationshipbetweenstandardoccupationalclassification2010andstandardoccupationalclassification2020 | July 2021 tables; the page also lists superseded versions |
+| SOC 2000 and 2010 relationship tables | https://www.ons.gov.uk/methodology/classificationsandstandards/standardoccupationalclassificationsoc/soc2010 | Download "Relationship between SOC2010 and SOC2000" (zip) |
+| SOC 2020 Volume 2 coding index | https://www.ons.gov.uk/methodology/classificationsandstandards/standardoccupationalclassificationsoc/soc2020/soc2020volume2codingrulesandconventions | Excel or CSV; about 30,110 entries at first publication (my later version has about 32,000) |
+| DfE, The impact of AI on UK jobs and training | https://www.gov.uk/government/publications/the-impact-of-ai-on-uk-jobs-and-training | 28 Nov 2023; Annex 1 is the Excel data file |
+| ONS online job advert estimates | https://www.ons.gov.uk/economy/economicoutputandproductivity/output/datasets/onlinejobadvertestimates | Last edition 24 Oct 2024; discontinued |
+| APS 2016 age bands (ad hoc 006998) | https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/adhocs/0069984digitoccupationsocand4digitindustrysicbyagebands | Released 5 May 2017 |
+| ILO WP140 | https://webapps.ilo.org/static/english/intserv/working-papers/wp140/index.html | DOI https://doi.org/10.54394/HETP0387 |
+| ESCO | https://esco.ec.europa.eu/en/use-esco/download | From my `SOURCE.md` |
+| O\*NET | https://www.onetcenter.org/database.html | From my `SOURCE.md` |
+| Census 2021 TS063 (England and Wales, 10 groups; not used) | https://www.nomisweb.co.uk/datasets/c2021ts063 | Broad groups only |
+| Scotland's Census 2022 output-area data (not used) | https://www.scotlandscensus.gov.uk/documents/2022-output-area-data | Its only occupation table has 9 broad groups by ethnicity, so it is no use for occupation-level self-employed counts |
 
 ---
 
@@ -108,12 +128,12 @@ One correction to `docs/data-sources.md` item 3 ("no SOC 2020 to ISCO-08 file ex
 | 3 | `crosswalk_build.py` | SOC 2010 to SOC 2020 composition weights (for pay) and split shares (for counts); SOC 2020 to ISCO-08 with shares |
 | 4 | `crosswalk_2000.py` | The same for SOC 2000 to SOC 2010 (LFS Jan to Mar 2007, Census 2001 where the LFS base is empty). Weights are renormalised, because ONS lists only destinations above a threshold |
 | 5 | `ilo_parse.py` | Reads the ILO table from the paper's web page: one row per ISCO code with gradient, mean score and standard deviation |
-| 6 | `esco_link.py` | Links UK job titles to ESCO occupations (rule in 5.5) |
+| 6 | `esco_link.py` | Links UK job titles to ESCO occupations (rule in 4.5) |
 | 7 | `hedges_build.py` | Skill vectors and weighted Jaccard similarity; top 5 hedge candidates per occupation |
 | 8 | `validate_hedges.py` | Checks hedges against O*NET related occupations (reference only) |
 | 9 | `build_artefacts.py` | Builds every JSON artefact for all 412 occupations, plus the 20-career mocks |
 | 10 | `m1_matcher.py`, `m1_gen_statements.py`, `m1_train.py` | Matcher texts, evaluation and `fit.json`; synthetic training statements; the fine-tune |
-| Probes | `probe_ashe.py`, `probe_bridge.py`, `probe_isco.py` | Checks run before modelling; nothing is fitted to outcomes (section 5.1) |
+| Probes | `probe_ashe.py`, `probe_bridge.py`, `probe_isco.py` | Checks run before modelling; nothing is fitted to outcomes (section 4.4) |
 
 The whole pipeline reruns in about a minute and gives the same files apart from timestamps. That is true only with my local raw data (section 9).
 
@@ -131,7 +151,7 @@ ONS changed the occupation codes twice inside the period. A number for "software
 - **Job counts** are sums of (share of an old group that went to the new code) times the old count.
 - **Job counts never cross a code change.** Trends stay inside one era: 2011 to 2019 (SOC 2010, bridged) and 2021 to 2025 (SOC 2020, native). Job lines on charts break at 2021.
 - **Crisis windows are measured natively** (COVID in SOC 2010, 2008 in SOC 2000). Only the relative change is carried over to today's codes.
-- **Fallback for sparse occupations:** full-time counts, then all-employee counts, then the ONS 3-digit parent group. Each step is flagged (`imputed_parent` for the parent group).
+- **Fallback for sparse occupations:** full-time counts, then all-employee counts, then the ONS 3-digit parent group. The parent step is flagged `imputed_parent`. In v1.1 the step from full-time to all-employee counts was recorded only in the free-text note, and blends with under half the weight from the parent were not flagged; v1.2 adds `fallback_all_employees` (section 5.9).
 - **Real pay** is pay divided by CPIH, in 2025 prices. v1.1 uses the April index; v1.2 uses the tax-year average (section 8).
 
 ### 4.3 Seam tests: does bridging work?
@@ -147,7 +167,7 @@ I compared bridged values with native values on both sides of each code change. 
 
 **Reading:** pay lines up across both seams (ratio close to 1), job counts do not. That is why pay is bridged and job counts are never joined across a change.
 
-**What the data review added:** the "within 0.8 to 1.25" band hides the error per occupation. At the 2020 to 2021 seam the typical net error for one occupation is 4.2% and the worst tenth is 14.3% or more. It is concentrated in occupations carved out of old catch-all codes (section 8.2, finding 1). Also, part of the 2021 job-count break is general instability in the first SOC 2020 counts, not only the recode: the share of occupations whose count moved outside the 0.8 to 1.25 band in one year is 25.1% for 2021 to 2022 and 3 to 7% in 2011 to 2019.
+**What the data review added:** the "within 0.8 to 1.25" band hides the error per occupation. At the 2020 to 2021 seam the typical net error for one occupation is 4.2% and the worst tenth is 14.3% or more. It is largest in occupations carved out of old catch-all codes (typical 6.2%, worst tenth 23%, against 3.7% and 11% for clean codes) (section 8.3, row 1). Also, part of the 2021 job-count break is general instability in the first SOC 2020 counts, not only the recode: the share of occupations whose count moved outside the 0.8 to 1.25 band in one year is 25.1% for 2021 to 2022 and 3 to 7% in 2011 to 2019.
 
 ### 4.4 Probes (run before any modelling)
 
@@ -174,11 +194,11 @@ Rule for every package: the simplest version first, measured on data it never sa
 
 | # | Package | Status in `03fb482`/`cb9e169` | Headline result | Review verdict | v1.2 |
 | --- | --- | --- | --- | --- | --- |
-| D0 | Data pipeline | Done, real | Pay bridges, job counts do not | Parsing exactly right; bridging error hidden for carved-out codes | Purity gate in progress |
-| R | Expected return (pay, real pay path) | Real, preliminary | Real pay fell for most careers since 2011 | Deflator timing wrong; ceiling missing for 377 of 412 | Deflator done; rest in progress or planned |
-| M4 | Demand trend | Real, preliminary | 409 of 412 have a value | Window includes distorted years | New window in progress |
-| M7 | Crisis resilience (4 crises) | Real, preliminary | COVID has real signal; 2008 has none | See 5.3 | In progress |
-| M2 | Automation exposure | Real, preliminary | ILO and DfE rank-correlate at 0.777 | Ranges too narrow | In progress |
+| D0 | Data pipeline | Done, real | Pay bridges, job counts do not | Parsing exactly right; bridging error hidden for carved-out codes | Purity gate written (not rebuilt) |
+| R | Expected return (pay, real pay path) | Real, preliminary | Real pay fell for most careers since 2011 | Deflator timing wrong; ceiling missing for 377 of 412 | Deflator, ceiling fallback, 10-year range, purity gate written (not rebuilt) |
+| M4 | Demand trend | Real, preliminary | 409 of 412 have a value | Window includes distorted years | New window written (not rebuilt) |
+| M7 | Crisis resilience (4 crises) | Real, preliminary | COVID has real signal; 2008 has none | See 5.3 | Mostly written (not rebuilt); keep or drop is a team decision |
+| M2 | Automation exposure | Real, preliminary | ILO and DfE rank-correlate at 0.777 | Ranges too narrow | Written (not rebuilt) |
 | M3 | Hedge careers | Real, preliminary | 82.1% of top-3 hedges are O*NET-related (233 of 412 occupations) | Partly circular; evidence label one-sided | Partly done |
 | M1 | Interest matcher | Real, preliminary | Dev set only; final score needs the team's labels | Evaluation too small to show a gain | Labels needed |
 | M5 | Track record | Real, preliminary, 3 windows | High pay persists; high pay grew more slowly | Tiers are simple rules, not our picks | Relabel in progress |
@@ -191,11 +211,11 @@ Rule for every package: the simplest version first, measured on data it never sa
 - **Method:** medians and percentiles from ASHE for full-time employees, latest year; no projections. `pay_median` has p25 and p75 as its range; `pay_p10` is the floor and `pay_p90` the ceiling. `real_pay_change_10y` is the real change in median pay from 2015 to 2025 in 2025 prices (2015 is bridged). `history.json` has one point per year, 2007 to 2025, nominal and real. `young_worker_share` is the share of people in the job aged 16 to 24 in 2016, including self-employed.
 - **Result:** real pay fell for most careers since 2011, and that survives the deflator fix (2011 to 2025: about -2.7% typical with the April index, -2.6% with the tax-year index; about 60% of occupations negative either way, per the data review).
 - **Review found:**
-  - The inflation index used April prices, but ASHE annual pay is for the tax year ending 5 April. The 2015 to 2025 price rise is +37.8% on the April basis and +34.4% on the tax-year average. That changes the typical 10-year real pay change from -1.15% (53.2% of occupations negative) to +1.38% (44.4% negative). **Done in v1.2** (re-measure after rebuild, **verify**).
+  - The inflation index used April prices, but ASHE annual pay is for the tax year ending 5 April. The 2015 to 2025 price rise is +37.8% on the April basis and +34.4% on the tax-year average. That changes the typical 10-year real pay change from -1.15% (53.2% of occupations negative) to +1.38% (44.4% negative). **Written for v1.2** (tax-year CPIH; re-measure after the rebuild, **verify**).
   - `pay_p90` (ceiling) is missing for 377 of 412 occupations and `pay_p10` for 192. Only 4 of the 20 demo careers have a ceiling (2134, 2133, 5241, 2313). 100 `pay_median` values have a range with p75 missing.
-  - `real_pay_change_10y` has no range, and is wrong for some carved-out codes (see 8.2, finding 1).
+  - `real_pay_change_10y` has no range, and is wrong for some carved-out codes (see 8.3, row 1).
   - ASHE annual pay covers adult-rate employees who have held the same job for over a year. It is not entry pay.
-- **Plan:** fall back to the wider group's ceiling (would fill about half of the gaps, flagged `imputed_parent`) and show the 75th percentile as "the top quarter earn more than". Planned, not confirmed built **(verify)**.
+- **Plan:** fall back to the wider group's ceiling (would fill about half of the gaps, flagged `imputed_parent`) and show the 75th percentile as "the top quarter earn more than". The group fallback is written for v1.2 (not rebuilt yet); the p75 line is for the card.
 
 ### 5.2 Demand: is the job growing?
 
@@ -208,7 +228,7 @@ Rule for every package: the simplest version first, measured on data it never sa
   - ONS publishes a sampling error for every job count; the parser threw it away. For 156 of the 312 published full-time counts it is above 10%.
   - Small, rounded counts give intervals that collapse to a point (some are width zero) yet were rated "high". 77 of 272 "high" trends in 2011 to 2019 have an average count under 15 thousand.
   - Past and recent trends correlate at only 0.15. The 2011 to 2019 slope describes the past well (split-half rank correlation 0.80) but does not predict.
-- **v1.2 (in progress):** trend on 2022 to 2025 measured against the typical occupation (cancels year effects), confidence capped at medium, job sampling errors carried into the interval, a new caveat flag, and the card wording "recent change in employee jobs".
+- **v1.2 (written, not rebuilt):** trend on 2022 to 2025 measured against the typical occupation (cancels year effects), confidence capped at medium, job sampling errors carried into the interval, a new caveat flag, and the card wording "recent change in employee jobs".
 
 ### 5.3 Crisis resilience: how careers held up in four shocks
 
@@ -217,9 +237,9 @@ Each value is relative to the typical occupation: +0.10 means ten points better 
 | Crisis | Definition | Window | Source | Review verdict | Plan |
 | --- | --- | --- | --- | --- | --- |
 | COVID-19 | Change in all-employee jobs 2019 to 2020 minus the median occupation. Own figure only if the occupation has at least 50,000 jobs, else its 3-digit group (`imputed_parent`). Measured in SOC 2010 | 2019 to 2020 | ASHE; advert category cross-check in `extra` | **Passes a placebo test:** dispersion across occupations that year is 0.118, against 0.052 to 0.082 in ordinary years | Keep |
-| Cost of living | Real pay change minus the median occupation | 2021 to 2023 | ASHE + CPIH | Tangled with the COVID rebound (the base year is the furlough year; rank correlation with the COVID metric -0.32). No noise filter: 96 of 359 own values have sampling error above 10%. Median baseline overstated by about 3 points | Move to 2023 to 2025 with the noise filter, or drop (**team decision**) |
-| Tech slump | Change in online job adverts from the first half of 2022 to 2024 for the occupation's advert category, minus the all-adverts change. Category level (`category_level`) | 2022 to 2024 | ONS job adverts | The category rules used old SOC 2010 numbering: 22 SOC 2020 codes silently fell into "Other / general" and about 30 more were wrongly assigned (about 50 of 412 wrong). Not centred (median -14.5%). Education category +105.5% for 13 occupations including the demo teacher. ONS flags Education, Marketing/PR and Transport (early 2023) and Travel (Sept 2023) as volatile | New reviewed SOC 2020 category map **done**. De-duplicated adverts, centring, "low" confidence and flags for unreliable categories in progress |
-| 2008 crash | The worse of (a) all-employee jobs change and (b) real full-time pay change, April 2008 to April 2009, each minus the median. Measured in SOC 2000 and bridged twice | 2008 to 2009 | ASHE 2008 and 2009 | **Fails the placebo test:** dispersion that year (jobs 0.063; pay 0.026) is no bigger than ordinary years (0.052 to 0.082; 0.021 to 0.030). The two parts are uncorrelated (0.018), "worse of" mostly picks the noisier part, the median is -2.0% with only 23% positive, and "April 2009" annual pay is the 2008/09 tax year, mostly before the crash | **Keep in the file, off the cards,** shown under "how we checked" as an honest negative result (**team decision**) |
+| Cost of living | Real pay change minus the median occupation | 2021 to 2023 | ASHE + CPIH | Tangled with the COVID rebound (the base year is the furlough year; rank correlation with the COVID metric -0.32). No noise filter: 96 of 359 own values have sampling error above 10%. Median baseline overstated by about 3 points | v1.2 code moves it to 2023 to 2025 with the noise filter and a placebo test; it shows on cards only if it passes (`show_on_card`). Keep or drop: **team decision** |
+| Tech slump | Change in online job adverts from the first half of 2022 to 2024 for the occupation's advert category, minus the all-adverts change. Category level (`category_level`) | 2022 to 2024 | ONS job adverts | The category rules used old SOC 2010 numbering: 22 SOC 2020 codes silently fell into "Other / general" and about 30 more were wrongly assigned (about 50 of 412 wrong). Not centred (median -14.5%). Education category +105.5% for 13 occupations including the demo teacher. ONS flags Education, Marketing/PR and Transport (early 2023) and Travel (Sept 2023) as volatile | New reviewed SOC 2020 category map and the de-duplicated advert series are written. Centring, "low" confidence and flags for unreliable categories in progress |
+| 2008 crash | The worse of (a) all-employee jobs change and (b) real full-time pay change, April 2008 to April 2009, each minus the median. Measured in SOC 2000 and bridged twice | 2008 to 2009 | ASHE 2008 and 2009 | **Fails the placebo test:** dispersion that year (jobs 0.063; pay 0.026) is no bigger than ordinary years (0.052 to 0.082; 0.021 to 0.030). The two parts are uncorrelated (0.018), "worse of" mostly picks the noisier part, the median is -2.0% with only 23% positive, and "April 2009" annual pay is the 2008/09 tax year, mostly before the crash | **Keep in the file, off the cards,** shown under "how we checked" as an honest negative result. The v1.2 code already sets `show_on_card: false` from the placebo result (**team decision** to confirm) |
 
 Honesty note: the COVID job-count threshold (20,000 changed to 50,000 jobs) and the 2008 definition were changed after I looked at outliers (radiographers -16% in COVID at the lower threshold; architects up by 2010 under jobs-only). They are decisions made after seeing outcomes, so I do not call them pre-registered.
 
@@ -229,10 +249,10 @@ Honesty note: the COVID job-count threshold (20,000 changed to 50,000 jobs) and 
 - **Result:** rank correlation between ILO and DfE is 0.777 over 409 occupations. 50 occupations carry `sources_disagree`. Among demo careers, graphic designers (2142: ILO percentile 0.854, DfE 0.484) and chartered surveyors (2454: 0.782 and 0.455) disagree by more than 30 points; the ILO counts image generation and the DfE measure does not.
 - **Review found:**
   - The 0.777 is driven by differences between broad job groups. Within a 1-digit group it is 0.54, within a 2-digit group 0.47. "Two independent sources" is generous; both are language-and-task exposure measures. I now say "two methods".
-  - The range ignored the ILO's own task-level spread. 68 of 412 ranges had zero width and were rated "high"; 227 `multi_isco` values were rated "high" though the contract caps them at medium.
-  - ISCO codes without an ILO score were dropped silently, so a few UK occupations rest on a sliver of their job titles (for example SOC 3311 on 1 of 57 titles). 11 groups have under 80% of titles scored and 6 under 50%.
+  - The range ignored the ILO's own task-level spread. 68 of 412 ranges had zero width and were rated "high" (engineering review; the data review counts 64 exactly zero-width); 227 `multi_isco` values were rated "high" though the contract caps them at medium.
+  - ISCO codes without an ILO score were dropped silently, so a few UK occupations rest on a sliver of their job titles (for example SOC 3311 on 1 of 57 titles). The data review counts 11 groups under 80% of titles scored and 6 under 50%; the engineering review, counting differently, found 15 and 10.
   - Four manager groups (1161, 1225, 1252, 1253) are imputed from siblings; they are flagged `imputed_parent` and low.
-- **v1.2 (in progress):** range = mean plus or minus the combined between-code and within-code spread (using the ILO's standard deviation), confidence from range width and scored share.
+- **v1.2 (written, not rebuilt):** range = mean plus or minus the combined between-code and within-code spread (using the ILO's standard deviation), confidence from range width and scored share.
 - **Optional in-house check (paused):** an LLM labels the ESCO skills of each demo career with the Eloundou et al. rubric (E0 none, E1 direct, E2 with extra software) and compares the result with the ILO score. It is not shown on cards. It is paused because some skill lists are noisy (CAD technicians were given programming languages). First in the cut order if time runs out. Results: none yet **(verify)**.
 - Wording rule (AGENTS.md rule 7): "Automation exposure (research estimate)". Exposure is not job loss.
 
@@ -248,7 +268,7 @@ Honesty note: the COVID job-count threshold (20,000 changed to 50,000 jobs) and 
   - No similarity floor: 342 of 2,055 candidate rows are below 0.05; 12 are exactly 1.0 (ISCO twins).
   - Hedge exposure tracks the source's exposure closely (rank correlation 0.84). Only 27.5% of occupations have any candidate with exposure at least 0.10 lower. Demo careers 2142, 2453 and 5241 have none. Florists (5443) have no hedges at all. So the file means "closest skills", not "lower risk".
   - Four ESCO URIs are duplicated, which double-weighted 9 link rows.
-- **v1.2:** `evidence` now takes the weaker of the two sides (**done**); similarity floor (**done**); duplicate ESCO URIs removed (**done**). The decision layer must handle "no lower-risk hedge available".
+- **v1.2:** `evidence` now takes the weaker of the two sides; a similarity floor of 0.05, and identical-vector ISCO twins are dropped; duplicate ESCO URIs are removed. All three are written, not rebuilt. The decision layer must handle "no lower-risk hedge available".
 
 ### 5.6 Interest matcher (M1): from keyword search to embeddings
 
@@ -267,7 +287,7 @@ Honesty note: the COVID job-count threshold (20,000 changed to 50,000 jobs) and 
 | `embed_ft` | 0.700 | 0.933 | 0.833 to 1.000 | 0.819 |
 | `embed_ft_tags` | 0.467 | 0.867 | 0.733 to 0.967 | 0.661 |
 
-  Paired differences in hit@3: every method beats BM25 by 0.17 to 0.23 (the `embed_ft_tags` interval touches zero). The fine-tune beats the base embeddings by only +0.033 (interval 0.000 to 0.100) and loses at hit@1, so **the fine-tune is not shipped**; it is re-scored once on the team's labels.
+  Paired differences in hit@3: every method beats BM25 by 0.17 to 0.23 (the intervals for `keyword_tags`, 0.000 to 0.400, and `embed_ft_tags`, -0.033 to 0.367, reach zero). The fine-tune beats the base embeddings by only +0.033 (interval 0.000 to 0.100) and loses at hit@1, so **the fine-tune is not shipped**; it is re-scored once on the team's labels.
 - **Decision made:** ship the base embedding model, not the fine-tune (`docs/decisions.md`).
 - **Review found, honestly:**
   - The development set is synthetic and written by the same hand as the keyword tags, so the keyword chain's 0.90 shows nothing. A constant predictor that always names the three most-labelled careers scores 0.50 on these 30 rows (best constant triple 0.57), so 0.90 is less impressive than it looks.
@@ -290,27 +310,27 @@ Honesty note: the COVID job-count threshold (20,000 changed to 50,000 jobs) and 
   - Window 1 ends on the provisional 2018 edition and is not flagged `provisional`.
   - The windows overlap by 80% so there are at most two independent ones.
   - Integration traps: `groups` always contains a null (`balanced`), so `groups.map(g => g.key)` fails; `group_then` can be `"other"` (undocumented); group counts differ from row counts (85 against 104 and 64 in 2013, because of ties and SOC 2010 against 2020 counts); `ml.backtest()` with no year returns the pay-only 2019 to 2024 window.
-- **v1.2:** relabel as "how simple rules held up" (in progress), add pay-level persistence, fix the group list, document `other`, add `ml.backtest_years()`. A 2015 to 2020 window (the year in the demo script) is planned, not built **(verify)**. Nazar's pick rules (PR #8, "for Arsenii: pick rules for backtest groups") could be backtested if historical inputs exist; I have not done this and will say so before the freeze.
+- **v1.2:** relabel as "how simple rules held up" (caveat text written), add pay-level persistence, fix the group list, document `other`, add `ml.backtest_years()`. A 2015 to 2020 window (the year in the demo script) is planned, not built **(verify)**. Nazar's pick rules (PR #8, "for Arsenii: pick rules for backtest groups") could be backtested if historical inputs exist; I have not done this and will say so before the freeze.
 
 ### 5.8 Evaluation sets and the "how we checked" panel
 
 - **Matcher test set:** `eval/LABELLING.md` and `eval/labels_template.csv`. 2 or 3 people write about 20 "what I enjoy" texts each (varied voice, a few hard ones, no job titles) and pick the 3 best of the 20 demo careers by SOC code. A seeded script splits rows 40% development and 60% test (by a hash of the profile id). The test split is scored **once**, at the end. Headline metric: top-3 hit rate against chance, with bootstrap intervals and paired differences.
 - **Development labels so far:** `eval/labels_dev_synthetic.csv` (30 synthetic profiles, AI-written). They are development only.
-- **`eval.json`** holds five checks: `bridge_seam` (4.3), `backtest_probe` (5.7), `exposure_agreement` (5.4), `hedge_sanity` (5.5) and `matcher` (5.6). The review notes that re-running `build_artefacts.py` on its own overwrites the matcher check and `fit.json` with placeholders; I am separating stage outputs **(verify fixed)**.
+- **`eval.json`** holds five checks: `bridge_seam` (4.3), `backtest_probe` (5.7), `exposure_agreement` (5.4), `hedge_sanity` (5.5) and `matcher` (5.6). The review notes that re-running `build_artefacts.py` on its own overwrites the matcher check and `fit.json` with placeholders; Separating stage outputs is queued, not done.
 
 ### 5.9 Quality layer: flags, confidence, sources page
 
 - **Metric shape (every number):** `value`, `low`, `high`, `unit`, `as_of`, `source`, `granularity`, `confidence`, `flags`, `status`, `note`, `extra`. A missing value is `null`; it is never guessed. Status is `final`, `preliminary`, `mock` or `pending`.
 - **Confidence rule in the contract (2.4):** high = occupation-level data, ONS sampling error at most 5%, no flag beyond `provisional`; medium = sampling error 5 to 10%, or bridged, or multi-ISCO, or moderate interval; low = sampling error above 10%, imputed from parent, suppressed inputs, COVID-year outliers, wide intervals, or mock.
 - **Review found:** the build scripts do not implement that rule. About 500 values (499) were rated higher than the contract allows, including 272 `demand_trend_2011_19` values with `bridged_soc2010` rated high and 227 `exposure` values with `multi_isco` rated high; 34 null `real_pay_change_10y` values are rated medium; `jobs`, `pay_p10` and `pay_p90` inherit the median pay's sampling error instead of their own; the fallback from full-time to all-employee counts is recorded only in free text; parent-group blends under half the weight are not flagged. Only about 4 of 14 metrics carry any range. By the letter of the rule nothing could be "high", because every ASHE metric carries `employees_only`.
-- **v1.2 (in progress):** one confidence function written from the contract, a flag for any parent share above 10%, and a test over the JSON that checks the rule for every value.
-- **Sources page data:** `sources.json` lists 12 entries; 11 are loaded and Census is pending. The CPIH note ("April values, the ASHE reference month") is wrong for annual pay and is being corrected.
+- **v1.2:** one confidence function (`cap_confidence`) is written and applied to every metric, with new flags `bridged_low_purity`, `partial_sources`, `ons_indicative_counts` and `fallback_all_employees`. A test over the JSON that checks the rule for every value is planned, not written.
+- **Sources page data:** `sources.json` lists 12 entries; 11 are loaded and Census is pending. The CPIH note ("April values, the ASHE reference month") is wrong for annual pay; the v1.2 code corrects it and adds an `attribution` line for every source.
 
 ---
 
 ## 6. (d) Artefacts in `snapshots/ml/` and what each powers
 
-All files carry `schema_version` (1.1) and a file-level `status`. The 20 demo careers are also in `snapshots/ml/mock/` in the same shapes. Avenir's loader (`avenir_contracts.load_data()`) joins these with Yehor's catalogue and routes into 20 careers. The largest file is `occupations.json` (3.2 MB for 412 occupations, from PR #4); all files stay under 5 MB.
+All v1.1 files carry `schema_version` 1.1 (v1.2 will carry 1.2) and a file-level `status`. The 20 demo careers are also in `snapshots/ml/mock/` in the same shapes. Avenir's loader (`avenir_contracts.load_data()`) joins these with Yehor's catalogue and routes into 20 careers. The largest file is `occupations.json` (3.2 MB for 412 occupations, from PR #4); all files stay under 5 MB.
 
 | File | Contents | Powers in the app | Status |
 | --- | --- | --- | --- |
@@ -378,7 +398,7 @@ Folder `packages/ml/pathfinder_ml/`. Import path: add `packages/ml` to `PYTHONPA
 Known issues from the engineering review (`status()` now reports `origin`, which fixed the biggest one):
 
 - Fallback to the mock is silent: a mistyped `PATHFINDER_ML_DIR` serves 20 careers. A strict mode that raises (and logs on every fallback) is proposed.
-- On the mock path 77 of 100 hedge targets are missing from the mock occupations, so `ml.occupation(hedge_soc)` returns `None` and a decision layer would break. v1.2 makes the mock set the demo careers plus their hedge targets (in progress). The demo set stays 20.
+- On the mock path 77 of 100 hedge targets are missing from the mock occupations, so `ml.occupation(hedge_soc)` returns `None` and a decision layer would break. v1.2 makes the mock set the demo careers plus their hedge targets (written, not rebuilt). The demo set stays 20.
 - A file with a byte-order mark (what PowerShell's `Out-File` writes) or a non-UTF-8 file raises, even in `status()`. A race in `_load` can make `status()` raise `KeyError`. `occupations()` deep-copies 412 profiles on every call (78 to 110 ms), so the API should cache. `schema_version` is not checked. `status()` returns absolute local paths. None of these are fixed yet **(verify)**.
 - **For Avenir's tests:** once real `snapshots/ml/*.json` land, `ML()` prefers them. Pin test fixtures to the mocks, as PR #4 advises: `load_data(ml_dir=<repo>/snapshots/ml/mock, snapshot_dir=tmp)`.
 
@@ -418,7 +438,7 @@ Gaps found by the engineering review:
 - Without `jsonschema` installed, 16 of 29 tests in `test_api.py` are skipped and pytest still exits 0. Fail instead of skip in CI.
 - No test touches the build scripts; there are no tests for the confidence rules; there is no CI for this package.
 - The README test command is bash-only and needs `PYTHONPATH`.
-- The reviewer wrote 46 proposed tests; 34 fail on `cb9e169`, exactly the defects listed above. v1.2 adds invariant tests for the confidence rule, history years, resilience centring, reference integrity, the backtest group list and the category map.
+- The reviewer wrote 46 proposed tests; 34 fail on `cb9e169`, exactly the defects listed above. Planned for v1.2, not written yet: invariant tests for the confidence rule, history years, resilience centring, reference integrity, the backtest group list and the category map.
 
 ---
 
@@ -436,7 +456,7 @@ Two independent review passes on the committed branch and its artefacts, run by 
 | Area | Confirmed |
 | --- | --- |
 | ASHE parsing | An independent re-parse of all 19 editions on both sheets (100,268 cells) matches the parquet with 0 mismatches. The sampling-error merge (14,324 cells) also has 0 mismatches. No duplicate year, sheet and code rows |
-| Crosswalks | Direction is right: composition weights for pay, split shares for counts. Weights sum to 1; jobs are conserved through the bridge (ratio 0.999) |
+| Crosswalks | Direction is right: composition weights for pay, split shares for counts. SOC 2000 and 2010 weights sum to exactly 1; SOC 2010 to 2020 composition weights sum to 0.986 to 1.000 (not renormalised; immaterial). Jobs are conserved through the bridge (ratio 0.999) |
 | Hand re-derivations | Several published values reproduce (for example software developer pay 38,442 for 2013 against 38,441.7 by hand; COVID resilience 0.0096 against 0.0097). 315 demand trends reproduce to within 5e-5 |
 | Hedge similarity | Weighted Jaccard values reproduce exactly (9 of 9 sample pairs) |
 | Backtest inputs | Tier inputs use only data up to the base year (no look-ahead). Regression to the mean is ruled out; the minimum-wage explanation holds |
@@ -446,40 +466,45 @@ Two independent review passes on the committed branch and its artefacts, run by 
 
 ### 8.3 Findings in plain English and what v1.2 does
 
-Status key: **done** = built in my working copy and not yet pushed; **in progress** = being fixed now; **queued** = on my list, not confirmed started **(verify)**; **team** = needs a decision.
+Status key, checked against my working copy at about 23:00: **written** = code changed in my working copy, artefacts not rebuilt, nothing pushed; **in progress** = being fixed now, no code yet; **queued** = on my list, not started **(verify)**; **team** = needs a decision.
 
 | # | What was wrong | Why it matters | Fix | Status |
 | --- | --- | --- | --- | --- |
-| 1 | **Blocker.** Pay history and `real_pay_change_10y` are wrong for occupations carved out of old catch-all codes. The confidence rule looked at where the people came from, not whether the old group's median describes them | Cyber security (2135) shows a fake +29% jump in 2021 (38,530 to 49,836) and a +4.6% 10-year change rated medium when the native 2021 to 2025 change is -12%. Other examples: graphic designers (step of -12%), GPs (-47.1%) | Purity and coverage per code. If purity is below 0.5 or coverage below 0.8: low confidence, new flag, 10-year change null or on the native window, and a break in the pay line at 2021. Add ranges | Purity gate **in progress** |
-| 2 | **Blocker.** Demand trend rests on the two distorted years and ONS calls the counts indicative | The headline trend moves with the start year | See 5.2 | **In progress** |
-| 3 | Confidence and flags do not follow the contract in nine ways | Cards would show more certainty than the data supports | One confidence function and a contract test | **In progress** |
+| 1 | **Blocker.** Pay history and `real_pay_change_10y` are wrong for occupations carved out of old catch-all codes. The confidence rule looked at where the people came from, not whether the old group's median describes them | Cyber security (2135) shows a fake +29% jump in 2021 (38,530 to 49,836) and a +4.6% 10-year change rated medium when the native 2021 to 2025 change is -12%. Other examples: graphic designers (step of -12%), GPs (-47.1%) | Purity and coverage per code. If purity is below 0.5 or coverage below 0.8: low confidence, new flag, 10-year change null or on the native window, and a break in the pay line at 2021. Add ranges | Purity gate and `partial_sources` **written** |
+| 2 | **Blocker.** Demand trend rests on the two distorted years and ONS calls the counts indicative | The headline trend moves with the start year | See 5.2 | **Written** (2022 to 2025, against the typical occupation) |
+| 3 | Confidence and flags do not follow the contract in nine ways | Cards would show more certainty than the data supports | One confidence function and a contract test | Function **written** (`cap_confidence`); test **queued** |
 | 4 | Trend confidence ignores tiny, rounded counts | "High" on trends that cannot be told from zero | Derive from propagated sampling error; minimum distinct values and size | **In progress** (with 2) |
-| 5 | 2008 shows no signal above ordinary years | A "resilience in 2008" badge would be noise | Off the cards; placebo test published | **Team** (recommended: yes) |
-| 6 | Cost of living is tangled with the COVID rebound and unfiltered | Same | Move to 2023 to 2025 with a noise filter, or drop | **Team** |
-| 7 | Inflation index timing (April, not tax year) | Typical 10-year real pay change flips sign | Tax-year mean CPIH; rebuild history, 10-year change and baselines; fix the source note | **Done** |
+| 5 | 2008 shows no signal above ordinary years | A "resilience in 2008" badge would be noise | Off the cards; placebo test published | **Team** (the code already sets `show_on_card: false`) |
+| 6 | Cost of living is tangled with the COVID rebound and unfiltered | Same | Move to 2023 to 2025 with a noise filter, or drop | Move **written**; keep or drop is **team** |
+| 7 | Inflation index timing (April, not tax year) | Typical 10-year real pay change flips sign | Tax-year mean CPIH; rebuild history, 10-year change and baselines; fix the source note | **Written** |
 | 8 | Pay and jobs are for experienced adult-rate employees, tax-year based; 2018 and 2025 editions are provisional | Not entry pay | Relabel metrics; add limits; swap in revised editions when I rerun | Relabel **queued**; reruns when editions land |
-| 9 | Backtest: survivors only, provisional 2018, tiers are not the picks, overlapping windows, group-list traps | "How our ratings held up" overstates | "How simple rules held up"; add persistence; clean group list | **In progress** |
+| 9 | Backtest: survivors only, provisional 2018, tiers are not the picks, overlapping windows, group-list traps | "How our ratings held up" overstates | "How simple rules held up"; add persistence; clean group list | Caveat text **written**; the rest **in progress** |
 | 10 | O\*NET agreement is partly circular and partly weak | 82% oversells | Report the no-shared-ESCO figure, sibling baseline and scope (233 of 412) | Wording **queued** |
-| 11 | Hedge `evidence` and no "no lower-risk hedge" case; weak and twin links shipped | Misleading hedge panel | Evidence = weaker side; similarity floor; duplicate URIs | **Done**; "none available" case is the decision layer's |
-| 12 | Exposure range ignores the ILO's own uncertainty and unscored share | False precision | See 5.4 | **In progress** |
-| 13 | Tech slump: wrong category map, not centred, volatile categories | A teacher shows +105% | New SOC 2020 category map | Map **done**; centring, flags, low confidence **in progress** |
-| 14 | Bridged job series are partial sums with no coverage tracking (297 of 3,131 bridged full-time job points use under 100% of the share weight; 190 use under 80%) | Some published job lines are nonsense (demo 2452: 11.6, 3.1, 8.9, 2.4, 0.4 ...) | Return coverage; blank points under 0.8; `partial_sources`-style flag; low confidence when coverage varies | **Queued** |
+| 11 | Hedge `evidence` and no "no lower-risk hedge" case; weak and twin links shipped | Misleading hedge panel | Evidence = weaker side; similarity floor; duplicate URIs | **Written**; the "none available" case is the decision layer's |
+| 12 | Exposure range ignores the ILO's own uncertainty and unscored share | False precision | See 5.4 | **Written** (between- and within-code spread) |
+| 13 | Tech slump: wrong category map, not centred, volatile categories | A teacher shows +105% | New SOC 2020 category map | Map and de-duplicated series **written**; centring, flags, low confidence **in progress** |
+| 14 | Bridged job series are partial sums with no coverage tracking (297 of 3,131 bridged full-time job points use under 100% of the share weight; 190 use under 80%) | Some published job lines are nonsense (demo 2452: 11.6, 3.1, 8.9, 2.4, 0.4 ...) | Return coverage; blank points under 0.8; `partial_sources` flag; low confidence when coverage varies | Coverage and `partial_sources` **written**; blanking points **queued** |
 | 15 | ILO and DfE agreement overstated; disagreement flag mostly marks the noise tail | "Independent sources" | Say "two methods"; report within-group agreement | Wording **queued** |
 | 16 | README and team-update claims the code does not support (pre-registered, "ratings", "ILO confirmed", "Real" on four weak crises) | Honesty | Reword; add a "what these numbers are not" box | **In progress** (this file already uses the new wording) |
 | 17 | Seam test hides per-occupation error; small LFS bases | Bridged pay is less certain than shown | Carry per-occupation seam error into intervals; small-base flag | **Queued** |
 | 18 | No tests for pipeline logic; re-running `build_artefacts.py` alone overwrites matcher and eval outputs | Silent regressions | Invariant tests; each stage owns its files | **Queued** |
-| 19 | Pay ceiling missing for 377 of 412 | Card row blank | Group fallback (fills about half), flagged; show p75 | **Planned** |
-| 20 | Keyword tagger false positives; service has no abstention; `/health` lies with 0 careers | Visible quiz errors | Whole-word matching, fixed keywords, abstain, health check | **In progress** |
-| 21 | Mock set missing 77 of 100 hedge targets; silent fallback | Decision layer breaks on mocks | Mock = demo careers plus hedge targets; strict mode | Mock set **in progress**; strict mode **queued** |
+| 19 | Pay ceiling missing for 377 of 412 | Card row blank | Group fallback (fills about half), flagged; show p75 | Group fallback **written** |
+| 20 | Keyword tagger false positives; service has no abstention; `/health` lies with 0 careers | Visible quiz errors | Whole-word matching, fixed keywords, abstain, health check | **In progress** (no code yet) |
+| 21 | Mock set missing 77 of 100 hedge targets; silent fallback | Decision layer breaks on mocks | Mock = demo careers plus hedge targets; strict mode | Mock set **written**; strict mode **queued** |
 | 22 | Contract gaps: undocumented `extra` keys; `eval.bridge_seam` shape changed in v1.1 (not strictly additive); history has gaps for 137 occupations; one-sided ranges | Consumers cannot rely on the docs | Document `extra`; document gaps; test | **Queued** |
 | 23 | Loader robustness (BOM, race, deep copy cost, no schema check) | Windows-written files crash it | Fix `utf-8-sig`, lock, cache | **Queued** |
-| 24 | ILO licence text and attribution | The sources page shows the licence to judges | "CC BY 4.0 (© ILO 2025), adapted"; add an attribution field; the exposure score is an adaptation and the ILO has not endorsed it **(verify the wording on the live page)** | **Queued** |
+| 24 | ILO licence text and attribution | The sources page shows the licence to judges | "CC BY 4.0 (© ILO 2025), adapted"; add an attribution field; the exposure score is an adaptation and the ILO has not endorsed it | **Written** (licence and `attribution` for every source). Live page checked 17 Oct: CC BY 4.0 confirmed; the attribution must use the ILO's exact adaptation disclaimer, which the current text paraphrases |
 | 25 | Cluster notes name internal hosts and paths in `RUNBOOK.md` | Must not go public | Remove before any public release. Avenir PR #2 flagged the same | **Queued**; Avenir's copy needs the same scrub |
 | 26 | Reproducibility from a fresh clone: raw data is git-ignored; no fetch manifest, no pinned packages | A teammate cannot rebuild | Fetch script with hashes, pinned requirements, commit the `SOURCE.md` files | **Queued** (after freeze if time is short) |
+| 27 | `young_worker_share`: 15 occupations show exactly 0.0 because APS "nil in sample" cells became 0; no interval; the 2016 vintage is old | Fake zeros on cards | Treat nil as missing | **Queued** |
+| 28 | Tech slump compares Jan to Jun 2022 with Jan to Oct 2024, so the seasonal mix differs | Bias in the slump figure | Same months in both years | **Queued** |
+| 29 | Flag wording: `suppressed` says "ONS withheld" but is also used for DfE and APS gaps; the `bridged_soc2010` sentence does not fit `exposure_uk`; `recoded_2021` sits on every post-2020 pay point although pay bridges cleanly, so a UI that breaks lines on it breaks pay too; 25 occupations have no 2025 history point | Misleading badges and charts | Reword; put constant flags at card level | **Queued** |
+| 30 | Build hygiene: a CV of 0.0 is treated as missing (latent); provisional years are hard-coded; the timestamp is taken at import; one global random generator across bootstraps; writes are not atomic; resilience notes say "points" but the values are ratios; `exposure_uk` says "score" but is a percentile; `pay_median` "2025" is tax year 2024/25 | Small | Fix in passing | **Queued** |
 
 ### 8.4 What v1.2 changes for you
 
-- **Shapes stay compatible with contract v1.1.** No new metric keys are planned, so `vocab.ML_METRICS` is unaffected. Flags are free text in Avenir's models, but new flag names (for example for low purity, indicative counts, fallback to all employees, partial sources) are possible; they will be added to `FLAG_TEXT` and `MUST_MENTION`, and `notices_for` picks them up with no code change.
+- **Additions only, `schema_version` 1.2.** The same 14 metric keys, so `vocab.ML_METRICS` is unaffected. Written so far: new flags `bridged_low_purity`, `partial_sources`, `ons_indicative_counts` and `fallback_all_employees` (flags are free text in Avenir's models; `FLAG_TEXT` and `MUST_MENTION` still have to gain them before the push, then `notices_for` picks them up with no code change); new `extra` keys such as `purity`; crises gain `show_on_card` and `placebo`; `eval.json` gains a `crisis_placebo` check; every source gains `attribution`.
+- **Yehor, one contract change needed:** Avenir's `Crisis` and `SourceInfo` models ignore unknown fields, so the API would silently drop `show_on_card` (it keeps 2008 off the cards) and `attribution` (the CC BY and OGL credits for the sources page). Please add both as optional fields.
 - **Values will move.** Expect: typical `real_pay_change_10y` near zero or slightly positive instead of -1.2%; demand trends shifting (typical +1.8% a year to about +4.8% a year before centring on the typical occupation); about 500 confidence badges lowered; some pay changes null with a flag; exposure ranges wider; fewer or no 2008 values on cards; tech slump centred; backtest labelled "simple rules". Do not hard-code today's numbers in tests or copy.
 - **Mock files grow** beyond 20 occupations (demo careers plus their hedge targets); `demo_set` stays 20.
 - `status()` gained `origin`; `mode` is now decided by origin. Additive.
@@ -493,7 +518,7 @@ Say these if asked:
 - **Employees only.** Pay and job counts come from a survey of employees (ASHE). Freelancers and self-employed people are not counted; freelance-heavy careers (architects, designers) are under-counted. Census is a stretch goal.
 - **Not starting pay.** Pay is for adult-rate employees who have held the job for over a year, in the tax year ending 5 April. It excludes apprentices on youth rates.
 - **Job counts are indicative.** ONS says so, and 2021 and 2022 were distorted. Trends describe the past; they are not forecasts (past and recent trends correlate at about 0.15).
-- **2018 and 2025 are provisional editions;** the revised 2025 edition is due this month.
+- **2018 and 2025 are provisional editions;** the revised 2025 edition is not out yet (ONS expects October or November 2026).
 - **Bridging has error.** Pay lines are bridged across two code changes. The typical error for one occupation is about 4% and can be much larger for occupations carved out of old catch-all codes.
 - **Small occupations** get group-level figures more often (marked "estimated").
 - **AI exposure is a research estimate** of how many tasks AI could touch, not a prediction that a job disappears, and it cannot be backtested. The two methods agree across broad groups (0.777) much less inside them (0.54 and 0.47).
@@ -520,7 +545,8 @@ Say these if asked:
 | 9 | Handle "no lower-risk hedge available" in the hedge pick; copy `evidence` from candidate to hedge; handle a null group and `other` in backtest groups | Nazar | When picks are built | n/a |
 | 10 | Say whether you want my `validate_explanation` in addition to the adapter's check (7.3) | Yehor | Sunday morning | n/a |
 | 11 | Frontend: break job lines at 2021; show "sample data", "estimated", "category level", "sources disagree" badges; give charts a text alternative; name the frontend owner in AGENTS.md | Frontend owner, Yehor | Sunday | n/a |
-| 12 | Scrub `packages/ml/RUNBOOK.md` in Avenir (it names internal machines and paths) before the repo goes public | Yehor, me | Before public release | n/a |
+| 12 | Add optional `Crisis.show_on_card` and `SourceInfo.attribution` to the contract (section 8.4) | Yehor | Before my v1.2 push | Both additive |
+| 13 | Scrub `packages/ml/RUNBOOK.md` in Avenir (it names internal machines and paths) before the repo goes public | Yehor, me | Before public release | n/a |
 
 The 20 demo careers (same as `eval/LABELLING.md`):
 
