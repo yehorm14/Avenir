@@ -148,7 +148,7 @@ const courses = {
   },
   glasgowAccounting: {
     name: "University of Glasgow",
-    course: "Accountancy & Finance BAcc",
+    course: "Accountancy with Finance BAcc",
     url: "https://www.gla.ac.uk/undergraduate/degrees/accountancy/",
     nation: "Scotland",
   },
@@ -187,7 +187,7 @@ const opportunities = {
     nation: "England",
     url: "https://codebar.io/london",
     description:
-      "London programming workshops with eligibility criteria set by codebar. Read the student guide before registering; the linked tutorials are another way to get started if you cannot attend.",
+      "London programming workshops for groups underrepresented in tech. Read codebar’s student guide to check eligibility before registering; the linked tutorials are another way to get started if you cannot attend.",
   },
   cyber: {
     id: "ncsc-cyber-skills",

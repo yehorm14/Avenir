@@ -84,7 +84,7 @@ const demand: Record<string, CareerEvidence["demand"]> = {
 const software: CareerEvidence["outlook"] = {
   title: "Software demand reaches beyond the tech sector",
   summary:
-    "The 2025–2030 scenario estimates 87,000 additional programmers and software development professionals across seven priority sectors. This uncertain scenario is not a vacancy count or a new 2026–2031 forecast.",
+    "The 2025–2030 scenario estimates 87,000 additional programmers and software development professionals across seven priority sectors. This is additional employment in the scenario, not current vacancies or a guarantee of entry-level hiring.",
   drivers: [
     "Cross-sector digital demand",
     "Financial-services technology",
@@ -96,12 +96,12 @@ const software: CareerEvidence["outlook"] = {
     "Growth does not guarantee entry-level hiring",
   ],
   source: priority2030,
-  period: "2025–2030 published scenario; qualitative context for 2026–2031",
+  period: "2025–2030 published scenario",
 };
 const digital: CareerEvidence["outlook"] = {
-  title: "Digital growth comes with changing skill requirements",
+  title: "Digital-sector scenarios through 2035",
   summary:
-    "The 2026 sector assessment models growth through 2035, with a substantially lower alternative scenario. For a 2026–2031 plan, treat this as broad direction: build adaptable technical skills and evidence of solving real problems. It is not a forecast for this individual occupation.",
+    "The 2026 sector assessment models growth through 2035, with a substantially lower alternative scenario. It describes England’s sector-wide skills needs, not future employment for this occupation or vacancies in a particular region.",
   drivers: [
     "Digital adoption across industries",
     "Systems, data and security requirements",
@@ -113,13 +113,12 @@ const digital: CareerEvidence["outlook"] = {
     "A sector-wide scenario cannot predict local hiring",
   ],
   source: digitalSource,
-  period:
-    "England skills-planning assessment, 2025–2035 scenarios; qualitative context for 2026–2031, not a Scotland-specific forecast",
+  period: "England skills-planning assessment, 2025–2035 scenarios",
 };
 const finance: CareerEvidence["outlook"] = {
-  title: "Finance increasingly combines analysis with digital skills",
+  title: "Financial-services skills needs through 2035",
   summary:
-    "The 2026 assessment models 22.5% growth in selected financial-services priority occupations during 2025–2035, and highlights digital literacy and adaptability. This is sector context for 2026–2031, not a forecast for investment analysts or accountants.",
+    "The 2026 assessment models 22.5% growth in selected financial-services priority occupations during 2025–2035, and highlights digital literacy and adaptability. This England sector scenario does not forecast employment for investment analysts or accountants as separate occupations.",
   drivers: [
     "Digitalisation within financial services",
     "Financial analysis and numeracy",
@@ -131,14 +130,13 @@ const finance: CareerEvidence["outlook"] = {
     "Different roles and regions can move in different directions",
   ],
   source: financeSource,
-  period:
-    "England skills-planning assessment, 2025–2035 scenario; qualitative context for 2026–2031, not a Scotland-specific forecast",
+  period: "England skills-planning assessment, 2025–2035 scenario",
 };
 const quantitative: CareerEvidence["outlook"] = {
   ...finance,
   title: "Separate actuarial, economics and statistical careers",
   summary:
-    "This occupation group combines actuaries, economists and statisticians. Finance-sector growth cannot be applied to the whole group, and their training routes differ. For 2026–2031, compare the actual role and sector before choosing a specialism; no combined five-year forecast is supplied here.",
+    "This occupation group combines actuaries, economists and statisticians. Their training routes and sectors differ; financial-services growth cannot be applied to the whole group. No combined employment forecast is supplied here.",
 };
 const construction: CareerEvidence["outlook"] = {
   title: "Construction needs both new entrants and replacement workers",
