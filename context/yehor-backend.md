@@ -1,7 +1,7 @@
 # yehor: backend (contract, catalogue, routes, live adapters)
 
 - **Owner:** Yehor (human) / Claude (agents); Codex runs the integration harness
-- **Status:** backend merged to `main` (Sun 18 Oct, ~00:20). Only verification and Sunday's real-data steps remain.
+- **Status:** final delivery on `main` (b397851, Sun 18 Oct 09:50). Handoff: `docs/updates/2026-10-18-claude-handoff.md`.
 
 ## On main
 | PR | What |
