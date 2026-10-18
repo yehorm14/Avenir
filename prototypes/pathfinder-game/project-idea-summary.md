@@ -53,7 +53,7 @@ Context only, not scored: the Temporary Shortage List and Skills Development Sco
 - AI helps extract figures from report PDFs and suggest occupation code mappings; a person checks every row.
 - An "Ask about this result" explainer answers only from our evidence, must cite it, and is checked by a validator.
 - If AI is unavailable or wrong, the app falls back to template explanations and works fully without it.
-- Option: run an open-weight model on our own GPU cluster (8 × A6000), so we do not depend on an external API.
+- Option: run an open-weight model on our own GPU server, so we do not depend on an external API.
 
 ## Architecture
 

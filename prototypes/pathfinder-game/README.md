@@ -147,7 +147,7 @@ The full specification for reviewers is in `docs/scoring-spec.md`. In short:
 - Interest fit below 0.5 is never shown, whatever the weights.
 - Missing data shows as "No data" and is never filled in.
 - If every answer is the same, nothing is shown.
-- AI never ranks. The optional LLM explainer (`CAREERS_LLM_URL`, any OpenAI-compatible server, for example vLLM on our own 8 × A6000) is checked by a validator, and the app falls back to templates without it.
+- AI never ranks. The optional LLM explainer (`CAREERS_LLM_URL`, any OpenAI-compatible server, for example vLLM on our own GPU server) is checked by a validator, and the app falls back to templates without it.
 
 ## Architecture
 

@@ -1,3 +1,4 @@
+import { Attributions } from "./Attributions";
 import { useEffect, useRef, useState } from "react";
 import type { Career, Metric, Weights } from "./types";
 import { money, percent, SalaryChart } from "./Charts";
@@ -514,6 +515,9 @@ export default function CareerDashboard({ area, careers, ...actions }: Props) {
                   </li>
                 ))}
               </ul>
+              <Attributions
+                adzuna={sources.some((s) => /adzuna/i.test(s.label))}
+              />
             </details>
           </section>
         </>

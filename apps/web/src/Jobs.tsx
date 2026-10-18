@@ -4,6 +4,7 @@ import { api } from "./store";
 import { money, SalaryChart } from "./Charts";
 import { careerEvidence } from "./careerEvidence";
 import { demandTrendLabel, isRelativeDemand } from "./planDocument";
+import { Attributions } from "./Attributions";
 import "./jobs.css";
 
 const work: Record<string, string> = {
@@ -610,6 +611,9 @@ function JobProfile({
             </li>
           ))}
         </ol>
+        <Attributions
+          adzuna={sources.some((s) => s && /adzuna/i.test(s.label))}
+        />
         <p className="jobs-source-note">
           ASHE pay figures cover full-time employees, excluding self-employment.
           Employee-job coverage is described alongside each supplied metric.

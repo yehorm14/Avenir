@@ -1,4 +1,5 @@
 import { useEffect, useId, useState } from "react";
+import { Attributions } from "./Attributions";
 import "./decisionReview.css";
 
 type Confidence = "high" | "medium" | "low";
@@ -450,9 +451,7 @@ export default function DecisionReview({
                       <h3>Explanation</h3>
                       <p>{data.explanation.text}</p>
                       {data.explanation.ai_written && (
-                        <p>
-                          AI-written explanation of the supplied comparison.
-                        </p>
+                        <p>AI-written, check the source.</p>
                       )}
                     </div>
                   )}
@@ -496,6 +495,11 @@ export default function DecisionReview({
                 ) : (
                   <p>Source statuses were not supplied for this response.</p>
                 )}
+                <Attributions
+                  adzuna={sources.some(
+                    (s) => s.name === "adzuna" && s.status !== "missing",
+                  )}
+                />
                 {data.notices.length > 0 && (
                   <div>
                     <h3>Evidence caveats</h3>
