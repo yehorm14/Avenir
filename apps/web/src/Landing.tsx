@@ -165,7 +165,12 @@ function DemandTicker({ careers }: { careers: Career[] }) {
     ));
   return (
     <div className="ed-ticker">
-      <div className="ed-ticker-label">In demand</div>
+      <div
+        className="ed-ticker-label"
+        title="ONS ASHE employment trend 2022-2025 vs the typical occupation; history, not the official Occupations in Demand rating"
+      >
+        Fastest-growing · ONS 2022–25
+      </div>
       <div
         className="ed-ticker-window"
         role="region"
@@ -284,9 +289,9 @@ export default function Landing({
           trade-offs, and you choose.
         </p>
         <p className="explain-note">
-          Built for people like Amira, 17, in Glasgow. She enjoys maths and is
-          choosing between Computer Science and Finance, but is not sure which
-          roles are really worth exploring.
+          Built for people like Amira, 17, in Glasgow. She enjoys maths and art,
+          her first idea is architect, and she is not sure which roles are
+          really worth exploring.
         </p>
       </section>
       <section className="explain-section" aria-labelledby="how-heading">

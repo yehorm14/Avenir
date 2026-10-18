@@ -8,7 +8,9 @@ import {
   parseEmployerData,
   pulseTabs,
   type EmployerData,
+  type EmployerSection,
   type EmployerView,
+  type OfficialFact,
   type PulseTab,
   type SourceLink,
 } from "./employerPulseModel";
@@ -156,9 +158,17 @@ function CareerLadder({ ladder }: { ladder: EmployerView["ladder"] }) {
           {ladder.rows.map((row) => (
             <li
               key={row.level}
-              aria-label={`${row.level}: ${row.range}, ${row.reports}`}
+              className={row.missing ? "is-missing" : undefined}
+              aria-label={`${row.level}: ${row.range}${row.reports ? `, ${row.reports}` : ""}`}
             >
-              <span className="pulse-ladder-level">{row.level}</span>
+              <span className="pulse-ladder-level">
+                {row.level}
+                {row.official ? (
+                  <i className="pulse-official-mark" title="BlackRock title">
+                    BlackRock title
+                  </i>
+                ) : null}
+              </span>
               <svg
                 className="pulse-ladder-track"
                 width="100%"
@@ -176,18 +186,20 @@ function CareerLadder({ ladder }: { ladder: EmployerView["ladder"] }) {
                     className="pulse-grid"
                   />
                 ))}
-                <rect
-                  x={`${row.lowPct}%`}
-                  width={`${Math.max(row.highPct - row.lowPct, 1)}%`}
-                  y="3"
-                  height="12"
-                  rx="6"
-                  className="pulse-ladder-bar"
-                />
+                {row.missing ? null : (
+                  <rect
+                    x={`${row.lowPct}%`}
+                    width={`${Math.max(row.highPct - row.lowPct, 1)}%`}
+                    y="3"
+                    height="12"
+                    rx="6"
+                    className="pulse-ladder-bar"
+                  />
+                )}
               </svg>
               <span className="pulse-ladder-figures">
-                <b>{row.range}</b>
-                <small>{row.reports}</small>
+                {row.missing ? <small>{row.range}</small> : <b>{row.range}</b>}
+                {row.reports ? <small>{row.reports}</small> : null}
               </span>
             </li>
           ))}
@@ -205,10 +217,211 @@ function CareerLadder({ ladder }: { ladder: EmployerView["ladder"] }) {
         </div>
       </div>
       <figcaption>
-        Source: <Source link={ladder.source} />. {ladder.note}
+        Pay: <Source link={ladder.source} />. {ladder.note} Job titles as
+        BlackRock names them: <Source link={ladder.titlesSource} />.
       </figcaption>
+      <p className="pulse-story">
+        <b>{ladder.story.label}:</b> {ladder.story.value}{" "}
+        <Cite fact={ladder.story} />
+      </p>
     </figure>
   );
+}
+
+function Cite({ fact }: { fact: OfficialFact }) {
+  return (
+    <small className="pulse-cite">
+      <a href={fact.source.href} target="_blank" rel="noreferrer">
+        {fact.cite}
+      </a>
+    </small>
+  );
+}
+
+function OfficialList({ facts }: { facts: OfficialFact[] }) {
+  return (
+    <ul className="pulse-official-list">
+      {facts.map((fact) => (
+        <li key={fact.label}>
+          <b>{fact.label}</b>
+          {fact.label === fact.value ? null : <span> {fact.value}</span>}
+          {fact.note ? <span> {fact.note}</span> : null} <Cite fact={fact} />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function WaysInForYou({
+  employer,
+  title,
+}: {
+  employer: EmployerView;
+  title: string;
+}) {
+  const official = employer.official;
+  const glassdoor = employer.waysIn;
+  return (
+    <section className="pulse-ways-in" aria-labelledby="pulse-ways-in-title">
+      <h3 id="pulse-ways-in-title">{title}</h3>
+      <ol className="pulse-ways-grid">
+        {official.waysIn.map((way) => (
+          <li key={way.label}>
+            <b>
+              {way.href ? (
+                <a href={way.href} target="_blank" rel="noreferrer">
+                  {way.label}
+                </a>
+              ) : (
+                way.label
+              )}
+            </b>
+            {way.tag ? <span className="pulse-tag">{way.tag}</span> : null}
+            <span>{way.value}</span>
+            {way.details.length ? (
+              <ul>
+                {way.details.map((detail) => (
+                  <li key={detail}>{detail}</li>
+                ))}
+              </ul>
+            ) : null}
+            <Cite fact={way} />
+          </li>
+        ))}
+        <li>
+          <b>Internships</b>
+          <ul>
+            {glassdoor.items.map((item) => (
+              <li key={item.title}>
+                <a href={item.href} target="_blank" rel="noreferrer">
+                  {item.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <small className="pulse-cite">
+            <Source link={glassdoor.source} />, listed on {employer.asOf}.
+            Listings change and close.
+          </small>
+        </li>
+      </ol>
+      <p className="pulse-degree">
+        <b>
+          {official.degreeSubject.label}: {official.degreeSubject.value}
+        </b>{" "}
+        <Cite fact={official.degreeSubject} />
+      </p>
+    </section>
+  );
+}
+
+function PayWorks({ employer }: { employer: EmployerView }) {
+  const median = employer.official.medianPay;
+  return (
+    <>
+      <OfficialList facts={employer.official.payWorks} />
+      <p className="pulse-median">
+        {median.label}: {median.value}. {median.note} <Cite fact={median} />
+      </p>
+    </>
+  );
+}
+
+function PayFairness({ employer }: { employer: EmployerView }) {
+  const gap = employer.official.payGap;
+  const global = employer.official.payFairnessGlobal;
+  return (
+    <>
+      <p className="pulse-section-sub">
+        {gap.title}: {gap.scope}.
+      </p>
+      <dl className="pulse-gap-rows">
+        {gap.rows.map((row) => (
+          <div key={row.label}>
+            <dt>{row.label}</dt>
+            <dd>
+              <b>{row.value}</b>
+              <small className="pulse-cite">
+                <a href={gap.source.href} target="_blank" rel="noreferrer">
+                  {row.cite}
+                </a>
+              </small>
+            </dd>
+          </div>
+        ))}
+      </dl>
+      <figure className="pulse-quartiles">
+        <figcaption>Women and men in each pay quarter (UK)</figcaption>
+        <ul>
+          {gap.quartiles.map((quarter) => (
+            <li
+              key={quarter.quarter}
+              aria-label={`${quarter.quarter} pay quarter: ${quarter.women}% women, ${quarter.men}% men`}
+            >
+              <span>{quarter.quarter}</span>
+              <span className="pulse-quartile-bar" aria-hidden="true">
+                <i style={{ width: `${quarter.women}%` }} />
+              </span>
+              <small>
+                {quarter.women}% women · {quarter.men}% men
+              </small>
+            </li>
+          ))}
+        </ul>
+        <small className="pulse-cite">
+          <a href={gap.source.href} target="_blank" rel="noreferrer">
+            {gap.quartilesCite}
+          </a>
+        </small>
+      </figure>
+      <p className="pulse-section-sub">{gap.reason}.</p>
+      <p className="pulse-section-sub">
+        <b>
+          {global.label}: {global.value}.
+        </b>{" "}
+        {global.note} <Cite fact={global} />
+      </p>
+    </>
+  );
+}
+
+function OfficialSection({
+  section,
+  employer,
+}: {
+  section: EmployerSection;
+  employer: EmployerView;
+}) {
+  const body =
+    section.id === "pay-works" ? (
+      <PayWorks employer={employer} />
+    ) : section.id === "pay-fairness" ? (
+      <PayFairness employer={employer} />
+    ) : section.id === "company" ? (
+      <OfficialList facts={employer.official.company} />
+    ) : section.id === "benefits" ? (
+      <OfficialList facts={employer.official.benefits} />
+    ) : null;
+  return (
+    <section className="pulse-more-section">
+      <h4>{section.title}</h4>
+      {body}
+    </section>
+  );
+}
+
+function MainSection({
+  section,
+  employer,
+}: {
+  section: EmployerSection;
+  employer: EmployerView;
+}) {
+  if (section.id === "ways-in")
+    return <WaysInForYou employer={employer} title={section.title} />;
+  if (section.id === "facts") return <EmployerFacts employer={employer} />;
+  if (section.id === "ladder") return <CareerLadder ladder={employer.ladder} />;
+  return null;
 }
 
 function EmployerFacts({ employer }: { employer: EmployerView }) {
@@ -251,33 +464,6 @@ function ShareTile({ share }: { share: EmployerView["share"] }) {
   );
 }
 
-function WaysIn({
-  waysIn,
-  asOf,
-}: {
-  waysIn: EmployerView["waysIn"];
-  asOf: string;
-}) {
-  return (
-    <aside className="pulse-ways" aria-labelledby="pulse-ways-title">
-      <h3 id="pulse-ways-title">Ways in</h3>
-      <ul>
-        {waysIn.items.map((item) => (
-          <li key={item.title}>
-            <a href={item.href} target="_blank" rel="noreferrer">
-              {item.title}
-            </a>
-          </li>
-        ))}
-      </ul>
-      <small>
-        Source: <Source link={waysIn.source} />, listed on {asOf}. Listings
-        change and close.
-      </small>
-    </aside>
-  );
-}
-
 export default function EmployerPulse({ careers }: { careers: Career[] }) {
   const [tab, setTab] = useState<PulseTab>("finance");
   const [employerData, setEmployerData] = useState<
@@ -316,11 +502,29 @@ export default function EmployerPulse({ careers }: { careers: Career[] }) {
 
       {employer ? (
         <>
-          <EmployerFacts employer={employer} />
-          <div className="pulse-employer">
-            <CareerLadder ladder={employer.ladder} />
-            <WaysIn waysIn={employer.waysIn} asOf={employer.asOf} />
-          </div>
+          {employer.sections
+            .filter((section) => !section.more)
+            .map((section) => (
+              <MainSection
+                key={section.id}
+                section={section}
+                employer={employer}
+              />
+            ))}
+          <details className="pulse-more">
+            <summary>More about working at {employer.name}</summary>
+            <div className="pulse-more-grid">
+              {employer.sections
+                .filter((section) => section.more)
+                .map((section) => (
+                  <OfficialSection
+                    key={section.id}
+                    section={section}
+                    employer={employer}
+                  />
+                ))}
+            </div>
+          </details>
         </>
       ) : employerData === null ? (
         <p className="pulse-unavailable pulse-employer-note" role="status">
@@ -429,16 +633,17 @@ export default function EmployerPulse({ careers }: { careers: Career[] }) {
         </aside>
       </div>
 
-      <p className="pulse-footer">
-        {model.footer} Sources:{" "}
-        {model.footerLinks.map((link, index) => (
-          <span key={link.href}>
-            {index ? " · " : ""}
-            <Source link={link} />
-          </span>
-        ))}
-        .
-      </p>
+      <footer className="pulse-footer">
+        <p>{model.footer}</p>
+        <h3>Sources</h3>
+        <ul className="pulse-sources">
+          {model.footerLinks.map((link) => (
+            <li key={link.label}>
+              <Source link={link} />
+            </li>
+          ))}
+        </ul>
+      </footer>
     </section>
   );
 }

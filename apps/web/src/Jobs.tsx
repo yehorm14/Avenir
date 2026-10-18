@@ -638,6 +638,10 @@ function PublishedEvidence({ career }: { career: Career }) {
   return (
     <section className="job-evidence">
       <h2>What the evidence shows</h2>
+      <p className="jobs-source-note">
+        Observed employment trends describe the past. AI exposure describes
+        tasks that technology could affect; it is not a forecast of job losses.
+      </p>
       <dl className="job-evidence-grid">
         {headline.map((key) =>
           career.metrics[key] ? (

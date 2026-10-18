@@ -2,8 +2,10 @@ import type { Career, HistoryPoint, Metric } from "./types";
 
 /** View model for the Home page "Employer pulse" card.
  * Occupation figures come from the careers served by the app's own API (ONS ASHE).
- * Employer figures come from /employers/blackrock.json: public Glassdoor UK and
- * Levels.fyi pages read on the date in its `as_of` field. Nothing here is invented.
+ * Employer figures come from /employers/blackrock.json: BlackRock's own reports and
+ * careers site (source, page and date on each item, under `official`), plus public
+ * Glassdoor UK and Levels.fyi pages read on the date in its `as_of` field.
+ * Nothing here is invented and no figure is derived or converted.
  */
 export type PulseTab = "finance" | "technology" | "data";
 
@@ -74,6 +76,53 @@ export type EmployerData = {
   entry_routes: SourceRef & { items: string[] };
   uk_offices: SourceRef & { items: { city: string; reports: number }[] };
   compensation_rating: { value: number; out_of: number } & SourceRef;
+  official: OfficialData;
+};
+
+/** A fact from BlackRock's own reports or careers site; `source` is a key of `official.sources`. */
+export type OfficialFactRaw = {
+  label: string;
+  value: string;
+  note?: string;
+  tag?: string;
+  details?: string[];
+  href?: string;
+  source: string;
+  page?: string;
+  date?: string;
+};
+
+type PayGapQuartile = { quarter: string; women_pct: number; men_pct: number };
+
+export type OfficialData = {
+  sources: Record<string, { label: string; url: string; note?: string }>;
+  ways_in: OfficialFactRaw[];
+  degree_subject: OfficialFactRaw;
+  career_titles: { items: string[]; source: string };
+  career_story: OfficialFactRaw;
+  company: OfficialFactRaw[];
+  pay_works: OfficialFactRaw[];
+  median_pay: OfficialFactRaw;
+  pay_gap_uk: {
+    source: string;
+    snapshot: string;
+    scope: string;
+    hourly: { median_pct: number; mean_pct: number; page: string };
+    bonus: { median_pct: number; mean_pct: number; page: string };
+    received_bonus: { women_pct: number; men_pct: number; page: string };
+    quartiles: { page: string; items: PayGapQuartile[] };
+    trend: {
+      page: string;
+      from_year: number;
+      from_median_pct: number;
+      to_year: number;
+      to_median_pct: number;
+    };
+    graduate_class: { women_pct: number; year: number; page: string };
+    reason: string;
+  };
+  pay_fairness_global: OfficialFactRaw;
+  benefits: OfficialFactRaw[];
 };
 
 const isObject = (value: unknown): value is Record<string, unknown> =>
@@ -132,8 +181,76 @@ export function parseEmployerData(raw: unknown): EmployerData | null {
     hasSource(compensation_rating) &&
     isObject(compensation_rating) &&
     isNumber(compensation_rating.value) &&
-    isNumber(compensation_rating.out_of);
+    isNumber(compensation_rating.out_of) &&
+    isOfficial(raw.official);
   return ok ? (raw as unknown as EmployerData) : null;
+}
+
+const hasNumbers = (value: unknown, keys: string[]): boolean =>
+  isObject(value) && keys.every((key) => isNumber(value[key]));
+
+/** Official facts: every item names a known source; quartiles add up to 100%. */
+function isOfficial(value: unknown): boolean {
+  if (!isObject(value) || !isObject(value.sources)) return false;
+  const sources = value.sources;
+  const sourceOk = Object.values(sources).every(
+    (source) =>
+      isObject(source) && isString(source.label) && isString(source.url),
+  );
+  const isFact = (fact: unknown) =>
+    isObject(fact) &&
+    isString(fact.label) &&
+    isString(fact.value) &&
+    isString(fact.source) &&
+    isObject(sources[fact.source]);
+  const isFactList = (list: unknown) =>
+    Array.isArray(list) && list.length > 0 && list.every(isFact);
+  const gap = value.pay_gap_uk;
+  const titles = value.career_titles;
+  return (
+    sourceOk &&
+    isFactList(value.ways_in) &&
+    isFact(value.degree_subject) &&
+    isObject(titles) &&
+    Array.isArray(titles.items) &&
+    titles.items.every(isString) &&
+    isString(titles.source) &&
+    isObject(sources[titles.source]) &&
+    isFact(value.career_story) &&
+    isFactList(value.company) &&
+    isFactList(value.pay_works) &&
+    isFact(value.median_pay) &&
+    isFact(value.pay_fairness_global) &&
+    isFactList(value.benefits) &&
+    isObject(gap) &&
+    isString(gap.source) &&
+    isObject(sources[gap.source]) &&
+    isString(gap.snapshot) &&
+    isString(gap.scope) &&
+    isString(gap.reason) &&
+    hasNumbers(gap.hourly, ["median_pct", "mean_pct"]) &&
+    hasNumbers(gap.bonus, ["median_pct", "mean_pct"]) &&
+    hasNumbers(gap.received_bonus, ["women_pct", "men_pct"]) &&
+    hasNumbers(gap.trend, [
+      "from_year",
+      "from_median_pct",
+      "to_year",
+      "to_median_pct",
+    ]) &&
+    hasNumbers(gap.graduate_class, ["women_pct", "year"]) &&
+    isObject(gap.quartiles) &&
+    Array.isArray(gap.quartiles.items) &&
+    gap.quartiles.items.length === 4 &&
+    gap.quartiles.items.every(
+      (item) =>
+        hasNumbers(item, ["women_pct", "men_pct"]) &&
+        isString(item.quarter) &&
+        isObject(item) &&
+        isNumber(item.women_pct) &&
+        isNumber(item.men_pct) &&
+        item.women_pct + item.men_pct === 100,
+    )
+  );
 }
 
 /* ---------- Formatting ---------- */
@@ -209,8 +326,12 @@ export type LadderRow = {
   level: string;
   range: string;
   reports: string;
-  low: number;
-  high: number;
+  /** True when the level is one of BlackRock's own career titles. */
+  official: boolean;
+  /** True when Glassdoor UK has no salary range for this title. */
+  missing: boolean;
+  low: number | null;
+  high: number | null;
   /** Bar position as a percentage of the chart's scale. */
   lowPct: number;
   highPct: number;
@@ -223,7 +344,24 @@ export type EmployerFact = {
   source: SourceLink;
 };
 
+/** Card sections in display order; `more` ones sit inside the "More about working at" details. */
+export type EmployerSection = {
+  id:
+    | "ways-in"
+    | "facts"
+    | "ladder"
+    | "pay-works"
+    | "pay-fairness"
+    | "company"
+    | "benefits";
+  title: string;
+  more: boolean;
+};
+
 export type EmployerView = {
+  sections: EmployerSection[];
+  waysIn: { items: { title: string; href: string }[]; source: SourceLink };
+  official: OfficialView;
   name: string;
   asOf: string;
   ladder: {
@@ -232,6 +370,8 @@ export type EmployerView = {
     ticks: { label: string; pct: number }[];
     source: SourceLink;
     note: string;
+    titlesSource: SourceLink;
+    story: OfficialFact;
   };
   facts: EmployerFact[];
   share: {
@@ -245,7 +385,6 @@ export type EmployerView = {
     source: SourceLink;
     attribution: SourceLink;
   };
-  waysIn: { items: { title: string; href: string }[]; source: SourceLink };
 };
 
 const isLevelsFyi = (source: string) => /levels\.fyi/i.test(source);
@@ -258,6 +397,7 @@ function sourceLink(ref: SourceRef): SourceLink {
 }
 
 export function buildLadder(data: EmployerData): EmployerView["ladder"] {
+  const titles = data.official.career_titles;
   const levels = [...data.career_ladder_uk.levels].sort(
     (a, b) => a.low - b.low || a.high - b.high,
   );
@@ -270,18 +410,174 @@ export function buildLadder(data: EmployerData): EmployerView["ladder"] {
     ticks.push({ label: formatK(value), pct: pct(value) });
   return {
     title: `Career ladder at ${data.employer} (UK)`,
-    rows: levels.map((level) => ({
-      level: level.level,
-      range: formatKRange(level.low, level.high),
-      reports: formatReports(level.reports),
-      low: level.low,
-      high: level.high,
-      lowPct: pct(level.low),
-      highPct: pct(level.high),
-    })),
+    rows: [
+      ...levels.map((level) => ({
+        level: level.level,
+        range: formatKRange(level.low, level.high),
+        reports: formatReports(level.reports),
+        official: titles.items.includes(level.level),
+        missing: false,
+        low: level.low,
+        high: level.high,
+        lowPct: pct(level.low),
+        highPct: pct(level.high),
+      })),
+      ...titles.items
+        .filter((title) => !levels.some((level) => level.level === title))
+        .map((title) => ({
+          level: title,
+          range: noSalaryData,
+          reports: "",
+          official: true,
+          missing: true,
+          low: null,
+          high: null,
+          lowPct: 0,
+          highPct: 0,
+        })),
+    ],
     ticks,
     source: sourceLink(data.career_ladder_uk),
     note: data.career_ladder_uk.note ?? "",
+    titlesSource: officialLink(data.official, titles.source),
+    story: buildOfficialFact(data.official, data.official.career_story),
+  };
+}
+
+/* ---------- Official BlackRock facts ---------- */
+
+export const noSalaryData = "no UK salary data";
+
+export type OfficialFact = {
+  label: string;
+  value: string;
+  note: string | null;
+  tag: string | null;
+  details: string[];
+  href: string | null;
+  /** "BlackRock 2026 Proxy Statement, p.37, 31 Dec 2025". */
+  cite: string;
+  source: SourceLink;
+};
+
+function officialLink(official: OfficialData, id: string): SourceLink {
+  const source = official.sources[id];
+  return { label: source.label, href: source.url };
+}
+
+export function buildOfficialFact(
+  official: OfficialData,
+  fact: OfficialFactRaw,
+): OfficialFact {
+  const source = officialLink(official, fact.source);
+  return {
+    label: fact.label,
+    value: fact.value,
+    note: fact.note ?? null,
+    tag: fact.tag ?? null,
+    details: fact.details ?? [],
+    href: fact.href ?? null,
+    cite: [source.label, fact.page, fact.date].filter(Boolean).join(", "),
+    source,
+  };
+}
+
+export type PayGapView = {
+  title: string;
+  scope: string;
+  rows: { label: string; value: string; cite: string }[];
+  quartiles: { quarter: string; women: number; men: number }[];
+  quartilesCite: string;
+  reason: string;
+  source: SourceLink;
+};
+
+export function buildPayGap(official: OfficialData): PayGapView {
+  const gap = official.pay_gap_uk;
+  const source = officialLink(official, gap.source);
+  const cite = (page: string) => `${source.label}, ${page}`;
+  return {
+    title: "Pay fairness (UK)",
+    scope: `${gap.scope}, snapshot ${gap.snapshot}`,
+    rows: [
+      {
+        label: "Hourly pay gap",
+        value: `median ${gap.hourly.median_pct}%, mean ${gap.hourly.mean_pct}%`,
+        cite: cite(gap.hourly.page),
+      },
+      {
+        label: "Bonus gap",
+        value: `median ${gap.bonus.median_pct}%, mean ${gap.bonus.mean_pct}%`,
+        cite: cite(gap.bonus.page),
+      },
+      {
+        label: "Received a bonus",
+        value: `${gap.received_bonus.women_pct}% of women, ${gap.received_bonus.men_pct}% of men`,
+        cite: cite(gap.received_bonus.page),
+      },
+      {
+        label: "Median gap trend",
+        value: `${gap.trend.from_median_pct}% (${gap.trend.from_year}) to ${gap.trend.to_median_pct}% (${gap.trend.to_year})`,
+        cite: cite(gap.trend.page),
+      },
+      {
+        label: `${gap.graduate_class.year} UK graduate analyst class`,
+        value: `${gap.graduate_class.women_pct}% women`,
+        cite: cite(gap.graduate_class.page),
+      },
+    ],
+    quartiles: gap.quartiles.items.map((item) => ({
+      quarter: item.quarter,
+      women: item.women_pct,
+      men: item.men_pct,
+    })),
+    quartilesCite: cite(gap.quartiles.page),
+    reason: `The report's stated reason (its claim, not ours): ${gap.reason.charAt(0).toLowerCase()}${gap.reason.slice(1)}`,
+    source,
+  };
+}
+
+export type OfficialView = {
+  waysIn: OfficialFact[];
+  degreeSubject: OfficialFact;
+  company: OfficialFact[];
+  payWorks: OfficialFact[];
+  medianPay: OfficialFact;
+  payGap: PayGapView;
+  payFairnessGlobal: OfficialFact;
+  benefits: OfficialFact[];
+  sources: SourceLink[];
+};
+
+/** Official source links, one per document; "(link to verify)" when only the site is known. */
+export function officialSources(official: OfficialData): SourceLink[] {
+  const seen = new Set<string>();
+  return Object.values(official.sources)
+    .map((source) => ({
+      label: source.note?.includes("(verify)")
+        ? `${source.label} (link to verify)`
+        : source.label,
+      href: source.url,
+    }))
+    .filter((source) => {
+      if (seen.has(source.label)) return false;
+      seen.add(source.label);
+      return true;
+    });
+}
+
+export function buildOfficial(official: OfficialData): OfficialView {
+  const fact = (raw: OfficialFactRaw) => buildOfficialFact(official, raw);
+  return {
+    waysIn: official.ways_in.map(fact),
+    degreeSubject: fact(official.degree_subject),
+    company: official.company.map(fact),
+    payWorks: official.pay_works.map(fact),
+    medianPay: fact(official.median_pay),
+    payGap: buildPayGap(official),
+    payFairnessGlobal: fact(official.pay_fairness_global),
+    benefits: official.benefits.map(fact),
+    sources: officialSources(official),
   };
 }
 
@@ -336,11 +632,15 @@ export function buildShare(data: EmployerData): EmployerView["share"] {
 
 export function buildEmployerView(data: EmployerData): EmployerView {
   return {
-    name: data.employer,
-    asOf: formatIsoDate(data.as_of),
-    ladder: buildLadder(data),
-    facts: buildFacts(data),
-    share: buildShare(data),
+    sections: [
+      { id: "ways-in", title: "Ways in for you", more: false },
+      { id: "facts", title: `${data.employer} at a glance`, more: false },
+      { id: "ladder", title: "Career ladder", more: false },
+      { id: "pay-works", title: "How pay works in finance", more: true },
+      { id: "pay-fairness", title: "Pay fairness", more: true },
+      { id: "company", title: "The company", more: true },
+      { id: "benefits", title: "Benefits", more: true },
+    ],
     waysIn: {
       items: data.entry_routes.items.map((title) => ({
         title,
@@ -348,6 +648,12 @@ export function buildEmployerView(data: EmployerData): EmployerView {
       })),
       source: sourceLink(data.entry_routes),
     },
+    official: buildOfficial(data.official),
+    name: data.employer,
+    asOf: formatIsoDate(data.as_of),
+    ladder: buildLadder(data),
+    facts: buildFacts(data),
+    share: buildShare(data),
   };
 }
 
@@ -468,7 +774,7 @@ function trendOf(career: Career) {
 
 function footerFor(careers: Career[], employer: EmployerData | null): string {
   const employerPart = employer
-    ? `Employer figures: Glassdoor UK and Levels.fyi, self-reported, as of ${formatIsoDate(employer.as_of)}; share price via TradingView. `
+    ? `Employer figures: BlackRock's own reports and careers site (page and date on each figure); Glassdoor UK and Levels.fyi, self-reported, as of ${formatIsoDate(employer.as_of)}; share price via TradingView. USD figures are not converted. `
     : "";
   const base = `${employerPart}Occupation pay: ONS ASHE, full-time employees.`;
   const payYears = [
@@ -498,6 +804,7 @@ function footerLinksFor(employer: EmployerData | null): SourceLink[] {
   const ons = { label: "ONS ASHE", href: onsAsheUrl };
   if (!employer) return [ons];
   return [
+    ...officialSources(employer.official),
     { label: "Glassdoor UK salaries", href: employer.career_ladder_uk.url },
     { label: "Glassdoor UK jobs", href: employer.entry_routes.url },
     levelsFyiAttribution,

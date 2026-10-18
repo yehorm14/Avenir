@@ -1206,6 +1206,7 @@ function Quiz({
           <button
             role="radio"
             aria-checked={answered === i}
+            tabIndex={i === (answered ?? 0) ? 0 : -1}
             key={o.text}
             className={`quiz-option ${answered === i ? "is-selected" : ""}`}
             onClick={() => update({ answers: { ...prefs.answers, [q.id]: i } })}
@@ -1219,8 +1220,8 @@ function Quiz({
                 const next =
                   (i +
                     (e.key === "ArrowUp" || e.key === "ArrowLeft" ? -1 : 1) +
-                    4) %
-                  4;
+                    q.options.length) %
+                  q.options.length;
                 update({ answers: { ...prefs.answers, [q.id]: next } });
                 (
                   e.currentTarget.parentElement?.children[next] as HTMLElement

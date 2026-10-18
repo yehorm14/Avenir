@@ -4,9 +4,10 @@
   "facts": [
     {
       "label": "Employees worldwide",
-      "value": "25,000",
-      "source": "Levels.fyi company profile",
-      "url": "https://www.levels.fyi/en-gb/companies/blackrock"
+      "value": "about 24,900",
+      "note": "In more than 30 countries, at 31 Dec 2025 (p.37)",
+      "source": "BlackRock 2026 Proxy Statement",
+      "url": "https://ir.blackrock.com/"
     },
     {
       "label": "Founded",
@@ -36,22 +37,72 @@
     "url": "https://www.glassdoor.co.uk/Salary/BlackRock-Salaries-E9331.htm",
     "note": "Self-reported by employees; ranges, not offers. UK, all locations.",
     "levels": [
-      { "level": "Summer analyst (intern)", "low": 38000, "high": 55000, "reports": 92 },
-      { "level": "Analyst", "low": 43000, "high": 66000, "reports": 389 },
-      { "level": "Associate", "low": 62000, "high": 96000, "reports": 527 },
-      { "level": "Vice President", "low": 95000, "high": 145000, "reports": 387 },
-      { "level": "Director", "low": 160000, "high": 235000, "reports": 201 },
-      { "level": "Managing Director", "low": 211000, "high": 448000, "reports": 29 }
+      {
+        "level": "Summer analyst (intern)",
+        "low": 38000,
+        "high": 55000,
+        "reports": 92
+      },
+      {
+        "level": "Analyst",
+        "low": 43000,
+        "high": 66000,
+        "reports": 389
+      },
+      {
+        "level": "Associate",
+        "low": 62000,
+        "high": 96000,
+        "reports": 527
+      },
+      {
+        "level": "Vice President",
+        "low": 95000,
+        "high": 145000,
+        "reports": 387
+      },
+      {
+        "level": "Director",
+        "low": 160000,
+        "high": 235000,
+        "reports": 201
+      },
+      {
+        "level": "Managing Director",
+        "low": 211000,
+        "high": 448000,
+        "reports": 29
+      }
     ]
   },
   "roles_uk": {
     "source": "Glassdoor UK, self-reported salaries",
     "url": "https://www.glassdoor.co.uk/Salary/BlackRock-Salaries-E9331.htm",
     "roles": [
-      { "title": "Software Engineer", "low": 65000, "high": 95000, "reports": 59 },
-      { "title": "Investment Analyst", "low": 44000, "high": 100000, "reports": 21 },
-      { "title": "Business Analyst", "low": 38000, "high": 56000, "reports": 23 },
-      { "title": "Portfolio Manager", "low": 100000, "high": 225000, "reports": 43 }
+      {
+        "title": "Software Engineer",
+        "low": 65000,
+        "high": 95000,
+        "reports": 59
+      },
+      {
+        "title": "Investment Analyst",
+        "low": 44000,
+        "high": 100000,
+        "reports": 21
+      },
+      {
+        "title": "Business Analyst",
+        "low": 38000,
+        "high": 56000,
+        "reports": 23
+      },
+      {
+        "title": "Portfolio Manager",
+        "low": 100000,
+        "high": 225000,
+        "reports": 43
+      }
     ]
   },
   "entry_routes": {
@@ -68,8 +119,14 @@
     "source": "Glassdoor salary reports by city",
     "url": "https://www.glassdoor.co.uk/Salary/BlackRock-Salaries-E9331.htm",
     "items": [
-      { "city": "London", "reports": 2428 },
-      { "city": "Edinburgh", "reports": 744 }
+      {
+        "city": "London",
+        "reports": 2428
+      },
+      {
+        "city": "Edinburgh",
+        "reports": 744
+      }
     ]
   },
   "compensation_rating": {
@@ -77,5 +134,305 @@
     "out_of": 5,
     "source": "Glassdoor UK",
     "url": "https://www.glassdoor.co.uk/Salary/BlackRock-Salaries-E9331.htm"
+  },
+  "official": {
+    "sources": {
+      "proxy_2026": {
+        "label": "BlackRock 2026 Proxy Statement",
+        "url": "https://ir.blackrock.com/",
+        "note": "FY2025"
+      },
+      "ar_2025": {
+        "label": "BlackRock 2025 Annual Report",
+        "url": "https://ir.blackrock.com/"
+      },
+      "ir_site": {
+        "label": "BlackRock investor relations",
+        "url": "https://ir.blackrock.com/"
+      },
+      "gpg_2023": {
+        "label": "BlackRock UK Gender Pay Gap Report 2023",
+        "url": "https://www.blackrock.com/",
+        "note": "Exact document link (verify)"
+      },
+      "bsf_2026": {
+        "label": "BlackRock Strategic Funds annual report 2026",
+        "url": "https://www.blackrock.com/",
+        "note": "Year to 31 May 2026, remuneration disclosure; exact document link (verify)"
+      },
+      "careers": {
+        "label": "careers.blackrock.com",
+        "url": "https://careers.blackrock.com/"
+      },
+      "careers_req_12219": {
+        "label": "careers.blackrock.com, job requisition 12219",
+        "url": "https://careers.blackrock.com/job/london/2027-full-time-analyst-program-emea/45831/97150826656"
+      },
+      "careers_pay_fairness": {
+        "label": "careers.blackrock.com, pay fairness",
+        "url": "https://careers.blackrock.com/en/pay-fairness"
+      }
+    },
+    "ways_in": [
+      {
+        "label": "Smart Start",
+        "value": "An early-career pathway for school leavers aged 16 to 24, an alternative to higher education.",
+        "tag": "Described in 2023; check current availability",
+        "source": "gpg_2023",
+        "page": "p.6",
+        "date": "2023"
+      },
+      {
+        "label": "2027 Full-Time Analyst Programme, EMEA",
+        "value": "Two years, starts August. For graduates finishing a bachelor’s or master’s between June 2026 and July 2027.",
+        "details": [
+          "“We welcome applications from candidates studying any degree subject”",
+          "Deadlines: London 30 Sep 2026 (closed), Edinburgh 30 Oct 2026",
+          "Pre-interview assessment within five days"
+        ],
+        "href": "https://careers.blackrock.com/job/london/2027-full-time-analyst-program-emea/45831/97150826656",
+        "source": "careers_req_12219",
+        "date": "2027 intake"
+      },
+      {
+        "label": "Later entry: Returners and Veterans",
+        "value": "Returners programme for people after a career break of 18 months or more, and a Veterans programme.",
+        "source": "proxy_2026",
+        "page": "p.38",
+        "date": "FY2025"
+      }
+    ],
+    "degree_subject": {
+      "label": "Degree subject",
+      "value": "any (Analyst Programme 2027)",
+      "source": "careers_req_12219",
+      "date": "2027 intake"
+    },
+    "career_titles": {
+      "items": [
+        "Analyst",
+        "Associate",
+        "Vice President",
+        "Director",
+        "Managing Director",
+        "Senior Managing Director"
+      ],
+      "source": "careers"
+    },
+    "career_story": {
+      "label": "Career story",
+      "value": "The current COO joined in 1994 as an analyst in the Portfolio Analytics Group.",
+      "source": "proxy_2026",
+      "page": "p.46",
+      "date": "FY2025"
+    },
+    "company": [
+      {
+        "label": "Employees by region",
+        "value": "Americas 40% · Europe, Middle East and Africa 31% · Asia Pacific 29%",
+        "source": "proxy_2026",
+        "page": "p.38",
+        "date": "31 Dec 2025"
+      },
+      {
+        "label": "Offices",
+        "value": "154 offices in 88 cities",
+        "source": "proxy_2026",
+        "page": "p.83",
+        "date": "FY2025"
+      },
+      {
+        "label": "Outside the United States",
+        "value": "About 60% of employees",
+        "note": "London and Edinburgh are named among the cities where critical operations are concentrated.",
+        "source": "ar_2025",
+        "page": "pp.20, 31",
+        "date": "FY2025"
+      },
+      {
+        "label": "Assets under management",
+        "value": "About $14.0 trillion",
+        "note": "$14,041,518 million at 31 Dec 2025; 2024: $11,551,251 million. Money managed for clients, not BlackRock’s own.",
+        "source": "ar_2025",
+        "page": "p.18",
+        "date": "31 Dec 2025"
+      },
+      {
+        "label": "Revenue",
+        "value": "$24.2 billion, up 19%",
+        "note": "$24,216m in 2025 vs $20,407m in 2024.",
+        "source": "ar_2025",
+        "page": "p.2",
+        "date": "2025"
+      },
+      {
+        "label": "iShares",
+        "value": "$5.5 trillion of iShares ETF assets",
+        "note": "The world’s leading ETF provider (the report’s claim).",
+        "source": "ar_2025",
+        "page": "p.21",
+        "date": "31 Dec 2025"
+      },
+      {
+        "label": "Technology (Aladdin)",
+        "value": "Technology services revenue $2.0 billion, up 24%",
+        "note": "360,000+ users across Aladdin, Preqin and eFront. Technology is a real career route at an investment firm.",
+        "source": "ar_2025",
+        "page": "pp.24, 4",
+        "date": "2025"
+      },
+      {
+        "label": "Market value",
+        "value": "Market cap $175.68B · share price $1,134.38",
+        "note": "Share price, not pay.",
+        "source": "ir_site",
+        "date": "16 Oct 2026 close"
+      }
+    ],
+    "pay_works": [
+      {
+        "label": "Salary plus bonus",
+        "value": "Base salary is contractual; on top there is a discretionary bonus, which can be zero.",
+        "source": "bsf_2026",
+        "page": "pp.18-20",
+        "date": "year to 31 May 2026"
+      },
+      {
+        "label": "Shares that vest",
+        "value": "Part of larger bonuses is paid in BlackRock shares that vest in three equal parts over three years.",
+        "source": "bsf_2026",
+        "page": "pp.18-20",
+        "date": "year to 31 May 2026"
+      },
+      {
+        "label": "Performance ratings",
+        "value": "Managers rate performance on a 5-point scale; pay is decided once a year, in January.",
+        "source": "bsf_2026",
+        "page": "pp.18-20",
+        "date": "year to 31 May 2026"
+      },
+      {
+        "label": "Employee share plan",
+        "value": "UK staff can buy BlackRock shares through an employee stock purchase plan.",
+        "source": "proxy_2026",
+        "page": "p.39",
+        "date": "FY2025"
+      }
+    ],
+    "median_pay": {
+      "label": "Median employee pay (global)",
+      "value": "$153,770 in 2025",
+      "note": "All levels worldwide, including bonus and stock, no cost-of-living adjustment, so it is not a starting or UK salary.",
+      "source": "proxy_2026",
+      "page": "p.104",
+      "date": "2025"
+    },
+    "pay_gap_uk": {
+      "source": "gpg_2023",
+      "snapshot": "5 April 2023",
+      "scope": "BlackRock UK incl. eFront Limited",
+      "hourly": {
+        "median_pct": 20,
+        "mean_pct": 16,
+        "page": "p.4"
+      },
+      "bonus": {
+        "median_pct": 25,
+        "mean_pct": 70,
+        "page": "p.4"
+      },
+      "received_bonus": {
+        "women_pct": 97,
+        "men_pct": 97,
+        "page": "p.4"
+      },
+      "quartiles": {
+        "page": "p.4",
+        "items": [
+          {
+            "quarter": "Lowest",
+            "women_pct": 54,
+            "men_pct": 46
+          },
+          {
+            "quarter": "Lower middle",
+            "women_pct": 48,
+            "men_pct": 52
+          },
+          {
+            "quarter": "Upper middle",
+            "women_pct": 40,
+            "men_pct": 60
+          },
+          {
+            "quarter": "Highest",
+            "women_pct": 30,
+            "men_pct": 70
+          }
+        ]
+      },
+      "trend": {
+        "page": "p.3",
+        "from_year": 2019,
+        "from_median_pct": 25,
+        "to_year": 2023,
+        "to_median_pct": 20
+      },
+      "graduate_class": {
+        "women_pct": 56.7,
+        "year": 2023,
+        "page": "p.2"
+      },
+      "reason": "The gap mostly reflects fewer women in senior roles."
+    },
+    "pay_fairness_global": {
+      "label": "Pay fairness (global)",
+      "value": "99 cents per $1.00",
+      "note": "Women globally and non-white US colleagues earned 99 cents per $1.00 of comparable colleagues, after adjusting for role, performance and location.",
+      "source": "careers_pay_fairness",
+      "date": "2024 analysis"
+    },
+    "benefits": [
+      {
+        "label": "Retirement savings",
+        "value": "Retirement savings",
+        "source": "proxy_2026",
+        "page": "p.39",
+        "date": "FY2025"
+      },
+      {
+        "label": "Flexible time off",
+        "value": "Flexible time off",
+        "source": "proxy_2026",
+        "page": "p.39",
+        "date": "FY2025"
+      },
+      {
+        "label": "Parental leave",
+        "value": "Parental leave",
+        "source": "proxy_2026",
+        "page": "p.39",
+        "date": "FY2025"
+      },
+      {
+        "label": "Mental health support",
+        "value": "Mental health support",
+        "source": "proxy_2026",
+        "page": "p.39",
+        "date": "FY2025"
+      },
+      {
+        "label": "Tuition reimbursement",
+        "value": "Tuition reimbursement",
+        "source": "careers"
+      },
+      {
+        "label": "Volunteering and giving",
+        "value": "Up to 2 paid volunteer days; charity matching up to $10,000 a year",
+        "source": "proxy_2026",
+        "page": "p.38",
+        "date": "FY2025"
+      }
+    ]
   }
 }
