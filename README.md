@@ -8,6 +8,10 @@ The hackathon demo follows Amira, 17, in Glasgow: maths and art, architecture as
 
 Requires Node 20+ and Python 3.12+. Use a Python executable for that version or newer (`python3.13` in the tested local environment):
 
+On macOS or Linux, prepare the complete app with `bash scripts/setup.sh`. It creates the local environment when absent, installs locked web dependencies and Python development dependencies, builds the app, then checks that both API layers and real evidence load. Recheck an existing setup with `bash scripts/check-setup.sh`.
+
+Manual setup:
+
 ```sh
 python3.13 -m venv .venv
 .venv/bin/python -m pip install -e ".[dev]"
