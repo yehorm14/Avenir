@@ -2,12 +2,15 @@
   color: #dae0e7;
   padding-top: 3px;
 }
+.main-content.workspace:has(.career-dashboard) {
+  padding-top: 25px;
+}
 .career-dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 24px;
-  margin-bottom: 21px;
+  margin-bottom: 12px;
 }
 .career-dashboard-header h1 {
   font-size: 36px;
@@ -24,6 +27,13 @@
 .career-dashboard-header .button {
   flex-shrink: 0;
 }
+.dashboard-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
 .dashboard-role-switch {
   display: flex;
   flex-wrap: wrap;
@@ -33,7 +43,7 @@
 .dashboard-role-switch button {
   color: #acb6c3;
   border-bottom: 2px solid transparent;
-  padding: 13px 0 14px;
+  padding: 10px 0;
   text-align: left;
   font-size: 13px;
   line-height: 1.55;
@@ -47,27 +57,27 @@
   color: #dae0e7;
 }
 .dashboard-selected-role {
-  padding: 18px 0;
+  padding: 10px 0;
 }
 .dashboard-selected-role h2 {
-  font-size: 23px;
+  font-size: 20px;
   font-weight: 500;
   letter-spacing: -0.035em;
   line-height: 1.3;
 }
 .dashboard-selected-role p {
   color: #acb6c3;
-  font-size: 14px;
-  line-height: 1.75;
+  font-size: 13px;
+  line-height: 1.6;
   max-width: 76ch;
-  margin-top: 0;
+  margin-top: 4px;
 }
 .dashboard-selected-role small {
   display: block;
   color: #96a1b1;
-  font-size: 11px;
-  line-height: 1.65;
-  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-top: 4px;
 }
 .dashboard-facts {
   display: grid;
@@ -75,8 +85,8 @@
   gap: 26px;
   border-top: 1px solid #303540;
   border-bottom: 1px solid #303540;
-  padding: 18px 0;
-  margin: 0 0 26px;
+  padding: 12px 0;
+  margin: 0 0 18px;
 }
 .dashboard-facts > div {
   min-width: 0;
@@ -105,7 +115,7 @@
 .dashboard-facts small {
   display: block;
   color: #acb6c3;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.65;
 }
 .dashboard-facts small {
@@ -123,11 +133,11 @@
   min-width: 0;
 }
 .career-dashboard .chart-module {
-  background: #111216;
-  border: 1px solid #303540;
-  border-radius: 18px;
+  background: none;
+  border: 0;
+  border-radius: 0;
   box-shadow: none;
-  padding: 23px 22px 20px;
+  padding: 0;
   margin-top: 0;
 }
 .career-dashboard .chart-top {
@@ -140,7 +150,7 @@
   letter-spacing: -0.035em;
 }
 .career-dashboard .chart-top p {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.65;
 }
 .career-dashboard .segmented {
@@ -148,7 +158,7 @@
 }
 .career-dashboard .segmented button {
   border-radius: 999px;
-  font-size: 11px;
+  font-size: 12px;
   padding: 7px 9px;
 }
 .career-dashboard .chart-readout {
@@ -158,21 +168,21 @@
 .career-dashboard .chart-readout,
 .career-dashboard .chart-readout > span,
 .career-dashboard .chart-readout b {
-  font-size: 11px;
+  font-size: 12px;
 }
 .career-dashboard .chart-interactive svg {
   max-height: 300px;
 }
 .career-dashboard .chart-interactive text {
-  font-size: 11px;
+  font-size: 12px;
 }
 .career-dashboard .chart-note {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.75;
   margin-top: 12px;
 }
 .career-dashboard .data-table summary {
-  font-size: 11px;
+  font-size: 12px;
 }
 .dashboard-demand,
 .dashboard-outlook,
@@ -216,7 +226,7 @@
 .dashboard-starting-pay small {
   display: block;
   color: #96a1b1;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.8;
   margin-top: 13px;
 }
@@ -265,9 +275,17 @@
   padding: 18px 0;
   margin: 12px 0 0;
 }
+.career-dashboard-rail > .dashboard-starting-pay {
+  padding-top: 0;
+  margin-top: 0;
+  border-top: 0;
+  padding-bottom: 26px;
+  margin-bottom: 26px;
+  border-bottom: 1px solid #303540;
+}
 .dashboard-starting-pay dt {
   color: #acb6c3;
-  font-size: 11px;
+  font-size: 12px;
 }
 .dashboard-starting-pay dd {
   color: #dae0e7;
@@ -333,7 +351,7 @@
   margin-top: 8px;
 }
 .dashboard-measure .dashboard-provenance {
-  font-size: 11px;
+  font-size: 12px;
 }
 .career-dashboard button:focus-visible,
 .career-dashboard a:focus-visible,
@@ -361,6 +379,9 @@
   .career-dashboard-header {
     align-items: flex-start;
     flex-wrap: wrap;
+  }
+  .dashboard-header-actions {
+    justify-content: flex-start;
   }
   .career-dashboard-layout {
     grid-template-columns: minmax(0, 1fr);
@@ -397,7 +418,7 @@
     font-size: 25px;
   }
   .career-dashboard .chart-module {
-    padding: 20px 16px;
+    padding: 0;
   }
   .career-dashboard .chart-top {
     flex-wrap: wrap;

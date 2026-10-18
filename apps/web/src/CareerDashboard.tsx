@@ -14,6 +14,7 @@ type Props = {
   onGuide: (career: Career) => void;
   saved: string[];
   onToggleSave: (id: string) => void;
+  sourceRegistry?: Record<string, { name?: string; url?: string }>;
 };
 
 const areas = {
@@ -29,7 +30,8 @@ const areas = {
   },
 };
 const sourceNames: Record<string, string> = {
-  ons_ashe_t14: "ONS ASHE, Table 14",
+  ons_ashe_t14: "ONS ASHE",
+  ons_cpih: "ONS CPIH",
   ilo_wp140: "ILO Working Paper 140",
   dfe_ai_uk_2023: "DfE UK AI exposure study",
   ons_online_job_adverts: "ONS / Adzuna job adverts",
@@ -43,7 +45,7 @@ const measureNames: Record<string, string> = {
   jobs: "Employee jobs",
   demand_trend: "Employee-job trend",
   demand_trend_2011_19: "Earlier employee-job trend",
-  exposure: "AI task exposure",
+  exposure: "Automation exposure",
   exposure_uk: "UK exposure cross-check",
   resilience_covid: "COVID employment resilience",
   resilience_cost_of_living: "Cost-of-living pay resilience",
@@ -51,13 +53,17 @@ const measureNames: Record<string, string> = {
   resilience_2008: "2008 crisis resilience",
   young_worker_share: "Workers aged 16–24",
 };
-const ashe = {
-  label: "ONS ASHE, Table 14",
-  url: "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/occupation4digitsoc2010ashetable14",
-};
-const cpih = {
-  label: "ONS CPIH",
-  url: "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/l522/mm23",
+const roleDescriptions: Record<string, string> = {
+  "2134": "Develop, test and maintain software applications.",
+  "3544": "Clean and analyse data to support decisions.",
+  "2133": "Analyse business requirements and design IT systems.",
+  "2135":
+    "Protect networks and systems, investigate incidents and reduce security risks.",
+  "2422":
+    "Analyse financial data and investments to support financial decisions.",
+  "2421": "Prepare financial accounts, audit records and advise on tax.",
+  "2433":
+    "Model risk, study economic conditions or analyse statistics, depending on the role.",
 };
 
 function available(metric?: Metric) {
@@ -186,18 +192,29 @@ export default function CareerDashboard({ area, careers, ...actions }: Props) {
   const exposure = career.metrics.exposure;
   const jobsValue = available(jobs);
   const exposureValue = available(exposure);
+  const sourceIds = [
+    ...new Set(Object.values(career.metrics).map((metric) => metric.source)),
+    "ons_cpih",
+  ];
   const sources = [
     ...(career.sources ?? []).map((source) => ({
       label: source.name,
       url: source.url,
     })),
-    ashe,
-    cpih,
+    ...sourceIds.flatMap((id) => {
+      const source = actions.sourceRegistry?.[id];
+      return sourceNames[id] && source?.url
+        ? [{ label: source.name ?? sourceNames[id], url: source.url }]
+        : [];
+    }),
     evidence?.demandSource,
     evidence?.salary?.source,
     evidence?.outlook.source,
   ]
-    .filter((source): source is { label: string; url: string } => !!source)
+    .filter(
+      (source): source is { label: string; url: string } =>
+        !!source && /^https:\/\//i.test(source.url),
+    )
     .filter(
       (source, index, all) =>
         all.findIndex((item) => item.url === source.url) === index,
@@ -209,12 +226,20 @@ export default function CareerDashboard({ area, careers, ...actions }: Props) {
         <div>
           <h1>{configuration.title}</h1>
         </div>
-        <button
-          className="button secondary"
-          onClick={() => actions.onGuide(career)}
-        >
-          Ask career guide
-        </button>
+        <div className="dashboard-header-actions">
+          <button
+            className="button primary"
+            onClick={() => actions.onPlan(career)}
+          >
+            Build my plan
+          </button>
+          <button
+            className="button secondary"
+            onClick={() => actions.onGuide(career)}
+          >
+            Ask career guide
+          </button>
+        </div>
       </header>
 
       <nav className="dashboard-role-switch" aria-label="Choose an occupation">
@@ -233,12 +258,11 @@ export default function CareerDashboard({ area, careers, ...actions }: Props) {
       </nav>
 
       <div className="dashboard-selected-role" aria-live="polite">
-        <h2 className="sr-only">{career.title}</h2>
-        <p>{career.summary}</p>
+        <h2>{career.title}</h2>
+        <p>{roleDescriptions[career.soc] ?? career.summary}</p>
         <small>
-          Representative occupation · UK SOC {career.soc}. These figures
-          describe this job, not every {configuration.title.toLowerCase()}{" "}
-          graduate.
+          Representative occupation. These figures describe this job, not every{" "}
+          {configuration.title.toLowerCase()} graduate.
         </small>
       </div>
 
@@ -280,14 +304,14 @@ export default function CareerDashboard({ area, careers, ...actions }: Props) {
           {headlineCaveat(trend) && <small>{headlineCaveat(trend)}</small>}
         </div>
         <div>
-          <dt>AI task exposure</dt>
+          <dt>Automation exposure</dt>
           <dd>
             {exposureValue == null
               ? "Not available"
               : (exposureValue * 100).toFixed(0)}
             {exposureValue != null && <span> / 100</span>}
           </dd>
-          <p>Task exposure, not job-loss risk.</p>
+          <p>Research estimate; not job-loss risk.</p>
           <small>{observation(exposure)}</small>
           {exposure &&
             exposure.low != null &&
@@ -359,14 +383,6 @@ export default function CareerDashboard({ area, careers, ...actions }: Props) {
           className="career-dashboard-rail"
           aria-label="Routes and next steps"
         >
-          <DashboardNextSteps
-            key={career.soc}
-            career={career}
-            onPlan={actions.onPlan}
-            saved={actions.saved}
-            onToggleSave={actions.onToggleSave}
-          />
-
           <section className="dashboard-starting-pay">
             <h2>Starting pay guide</h2>
             {evidence?.salary ? (
@@ -397,6 +413,13 @@ export default function CareerDashboard({ area, careers, ...actions }: Props) {
               </p>
             )}
           </section>
+          <DashboardNextSteps
+            key={career.soc}
+            career={career}
+            onPlan={actions.onPlan}
+            saved={actions.saved}
+            onToggleSave={actions.onToggleSave}
+          />
         </aside>
       </div>
 
