@@ -1,3 +1,50 @@
+# Final CS/Finance delivery verification — 18 October 2026
+
+Current local branch: `codex/final-delivery`. Runtime checkpoint: `538690c` (final follow-up increases historical-stat readability and records verification). Preview: http://127.0.0.1:4186. The previous 4175 release and original dirty checkout are preserved. This delivery is committed locally; it has not been pushed, merged or publicly deployed.
+
+## Current release gate
+
+`PATH="$PWD/.venv/bin:$PATH" make check` passed: **645 tests passed, 3 optional tests skipped** — 467 core, 120 app/API/integration/scripts, 32 preserved prototype and 26 web tests. Repository Ruff, frontend formatting, TypeScript/Vite production build and tracked-file secret scan passed. The final CTA, keyboard-focus and method-wording refinements were followed by fresh web tests, formatting and production build. The scan checks current tracked files, not all history or untracked files.
+
+ML owner release v1.2 was integrated atomically with authorship retained. The UI/API carry its tax-year price metadata, multiplicative relative employment trend and uncertainty flags. Low-purity historical pay mappings break at 2021. Both failed-placebo crisis metrics are excluded at the production decision-input boundary; raw evidence is preserved. Fixture assertions were updated to exact owner outputs, and the narrow-profile API test retains controlled eligibility rather than accepting extra recommendations.
+
+## Current browser evidence
+
+Three independent specialists and the integrator exercised the built UI against the assembled service in isolated browser contexts at **1200×800 and 1440×1000**:
+
+- All seven scoped roles open directly with correct hash, title, evidence and sources. Rapid changes, Back/Forward and reload preserve role consistency. Both chart price bases and relative trend periods match the v1.2 API.
+- Compare stays within four CS or three Finance roles. Actual rows and comparison indices match the API. CS pay priority selects IT business analyst; balanced/trend selects Cyber security. The Finance grouped role leads all three presets in this snapshot; no artificial movement is added.
+- Exactly one Build my plan action is shown in Compare. The chosen role and actual pay/trend weights reach the plan and export without inventing interest matching or quiz completion. Explore returns keyboard focus to the persistent Evidence button.
+- Route, personal note, completed action and saved opportunity survive reload and export. Export escapes markup and retains source links and actual data periods. Career-scoped guides do not mutate the plan; the grouped Finance guide does not borrow software-entry advice.
+- Simulated comparison failures remove stale recommendations; Retry recovers and delayed aborted responses cannot overwrite newer priorities. Bootstrap failure recovers through Try again. Offline guide failure retries without duplicating a question.
+- No page overflow, clipped controls, console warnings or console errors in the audited flows. Path route selector and guide Send control are visible at 1200×800. Lower table rows and detailed caveats use ordinary vertical scrolling.
+
+Lighthouse snapshot audits on current CS/Finance Evidence and Compare views scored **100 accessibility, 100 best practices, 100 SEO and 100 agentic browsing**, with zero failed audits. These exclude performance and do not certify every assistive technology or route. [Compact audit record](artifacts/final-browser-audit.json), [CS screenshot](artifacts/demo-cs-desktop.jpg), [Finance screenshot](artifacts/demo-finance-desktop.jpg), [comparison screenshot](artifacts/demo-finance-comparison.jpg).
+
+## Portable submission rehearsal
+
+The packager created a 463-entry archive from runtime checkpoint `538690c`, containing committed source and the prebuilt UI. Every manifest SHA-256 matched; no `.env`, Git internals, raw data or installed dependencies were included. Six packager regressions cover inclusion/checksums, incomplete builds, dirty tracked changes, symlinks, existing outputs and tracked environment files.
+
+A clean extraction at `/private/tmp/aventier-submission-rehearsal` created its own Python 3.13 environment and successfully ran `pip install -e .` without `.env` or API keys. The prebuilt app started directly through Python/Uvicorn on 4187, without an npm install or build. Browser and HTTP checks confirmed:
+
+- Built JS/CSS return 200; the Finance UI and scoped comparison render and Build my plan opens the correct grouped-role pathway.
+- Health reports real evidence, the directory contains 412 profiles, bootstrap exposes v1.2/2024–25 price metadata and OpenAPI has 22 paths.
+- The direct plan stores its actual 50/0/50 weights and `completed:false`; the prepared guide returns200. The historical evidence view includes all four windows, including2015→2020, and the crisis-check disclosure.
+- Unknown and malformed careers return consistent404/422 envelopes with request IDs.
+- The repository's HTTP-only `pull_the_plug.py --freeze` rehearsal exits0: API available, valid envelopes, no mock statuses and no live-ad claim after unplugging. Adzuna data is honestly missing; the harness restores its live flag.
+
+The final ZIP is rebuilt from the delivery commit. The final historical-stat font increase is followed by a fresh production build and browser check; all other runtime source matches the independently installed checkpoint. Its own `SUBMISSION.json` identifies the exact revision and per-file hashes. Use [portable startup](../../docs/launch/submission.md) and the [three-minute demo](../../docs/launch/demo-script.md). Temporary rehearsal servers are stopped after verification; the4186 preview remains available.
+
+## Scope and limits
+
+The primary demo is the CS/Finance evidence → explicit priority comparison → chosen route and next action. The broader20-role interest matcher and412-profile directory are secondary. Affinities and mappings remain preliminary; historical checks do not validate personalised outcomes. Source redistribution rights and human catalogue verification still need review before a public release. Docker is unavailable here, so container execution remains unverified. There are no accounts, cross-device sync or live vacancies. The source README and launch handoff map the six core requirements and all17 checklist items without inventing judging scores or promising a win.
+
+---
+
+# Historical release records
+
+The following records describe earlier checkpoints. Their branch names, data versions, test counts and publication status do not describe the current local CS/Finance delivery.
+
 # Launch verification — 18 October 2026
 
 This record supersedes the earlier 17 October prototype checks. Current release branch: `codex/hackathon-release`, created from the completed `codex/hackathon-launch` branch at the user's request. The complete product runs at http://127.0.0.1:4175 using `node scripts/run-app.mjs --production`, after the documented build. UI, experience API and canonical API share this one process and origin. This is a local running product and pushed integration branch, not a public deployment or a merge into main.
@@ -8,13 +55,13 @@ Run `PATH="$PWD/.venv/bin:$PATH" make check` from the repository root. The gate 
 
 Final `make check` exited 0:
 
-| Check | Result |
-| --- | --- |
-| Core ML/contracts/decision/ETL/API | 438 passed, 2 optional skipped |
-| App API, integration and scanner | 101 passed |
-| Preserved prototype backend | 32 passed |
-| Web state, notices, routes, export and chart gaps | 17 passed |
-| Ruff, Prettier, TypeScript/Vite, tracked-file secret scan | Passed |
+| Check                                                     | Result                         |
+| --------------------------------------------------------- | ------------------------------ |
+| Core ML/contracts/decision/ETL/API                        | 438 passed, 2 optional skipped |
+| App API, integration and scanner                          | 101 passed                     |
+| Preserved prototype backend                               | 32 passed                      |
+| Web state, notices, routes, export and chart gaps         | 17 passed                      |
+| Ruff, Prettier, TypeScript/Vite, tracked-file secret scan | Passed                         |
 
 **588 passing tests in total.** Two optional core checks require the external model or freeze environment; dependency lifecycle/TestClient deprecation warnings remain. The secret fallback checks tracked text files, not all Git history or untracked files.
 

@@ -3930,9 +3930,11 @@ thead th {
   margin-top: -4px;
 }
 .backtest-groups .backtest-stat {
+  font-size: 12px;
   align-items: flex-start;
 }
 .backtest-groups .backtest-stat > b {
+  font-size: 13px;
   white-space: nowrap;
 }
 @media (max-width: 580px) {

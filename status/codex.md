@@ -1,11 +1,11 @@
 # Status: codex
 
-Updated: 18 October 2026.
+Updated:18 October2026.
 
-**Doing now:** CS/Finance demo polish complete locally on codex/cs-finance-demo in /private/tmp/aventier-demo-polish. Preview http://127.0.0.1:4186.
+**Doing now:** Final CS/Finance delivery complete locally on codex/final-delivery. Preview http://127.0.0.1:4186. Portable source+prebuilt ZIP has independently installed and run without keys.
 
-**Done and merged:** Local agent checkpoints integrated and independently reviewed; nothing merged into main or pushed. Direct subject/role dashboards, compact sourced facts and charts, early starting-pay context, domain-specific practical tasks, saved links and direct plan creation. Removed decorative home treatment, filler labels and fake opportunity refresh. Fixed guide actions mutating plans and direct-plan edit links requiring an unfinished quiz. Full check588 passed,2 optional skips; final build/format and desktop browser/visual regressions passed. Screenshots and three-minute demo guide saved.
+**Done and merged:** Three specialist agents plus integration completed priority comparison, semantic accessibility/compact guide/pathway, correct grouped-role guidance, atomic owner MLv1.2 integration and UI/API compatibility, exact fixture regeneration, adversarial retry/stale-response/persistence/export checks and aligned six-core/17-checklist documentation.645 tests passed/3 optional skipped; lint/format/build/secret check passed. Current dashboard/comparison Lighthouse snapshots100 across audited categories, no failed audits. Nothing merged to main or pushed.
 
-**Interfaces changed:** Frontend-only Page routes computer-science/finance, optional role hash segments, career-scoped guide hashes and optional MyPlan edit callback. Shared API/ML/contracts unchanged.
+**Interfaces changed:** ScopedComparison calls existing matches API with explicit pay/need weights and no interest inference. Optional evidence_metadata on bootstrap/full career; metric shapes unchanged. Direct plans retain actual weights without quiz completion. Production canonical input boundary filters failed-placebo metrics, raw evidence retained. No manual engine/ML/contract edits; owner release preserves authorship.
 
-**Blocked on:** Nothing for the local demo. No publication requested. Existing4175 release and dirty root checkout preserved. Evidence/known limitations in context/codex-demo-polish.md.
+**Blocked on:** Nothing for local delivery. Public source-rights/catalogue review and Docker execution remain documented limits. Existing4175 release and dirty user checkout preserved. See apps/web/VERIFICATION.md and docs/launch/submission.md.
