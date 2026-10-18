@@ -1,8 +1,8 @@
 # Aventier
 
-A career decision and action plan for UK school leavers. Start with a career or a few interests, compare the evidence and trade-offs, choose three directions, then keep a practical plan with study routes, next actions and opportunities.
+A career decision and action plan for UK school leavers. Compare Computer Science and Finance occupations, set your pay and employment priorities, then choose a first role to explore and a practical next step.
 
-The hackathon demo follows Amira, 17, in Glasgow: maths and art, architecture as a first idea, and a question about how technology might change her options. The decision is which career to explore first and what to try this month.
+The hackathon demo follows Amira, 17, in Glasgow. She enjoys maths and is choosing between Computer Science and Finance. Occupation earnings, employment evidence and independent automation research help her compare the trade-offs. She decides which role to explore first; Aventier keeps her chosen route and what to try this month.
 
 ## Run the complete product
 
@@ -32,12 +32,13 @@ The complete container definition is `docker compose up --build` (port 4175). It
 
 ## What works
 
-- Guided discovery, editable answers, three weighted options and three learner-ranked choices. Priorities change comparison indices; a known career stays visible as the reference.
-- A searchable directory of all **412** supplied occupation profiles. Full evidence loads when a career is opened; personalised matching covers the **20** roles with supplied affinities.
+- Direct Computer Science and Finance dashboards cover seven supported occupation groups. Evidence shows source dates, pay history, employment, automation research, starting-pay guides and practical examples. Starting pay remains separate from the workforce median.
+- The subject's **Compare** tab weighs pay against historical employment trend, explains the resulting first role to explore and opens **Build my plan**. Results stay within that subject. No interest profile is inferred from opening a subject, and a comparison score is not a prediction of personal success.
 - My plan remembers the route, personal reasoning, completed next actions and saved opportunities. Home offers resume. Download produces a readable HTML plan with source links; open it in a browser to print or save as PDF.
 - University and earn-and-learn exploration, practical projects, transferable skills and curated organiser links. These are examples and discovery resources; availability and eligibility must be checked at the provider.
-- The team's deterministic high-earnings, lower-risk and balanced comparisons, differences against the first idea, evidence confidence and a skill-overlap alternative when supported.
-- Pay and employment histories, inflation adjustment, the 2021 occupation-code break, source notes, research exposure and historical backtest results, including negative outcomes.
+- The broader quiz remains available as a secondary journey: editable answers, three weighted options and three learner-ranked choices across **20** roles with supplied interest affinities. Jobs browses **412** occupation profiles; that catalogue is evidence coverage, not 412 calibrated recommendations or complete training plans.
+- Deterministic comparisons, evidence confidence and supported skill-overlap alternatives. Historical checks show how simple rules held up, including weak outcomes and failed crisis checks.
+- Pay and employment histories, tax-year inflation adjustment, the 2021 occupation-code break and explicit gaps where old occupation mappings are unreliable.
 - Prepared career guidance with per-response sources, retry, request cancellation and optional browser read-aloud. Keyboard controls, mobile layouts, reduced motion and text alternatives accompany the charts.
 
 ## Architecture and API
@@ -58,9 +59,9 @@ Pure decision functions are in `packages/decision`. Provider interfaces and adap
 
 ## Evidence and AI limits
 
-ONS ASHE earnings and employment, ONS CPIH, ILO Working Paper 140, ESCO relationships and supplied UK demand context provide different perspectives. Every observation keeps its original source, date, geography, confidence and caveats. The latest available employment observation may be older than 2025 and is labelled with its actual year. Missing and suppressed observations remain unavailable. Median full-time employee pay excludes the self-employed and is not starting pay. Task exposure is not a job-loss probability; historical demand is not a forecast.
+The committed ML release is **v1.2**. ONS ASHE earnings and employment, ONS CPIH, ILO Working Paper 140, ESCO relationships and supplied UK demand context provide different perspectives. Every observation keeps its source, date, geography, confidence and caveats. Median full-time employee pay excludes the self-employed and is not starting pay; the separate National Careers Service guide describes an example role. Real pay is shown in **2024/25 money**, using tax-year average CPIH. Recent employment trend covers **2022–2025 relative to the typical occupation**: a positive relative value can coexist with falling absolute employment. It is historical evidence, not a vacancy forecast. Missing, suppressed and unreliable mapped history stays missing; low-purity historical mappings create gaps rather than misleading continuity. Task exposure is not a job-loss probability.
 
-Interest affinities and occupation mappings are preliminary. Matcher development labels are synthetic; no validated accuracy or admissions eligibility is claimed. The historical backtest evaluates earlier market signals, not the personalised conversation or sliders. Curated routes are clearly identified as examples; the human-verified catalogue CSV is incomplete and has not been passed off as verified.
+Interest affinities and occupation mappings are preliminary. Matcher development labels are synthetic; no validated matching accuracy or admissions eligibility is claimed. The corrected historical backtest assigns simple tiers using base-year evidence before checking later outcomes. Its windows overlap, and windows crossing the 2021 coding change compare pay only. It does not validate the personalised conversation or the subject comparison slider. The 2008 and cost-of-living crisis measures failed placebo checks; their raw observations are disclosed, but they are excluded from recommendation inputs and are not presented as validated resilience signals. Curated routes are examples; the human-verified catalogue CSV is incomplete and has not been passed off as verified.
 
 Codex helped integrate code, write editorial guidance, review changes and run verification. The runtime guide uses prepared source-based responses. Production explicitly uses template explanations, keyword suggestions and snapshot ads, so it remains functional without a live AI provider. The learner chooses priorities, career ranking, route and next actions. These choices are stored in the browser; there is no account, tracking or cross-device sync.
 
@@ -74,7 +75,7 @@ PATH="$PWD/.venv/bin:$PATH" make check
 
 The release gate covers Python lint, core/API/integration tests, web state/export tests, formatting, production build and a local secret scan. Browser evidence and actual limits are recorded in [apps/web/VERIFICATION.md](apps/web/VERIFICATION.md).
 
-The [launch handoff](docs/launch/README.md) maps the product to the GUTS requirements. Use the [three-minute demo](docs/launch/demo-script.md) and [pilot/business case](docs/launch/business-case.md). Pricing, school adoption and pilot targets in that case are hypotheses, not traction or validated demand.
+The [launch handoff](docs/launch/README.md) maps the product to the GUTS brief's six core requirements and 17 submission items, with repository evidence and verification steps. Use the [three-minute demo](docs/launch/demo-script.md), [CS/Finance rehearsal notes](docs/launch/cs-finance-demo.md) and [pilot/business case](docs/launch/business-case.md). Pricing, school adoption and pilot targets are hypotheses, not traction or validated demand. The final integrated build's check results belong in the verification record; earlier recorded test counts are historical.
 
 ## Team integration
 
