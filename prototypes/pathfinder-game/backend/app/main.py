@@ -367,10 +367,22 @@ def get_sources() -> list[SourceOut]:
 
 # Serve the built frontend, if present, so one process runs the whole app.
 DIST = Path(__file__).resolve().parents[2] / "frontend" / "dist"
+
+
+def spa(path: str) -> FileResponse:
+    root = DIST.resolve()
+    try:
+        requested = (root / path).resolve()
+        if not requested.is_relative_to(root):
+            raise HTTPException(status_code=404, detail="Not found")
+        target = requested if path and requested.is_file() else (root / "index.html").resolve()
+    except (OSError, RuntimeError, ValueError) as exc:
+        raise HTTPException(status_code=404, detail="Not found") from exc
+    if not target.is_relative_to(root):
+        raise HTTPException(status_code=404, detail="Not found")
+    return FileResponse(target)
+
+
 if DIST.exists():
     app.mount("/assets", StaticFiles(directory=DIST / "assets"), name="assets")
-
-    @app.get("/{path:path}", include_in_schema=False)
-    def spa(path: str) -> FileResponse:
-        f = DIST / path
-        return FileResponse(f if path and f.is_file() else DIST / "index.html")
+    app.add_api_route("/{path:path}", spa, methods=["GET"], include_in_schema=False)

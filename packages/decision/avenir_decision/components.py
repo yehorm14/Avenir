@@ -62,7 +62,17 @@ def _disruption_confidence(career: Career) -> Confidence:
     if exposure.low is not None and exposure.high is not None and exposure.high - exposure.low > _WIDE_SPREAD:
         level = downgrade(level)
     uk = _value(_metric(career, "exposure_uk"))
-    if uk is not None and abs(uk - exposure.value) > _UK_DISAGREEMENT:
+    # DfE is a percentile, not an ILO task-exposure mean. Use the supplied
+    # all-occupation percentile; ranking this subset would change the population.
+    ilo_percentile = exposure.extra.get("ilo_percentile")
+    if (
+        uk is not None
+        and 0 <= uk <= 1
+        and isinstance(ilo_percentile, (int, float))
+        and not isinstance(ilo_percentile, bool)
+        and 0 <= ilo_percentile <= 1
+        and abs(uk - ilo_percentile) > _UK_DISAGREEMENT
+    ):
         level = downgrade(level)
     return level
 

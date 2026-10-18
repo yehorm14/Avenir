@@ -38,7 +38,7 @@ def _full(soc, **over):
         "pay_median": _m(30000.0), "pay_p90": _m(50000.0), "real_pay_change_10y": _m(0.1),
         "demand_trend": _m(0.1), "resilience_covid": _m(0.5), "resilience_cost_of_living": _m(0.5),
         "resilience_tech_slump": _m(None, "low", "pending"), "resilience_2008": _m(None, "low", "pending"),
-        "shortage": _m(0.0), "exposure": _m(0.5, low=0.4, high=0.6),
+        "shortage": _m(0.0), "exposure": _m(0.5, low=0.4, high=0.6, extra={"ilo_percentile": 0.5}),
     }
     base.update(over)
     return _career(soc, **base)
@@ -79,13 +79,57 @@ def test_exposure_uk_disagreement_and_wide_spread_downgrade():
         _full("1111", exposure_uk=_m(0.8)),
         _full("2222", exposure_uk=_m(0.55)),
         _full("3333", exposure=_m(0.5, low=0.3, high=0.6)),
-        _full("4444", exposure=_m(0.5, low=0.3, high=0.6), exposure_uk=_m(0.9)),
+        _full("4444", exposure=_m(0.5, low=0.3, high=0.6, extra={"ilo_percentile": 0.5}), exposure_uk=_m(0.9)),
     ]
     out = score_components(ProfileIn(), cs, {})
     assert out["1111"].disruption_risk.confidence == "medium"
     assert out["2222"].disruption_risk.confidence == "high"
     assert out["3333"].disruption_risk.confidence == "medium"
     assert out["4444"].disruption_risk.confidence == "low"
+
+
+def test_agreeing_exposure_percentiles_preserve_source_confidence():
+    # Test-only values: ILO and DfE percentiles agree closely, so source confidence is kept.
+    exposure = _m(0.6, confidence="high", extra={"ilo_percentile": 0.59})
+    exposure_uk = _m(0.589, confidence="high")
+    career = _career("3120", exposure=exposure, exposure_uk=exposure_uk)
+    before = career.model_dump()
+
+    result = score_components(ProfileIn(), [career], {})["3120"]
+
+    assert result.disruption_risk.confidence == exposure.confidence == "high"
+    assert career.model_dump() == before
+
+
+def test_percentile_disagreement_lowers_confidence_even_when_raw_values_match():
+    career = _full(
+        "1111", exposure=_m(0.6, low=0.55, high=0.65, extra={"ilo_percentile": 0.2}), exposure_uk=_m(0.6)
+    )
+
+    result = score_components(ProfileIn(), [career], {})["1111"]
+
+    assert result.disruption_risk.confidence == "medium"
+
+
+@pytest.mark.parametrize("percentile", [None, "0.8", True, -0.1, 1.1, float("nan"), float("inf")])
+def test_unavailable_or_invalid_ilo_percentile_never_falls_back_to_raw_comparison(percentile):
+    extra = {} if percentile is None else {"ilo_percentile": percentile}
+    career = _full("1111", exposure=_m(0.1, low=0.05, high=0.15, extra=extra), exposure_uk=_m(0.8))
+
+    result = score_components(ProfileIn(), [career], {})["1111"]
+
+    assert result.disruption_risk.confidence == "high"
+
+
+def test_percentile_agreement_does_not_upgrade_low_source_confidence():
+    career = _full(
+        "1111", exposure=_m(0.1, confidence="low", low=0.05, high=0.15, extra={"ilo_percentile": 0.8}),
+        exposure_uk=_m(0.8),
+    )
+
+    result = score_components(ProfileIn(), [career], {})["1111"]
+
+    assert result.disruption_risk.confidence == "low"
 
 
 def test_all_missing_gives_none_low_and_risk_uses_other_side():
