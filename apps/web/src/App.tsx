@@ -1073,33 +1073,11 @@ function Quiz({
   finish: () => void;
   go: (p: Page) => void;
 }) {
-  const step = Math.min(prefs.step, questions.length),
+  // A finished quiz stores the end position. Reopening it should let the
+  // learner review their answers from the start, rather than strand them.
+  const step = prefs.step < questions.length ? prefs.step : 0,
     q = questions[step];
-  const answered = q ? prefs.answers[q.id] : undefined;
-  if (!q)
-    return (
-      <section className="quiz-container">
-        <h1>Quiz complete.</h1>
-        <p className="quiz-hint">
-          Compare three careers based on your answers.
-        </p>
-        <div className="quiz-footer">
-          <button
-            className="text-button"
-            onClick={() => update({ step: questions.length - 1 })}
-          >
-            Back
-          </button>
-          <button className="button primary" onClick={finish}>
-            Show careers
-          </button>
-        </div>
-        <p className="fine-print">
-          The quiz explores work interests; it is not a validated psychological
-          assessment.
-        </p>
-      </section>
-    );
+  const answered = prefs.answers[q.id];
   return (
     <section className="quiz-container" key={q.id}>
       <div className="quiz-progress">
@@ -1163,12 +1141,20 @@ function Quiz({
         <button
           className="button primary"
           disabled={answered === undefined}
-          onClick={() => update({ step: step + 1 })}
+          onClick={() =>
+            step === questions.length - 1
+              ? finish()
+              : update({ step: step + 1 })
+          }
         >
           {step === questions.length - 1 ? "Finish quiz" : "Continue"}
           <Icon name="arrow" size={18} />
         </button>
       </div>
+      <p className="fine-print">
+        The quiz explores work interests; it is not a validated psychological
+        assessment.
+      </p>
     </section>
   );
 }
