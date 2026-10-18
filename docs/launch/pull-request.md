@@ -5,11 +5,14 @@ This integration includes previously unmerged frontend/prototype history and com
 
 UI and both enveloped API layers now run from one key-free process. Added durable browser-local planning, cited/cancellable prepared guidance, canonical trade-off comparison, exact evidence labels, safe HTML export, production/container setup and CI release checks. Reviews closed missing-year interpolation, wider-group estimates, missing-input confidence, saved caveats, backtest interval labels, England planning coverage and optional matcher readiness.
 
+Release branch: `codex/hackathon-release`. Reproducible setup/check scripts and the standalone API command have been verified from a fresh clone. Vite 6.4.4 closes the inherited npm findings without changing React or the product design.
+
 ## Context file
 `context/codex-hackathon-launch.md`
 
 ## Checklist
 - [x] `make check` passes: 438 core, 101 app/integration/scanner, 32 prototype and 17 web tests; 2 optional skips. Ruff, format, TypeScript/Vite and tracked-file secret scan pass.
+- [x] Fresh clone installation, real production HTTP, strict locked frontend install and setup checks pass. npm audit reports zero vulnerabilities. Live freeze rehearsal passes with missing-advert disclosure.
 - [x] Evidence retains actual source dates and caveats; missing/suppressed values stay missing.
 - [x] England planning context and wider occupation-group estimates are labelled.
 - [x] No credentials introduced; the redacted tracked-file scanner does not claim to audit all Git history.
@@ -24,7 +27,7 @@ Docker is not installed here, so Compose execution is unverified. Human catalogu
 Confirm the integration boundary and remaining data/licence work before public release. Keep the canonical market comparison distinct from learner-adjustable interest priorities.
 
 ## How to test
-1. Follow README: Python 3.12+/Node 20+, install `.[dev]`, `npm --prefix apps/web ci`, then build.
+1. Follow README: Python 3.12+/Node 20+, then `bash scripts/setup.sh` (or the documented manual commands).
 2. Run `PATH="$PWD/.venv/bin:$PATH" make check`.
 3. Start `node scripts/run-app.mjs --production`; open http://127.0.0.1:4175.
 4. Follow `docs/launch/demo-script.md`: architecture idea, three directions, saved route/note/action, reload/resume/export, source inspection and prepared guide.

@@ -29,17 +29,15 @@ ONS ASHE supplies earnings and employee-job observations; ILO Working Paper 140 
 From the repository root, with Node 20+ and Python 3.12+:
 
 ```sh
-python3.12 -m venv .venv
-.venv/bin/python -m pip install -e ".[dev]"
-npm --prefix apps/web ci
-node scripts/run-app.mjs
+bash scripts/setup.sh
+node scripts/run-app.mjs --production
 ```
 
-Open [the local app](http://127.0.0.1:4175). No API key is required. For the existing built-preview launcher:
+Open [the local app](http://127.0.0.1:4175). No API key is required. Recheck setup or rebuild after frontend changes:
 
 ```sh
+bash scripts/check-setup.sh
 npm --prefix apps/web run build
-node scripts/run-app.mjs --preview
 ```
 
 The production command is `node scripts/run-app.mjs --production` on port 4175; `--preview` is an alias. It serves UI and both API layers from one origin. The [Compose configuration](../../docker-compose.yml) defines the same complete app. Docker execution is unverified on this machine because Docker is not installed:
@@ -51,15 +49,11 @@ docker compose up --build
 Run these checks against the final integrated commit; record actual output, skipped checks, browser evidence and any unresolved failures. This document does not certify a pass or give a test count.
 
 ```sh
-npm --prefix apps/web run format:check
-npm --prefix apps/web run build
-.venv/bin/python -m ruff check .
-.venv/bin/python -m pytest -q
-.venv/bin/python -m pytest apps/web/api/tests -q
-gitleaks detect --no-banner --redact
+PATH="$PWD/.venv/bin:$PATH" make check
+.venv/bin/python scripts/demo/pull_the_plug.py --base-url http://127.0.0.1:4175 --freeze
 ```
 
-The secret scan requires `gitleaks` to be installed. A missing scanner is an uncompleted check.
+The release gate includes a redacted tracked-file secret scan. If Gitleaks is installed, the gate additionally runs it and propagates failures; the tracked-file check does not claim to audit all Git history. The live rehearsal requires the app server to be running. Missing job adverts are reported as missing and produce a warning; no mock status is accepted with `--freeze`.
 
 ## Challenge acceptance matrix
 

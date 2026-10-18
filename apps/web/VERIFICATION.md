@@ -1,6 +1,6 @@
 # Launch verification — 18 October 2026
 
-This record supersedes the earlier 17 October prototype checks. Release branch: `codex/hackathon-launch`. The complete product runs at http://127.0.0.1:4175 using `node scripts/run-app.mjs --production`, after the documented build. UI, experience API and canonical API share this one process and origin. This is a local running product and pushed integration branch, not a public deployment or a merge into main.
+This record supersedes the earlier 17 October prototype checks. Current release branch: `codex/hackathon-release`, created from the completed `codex/hackathon-launch` branch at the user's request. The complete product runs at http://127.0.0.1:4175 using `node scripts/run-app.mjs --production`, after the documented build. UI, experience API and canonical API share this one process and origin. This is a local running product and pushed integration branch, not a public deployment or a merge into main.
 
 ## Release gate
 
@@ -18,6 +18,23 @@ Final `make check` exited 0:
 
 **588 passing tests in total.** Two optional core checks require the external model or freeze environment; dependency lifecycle/TestClient deprecation warnings remain. The secret fallback checks tracked text files, not all Git history or untracked files.
 
+The complete gate was repeated successfully after the release fixes at `f3cfc24`, using Node 20.20.2 and Python 3.13.16. The same test counts passed with Vite 6.4.4; a fresh `npm audit --json` reported zero vulnerabilities.
+
+## Fresh setup and release rehearsal
+
+`scripts/setup.sh` creates an absent Python environment, installs declared Python and locked web dependencies, builds the UI and checks the assembled application. `AVENIR_SETUP_PYTHON` selects the bootstrap interpreter; `AVENIR_PYTHON` remains the launcher's separate prepared-runtime override. `scripts/check-setup.sh` verifies the frontend build, real occupation evidence and both API layers without starting a server. The standalone `npm --prefix apps/web run api` now serves the assembled application, including canonical recommendations.
+
+An independent fresh clone at `7718e95` installed successfully with new, unlinked `.venv` and `node_modules` directories. After updating that clone to `f3cfc24`, an engine-strict locked frontend install, production build and setup check also passed. No `.env` or provider keys were used. Actual production HTTP checks on a separate port verified:
+
+- Built HTML, JavaScript, CSS and all seven local font assets return 200.
+- Health reports real evidence; the catalogue contains 412 distinct profiles, bootstrap contains 21 curated profiles and OpenAPI exposes 22 paths.
+- Amira receives three distinct canonical comparison tiers with return/risk scores, explanations and roadmaps. Unknown interest and career requests retain valid 422/404 error envelopes.
+- The final Vite 6.4.4 bundle and canonical comparison also pass in the clean clone. Its temporary server was stopped; the user's app on 4175 remains running.
+
+The actual `scripts/demo/pull_the_plug.py --base-url http://127.0.0.1:4175 --freeze` rehearsal exited 0: API up, valid envelopes, no mock status and no live-ad claim after unplugging. The live flag was restored. It warns that no Adzuna snapshot exists, so adverts remain explicitly missing.
+
+The fresh installation exposed two inherited npm advisories. The targeted Vite 5.4.11 → 6.4.4 update also updates its esbuild dependency; React and the existing React plugin remain unchanged. Vite's [release policy](https://vite.dev/releases) lists the 6.4 security line, and its [file-serving advisory](https://github.com/vitejs/vite/security/advisories/GHSA-fx2h-pf6j-xcff) identifies the affected versions. The final root audit and independent clean install both report zero known vulnerabilities for this lockfile; that is not a general security certification.
+
 ## Actual browser checks
 
 Chrome DevTools exercised the built React bundle against the assembled Python application, without keys or live AI:
@@ -33,6 +50,8 @@ Chrome DevTools exercised the built React bundle against the assembled Python ap
 
 Lighthouse on My plan scored **100 accessibility, 100 best practices and 100 SEO** at both widths, with no failed audits or run warnings. Automated audits cover this page and do not certify the entire application. [Compact audit record](artifacts/launch-lighthouse-summary.json), [desktop screenshot](artifacts/launch-plan-desktop.jpg), [mobile screenshot](artifacts/launch-plan-mobile.jpg).
 
+After the Vite update, Chrome reloaded the final hashed bundle at both widths. Home → Resume plan preserved the Architect note, earn-and-learn choice and completed action. The mobile Electrician plan and canonical comparison rendered without page overflow. Neither page logged warnings or errors; built assets, bootstrap, matches and canonical recommendations returned 200. The preceding Lighthouse scores belong to the earlier unchanged UI audit, not a second Lighthouse run.
+
 ## Review and integration
 
 Latest fetched main `6695e58` and Arsenii's real-artefact branch `a17aebb` are included, preserving authorship. The original dirty KATYATA checkout and teammate worktrees remain untouched. No manual edits were made to protected AGENTS.md or docs/contracts.md.
@@ -47,4 +66,4 @@ Production excludes synthetic catalogue metrics and unreviewed canonical route r
 
 ## Publication status
 
-All application checkpoints are committed and pushed to `origin/codex/hackathon-launch`. A draft PR description is prepared in [docs/launch/pull-request.md](../../docs/launch/pull-request.md). The GitHub connector returned404. Automatic approval review rejected use of stored Git credentials and an authenticated-browser fallback; no credentials were retrieved. The PR has not been opened. [Compare the pushed branch](https://github.com/yehorm14/Avenir/compare/main...codex/hackathon-launch?expand=1).
+The completed launch and release checkpoints are committed and pushed to `origin/codex/hackathon-release`; the earlier launch branch remains available. A draft PR description is prepared in [docs/launch/pull-request.md](../../docs/launch/pull-request.md). The GitHub connector returned404. Automatic approval review rejected use of stored Git credentials and an authenticated-browser fallback without specific authorization; no credentials were retrieved. The user's subsequent instruction was to make a new branch, which is complete; it was not treated as authorization to retry the rejected access methods. The PR has not been opened. [Compare the pushed release branch](https://github.com/yehorm14/Avenir/compare/main...codex/hackathon-release?expand=1).

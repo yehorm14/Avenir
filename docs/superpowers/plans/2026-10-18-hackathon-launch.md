@@ -57,3 +57,9 @@ Serve the production frontend, app API and canonical API from one documented pro
 ## Checkpoints and evidence
 
 Record work and decisions in context/codex-hackathon-launch.md, update TASKS.md and status/codex.md. Push after each coherent verified increment. Never force-push or merge main directly. Final evidence includes exact commits, tests, screenshots, start URL, known limits and draft PR.
+
+## Execution outcome
+
+Tasks 1–5 are implemented, reviewed, verified and pushed. The user then requested a new branch: `codex/hackathon-release` contains the completed launch plus corrected alternate API startup, reproducible setup/check commands and the targeted Vite security update. A truly fresh install and real HTTP demonstration pass without keys. Final gate: 588 tests passed, 2 optional skipped; npm audit reports zero vulnerabilities. Desktop/mobile saved-plan checks pass against the rebuilt bundle. See apps/web/VERIFICATION.md for scope and evidence.
+
+The prepared draft PR remains unopened: the connector lacks repository access, and automatic approval review rejected alternate authentication without specific authorization. No main merge or public deployment occurred. Docker execution, human catalogue/route review and source rights remain explicitly documented limits.

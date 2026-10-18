@@ -27,8 +27,8 @@ In a second terminal, from the repository root:
 npm --prefix apps/web run dev
 ```
 
-Open `http://127.0.0.1:4175`. Vite proxies `/api` to port 8015. CORS permits
-localhost and 127.0.0.1 on ports 4175 and 5173. Run only one backend on port 8015
+Open `http://127.0.0.1:4175`. Vite proxies `/api` to port 8015, so browser requests
+stay on the frontend's origin. Run only one backend on port 8015
 and one frontend on port 4175 at a time. The equivalent direct backend command,
 from `apps/web`, is:
 
