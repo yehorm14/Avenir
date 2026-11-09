@@ -1,9 +1,0 @@
-{
-  "software developer": {"featured":true,"sector_id":"technology","salary":{"min":30000,"max":75000,"currency":"GBP","source_url":"https://nationalcareers.service.gov.uk/job-profiles/software-developer","source_name":"National Careers Service","checked":"2026-10-17"}},
-  "data analyst": {"featured":true,"sector_id":"technology","salary":{"min":28000,"max":65000,"currency":"GBP","source_url":"https://nationalcareers.service.gov.uk/job-profiles/data-analyst-statistician","source_name":"National Careers Service","checked":"2026-10-17","note":"Reference profile: data analyst-statistician"}},
-  "electrical engineer": {"featured":true,"sector_id":"manufacturing","salary":{"min":27000,"max":58000,"currency":"GBP","source_url":"https://nationalcareers.service.gov.uk/job-profiles/electrical-engineer","source_name":"National Careers Service","checked":"2026-10-17"}},
-  "civil engineer": {"featured":true,"sector_id":"construction","salary":{"min":29000,"max":63000,"currency":"GBP","source_url":"https://nationalcareers.service.gov.uk/job-profiles/civil-engineer","source_name":"National Careers Service","checked":"2026-10-17"}},
-  "mechanical engineer": {"featured":true,"sector_id":"manufacturing","salary":{"min":28000,"max":60000,"currency":"GBP","source_url":"https://nationalcareers.service.gov.uk/job-profiles/mechanical-engineer","source_name":"National Careers Service","checked":"2026-10-17"}},
-  "land surveyor": {"featured":true,"sector_id":"construction","salary":{"min":20000,"max":50000,"currency":"GBP","source_url":"https://nationalcareers.service.gov.uk/job-profiles/land-surveyor","source_name":"National Careers Service","checked":"2026-10-17"}},
-  "environmental consultant": {"featured":true,"sector_id":null,"salary":{"min":25000,"max":50000,"currency":"GBP","source_url":"https://nationalcareers.service.gov.uk/job-profiles/environmental-consultant","source_name":"National Careers Service","checked":"2026-10-17"}}
-}

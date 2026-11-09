@@ -42,7 +42,7 @@ const nav: { id: Page; icon: string }[] = [
 // Pages shown under the Jobs tab: the full directory and the two subject dashboards.
 const jobsSection: Page[] = ["jobs", "computer-science", "finance"];
 const directPlanSocs = ["2134", "3544", "2133", "2135", "2422", "2421", "2433"];
-// Amira, 17, S6 in Glasgow (AGENTS.md section 1): the primary demo journey.
+// Amira, 17, S6 in Glasgow: the primary demo journey.
 const amiraAnswers: Record<string, string> = {
   direction: "Architect",
   interests: "Making or designing something; Solving a tricky problem",
@@ -327,7 +327,7 @@ export default function App() {
     );
     const a = document.createElement("a");
     a.href = url;
-    a.download = "my-avenier-plan.html";
+    a.download = "my-avenir-plan.html";
     a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
     setToast("Plan downloaded. Open it in a browser to share or print.");
@@ -896,7 +896,7 @@ export default function App() {
           <button onClick={() => go("evidence")}>
             Research <Icon name="external" size={12} />
           </button>
-          <span>© 2026 Avenier</span>
+          <span>© 2026 Avenir</span>
         </footer>
       )}
       {toast && (

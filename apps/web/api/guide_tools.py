@@ -1,4 +1,4 @@
-"""Read-only tools the guide model can call to fetch Avenier's own data itself.
+"""Read-only tools the guide model can call to fetch Avenir's own data itself.
 
 Every tool runs in the backend from data the app already loads (evidence packs, the occupation
 catalogue, the curated path, the committed BlackRock employer file and the Occupations in Demand

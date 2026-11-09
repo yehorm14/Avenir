@@ -33,7 +33,7 @@ def _experience_endpoint(endpoint, sources):
 
 def create_application(web_dir: Path | None = None):
     app = create_app(data=product_data(), ads=SnapshotAds(), writer=TemplateExplanation(), suggester=KeywordSuggester())
-    app.title = "Avenier API"
+    app.title = "Avenir API"
     app.version = "1.1.0"
     app.description = "Career discovery, sourced evidence and deterministic decision comparisons. No API key is required."
     for route in experience.routes:
@@ -65,7 +65,7 @@ def create_application(web_dir: Path | None = None):
         @app.get("/", include_in_schema=False)
         def build_needed():
             return HTMLResponse(
-                "<h1>Avenier API is ready</h1><p>Build the web app with npm run build in apps/web, then restart.</p>",
+                "<h1>Avenir API is ready</h1><p>Build the web app with npm run build in apps/web, then restart.</p>",
                 status_code=503,
             )
 

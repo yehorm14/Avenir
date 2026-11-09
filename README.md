@@ -1,86 +1,62 @@
-# Avenier
+# Avenir
 
-A career decision and action plan for UK school leavers. Compare Computer Science and Finance occupations, set your pay and employment priorities, then choose a first role to explore and a practical next step.
+A career decision tool for UK school leavers: it compares Computer Science and Finance careers using real UK pay, employment and automation data, then builds a plan.
 
-The hackathon demo follows Amira, 17, in Glasgow. She enjoys maths and is choosing between Computer Science and Finance. Occupation earnings, employment evidence and independent automation research help her compare the trade-offs. She decides which role to explore first; Avenier keeps her chosen route and what to try this month.
+![Avenir home screen](docs/images/home.png)
 
-## Run the complete product
+## Why it is useful
 
-For the prebuilt delivery ZIP, use the [portable submission instructions](docs/launch/submission.md); it can run with Python alone. The source checkout workflow below also requires Node.
+- Every pay and job figure shows its ONS source, year and caveats.
+- Automation exposure sits next to pay and job trend, labelled as research, not a job-loss forecast.
+- The outcome is a saved plan with a route and next actions, not a score.
 
-Requires Node 20+ and Python 3.12+. Use a Python executable for that version or newer (`python3.13` in the tested local environment):
+## Features
 
-On macOS or Linux, prepare the complete app with `bash scripts/setup.sh`. It creates the local environment when absent, installs locked web dependencies and Python development dependencies, builds the app, then checks that both API layers and real evidence load. Recheck an existing setup with `bash scripts/check-setup.sh`.
+- Evidence dashboards for Computer Science and Finance: pay history, jobs, 2022-2025 trend, automation exposure, starting-pay guides.
+- Compare tab that weighs pay against employment trend and suggests a first role.
+- My plan: route, reasons and actions saved in the browser, downloadable as HTML.
+- Jobs directory of 412 occupation profiles and a quiz matching interests to 20 roles.
+- Career chatbot answering from the app's data, with sources.
+- Historical backtest of simple rules, including failed checks.
+- Pull-the-plug harness that disables live sources to show the snapshot fallback.
 
-Set `AVENIR_SETUP_PYTHON` to choose the Python executable used to create `.venv`. The separate `AVENIR_PYTHON` launcher override is for an already-prepared runtime environment.
+## How it works
 
-Manual setup:
+One FastAPI process serves the React app and the APIs, all using an `{ok, data, error, meta}` envelope with source status.
+Decision rules are plain functions in `packages/decision`; no LLM ranks careers.
+The app serves committed ONS, ILO and ESCO snapshots. Adzuna and LLM adapters (`packages/adapters`) have timeouts and snapshot or template fallbacks.
+The chatbot uses an LLM only if a key is configured, and checks its numbers against the sources.
 
-```sh
-python3.13 -m venv .venv
-.venv/bin/python -m pip install -e ".[dev]"
-npm --prefix apps/web ci
-npm --prefix apps/web run build
-node scripts/run-app.mjs --production
-```
+## Tech stack
 
-Open [Avenier](http://127.0.0.1:4175). The production launcher serves the UI and both API layers from one process. No API keys, database, cloud account or external font service are required. Set `AVENIR_PYTHON` to use another Python environment; `AVENIR_PORT` changes the production port. Ctrl+C stops the service.
+- Backend: Python 3.12+, FastAPI, Pydantic
+- Frontend: React, TypeScript, Vite
+- Data: JSON snapshots (ONS ASHE, CPIH, ILO WP140, ESCO), CSV curation
+- Tooling: pytest, Ruff, Prettier, Node test runner, GitHub Actions, Docker
 
-On Windows, create the environment with `python -m venv .venv` (Python 3.12 or newer; `py -3.13 -m venv .venv` if you use the Python launcher), install with `.venv\Scripts\python.exe -m pip install -e ".[dev]"`, then run the same npm and Node commands. `npm ci` needs the lock file to include npm's optional platform packages (added for npm 11 on 18 Oct); if it still fails, `npm --prefix apps/web install` is the fallback. `node scripts/run-app.mjs --production` works on Windows (checked on Windows 11 with Node 24, npm 11 and Python 3.13; see [VERIFICATION.md](apps/web/VERIFICATION.md)). Node may print a `DEP0190` deprecation warning from the launcher; the app still runs.
-
-For development, use `node scripts/run-app.mjs`: Vite runs on 4175 and proxies the combined API on 8015. `--preview` is an alias for the single-process production launcher after building.
-
-The complete container definition is `docker compose up --build` (port 4175). It builds the web bundle, includes the committed snapshots and runs without keys as a non-root user. Container execution could not be verified on the current development machine because Docker is not installed. The optional standalone team API is available through `docker compose --profile api-only up api` on port 8000.
-
-## What works
-
-- Direct Computer Science and Finance dashboards cover seven supported occupation groups. Evidence shows source dates, pay history, employment, automation research, starting-pay guides and practical examples. Starting pay remains separate from the workforce median.
-- The subject's **Compare** tab weighs pay against historical employment trend, explains the resulting first role to explore and opens **Build my plan**. Results stay within that subject. No interest profile is inferred from opening a subject, and a comparison score is not a prediction of personal success.
-- My plan remembers the route, personal reasoning, completed next actions and saved opportunities. Home offers resume. Download produces a readable HTML plan with source links; open it in a browser to print or save as PDF.
-- University and earn-and-learn exploration, practical projects, transferable skills and curated organiser links. These are examples and discovery resources; availability and eligibility must be checked at the provider.
-- The broader quiz remains available as a secondary journey: editable answers, three weighted options and three learner-ranked choices across **20** roles with supplied interest affinities. Jobs browses **412** occupation profiles; that catalogue is evidence coverage, not 412 calibrated recommendations or complete training plans.
-- Deterministic comparisons, evidence confidence and supported skill-overlap alternatives. Historical checks show how simple rules held up, including weak outcomes and failed crisis checks.
-- Pay and employment histories, tax-year inflation adjustment, the 2021 occupation-code break and explicit gaps where old occupation mappings are unreliable.
-- Prepared career guidance with per-response sources, retry, request cancellation and optional browser read-aloud. Keyboard controls, mobile layouts, reduced motion and text alternatives accompany the charts.
-
-## Architecture and API
-
-```mermaid
-flowchart LR
-  UI[React experience and browser-local plan] --> API[FastAPI application]
-  API --> R[App priority ranking]
-  API --> D[Team decision engine]
-  API --> P[Provider and snapshot boundary]
-  P --> M[Arsenii's committed evidence and model artefacts]
-  P --> C[Curated pathway and organiser examples]
-```
-
-`apps/web/api/application.py` assembles the experience API, the canonical `/api/v1` API and the built UI. All served API responses use `{ok, data, error, meta}` with source statuses and request IDs. Explore [OpenAPI](http://127.0.0.1:4175/openapi.json) or [interactive API docs](http://127.0.0.1:4175/docs). The existing shared contract remains in [docs/contracts.md](docs/contracts.md); the assembled schema additionally describes `/api/bootstrap`, `/api/catalogue`, `/api/careers/{soc}`, `/api/discovery`, `/api/matches`, `/api/path/{soc}` and `/api/guide`.
-
-Pure decision functions are in `packages/decision`. Provider interfaces and adapters remain separate in `packages/contracts`, `packages/adapters` and `packages/etl`. The product data boundary excludes synthetic catalogue metrics and unreviewed route rows from canonical ranking; genuine ML metrics are preserved. Unavailable catalogue inputs reduce coverage and confidence. No LLM ranks careers.
-
-## Evidence and AI limits
-
-The committed ML release is **v1.2**. ONS ASHE earnings and employment, ONS CPIH, ILO Working Paper 140, ESCO relationships and supplied UK demand context provide different perspectives. Every observation keeps its source, date, geography, confidence and caveats. Median full-time employee pay excludes the self-employed and is not starting pay; the separate National Careers Service guide describes an example role. Real pay is shown in **2024/25 money**, using tax-year average CPIH. Recent employment trend covers **2022–2025 relative to the typical occupation**: a positive relative value can coexist with falling absolute employment. It is historical evidence, not a vacancy forecast. Missing, suppressed and unreliable mapped history stays missing; low-purity historical mappings create gaps rather than misleading continuity. Task exposure is not a job-loss probability.
-
-Interest affinities and occupation mappings are preliminary. Matcher development labels are synthetic; no validated matching accuracy or admissions eligibility is claimed. The corrected historical backtest assigns simple tiers using base-year evidence before checking later outcomes. Its windows overlap, and windows crossing the 2021 coding change compare pay only. It does not validate the personalised conversation or the subject comparison slider. The 2008 and cost-of-living crisis measures failed placebo checks; their raw observations are disclosed, but they are excluded from recommendation inputs and are not presented as validated resilience signals. Curated routes are examples; the human-verified catalogue CSV is incomplete and has not been passed off as verified.
-
-Codex helped integrate code, write editorial guidance, review changes and run verification. The runtime guide uses prepared source-based responses. Production explicitly uses template explanations, keyword suggestions and snapshot ads, so it remains functional without a live AI provider. The learner chooses priorities, career ranking, route and next actions. These choices are stored in the browser; there is no account, tracking or cross-device sync.
-
-Source attribution: ONS (Open Government Licence); Skills England / DfE (OGL); ILO Working Paper 140 (Gmyrek et al., 2025, https://doi.org/10.54394/HETP0387, CC BY 4.0, © ILO; our exposure score adapts it, full citation in [docs/data-sources.md](docs/data-sources.md)); ESCO (European Commission); HESA / Discover Uni (CC BY 4.0), where used. The [source registry](snapshots/ml/sources.json) and [data manifest](data/manifest.yaml) retain coverage and licence notes. Optional Adzuna integrations retain Jobs by Adzuna attribution.
-
-> This is an adaptation of a copyrighted work of the International Labour Organization (ILO). This adaptation has not been prepared, reviewed or endorsed by the ILO and should not be considered an official ILO adaptation. The ILO disclaims all responsibility for its content and accuracy. Responsibility rests solely with the author(s) of the adaptation.
-
-## Verify and demonstrate
+## Run locally
 
 ```sh
-PATH="$PWD/.venv/bin:$PATH" make check
+bash scripts/setup.sh
+node scripts/run-app.mjs --production   # http://127.0.0.1:4175
 ```
 
-The release gate covers Python lint, core/API/integration tests, web state/export tests, formatting, production build and a local secret scan. Browser evidence and actual limits are recorded in [apps/web/VERIFICATION.md](apps/web/VERIFICATION.md).
+Needs Python 3.12+ and Node 20+. No keys required; optional settings are in `.env.example`. Docker and Render: [docs/DEPLOY.md](docs/DEPLOY.md).
 
-The [launch handoff](docs/launch/README.md) maps the product to the GUTS brief's six core requirements and 17 submission items, with repository evidence and verification steps. Use the [three-minute demo](docs/launch/demo-script.md), [CS/Finance rehearsal notes](docs/launch/cs-finance-demo.md) and [pilot/business case](docs/launch/business-case.md). Pricing, school adoption and pilot targets are hypotheses, not traction or validated demand. The final integrated build's check results belong in the verification record; earlier recorded test counts are historical.
+## Tests
 
-## Team integration
+686 Python tests and 55 Node tests: `make check` (also runs lint, build and a secret scan; CI runs the same).
 
-This branch combines Illia's finished frontend, Max's preserved Pathfinder prototype, Nazar's decision engine/API, Yehor's contracts/adapters and Arsenii's real occupation artefacts. Original commits retain their authorship. Earlier explorers remain under `apps/aventir` and `prototypes/pathfinder-game`; `apps/web` is the shipped experience. Read [AGENTS.md](AGENTS.md) before changing another slice.
+## Team and my role
+
+Built at GUTS 2026 for the BlackRock challenge with [iluha2vuha](https://github.com/iluha2vuha), [Nazar818](https://github.com/Nazar818), [z1nare](https://github.com/z1nare) and [maksymkhomitskyi](https://github.com/maksymkhomitskyi). I was the integrator and built:
+
+- the API contract (`packages/contracts`)
+- the ETL and data pipeline (`packages/etl`)
+- the live adapters: Adzuna with snapshot fallback, and LLM explanations (`packages/adapters`)
+
+## Credits
+
+Data: ONS ASHE and CPIH (Open Government Licence); Skills England / DfE (OGL); ESCO (European Commission); HESA / Discover Uni (CC BY 4.0); ILO Working Paper 140, Gmyrek et al., 2025 (CC BY 4.0). Ads: Jobs by Adzuna. Details: [docs/data-sources.md](docs/data-sources.md).
+
+> This is an adaptation of a copyrighted work of the International Labour Organization (ILO). This adaptation has not been prepared, reviewed or endorsed by the ILO and should not be considered an official ILO adaptation. The ILO disclaims all responsibility for its content and accuracy.

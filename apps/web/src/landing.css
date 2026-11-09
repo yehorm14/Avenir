@@ -1,4 +1,4 @@
-.aventier-landing {
+.avenir-landing {
   --gutter: clamp(38px, 4vw, 76px);
   color: var(--foreground);
   background: var(--canvas);
@@ -118,7 +118,7 @@
   padding: 5px 0;
   color: #9fc1ff;
 }
-.main-content:has(.aventier-landing) {
+.main-content:has(.avenir-landing) {
   max-width: none;
   padding: 0;
 }
@@ -914,7 +914,7 @@
   }
 }
 @media (max-width: 800px) {
-  .aventier-landing {
+  .avenir-landing {
     --gutter: 22px;
   }
   .hero.editorial {

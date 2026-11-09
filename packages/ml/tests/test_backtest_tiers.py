@@ -1,4 +1,4 @@
-"""No look-ahead in the backtest (AGENTS rule 6): tiers depend only on base-year features."""
+"""No look-ahead in the backtest: tiers depend only on base-year features."""
 import pytest
 
 pd = pytest.importorskip("pandas")

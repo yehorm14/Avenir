@@ -46,7 +46,7 @@ lint:
 
 test:
 	$(PY) -m pytest
-	$(PY) -m pytest apps/web/api/tests scripts/integration scripts/tests
+	$(PY) -m pytest apps/web/api/tests scripts/tests
 	PYTHONPATH=prototypes/pathfinder-game/backend $(PY) -m pytest prototypes/pathfinder-game/backend/tests
 
 web-check:

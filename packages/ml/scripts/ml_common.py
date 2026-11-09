@@ -246,7 +246,7 @@ def load_json(path: Path):
 def assign_tiers(base: pd.DataFrame) -> pd.DataFrame:
     """Backtest tiers from base-year features only (columns pay, prior). Cutoffs are thirds of the
     base-year population; outcomes are attached afterwards, so a missing future value can never move
-    another occupation between tiers (no look-ahead, AGENTS rule 6)."""
+    another occupation between tiers (no look-ahead)."""
     base = base[["pay", "prior"]].dropna()
     return pd.DataFrame({"ambitious": base.pay >= base.pay.quantile(2 / 3),
                          "safe": base.prior >= base.prior.quantile(2 / 3)}, index=base.index)

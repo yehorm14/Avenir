@@ -1,4 +1,4 @@
-# Avenier app API
+# Avenir app API
 
 `api.application:app` is the served application. It combines the experience
 endpoints with the canonical `/api/v1` decision API and wraps both in the shared

@@ -12,6 +12,5 @@ data/raw
 node_modules
 **/node_modules
 **/dist
-apps/web/artifacts
 packages/ml/models
 packages/ml/runs

@@ -4036,7 +4036,7 @@ thead th {
   margin: 0;
 }
 
-/* QuantSoc's silver-on-charcoal system, adapted to Avenier's working screens. */
+/* QuantSoc's silver-on-charcoal system, adapted to Avenir's working screens. */
 body {
   background: var(--canvas);
   -webkit-font-smoothing: antialiased;
@@ -4536,7 +4536,7 @@ input[type="range"]::-moz-range-thumb {
   color: var(--muted);
   font-size: 11px;
 }
-.app:has(.aventier-landing) .topbar {
+.app:has(.avenir-landing) .topbar {
   position: fixed;
   left: 0;
   right: 0;

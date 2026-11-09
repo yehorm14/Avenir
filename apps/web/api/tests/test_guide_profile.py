@@ -79,7 +79,7 @@ def test_profile_is_validated_and_reflected_in_the_prompt_with_compared_roles(cl
     assert "Architect (2451)" in system and "Data analyst (3544)" in system
     assert "I like building things that people use." in system
     assert "Other roles the student selected" in system and "never claim they predict" in system
-    assert "cite them by label only" in system and "Architect in Avenier" in system
+    assert "cite them by label only" in system and "Architect in Avenir" in system
     assert "The student asked for a career path" in system and "grades_note" in system
     assert "allowed_numbers" not in system
     # A bad profile is rejected, and unknown fields stay forbidden.
@@ -108,7 +108,7 @@ def test_path_question_without_a_model_returns_the_structured_path_and_links(cli
     assert "University" in answer["text"] and "About grades:" in answer["text"] and "First step this month:" in answer["text"]
     hrefs = [link["href"] for link in answer["links"]]
     assert hrefs[:3] == ["#/guides/2134", "#/guides/2451", "#/guides/3544"]
-    assert answer["links"][1]["label"] == "Architect in Avenier"
+    assert answer["links"][1]["label"] == "Architect in Avenir"
     pack = client.get("/api/careers/2134/evidence-pack").json()
     source_urls = [source["url"] for source in pack["sources"] if source.get("url")]
     assert source_urls and all(url in hrefs for url in source_urls)

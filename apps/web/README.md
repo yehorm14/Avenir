@@ -1,6 +1,6 @@
-# Avenier application
+# Avenir application
 
-The complete React/Vite + FastAPI product lives here. See the [root setup and architecture](../../README.md) and [launch acceptance matrix](../../docs/launch/README.md).
+The complete React/Vite + FastAPI product lives here. See the [root setup and architecture](../../README.md).
 
 From the repository root after installing dependencies:
 
@@ -23,7 +23,7 @@ The plan uses the same prepared guide as Chatbot, with source links on evidence 
 
 The eight-question quiz supports answer review, previous-question navigation, keyboard arrows and direct completion into career results. Question changes restore focus to the heading. Jobs profiles have shareable URLs such as `#/jobs/2134`; Back/Forward and refresh retain the expected career, and returning to the list preserves its current search and sort. Connection failures show a readable message and a retry action.
 
-The focused hackathon entry now opens `#/computer-science` or `#/finance` directly. Each dashboard switches between supported occupations, preserves the chosen role in the URL, and places observed pay/employment charts beside starting-pay guidance and practical next steps. “Build my plan” saves the selected career without claiming the user completed discovery; “Ask career guide” opens that career's guidance without changing the plan. Source details retain the API's publisher registry. The original quiz and full Jobs directory remain available. See the [three-minute demo](../../docs/launch/cs-finance-demo.md).
+The focused hackathon entry now opens `#/computer-science` or `#/finance` directly. Each dashboard switches between supported occupations, preserves the chosen role in the URL, and places observed pay/employment charts beside starting-pay guidance and practical next steps. “Build my plan” saves the selected career without claiming the user completed discovery; “Ask career guide” opens that career's guidance without changing the plan. Source details retain the API's publisher registry. The original quiz and full Jobs directory remain available.
 
 `api/main.py` contains the internal experience endpoints; `api/application.py` assembles the served production application and wraps them in the canonical envelope. Low-level API tests preserve the original payload checks; assembled application tests exercise the real served envelope, both API layers, validation, no-key decisions and static UI. `api/product_data.py` excludes unreviewed sample catalogue inputs from ranking and lowers confidence for that absence. It preserves genuine ML observations.
 

@@ -39,4 +39,4 @@ fi
 npm --prefix apps/web ci
 npm --prefix apps/web run build
 bash scripts/check-setup.sh
-printf '\nStart Avenier: node scripts/run-app.mjs --production\n'
+printf '\nStart Avenir: node scripts/run-app.mjs --production\n'

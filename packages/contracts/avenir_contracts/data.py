@@ -1,7 +1,7 @@
 """One loader for everything the API serves: ML artefacts (via pathfinder_ml) + catalogue + routes.
 
-The API calls `load_data()` once at start-up. This is the only file access outside adapters
-(AGENTS.md rule 5). Each source reports live/snapshot/mock/missing for the badges.
+The API calls `load_data()` once at start-up. This is the only file access outside adapters.
+Each source reports live/snapshot/mock/missing for the badges.
 """
 from __future__ import annotations
 

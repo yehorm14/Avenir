@@ -11,7 +11,7 @@ Each stage owns its outputs: this script never overwrites a real fit.json (m1_ma
 owns it) and merges its checks into eval.json instead of replacing the file (m1_matcher and
 m2_exposure_check add their own checks).
 
-Rules (docs/decisions.md; the v1.2 changes follow two independent reviews):
+Rules (the v1.2 changes follow two independent reviews):
 - Inflation: CPIH averaged over the tax year ending 5 April, the period ASHE annual pay covers.
 - Pay bridges across code changes; job counts don't. Every bridged value carries the crosswalk's
   purity (how much of the old group's workforce the new group is) and coverage (how much of the

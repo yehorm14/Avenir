@@ -266,7 +266,7 @@ def grounded_reply(
     return text, "passed"
 
 
-# --- Tool use: the model fetches Avenier's own data itself (guide_tools), then answers. ---
+# --- Tool use: the model fetches Avenir's own data itself (guide_tools), then answers. ---
 
 TOOL_DEADLINE_S = 25.0
 MAX_TOOL_ROUNDS = 2  # each round is one model request (free-tier quotas): 2 tool rounds plus the final answer
@@ -277,7 +277,7 @@ FINAL_MAX_TOKENS = 700  # last round, answer only: 80-140 words plus headroom fo
 FINAL_MAX_TOKENS_ANTHROPIC = 400
 TOOL_MAX_TOKENS = 1500  # OpenAI-compatible path: room for Gemini models that count thinking tokens as output
 TOOLS_PROMPT = (
-    "\n\nTools: you can call read-only tools that return Avenier's own data: get_role_stats, search_jobs, "
+    "\n\nTools: you can call read-only tools that return Avenir's own data: get_role_stats, search_jobs, "
     "compare_roles, get_career_path and get_employer (BlackRock only). Pick the tools that fit the question. "
     'Questions about an employer (for example BlackRock) -> get_employer. "How do I become..." or "what '
     'should I study" -> get_career_path. Comparing jobs -> compare_roles. If the student names a job title '

@@ -246,7 +246,7 @@ export default function Landing({
   resume?: { title: string; onResume: () => void };
 }) {
   return (
-    <div className="aventier-landing">
+    <div className="avenir-landing">
       <section className="hero editorial" aria-labelledby="mission-heading">
         <div className="ed-meta">
           <select
@@ -277,7 +277,7 @@ export default function Landing({
             ))}
           </select>
         </div>
-        <p className="ed-label">( AVENIER )</p>
+        <p className="ed-label">( AVENIR )</p>
         <h1 id="mission-heading" className="ed-title">
           <span className="serif">Explore your</span> <b>career choices,</b>{" "}
           <span className="serif">see clear</span> <b>path</b>{" "}
@@ -285,7 +285,7 @@ export default function Landing({
         </h1>
         <div className="ed-row">
           <p className="ed-lede">
-            Avenier puts real UK pay, jobs and automation research for each
+            Avenir puts real UK pay, jobs and automation research for each
             career in one place, shows you the trade-offs, and turns your choice
             into a plan you can start this month.
           </p>

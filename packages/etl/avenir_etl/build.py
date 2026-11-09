@@ -4,7 +4,7 @@
 
 Also writes snapshots/routes.json from the curated routes CSV. Both inputs are validated
 before either file is written. Any metric input that is absent becomes `Metric.missing`
-for that key (AGENTS.md rule 3).
+for that key.
 """
 from __future__ import annotations
 

@@ -1,4 +1,4 @@
-// Required source attributions (AGENTS.md section 7). Names and licences follow
+// Required source attributions. Names and licences follow
 // data/manifest.yaml exactly (licences checked 18 Oct); ESCO's page states no licence,
 // so only its credit line is shown.
 export function Attributions({ adzuna = false }: { adzuna?: boolean }) {

@@ -22,6 +22,7 @@ RUN pip install --no-cache-dir -e . && useradd --create-home avenir
 USER avenir
 WORKDIR /app/apps/web
 EXPOSE 4175
+ENV PORT=4175
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s \
-  CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:4175/health', timeout=3)"
-CMD ["uvicorn", "api.application:app", "--host", "0.0.0.0", "--port", "4175"]
+  CMD python -c "import os, urllib.request; urllib.request.urlopen('http://127.0.0.1:%s/health' % os.environ.get('PORT', '4175'), timeout=3)"
+CMD ["sh", "-c", "exec uvicorn api.application:app --host 0.0.0.0 --port ${PORT}"]

@@ -1,7 +1,7 @@
 # Frontend handoff: Avenir
 
 For the frontend developers (React + Vite + TypeScript, `apps/web/`). You do not need to know the backend.
-Everything below is backed by a file in this folder, `docs/contracts.md`, `AGENTS.md` (team rules) or the ML contract
+Everything below is backed by a file in this folder, `docs/contracts.md` or the ML contract
 (`packages/ml/CONTRACTS.md`, Arsenii).
 
 ## 1. TL;DR
@@ -166,7 +166,7 @@ matcher) is still an open decision (plan, section 7).
 
 ## 6. ML contract v1.1 (Arsenii): what changes for the UI
 
-Source: ML CONTRACTS v1.1 (Arsenii; `git -C C:/dev/KATYATA show 03fb482:packages/ml/CONTRACTS.md`; it lands on main when he
+Source: ML CONTRACTS v1.1 (Arsenii; `packages/ml/CONTRACTS.md`; it lands on main when he
 pushes). All changes are additions, so build for them now. Today's examples are still v1.0 data, and `flags.json` has only the
 v1.0 flags until then; the three new flags are in the table in section 4.
 
@@ -185,7 +185,7 @@ v1.0 flags until then; the three new flags are in the table in section 4.
 
 ## 7. The cards
 
-Screens, from the project rules (`AGENTS.md`). The ones marked **never cut** stay in the demo, whatever else is dropped.
+Screens, from the project design. The ones marked **never cut** stay in the demo, whatever else is dropped.
 
 1. **Three picks vs her first idea** (never cut): Ambitious (highest return among good fits), Safe (lowest risk among
    good fits), Balanced (best return per unit of risk). Each pick has `components` and `vs_first_idea`.
