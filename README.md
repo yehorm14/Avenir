@@ -61,7 +61,7 @@ Avenir was built at GUTS 2026 (Glasgow, October 2026) by a team of five for the 
 | [Yehor Mykhailov (yehorm14)](https://github.com/yehorm14) | API contract, ETL and data pipeline, live adapters, integration |
 | [Nazar (Nazar818)](https://github.com/Nazar818) | FastAPI service (`services/api`) and decision rules (`packages/decision`) |
 | [Arsenii Harbar (z1nare)](https://github.com/z1nare) | ML evidence pipeline (`packages/ml`, `snapshots/ml`) and frontend work |
-| [Max (maksymkhomitskyi)](https://github.com/maksymkhomitskyi) | One commit |
+| [Max (maksymkhomitskyi)](https://github.com/maksymkhomitskyi) | Pathfinder game prototype (`prototypes/pathfinder-game`) |
 
 My part:
 
