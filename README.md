@@ -1,5 +1,9 @@
 # Avenir
 
+[![Check](https://github.com/yehorm14/avenir/actions/workflows/check.yml/badge.svg)](https://github.com/yehorm14/avenir/actions/workflows/check.yml)
+![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-3776AB?logo=python&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-React%20%2B%20Vite-3178C6?logo=typescript&logoColor=white)
+
 A career decision tool for UK school leavers: it compares Computer Science and Finance careers using real UK pay, employment and automation data, then builds a plan.
 
 ![Avenir home screen](docs/images/home.png)
@@ -45,15 +49,29 @@ Needs Python 3.12+ and Node 20+. No keys required; optional settings are in `.en
 
 ## Tests
 
-686 Python tests and 55 Node tests: `make check` (also runs lint, build and a secret scan; CI runs the same).
+686 Python tests (3 more skipped) and 55 Node tests: `make check` (also runs lint, build and a secret scan; CI runs the same).
 
 ## Team and my role
 
-Built at GUTS 2026 for the BlackRock challenge with [iluha2vuha](https://github.com/iluha2vuha), [Nazar818](https://github.com/Nazar818), [z1nare](https://github.com/z1nare) and [maksymkhomitskyi](https://github.com/maksymkhomitskyi). I was the integrator and built:
+Avenir was built at GUTS 2026 (Glasgow, October 2026) by a team of five for the BlackRock challenge. This repository is my maintained copy of the project.
 
-- the API contract (`packages/contracts`)
-- the ETL and data pipeline (`packages/etl`)
-- the live adapters: Adzuna with snapshot fallback, and LLM explanations (`packages/adapters`)
+| Teammate | Main areas (by commit history) |
+| --- | --- |
+| [Illia (iluha2vuha)](https://github.com/iluha2vuha) | React frontend (`apps/web`) |
+| [Yehor Mykhailov (yehorm14)](https://github.com/yehorm14) | API contract, ETL and data pipeline, live adapters, integration |
+| [Nazar (Nazar818)](https://github.com/Nazar818) | FastAPI service (`services/api`) and decision rules (`packages/decision`) |
+| [Arsenii Harbar (z1nare)](https://github.com/z1nare) | ML evidence pipeline (`packages/ml`, `snapshots/ml`) and frontend work |
+| [Max (maksymkhomitskyi)](https://github.com/maksymkhomitskyi) | One commit |
+
+My part:
+
+- Owned the API contract (`packages/contracts`): the versioned `{ok, data, error, meta}` schemas, vocabulary and mocks that let the frontend, backend and ML work in parallel.
+- Built the ETL and data pipeline (`packages/etl`, `scripts/fetch`, `data/manifest.yaml`) that turns ONS, ILO and ESCO sources into the committed snapshots.
+- Built the live adapters (`packages/adapters`): Adzuna with snapshot fallback, and LLM explanations with template fallback.
+- Wrote the pull-the-plug demo harness (`scripts/demo`) and the frontend handoff docs (`docs/frontend`).
+- Did most of the integration and merging across the four other workstreams.
+
+Since the hackathon I have tidied the repo, fixed cold-install issues, and added tests and CI.
 
 ## Credits
 
