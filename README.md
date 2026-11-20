@@ -30,6 +30,7 @@ One FastAPI process serves the React app and the APIs, all using an `{ok, data, 
 Decision rules are plain functions in `packages/decision`; no LLM ranks careers.
 The app serves committed ONS, ILO and ESCO snapshots. Adzuna and LLM adapters (`packages/adapters`) have timeouts and snapshot or template fallbacks.
 The chatbot uses an LLM only if a key is configured, and checks its numbers against the sources.
+The canonical `/api/v1` decision API lives in `services/api`, and `apps/web/api` builds on it: it takes that app, adds the experience endpoints (using `packages/ml` and the Pathfinder backend), wraps them in the same envelope and serves the built React app.
 
 ## Tech stack
 
@@ -72,6 +73,10 @@ My part:
 - Did most of the integration and merging across the four other workstreams.
 
 Since the hackathon I have tidied the repo, fixed cold-install issues, and added tests and CI.
+
+## Licence
+
+Code: MIT, see [LICENSE](LICENSE). Data sources keep their own licences and attributions; see Credits.
 
 ## Credits
 
