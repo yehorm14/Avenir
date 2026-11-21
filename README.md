@@ -8,6 +8,12 @@ A career decision tool for UK school leavers: it compares Computer Science and F
 
 ![Avenir home screen](docs/images/home.png)
 
+## Try the demo
+
+[Watch the recorded walkthrough or view the screenshots](docs/demo/README.md). The app compares careers, shows where the evidence came from and saves a plan locally while external sources are unavailable.
+
+To try it yourself, [run Avenir locally](#run-locally), then choose **Try a sample comparison** or **Use Amira’s example profile** on Home. Both work without an account or provider keys.
+
 ## Why it is useful
 
 - Every pay and job figure shows its ONS source, year and caveats.
@@ -72,7 +78,7 @@ My part:
 - Wrote the pull-the-plug demo harness (`scripts/demo`) and the frontend handoff docs (`docs/frontend`).
 - Did most of the integration and merging across the four other workstreams.
 
-Since the hackathon I have tidied the repo, fixed cold-install issues, and added tests and CI.
+Since the hackathon I have maintained this copy, fixed cold-install issues, and added tests and CI, including a production container check that verifies the app and its evidence snapshots with external networking disabled. I also added the public walkthrough of the comparison and browser-saved plan.
 
 ## Licence
 

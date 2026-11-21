@@ -286,7 +286,7 @@ export default function App() {
         },
       }));
       setMatches(result.results);
-      go("overview");
+      go("matches");
     } catch (cause) {
       setAmiraError(
         cause instanceof Error
