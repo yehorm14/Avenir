@@ -26,3 +26,12 @@ jobs:
       - run: python -m pip install -e ".[dev]"
       - run: npm --prefix apps/web ci
       - run: make check
+
+  production-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - run: bash scripts/smoke-production.sh

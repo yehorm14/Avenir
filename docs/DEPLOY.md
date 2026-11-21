@@ -2,7 +2,7 @@
 
 - Docker: `docker compose up --build` serves the app on port 4175. The image reads `$PORT` (default 4175).
 - Render: [render.yaml](../render.yaml) defines a free-plan Docker web service built from `apps/web/Dockerfile`, with `/health` as the health check.
-- The image has not been built in CI yet.
+- Production smoke check: run `bash scripts/smoke-production.sh` from the repo. CI runs the same script. It builds the Render image, starts it without optional keys or outbound networking, and checks the app shell and JavaScript, health, bundled bootstrap evidence and a career comparison. On failure it prints the container logs.
 
 ## Optional environment variables
 
