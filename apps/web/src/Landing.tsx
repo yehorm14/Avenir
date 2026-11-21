@@ -299,6 +299,9 @@ export default function Landing({
             <button onClick={() => onChoose("explore")}>
               I'm not sure what to do <i>→</i>
             </button>
+            <button onClick={() => onDashboard("cs")}>
+              Try a sample comparison <i>→</i>
+            </button>
           </nav>
         </div>
         <DemandTicker careers={careers} />
@@ -319,20 +322,19 @@ export default function Landing({
           <h2 id="subjects-heading">Start with a subject</h2>
         </header>
         <article className="amira-journey" aria-labelledby="amira-heading">
-          <span className="amira-kicker">Start here</span>
+          <span className="amira-kicker">Example profile</span>
           <h2 id="amira-heading">Amira, 17, S6 in Glasgow</h2>
           <p>
-            Good at maths and art. Her first idea is architect, and she is
-            worried about AI. See three careers worth exploring next to that
-            first idea, a hedge career, how simple rules held up, and her next
-            step.
+            Amira likes maths and art and is considering architecture. Use her
+            prepared answers to compare career matches and review her next
+            steps. This replaces your current career choices in this browser.
           </p>
           <button
             className="mission-cta mission-cta-primary"
             onClick={onAmira}
             disabled={amiraBusy}
           >
-            {amiraBusy ? "Comparing…" : "Try architect"}
+            {amiraBusy ? "Comparing…" : "Use Amira’s example profile"}
           </button>
           {amiraError && (
             <p className="amira-error" role="alert">

@@ -40,6 +40,7 @@ export default function MyPlan({
       <header className="page-heading">
         <div>
           <h1>My plan</h1>
+          <p className="fine-print">Saved in this browser.</p>
           {!prefs.completed && (
             <p className="fine-print">{planPrioritySummary(prefs)}</p>
           )}
