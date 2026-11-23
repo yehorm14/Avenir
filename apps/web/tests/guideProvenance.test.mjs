@@ -39,7 +39,7 @@ test('a fallback check shows the neutral note and keeps the prepared badge', () 
   const view = guideProvenance({ mode: 'prepared_demo', checks: 'fallback: number 48,000 not in evidence', based_on: 'not-a-list', model: null });
   assert.equal(view.badge, PREPARED_BADGE);
   assert.equal(view.fallbackNote, FALLBACK_NOTE);
-  assert.equal(view.fallbackNote, 'Model reply did not pass the number checks; prepared answer shown.');
+  assert.equal(view.fallbackNote, 'Model reply did not pass the figure checks; prepared answer shown.');
   assert.deepEqual(view.basedOn, []);
   assert.equal(guideProvenance({ checks: 'passed' }).fallbackNote, null);
 });

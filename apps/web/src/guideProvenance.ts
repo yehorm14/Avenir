@@ -17,7 +17,7 @@ export const MODEL_BADGE = "Written by the model from this role's evidence";
 export const PREPARED_BADGE = "Prepared guide (no model connected)";
 export const AI_LABEL = "AI-written, check the source";
 export const FALLBACK_NOTE =
-  "Model reply did not pass the number checks; prepared answer shown.";
+  "Model reply did not pass the figure checks; prepared answer shown.";
 
 export function guideProvenance(reply: unknown): GuideProvenance {
   const fields: GuideProvenanceFields =

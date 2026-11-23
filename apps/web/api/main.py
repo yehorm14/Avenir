@@ -624,8 +624,9 @@ def guide(request: GuideRequest, http_request: Request) -> dict:
         hit = guide_cache.load(key)
         if hit is not None:
             text, checks, tools_used = hit["text"], hit["checks"] or "passed", list(hit["tools_used"] or [])
+            claims = list(hit["claims"] or [])
         else:
-            text, checks, tools_used = tool_reply(
+            text, checks, tools_used, claims = tool_reply(
                 config,
                 pack,
                 request.message,
@@ -637,13 +638,22 @@ def guide(request: GuideRequest, http_request: Request) -> dict:
                 path=path_data,
             )
             if text is not None:
-                guide_cache.save(key, {"text": text, "model": config.model, "tools_used": tools_used, "checks": checks})
+                guide_cache.save(
+                    key,
+                    {"text": text, "model": config.model, "tools_used": tools_used, "checks": checks, "claims": claims},
+                )
         if text is not None:
-            note = "AI-written from this role's evidence pack; every number was checked against the pack. Check the source."
+            note = (
+                "AI-written from this role's evidence pack. Each £ and % figure and each decimal or large number was "
+                "matched to the same occupation, measure, unit and period in the evidence; the wording around the "
+                "figures is not verified. Check the source."
+            )
             if tools_used:
                 note = (
-                    "AI-written from this role's evidence pack and the app's data tools listed below; every number "
-                    "was checked against the pack and the tool results. Check the source."
+                    "AI-written from this role's evidence pack and the app's data tools listed below. Each £ and % "
+                    "figure and each decimal or large number was matched to the same occupation, measure, unit and "
+                    "period in the evidence and tool results; the wording around the figures is not verified. "
+                    "Check the source."
                 )
             return {
                 "text": text,
@@ -654,6 +664,7 @@ def guide(request: GuideRequest, http_request: Request) -> dict:
                 "note": note,
                 "based_on": list(pack["based_on"]),
                 "checks": checks,
+                "claims": claims,
                 "tools_used": tools_used,
                 "cached": hit is not None,
                 **extras,
@@ -673,6 +684,7 @@ def guide(request: GuideRequest, http_request: Request) -> dict:
         "note": note,
         "based_on": list(pack["based_on"]),
         "checks": checks,
+        "claims": [],
         "tools_used": [],
         "cached": False,
         **extras,

@@ -1,10 +1,11 @@
 """Model-written guide replies grounded in a role's evidence pack, with hard checks.
 
 The model sees only the evidence pack (without `allowed_numbers`), the last few turns and the
-question. Its reply is accepted only if every number in it appears in the pack's `allowed_numbers`,
-it avoids the banned phrases, is not empty and is under MAX_CHARS. Any failure, timeout, HTTP error
-or exception means the caller falls back to the prepared reply; the reason is returned in the
-response. Logs carry only that reason, never a key, URL, prompt or reply text.
+question. Its reply is accepted only if every number in it appears in the pack's `allowed_numbers`, every
+figure matches a typed fact for the same occupation, measure, unit and period (guide_claims.py), it avoids the
+banned phrases, is not empty and is under MAX_CHARS. Any failure, timeout, HTTP error or exception means the
+caller falls back to the prepared reply; the reason is returned in the response. Logs carry only that reason,
+never a key, URL, prompt or reply text.
 
 Configuration (same names as the LLM explanation writer): `LLM_ENABLED`, `LLM_BASE_URL`,
 `LLM_API_KEY`, `LLM_MODEL` for an OpenAI-compatible chat-completions endpoint; or
@@ -31,6 +32,7 @@ from avenir_adapters.llm.writer import TRUTHY, numbers_in
 
 from . import guide_tools
 from .evidence_pack import allowed_numbers
+from .guide_claims import Claim, FactBook, claim_dict
 
 log = logging.getLogger(__name__)
 
@@ -210,20 +212,37 @@ def clean_reply(text: str) -> str:
     return text
 
 
-def failed_check(text: str, allowed: set[str]) -> str | None:
-    """Name of the first hard check the reply fails, or None when it passes."""
+def failed_check(text: str, allowed: set[str], facts: FactBook | None = None) -> str | None:
+    """Name of the first hard check the reply fails, or None when it passes.
+
+    `allowed` is the plain check: every number must appear somewhere in the evidence. With `facts`, every figure
+    must also match a typed fact (occupation, measure, unit, value, period); see guide_claims."""
+    return check_reply(text, allowed, facts)[0]
+
+
+def check_reply(text: str, allowed: set[str], facts: FactBook | None = None) -> tuple[str | None, list[Claim]]:
+    """(first failed check or None, the typed claims found in the reply)."""
     if not text or not text.strip():
-        return "empty reply"
+        return "empty reply", []
     if len(text) > MAX_CHARS:
-        return f"reply over {MAX_CHARS:,} characters"
+        return f"reply over {MAX_CHARS:,} characters", []
     stray = stray_numbers(text, allowed)
     if stray:
-        return "number not in the evidence pack: " + ", ".join(stray[:5])
+        return "number not in the evidence pack: " + ", ".join(stray[:5]), []
+    claims: list[Claim] = []
+    if facts is not None:
+        failure, claims = facts.check(text)
+        if failure:
+            return "claim not supported by the evidence: " + failure, claims
     lowered = text.lower()
     for phrase in BANNED_PHRASES:
         if phrase in lowered:
-            return f"banned phrase: {phrase}"
-    return None
+            return f"banned phrase: {phrase}", claims
+    return None, claims
+
+
+def _fact_book(pack: dict, compared: list[dict] | None, path: dict | None) -> FactBook:
+    return FactBook(str(pack.get("soc", ""))).add(pack).add(compared or []).add(path or {})
 
 
 def grounded_reply(
@@ -260,7 +279,7 @@ def grounded_reply(
     except (KeyError, IndexError, TypeError, AttributeError):
         return None, "fallback: unexpected response shape"
     text = clean_reply(text)
-    failed = failed_check(text, allowed)
+    failed = failed_check(text, allowed, _fact_book(pack, compared, path))
     if failed:
         return None, f"fallback: {failed}"
     return text, "passed"
@@ -376,8 +395,8 @@ def tool_reply(
     compared: list[dict] | None = None,
     link_labels: list[str] | None = None,
     path: dict | None = None,
-) -> tuple[str | None, str, list[dict]]:
-    """(accepted reply or None, check result, tools used). Never raises.
+) -> tuple[str | None, str, list[dict], list[dict]]:
+    """(accepted reply or None, check result, tools used, typed claims). Never raises.
 
     Up to MAX_TOOL_ROUNDS rounds of tool calls, then a final answer, all within TOOL_DEADLINE_S. The number
     check allows every number in the pack, the compared packs, the preferences, the path and every tool result.
@@ -389,6 +408,7 @@ def tool_reply(
         {"compared": compared or [], "preferences": preferences or {}, "path": path or {}}
     )
     used: list[dict] = []
+    facts = _fact_book(pack, compared, path)
     deadline = time.monotonic() + TOOL_DEADLINE_S
     text = ""
     for round_no in range(MAX_TOOL_ROUNDS + 1):
@@ -398,26 +418,27 @@ def tool_reply(
         try:
             status, body = _send(config, payload, deadline)
         except (DeadlineExceeded, requests.Timeout) as error:
-            return None, "fallback: " + ("timeout" if isinstance(error, requests.Timeout) else "deadline exceeded"), []
+            return None, "fallback: " + ("timeout" if isinstance(error, requests.Timeout) else "deadline exceeded"), [], []
         except Exception as error:  # noqa: BLE001  (any transport failure means the prepared reply)
-            return None, f"fallback: {type(error).__name__}", []
+            return None, f"fallback: {type(error).__name__}", [], []
         if not 200 <= status < 300:
-            return None, f"fallback: HTTP {status}", []
+            return None, f"fallback: HTTP {status}", [], []
         try:
             calls, echo = _tool_calls(config.provider, body)
             if not calls:
                 text = _reply_text(config.provider, body)
                 break
         except (KeyError, IndexError, TypeError, AttributeError):
-            return None, "fallback: unexpected response shape", []
+            return None, "fallback: unexpected response shape", [], []
         if round_no == MAX_TOOL_ROUNDS:
-            return None, "fallback: still calling tools after the last round", []
+            return None, "fallback: still calling tools after the last round", [], []
         results = []
         for call in calls[:MAX_CALLS_PER_ROUND]:
             args = guide_tools.parse_args(call["args"])
             result, summary = guide_tools.run_tool(ctx, call["name"], args)
             used.append({"name": str(call["name"]), "args": args if isinstance(args, dict) else None, "summary": summary})
             allowed |= allowed_numbers(result)
+            facts.add(result)
             results.append((call["id"], result))
         if config.provider == "anthropic":
             content = [{"type": "tool_result", "tool_use_id": cid, "content": _compact(r)} for cid, r in results]
@@ -425,7 +446,7 @@ def tool_reply(
         else:
             payload["messages"] += [echo] + [{"role": "tool", "tool_call_id": cid, "content": _compact(r)} for cid, r in results]
     text = clean_reply(text)
-    failed = failed_check(text, allowed)
+    failed, claims = check_reply(text, allowed, facts)
     if failed:
-        return None, f"fallback: {failed}", []
-    return text, "passed", used
+        return None, f"fallback: {failed}", [], []
+    return text, "passed", used, [claim_dict(claim) for claim in claims]
