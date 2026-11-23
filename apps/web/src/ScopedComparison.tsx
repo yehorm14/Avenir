@@ -7,6 +7,7 @@ import {
   demandTrendLabel,
   metricCaveats,
 } from "./planDocument";
+import { metricLabel, sourcePeriodSummary } from "./metricLabel";
 import { api } from "./store";
 import "./scopedComparison.css";
 
@@ -241,6 +242,16 @@ export default function ScopedComparison({
               </button>
             </div>
 
+            <p
+              className="scoped-comparison-sources"
+              data-testid="source-period"
+            >
+              <strong>Evidence used:</strong> pay,{" "}
+              {sourcePeriodSummary(ranked, "pay_median")}; employment trend,{" "}
+              {sourcePeriodSummary(ranked, "demand_trend")}; AI task exposure,{" "}
+              {sourcePeriodSummary(ranked, "exposure")}. A figure shown as “Not
+              available” is missing, not zero.
+            </p>
             <div
               className="scoped-comparison-table-wrap"
               tabIndex={0}
@@ -284,20 +295,33 @@ export default function ScopedComparison({
                       <td>
                         {money(observed(career.metrics.pay_median))}
                         <small>
-                          ONS ·{" "}
-                          {career.metrics.pay_median?.as_of ||
-                            "Year unavailable"}
+                          {metricLabel(career.metrics.pay_median).text}
                         </small>
+                        {!metricLabel(career.metrics.pay_median).available && (
+                          <small>
+                            {
+                              metricLabel(career.metrics.pay_median)
+                                .unavailableReason
+                            }
+                          </small>
+                        )}
                       </td>
                       <td>
                         {percent(observed(career.metrics.demand_trend))}
                         {observed(career.metrics.demand_trend) != null &&
                           " / year"}
                         <small>
-                          ONS ·{" "}
-                          {career.metrics.demand_trend?.as_of ||
-                            "Period unavailable"}
+                          {metricLabel(career.metrics.demand_trend).text}
                         </small>
+                        {!metricLabel(career.metrics.demand_trend)
+                          .available && (
+                          <small>
+                            {
+                              metricLabel(career.metrics.demand_trend)
+                                .unavailableReason
+                            }
+                          </small>
+                        )}
                         {metricCaveats(career.metrics.demand_trend) && (
                           <small>
                             {metricCaveats(career.metrics.demand_trend)}
@@ -307,9 +331,16 @@ export default function ScopedComparison({
                       <td>
                         {exposure(career)}
                         <small>
-                          ILO ·{" "}
-                          {career.metrics.exposure?.as_of || "Year unavailable"}
+                          {metricLabel(career.metrics.exposure).text}
                         </small>
+                        {!metricLabel(career.metrics.exposure).available && (
+                          <small>
+                            {
+                              metricLabel(career.metrics.exposure)
+                                .unavailableReason
+                            }
+                          </small>
+                        )}
                         {metricCaveats(career.metrics.exposure) && (
                           <small>
                             {metricCaveats(career.metrics.exposure)}
