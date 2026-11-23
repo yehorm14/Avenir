@@ -13,6 +13,8 @@ import {
   metricCaveats,
 } from "./planDocument";
 import MyPlan from "./MyPlan";
+import GuidedExample from "./GuidedExample";
+import { amiraAnswers, isExampleProfile } from "./exampleProfile";
 import Guides from "./Guides";
 import Landing from "./Landing";
 import Jobs from "./Jobs";
@@ -42,14 +44,6 @@ const nav: { id: Page; icon: string }[] = [
 // Pages shown under the Jobs tab: the full directory and the two subject dashboards.
 const jobsSection: Page[] = ["jobs", "computer-science", "finance"];
 const directPlanSocs = ["2134", "3544", "2133", "2135", "2422", "2421", "2433"];
-// Amira, 17, S6 in Glasgow: the primary demo journey.
-const amiraAnswers: Record<string, string> = {
-  direction: "Architect",
-  interests: "Making or designing something; Solving a tricky problem",
-  subjects: "Maths; Art and design",
-  values: "Long-term demand; Making a useful impact",
-  skills: "Maths and data; Drawing or design",
-};
 const route = (): Page => {
   const p = window.location.hash.replace("#/", "").split("/")[0];
   return Object.prototype.hasOwnProperty.call(pageNames, p)
@@ -311,6 +305,12 @@ export default function App() {
     }));
     go(destination);
   };
+  const resetPlan = () => {
+    setPrefs(structuredClone(initial));
+    setMatches([]);
+    go("discover");
+    setToast("Saved plan cleared from this browser.");
+  };
   const exportPlan = () => {
     if (!primary || !data) return;
     const body = buildPlanDocument({
@@ -408,6 +408,11 @@ export default function App() {
                 ))}
             </nav>
           )}
+        {primary &&
+          isExampleProfile(prefs) &&
+          ["matches", "path", "opportunities", "evidence", "overview"].includes(
+            page,
+          ) && <GuidedExample page={page} go={go} onFreshSession={resetPlan} />}
         {loadError ? (
           <div className="empty-state" role="alert">
             <Icon name="info" size={36} />
@@ -815,12 +820,7 @@ export default function App() {
                   update={update}
                   go={go}
                   onExport={exportPlan}
-                  onReset={() => {
-                    setPrefs(structuredClone(initial));
-                    setMatches([]);
-                    go("discover");
-                    setToast("Saved plan cleared from this browser.");
-                  }}
+                  onReset={resetPlan}
                 />
               ) : prefs.completed ? (
                 <NeedChoices go={go} />

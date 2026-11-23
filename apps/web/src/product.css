@@ -553,3 +553,51 @@ summary:focus-visible,
 .jobs-sections {
   margin: 4px 0 22px;
 }
+.guided-example {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin: 0 0 24px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-soft);
+}
+.guided-example p {
+  margin: 6px 0 10px;
+  max-width: 70ch;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.guided-example-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+.guided-example-steps li {
+  counter-increment: step;
+}
+.guided-example-steps li button::before {
+  content: counter(step) ". ";
+}
+.guided-example-steps button {
+  padding: 6px 12px;
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.guided-example-steps button[aria-current] {
+  color: var(--foreground);
+  background: var(--bg, rgba(127, 127, 127, 0.18));
+}
+@media (max-width: 700px) {
+  .guided-example {
+    flex-direction: column;
+  }
+}

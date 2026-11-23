@@ -327,7 +327,9 @@ export default function Landing({
           <p>
             Amira likes maths and art and is considering architecture. Use her
             prepared answers to compare career matches and review her next
-            steps. This replaces your current career choices in this browser.
+            steps. It needs no account, personal details or provider keys. This
+            replaces your current career choices in this browser, where your
+            plan stays; you can start a fresh session at any point.
           </p>
           <button
             className="mission-cta mission-cta-primary"

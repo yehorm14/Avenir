@@ -12,7 +12,9 @@ A career decision tool for UK school leavers: it compares Computer Science and F
 
 [Watch the recorded walkthrough or view the screenshots](docs/demo/README.md). The app compares careers, shows where the evidence came from and saves a plan locally while external sources are unavailable.
 
-To try it yourself, [run Avenir locally](#run-locally), then choose **Try a sample comparison** or **Use Amira’s example profile** on Home. Both work without an account or provider keys.
+To try it yourself, [run Avenir locally](#run-locally), then choose **Use Amira’s example profile** on Home. It is clearly labelled as sample data, needs no account, personal details or provider keys, and walks you from the quiz answers to career matches, the evidence comparison (with sources and years visible) and a plan. The plan is stored only in your browser; **Start a fresh session** in the example banner clears it. **Try a sample comparison** goes straight to the Computer Science comparison.
+
+There is no hosted public demo link yet: none has been deployed and verified. See [Publishing the public demo](docs/DEPLOY.md#publishing-the-public-demo) for the steps; the link belongs here once it has been checked.
 
 ## Why it is useful
 
