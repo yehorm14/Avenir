@@ -89,6 +89,8 @@ def create_app(
             code, msg = ErrorCode.INTERNAL, "Something went wrong"
         resp = fail(code, msg)
         resp.status_code = exc.status_code
+        if exc.status_code == 429 and exc.headers:  # keep Retry-After from the public rate limit
+            resp.headers.update(exc.headers)
         return resp
 
     @app.exception_handler(Exception)

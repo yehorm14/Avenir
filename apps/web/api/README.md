@@ -240,7 +240,22 @@ Frontend contract: a small speaker button under each guide answer POSTs
 `new Blob([Uint8Array.from(atob(data.audio_base64), c => c.charCodeAt(0))], {type: "audio/wav"})`.
 On 503 (or any other failure) fall back to `window.speechSynthesis` with a
 `SpeechSynthesisUtterance` of the same text. That fallback is the normal path
-once the day's quota is spent, not an error to show.
+once the day's quota is spent, not an error to show. On 429 (rate limited, see below) show the "voice is
+resting, read the text instead" message from `src/rateLimit.ts` rather than falling back.
+
+## Rate limits
+
+`POST /api/guide` and `POST /api/tts` are public and spend a shared quota, so each is limited per client IP
+with an in-memory sliding window (`api/rate_limit.py`; per process, a restart starts fresh). Past the limit
+the route answers HTTP 429 with a `Retry-After` header. A cached TTS replay is served before the limit is
+counted and never uses up the allowance; a TTS request is counted only when it would call the speech model.
+
+| Variable | Default | Meaning |
+| --- | --- | --- |
+| `GUIDE_RATE_LIMIT` | 20 | guide requests per window per IP (0 turns it off) |
+| `TTS_RATE_LIMIT` | 5 | uncached TTS requests per window per IP (0 turns it off) |
+| `RATE_LIMIT_WINDOW_S` | 60 | window length in seconds |
+| `TRUST_PROXY_HEADERS` | off | `1` takes the client IP from the last `X-Forwarded-For` entry; set it on Render, leave it off elsewhere (the header is forgeable without a proxy) |
 
 ## Evidence and matching coverage
 

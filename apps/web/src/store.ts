@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import type { Preferences } from "./types";
 import { initial, normalisePreferences } from "./preferences";
+import { rateLimitMessage } from "./rateLimit";
 export { initial } from "./preferences";
 export function usePreferences() {
   const [value, setValue] = useState<Preferences>(() => {
@@ -36,6 +37,8 @@ export async function api<T>(
       "We couldn’t connect. Check your connection and try again.",
     );
   });
+  const limited = rateLimitMessage(r.status, path);
+  if (limited) throw new Error(limited);
   const result = await r.json().catch(() => null);
   if (!r.ok || result?.ok === false) {
     const err = result;
