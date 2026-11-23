@@ -244,6 +244,10 @@ def test_example_profile_answers_work_without_keys_or_network(client):
         ("I want a high salary", {"pay": 30, "interest": 55, "need": 15}),
         ("I don't care about salary but I want job security", {"pay": 15, "interest": 55, "need": 30}),
         ("I don't mind a low salary, but I want a stable job", {"pay": 15, "interest": 55, "need": 30}),
+        ("I don't care about salary and want job security", {"pay": 15, "interest": 55, "need": 30}),
+        ("I want a high salary and don't care about hours", {"pay": 30, "interest": 55, "need": 15}),
+        ("I couldn't care less about money", {"pay": 15, "interest": 70, "need": 15}),
+        ("Salary does not really matter", {"pay": 15, "interest": 70, "need": 15}),
     ],
 )
 def test_negated_value_preferences_do_not_raise_weights(client, values, expected):

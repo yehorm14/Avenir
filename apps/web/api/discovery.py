@@ -90,14 +90,16 @@ def _positive_clauses(text: str) -> str:
     A contrast such as "dislike coding, but enjoy helping" keeps the latter.
     """
     clauses = re.split(
-        r"[,;.!?\n]|\b(?:but|however|although|yet)\b|\band\s+(?=(?:i\s+)?(?:enjoy|like|love|prefer)\b)",
+        r"[,;.!?\n]|\b(?:but|however|although|yet)\b|"
+        r"\band\s+(?=(?:i\s+)?(?:enjoy|like|love|prefer|want|need|do not|don't|does not|doesn't|am not|i'm not)\b)",
         text.lower().replace("’", "'"),
     )
     negative = (
         r"\b(?:dislike|hate|avoid|not interested in|not keen on|no interest in|"
         r"(?:do not|don't|never)\s+(?:like|enjoy|want|prefer)|"
-        r"(?:do not|don't|does not|doesn't|am not|i'm not|not)\s+(?:really\s+|that\s+|too\s+)?"
-        r"(?:care|mind|bothered|fussed|worried)|"
+        r"(?:do not|don't|does not|doesn't|couldn't|could not|am not|i'm not|not)\s+(?:really\s+|that\s+|too\s+)?"
+        r"(?:care|mind|bothered|fussed|worried|motivated by|after)|"
+        r"(?:do not|don't|does not|doesn't)\s+need|no need for|of no importance|matters? little|"
         r"(?:do not|don't|does not|doesn't)\s+(?:really\s+)?matter|"
         r"(?:not|isn't|aren't)\s+(?:very\s+|that\s+|so\s+)?(?:important|a priority)|"
         r"unimportant|irrelevant|not a concern)\b"
