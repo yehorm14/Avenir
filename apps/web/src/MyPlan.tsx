@@ -4,6 +4,7 @@ import { allOpportunities, getCareerContent } from "./content";
 import { money, percent } from "./Charts";
 import { Icon } from "./icons";
 import { CareerGuide } from "./Guides";
+import { metricLabel } from "./metricLabel";
 import { demandTrendLabel, planPrioritySummary } from "./planDocument";
 
 export default function MyPlan({
@@ -56,6 +57,15 @@ export default function MyPlan({
             <div>
               <span>Median annual pay</span>
               <strong>{money(metric(primary, "pay_median"))}</strong>
+              <small data-testid="plan-pay-source">
+                {metricLabel(primary.metrics.pay_median).text}
+              </small>
+              {metric(primary, "pay_median") == null && (
+                <small>
+                  {metricLabel(primary.metrics.pay_median).unavailableReason}{" "}
+                  Not zero.
+                </small>
+              )}
             </div>
             <div>
               <span>{demandTrendLabel(primary.metrics.demand_trend)}</span>
@@ -63,8 +73,23 @@ export default function MyPlan({
                 {percent(metric(primary, "demand_trend"))}
                 <small> / year</small>
               </strong>
+              <small data-testid="plan-trend-source">
+                {metricLabel(primary.metrics.demand_trend).text}
+              </small>
+              {metric(primary, "demand_trend") == null && (
+                <small>
+                  {metricLabel(primary.metrics.demand_trend).unavailableReason}{" "}
+                  Not zero.
+                </small>
+              )}
             </div>
           </div>
+          <p className="fine-print">
+            Pay is a workforce median for employees, not a starting salary.
+            Employment trends describe the past, not future vacancies. The
+            pathway and first steps are curated examples to check, not a
+            prediction.
+          </p>
           <div className="decision-chat">
             <div className="decision-chat-heading">
               <h3>Why explore this career?</h3>

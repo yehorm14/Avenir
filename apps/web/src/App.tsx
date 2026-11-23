@@ -15,6 +15,7 @@ import {
 import MyPlan from "./MyPlan";
 import GuidedExample from "./GuidedExample";
 import { amiraAnswers, isExampleProfile } from "./exampleProfile";
+import { metricLabel } from "./metricLabel";
 import Guides from "./Guides";
 import Landing from "./Landing";
 import Jobs from "./Jobs";
@@ -1245,7 +1246,7 @@ function MetricDetail({
       </b>
       <small>
         {m
-          ? `${m.source} · ${m.as_of} · ${m.status} · ${m.confidence} confidence`
+          ? `${metricLabel(m).text} · ${m.status} · ${m.confidence} confidence`
           : "Not included in this snapshot"}
       </small>
       {metricKey === "pay_median" && (

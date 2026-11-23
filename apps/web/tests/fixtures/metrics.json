@@ -1,0 +1,102 @@
+{
+  "_comment": "snapshot-derived metrics copied from GET /api/careers/2134; 'missing' and 'zero' are hand-made edge cases",
+  "snapshot": {
+    "pay_median": {
+      "value": 56914.0,
+      "low": 42289.0,
+      "high": 75794.0,
+      "unit": "GBP/year",
+      "as_of": "2025",
+      "source": "ons_ashe_t14",
+      "granularity": "occupation",
+      "confidence": "high",
+      "flags": [
+        "employees_only",
+        "provisional"
+      ],
+      "status": "preliminary",
+      "note": "Median gross annual pay of full-time adult employees who have been in the job for over a year, tax year 2024/25. It is not starting pay. Range: 25th to 75th percentile (the middle half).",
+      "extra": {}
+    },
+    "demand_trend": {
+      "value": 0.0262,
+      "low": -0.0102,
+      "high": 0.1254,
+      "unit": "fraction/year",
+      "as_of": "2022-2025",
+      "source": "ons_ashe_t14",
+      "granularity": "occupation",
+      "confidence": "medium",
+      "flags": [
+        "employees_only",
+        "ons_indicative_counts",
+        "provisional"
+      ],
+      "status": "preliminary",
+      "note": "Yearly change in full-time employee jobs compared with the typical occupation, 2022 to 2025 (+0.02 = growing 2% a year faster). Robust (Theil-Sen) trend; range is a 90% interval including ONS sampling error.",
+      "extra": {
+        "absolute_trend": 0.0681,
+        "typical_occupation_trend": 0.0342
+      }
+    },
+    "exposure": {
+      "value": 0.5444,
+      "low": 0.4604,
+      "high": 0.6284,
+      "unit": "score 0-1",
+      "as_of": "2025",
+      "source": "ilo_wp140",
+      "granularity": "occupation",
+      "confidence": "medium",
+      "flags": [
+        "multi_isco"
+      ],
+      "status": "preliminary",
+      "note": "Generative-AI exposure of the job's tasks (ILO 2025), averaged over the international codes its UK job titles map to. Range: how much exposure varies across its tasks and codes, widened where the UK (DfE) estimate disagrees.",
+      "extra": {
+        "gradient": "Gradient 3",
+        "dominant_isco": "2512",
+        "n_isco": 10,
+        "ilo_percentile": 0.93,
+        "dfe_percentile": 0.756,
+        "spread_between_codes": 0.032,
+        "spread_within_tasks": 0.078,
+        "scored_title_share": 1.0
+      }
+    }
+  },
+  "missing": {
+    "value": null,
+    "low": null,
+    "high": null,
+    "unit": "GBP/year",
+    "as_of": "2025",
+    "source": "ons_ashe_t14",
+    "granularity": "occupation",
+    "confidence": "low",
+    "flags": [
+      "suppressed"
+    ],
+    "status": "preliminary",
+    "note": "",
+    "extra": {}
+  },
+  "zero": {
+    "value": 0.0,
+    "low": null,
+    "high": null,
+    "unit": "fraction/year",
+    "as_of": "2022-2025",
+    "source": "ons_ashe_t14",
+    "granularity": "occupation",
+    "confidence": "medium",
+    "flags": [
+      "employees_only",
+      "ons_indicative_counts",
+      "provisional"
+    ],
+    "status": "preliminary",
+    "note": "Yearly change in full-time employee jobs compared with the typical occupation, 2022 to 2025 (+0.02 = growing 2% a year faster). Robust (Theil-Sen) trend; range is a 90% interval including ONS sampling error.",
+    "extra": {}
+  }
+}

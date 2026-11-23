@@ -8,6 +8,7 @@ import {
   isRelativeDemand,
   demandTrendLabel,
 } from "./planDocument";
+import { sourceNames } from "./metricLabel";
 import ScopedComparison from "./ScopedComparison";
 import DashboardNextSteps from "./DashboardNextSteps";
 import EvidenceStats from "./EvidenceStats";
@@ -35,14 +36,6 @@ const areas = {
     route: "finance",
     roles: ["2422", "2421", "2433"],
   },
-};
-const sourceNames: Record<string, string> = {
-  ons_ashe_t14: "ONS ASHE",
-  ons_cpih: "ONS CPIH",
-  ilo_wp140: "ILO Working Paper 140",
-  dfe_ai_uk_2023: "DfE UK AI exposure study",
-  ons_online_job_adverts: "ONS / Adzuna job adverts",
-  ons_aps_2016_age: "ONS Annual Population Survey",
 };
 const measureNames: Record<string, string> = {
   pay_median: "Median annual pay",
