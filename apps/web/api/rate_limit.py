@@ -8,10 +8,14 @@ Settings (read on every request, so tests and deploys can change them without a 
 - `GUIDE_RATE_LIMIT`: guide requests per window per IP (default 20; 0 turns the limit off)
 - `TTS_RATE_LIMIT`: TTS requests that reach the speech model per window per IP (default 5; 0 turns it off)
 - `RATE_LIMIT_WINDOW_S`: window length in seconds (default 60)
-- `TRUST_PROXY_HEADERS`: 1/true to take the client IP from the last `X-Forwarded-For` entry (set it behind
-  Render's proxy; leave it off otherwise, because the header is client-controlled when there is no proxy)
+- `TRUSTED_PROXY_HOPS`: number of trusted proxies in front of the app (default 0: ignore `X-Forwarded-For` and
+  use the socket peer). With N > 0 the client is the Nth entry from the right of `X-Forwarded-For` (N=1 is the
+  last entry); a header with fewer entries falls back to the peer. `CF-Connecting-IP` and `True-Client-IP` are
+  never trusted.
 
-State is in memory, per process: a restart or a second worker starts a fresh count.
+State is in memory, per process: a restart or a second worker starts a fresh count. The store holds at most
+`MAX_TRACKED_IPS` keys: expired keys are pruned at most once per window, then the least recently seen are
+evicted down to the cap.
 """
 
 from __future__ import annotations
@@ -20,7 +24,7 @@ import math
 import os
 import threading
 import time
-from collections import deque
+from collections import OrderedDict, deque
 from collections.abc import Callable
 
 from fastapi import HTTPException, Request
@@ -30,7 +34,8 @@ ENV_LIMIT = {"guide": "GUIDE_RATE_LIMIT", "tts": "TTS_RATE_LIMIT"}
 DEFAULT_WINDOW_S = 60.0
 MAX_TRACKED_IPS = 10_000
 
-_hits: dict[tuple[str, str], deque[float]] = {}
+_hits: OrderedDict[tuple[str, str], deque[float]] = OrderedDict()
+_last_prune = float("-inf")
 _lock = threading.Lock()
 _clock: Callable[[], float] = time.monotonic
 
@@ -43,8 +48,10 @@ def set_clock(clock: Callable[[], float] | None) -> None:
 
 def reset() -> None:
     """Forget every count (tests)."""
+    global _last_prune
     with _lock:
         _hits.clear()
+        _last_prune = float("-inf")
 
 
 def _number(name: str, default: float) -> float:
@@ -64,13 +71,12 @@ def window_s() -> float:
 
 
 def client_ip(request: Request) -> str:
-    if (os.environ.get("TRUST_PROXY_HEADERS") or "").strip().lower() in {"1", "true", "yes", "on"}:
-        forwarded = request.headers.get("x-forwarded-for", "")
-        # The last entry is the one the trusted proxy appended; earlier ones can be forged by the client.
-        last = forwarded.split(",")[-1].strip()
-        if last:
-            return last
-    return request.client.host if request.client else "unknown"
+    peer = request.client.host if request.client else "unknown"
+    hops = int(_number("TRUSTED_PROXY_HOPS", 0))
+    if hops <= 0:
+        return peer
+    entries = [part.strip() for part in request.headers.get("x-forwarded-for", "").split(",") if part.strip()]
+    return entries[-hops] if len(entries) >= hops else peer
 
 
 def check(scope: str, request: Request) -> None:
@@ -93,6 +99,16 @@ def check(scope: str, request: Request) -> None:
                 headers={"Retry-After": str(retry)},
             )
         hits.append(now)
-        if len(_hits) > MAX_TRACKED_IPS:
-            for stale in [k for k, v in _hits.items() if not v or v[-1] <= now - window]:
-                del _hits[stale]
+        _hits.move_to_end(key)
+        _prune(now, window)
+
+
+def _prune(now: float, window: float) -> None:
+    """Called with the lock held: drop expired keys once per window, then cap the store by recency."""
+    global _last_prune
+    if now - _last_prune >= window:
+        _last_prune = now
+        for stale in [k for k, v in _hits.items() if not v or v[-1] <= now - window]:
+            del _hits[stale]
+    while len(_hits) > MAX_TRACKED_IPS:
+        _hits.popitem(last=False)

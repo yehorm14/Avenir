@@ -16,6 +16,7 @@ class ErrorCode(StrEnum):
     NOT_FOUND = "NOT_FOUND"                 # 404
     UPSTREAM_UNAVAILABLE = "UPSTREAM_UNAVAILABLE"  # 503, live source down and no snapshot
     INTERNAL = "INTERNAL"                   # 500
+    RATE_LIMITED = "RATE_LIMITED"           # 429, public per-IP rate limit
 
 
 HTTP_STATUS: dict[ErrorCode, int] = {
@@ -23,6 +24,7 @@ HTTP_STATUS: dict[ErrorCode, int] = {
     ErrorCode.NOT_FOUND: 404,
     ErrorCode.UPSTREAM_UNAVAILABLE: 503,
     ErrorCode.INTERNAL: 500,
+    ErrorCode.RATE_LIMITED: 429,
 }
 
 

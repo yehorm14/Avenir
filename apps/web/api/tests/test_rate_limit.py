@@ -75,12 +75,50 @@ def test_forwarded_header_is_ignored_unless_trusted(client, clock, monkeypatch):
     assert guide(client, **{"X-Forwarded-For": "2.2.2.2"}).status_code == 429
 
 
-def test_trusted_proxy_separates_clients_by_the_last_forwarded_entry(client, clock, monkeypatch):
+def _fwd(client, value):
+    return guide(client, **{"X-Forwarded-For": value}).status_code
+
+
+def test_one_hop_uses_the_last_entry(client, clock, monkeypatch):
     monkeypatch.setenv("GUIDE_RATE_LIMIT", "1")
-    monkeypatch.setenv("TRUST_PROXY_HEADERS", "1")
-    assert guide(client, **{"X-Forwarded-For": "9.9.9.9, 1.1.1.1"}).status_code == 200
-    assert guide(client, **{"X-Forwarded-For": "8.8.8.8, 1.1.1.1"}).status_code == 429
-    assert guide(client, **{"X-Forwarded-For": "9.9.9.9, 2.2.2.2"}).status_code == 200
+    monkeypatch.setenv("TRUSTED_PROXY_HOPS", "1")
+    assert _fwd(client, "9.9.9.9, 1.1.1.1") == 200
+    assert _fwd(client, "8.8.8.8, 1.1.1.1") == 429
+    assert _fwd(client, "9.9.9.9, 2.2.2.2") == 200
+
+
+def test_two_hops_use_the_second_from_the_right(client, clock, monkeypatch):
+    monkeypatch.setenv("GUIDE_RATE_LIMIT", "1")
+    monkeypatch.setenv("TRUSTED_PROXY_HOPS", "2")
+    assert _fwd(client, "7.7.7.7, 1.1.1.1, 10.0.0.1") == 200
+    assert _fwd(client, "6.6.6.6, 1.1.1.1, 10.0.0.2") == 429
+    assert _fwd(client, "7.7.7.7, 2.2.2.2, 10.0.0.1") == 200
+
+
+def test_short_header_falls_back_to_the_peer(client, clock, monkeypatch):
+    monkeypatch.setenv("GUIDE_RATE_LIMIT", "1")
+    monkeypatch.setenv("TRUSTED_PROXY_HOPS", "2")
+    assert _fwd(client, "1.1.1.1") == 200
+    assert _fwd(client, "2.2.2.2") == 429
+    assert guide(client).status_code == 429
+
+
+def test_store_is_hard_capped_and_pruned_once_per_window(clock, monkeypatch):
+    monkeypatch.setattr(rate_limit, "MAX_TRACKED_IPS", 3)
+    monkeypatch.setenv("GUIDE_RATE_LIMIT", "5")
+
+    class Req:
+        def __init__(self, ip):
+            self.client = type("C", (), {"host": ip})()
+            self.headers = {}
+
+    for n in range(10):
+        rate_limit.check("guide", Req(f"10.0.0.{n}"))
+    assert len(rate_limit._hits) == 3
+    assert [k[1] for k in rate_limit._hits] == ["10.0.0.7", "10.0.0.8", "10.0.0.9"]
+    clock.now += 61
+    rate_limit.check("guide", Req("10.0.1.1"))
+    assert [k[1] for k in rate_limit._hits] == ["10.0.1.1"]
 
 
 def test_tts_limit_counts_only_real_synthesis_and_cached_replays_pass(client, clock, monkeypatch):
@@ -112,6 +150,8 @@ def test_assembled_app_keeps_the_429_status(monkeypatch, clock, tmp_path):
     assert product.post("/api/guide", json=GUIDE).status_code == 200
     blocked = product.post("/api/guide", json=GUIDE)
     assert blocked.status_code == 429 and blocked.json()["ok"] is False
+    assert blocked.json()["error"]["code"] == "RATE_LIMITED"
+    assert "Try again in" in blocked.json()["error"]["message"]
     assert blocked.headers["retry-after"]
 
 

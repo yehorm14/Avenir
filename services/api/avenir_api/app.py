@@ -80,6 +80,12 @@ def create_app(
 
     @app.exception_handler(StarletteHTTPException)
     async def _http(request: Request, exc: StarletteHTTPException):
+        if exc.status_code == 429:
+            detail = exc.detail if isinstance(exc.detail, dict) else {}
+            resp = fail(ErrorCode.RATE_LIMITED, str(detail.get("message") or "Too many requests. Try again shortly."))
+            if exc.headers:  # keep Retry-After
+                resp.headers.update(exc.headers)
+            return resp
         if exc.status_code in (404, 405):
             code, msg = ErrorCode.NOT_FOUND, "Not found"
         elif 400 <= exc.status_code < 500:
@@ -89,8 +95,6 @@ def create_app(
             code, msg = ErrorCode.INTERNAL, "Something went wrong"
         resp = fail(code, msg)
         resp.status_code = exc.status_code
-        if exc.status_code == 429 and exc.headers:  # keep Retry-After from the public rate limit
-            resp.headers.update(exc.headers)
         return resp
 
     @app.exception_handler(Exception)

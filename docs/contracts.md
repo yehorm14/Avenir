@@ -15,6 +15,7 @@ This page summarises them. Change either only by PR with "needs a contract chang
 | `NOT_FOUND` | 404 | Unknown SOC code or backtest year |
 | `UPSTREAM_UNAVAILABLE` | 503 | No careers loaded |
 | `INTERNAL` | 500 | Anything else (no traceback returned) |
+| `RATE_LIMITED` | 429 | Public per-IP rate limit on the guide and text-to-speech routes (`Retry-After` header) |
 
 Serving a snapshot or mock is not an error: 200 with that source's status. Error envelopes may have an empty `meta.sources`.
 A malformed SOC (for example `abc` or `245`) is `VALIDATION_ERROR` 422; a well-formed unknown SOC (for example `9999`) is `NOT_FOUND` 404.

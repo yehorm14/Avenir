@@ -11,7 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from api import rate_limit  # noqa: E402
 
-RATE_ENV = ("GUIDE_RATE_LIMIT", "TTS_RATE_LIMIT", "RATE_LIMIT_WINDOW_S", "TRUST_PROXY_HEADERS")
+RATE_ENV = ("GUIDE_RATE_LIMIT", "TTS_RATE_LIMIT", "RATE_LIMIT_WINDOW_S", "TRUSTED_PROXY_HOPS")
 MODEL_ENV = ("ANTHROPIC_API_KEY", "LLM_ENABLED", "LLM_BASE_URL", "LLM_API_KEY", "LLM_API_KEY_2", "LLM_MODEL", "GUIDE_CACHE")
 
 

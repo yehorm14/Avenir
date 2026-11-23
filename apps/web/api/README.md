@@ -255,7 +255,9 @@ counted and never uses up the allowance; a TTS request is counted only when it w
 | `GUIDE_RATE_LIMIT` | 20 | guide requests per window per IP (0 turns it off) |
 | `TTS_RATE_LIMIT` | 5 | uncached TTS requests per window per IP (0 turns it off) |
 | `RATE_LIMIT_WINDOW_S` | 60 | window length in seconds |
-| `TRUST_PROXY_HEADERS` | off | `1` takes the client IP from the last `X-Forwarded-For` entry; set it on Render, leave it off elsewhere (the header is forgeable without a proxy) |
+| `TRUSTED_PROXY_HOPS` | 0 | trusted proxies in front of the app. 0 ignores `X-Forwarded-For` and uses the socket peer; N takes the Nth entry from the right (1 is the last entry), falling back to the peer if the header is shorter. `CF-Connecting-IP` and `True-Client-IP` are never trusted |
+
+Behind a reverse proxy, leaving `TRUSTED_PROXY_HOPS` at 0 makes every visitor share one bucket (the proxy's address). Render's edge appends the client address to `X-Forwarded-For`, but the right value must be confirmed for the deployment, for example by temporarily logging the header, before setting it. The store holds at most 10,000 IP keys: expired keys are pruned once per window and the least recently seen are evicted beyond the cap.
 
 ## Evidence and matching coverage
 
