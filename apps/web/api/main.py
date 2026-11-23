@@ -589,7 +589,8 @@ def _tool_context() -> ToolContext:
 def guide(request: GuideRequest) -> dict:
     """Model-written from the role's evidence pack when a model is configured and the reply passes the hard
     checks; otherwise the prepared template. Opinions are tied to the quiz profile when one is sent; links and
-    the career path are always built by the API, never by the model. Nothing from the conversation is cached."""
+    the career path are always built by the API, never by the model. A model reply is cached only under a key
+    covering every input (message, history, profile, evidence, model); the prepared fallback is never cached."""
     career = _career(request.soc)
     pack = evidence_pack(request.soc)
     compared = _compared_packs(request.profile, request.soc)
@@ -609,7 +610,15 @@ def guide(request: GuideRequest) -> dict:
     config = config_from_env()
     if config is not None:
         profile = request.profile.model_dump() if request.profile is not None else None
-        key = guide_cache.cache_key(request.soc, request.message, profile, config.model)
+        evidence = guide_cache.evidence_digest(pack, compared, path_data, words, [link["label"] for link in links])
+        key = guide_cache.cache_key(
+            request.soc,
+            request.message,
+            profile,
+            config.model,
+            history=[turn.model_dump() for turn in request.history],
+            evidence=evidence,
+        )
         hit = guide_cache.load(key)
         if hit is not None:
             text, checks, tools_used = hit["text"], hit["checks"] or "passed", list(hit["tools_used"] or [])

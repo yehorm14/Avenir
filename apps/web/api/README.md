@@ -147,10 +147,16 @@ Keys and quota: set `LLM_API_KEY` and optionally `LLM_API_KEY_2`. On HTTP 429 or
 403 the same request is retried once with the other key, and the exhausted key is
 skipped for the rest of the process.
 
-Cache: accepted replies are stored on disk, keyed by sha256 of the SOC, message,
-quiz profile and model, so a rehearsed demo replays without spending quota
-(`cached: true`). The default folder is `apps/web/api/.cache/guide/` (git-ignored);
-set `GUIDE_CACHE_DIR` to move it or `GUIDE_CACHE=0` to turn it off.
+Cache: accepted model replies (text, model, tools used, checks; never links or the
+path, which are rebuilt per request) are stored on disk, keyed by sha256 of every
+input the model sees: SOC, message, follow-up history, quiz profile, model name, a
+digest of the evidence given to the model, and a cache version. A different
+follow-up context, profile, model or evidence change is a different key; an
+identical repeat request replays the stored reply without spending quota
+(`cached: true`). The key-free prepared fallback is deterministic and never cached.
+Writes use a unique temporary file and an atomic replace, and a missing or
+unwritable folder is ignored. The default folder is `apps/web/api/.cache/guide/`
+(git-ignored); set `GUIDE_CACHE_DIR` to move it or `GUIDE_CACHE=0` to turn it off.
 
 Enable with a Gemini key in the repo-root `.env`:
 
