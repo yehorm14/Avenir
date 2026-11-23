@@ -1135,3 +1135,144 @@
   cursor: pointer;
   font-weight: 600;
 }
+
+/* Home hero: short title, journey and sample evidence comparison */
+.hero.editorial .ed-title.ed-title-short {
+  text-transform: none;
+  font-size: clamp(30px, 4.6vw, 60px);
+  line-height: 1.1;
+  max-width: 20ch;
+}
+.ed-row {
+  align-items: start;
+}
+.ed-journey {
+  display: grid;
+  gap: 0;
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid #000;
+}
+.ed-journey li {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid #000;
+}
+.ed-step-no {
+  font-weight: 700;
+  font-size: 15px;
+}
+.ed-journey strong {
+  font-size: 16px;
+  letter-spacing: -0.01em;
+}
+.ed-journey p {
+  margin: 2px 0 6px;
+  font-size: 13px;
+  color: #333;
+}
+.ed-journey button,
+.ed-secondary button,
+.hero-sample-empty button {
+  padding: 6px 0;
+  min-height: 32px;
+  color: #000;
+  font: inherit;
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ed-journey button i {
+  font-style: normal;
+}
+.ed-journey button:hover,
+.ed-secondary button:hover:not(:disabled) {
+  text-decoration-thickness: 2px;
+}
+.ed-journey button:focus-visible,
+.ed-secondary button:focus-visible,
+.hero-sample-empty button:focus-visible {
+  outline: 3px solid #1d4ed8;
+  outline-offset: 2px;
+}
+.ed-secondary {
+  margin: 14px 0 0;
+  font-size: 13px;
+  color: #333;
+}
+.ed-secondary button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+.hero-sample {
+  padding: 18px 20px 14px;
+  border: 1px solid #000;
+  background: #fff;
+  color: #000;
+  min-width: 0;
+}
+.hero-sample h2 {
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.hero-sample table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 13px;
+}
+.hero-sample th,
+.hero-sample td {
+  padding: 10px 8px 10px 0;
+  text-align: left;
+  vertical-align: top;
+  border-top: 1px solid #ccc;
+  overflow-wrap: anywhere;
+}
+.hero-sample thead th {
+  border-top: 0;
+  color: #000;
+  font-size: 12px;
+  font-weight: 650;
+}
+.hero-sample tbody th {
+  font-weight: 500;
+}
+.hero-sample td b {
+  display: block;
+  font-size: 19px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.hero-sample td small {
+  display: block;
+  margin-top: 3px;
+  font-size: 11px;
+  line-height: 1.4;
+  color: #444;
+}
+.hero-sample-note,
+.hero-sample-empty {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: #444;
+}
+@media (max-width: 800px) {
+  .hero.editorial .ed-title.ed-title-short {
+    font-size: clamp(28px, 8vw, 40px);
+  }
+  .hero-sample {
+    padding: 14px 14px 10px;
+  }
+  .hero-sample table {
+    font-size: 12px;
+  }
+  .hero-sample td b {
+    font-size: 16px;
+  }
+}

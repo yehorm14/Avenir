@@ -6,7 +6,7 @@
 
 A career decision tool for UK school leavers: it compares Computer Science and Finance careers using real UK pay, employment and automation data, then builds a plan.
 
-![Avenir home screen](docs/images/home.png)
+![Avenir home screen: short headline, discover, compare, save and export journey, and a sample evidence comparison with sources and years](docs/images/home.png)
 
 ## Try the demo
 
