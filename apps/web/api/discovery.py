@@ -95,7 +95,12 @@ def _positive_clauses(text: str) -> str:
     )
     negative = (
         r"\b(?:dislike|hate|avoid|not interested in|not keen on|no interest in|"
-        r"(?:do not|don't|never)\s+(?:like|enjoy|want|prefer))\b"
+        r"(?:do not|don't|never)\s+(?:like|enjoy|want|prefer)|"
+        r"(?:do not|don't|does not|doesn't|am not|i'm not|not)\s+(?:really\s+|that\s+|too\s+)?"
+        r"(?:care|mind|bothered|fussed|worried)|"
+        r"(?:do not|don't|does not|doesn't)\s+(?:really\s+)?matter|"
+        r"(?:not|isn't|aren't)\s+(?:very\s+|that\s+|so\s+)?(?:important|a priority)|"
+        r"unimportant|irrelevant|not a concern)\b"
     )
     return " ".join(clause for clause in clauses if not re.search(negative, clause))
 
