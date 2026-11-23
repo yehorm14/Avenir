@@ -216,3 +216,19 @@ def test_demand_priority_chip_increases_need_weight(client, value):
         },
     ).json()
     assert data["weights"] == {"pay": 15, "interest": 55, "need": 30}
+
+
+def test_example_profile_answers_work_without_keys_or_network(client):
+    """The guided demo's sample answers (Amira) must produce matches from the bundled evidence alone."""
+    answers = {
+        "direction": "Architect",
+        "interests": "Making or designing something; Solving a tricky problem",
+        "subjects": "Maths; Art and design",
+        "values": "Long-term demand; Making a useful impact",
+        "skills": "Maths and data; Drawing or design",
+    }
+    response = client.post("/api/discovery", json={"mode": "known", "answers": answers})
+    assert response.status_code == 200
+    data = response.json()
+    assert data["target_soc"] and len(data["results"]) >= 3
+    assert all(result["metrics"]["pay_median"]["as_of"] for result in data["results"])
