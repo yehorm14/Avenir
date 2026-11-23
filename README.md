@@ -40,6 +40,16 @@ The app serves committed ONS, ILO and ESCO snapshots. Adzuna and LLM adapters (`
 The chatbot uses an LLM only if a key is configured, and checks its numbers against the sources.
 The canonical `/api/v1` decision API lives in `services/api`, and `apps/web/api` builds on it: it takes that app, adds the experience endpoints (using `packages/ml` and the Pathfinder backend), wraps them in the same envelope and serves the built React app.
 
+## Repository layout
+
+| Folder | What it is |
+|---|---|
+| `apps/web` | The shipped app: React frontend and the web API (`apps/web/api`) that serves it |
+| `services/api` | Canonical `/api/v1` decision API |
+| `packages/` | Decision rules, ML, contracts, adapters and ETL |
+| `data/`, `snapshots/` | Source manifest and committed data snapshots |
+| `prototypes/` | Hackathon experiments, not the product and not a deployed service of their own; see [prototypes/README.md](prototypes/README.md) |
+
 ## Tech stack
 
 - Backend: Python 3.12+, FastAPI, Pydantic
