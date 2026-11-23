@@ -279,3 +279,8 @@ def test_public_accessors(ml):
     aff["maths"].clear()  # a copy: the loader's table is unchanged
     assert ml.affinity()["maths"]
 
+
+
+def test_backtest_status_accessor(ml):
+    expected = json.loads((MOCK / "backtest.json").read_text(encoding="utf-8")).get("status", "unknown")
+    assert ml.backtest_status() == expected

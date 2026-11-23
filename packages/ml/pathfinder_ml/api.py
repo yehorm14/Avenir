@@ -197,6 +197,10 @@ class ML:
                 return copy.deepcopy(w)
         raise KeyError(f"no backtest window for base year {base_year}; available: {sorted(w['base_year'] for w in windows)}")
 
+    def backtest_status(self) -> str:
+        """Status of the backtest artefact ("unknown" when the file does not declare one)."""
+        return str(self._load("backtest").get("status", "unknown"))
+
     def backtest_caveats(self) -> list[str]:
         return list(self._load("backtest").get("caveats", []))
 
