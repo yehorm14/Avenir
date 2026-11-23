@@ -163,7 +163,7 @@ def _hedges(evidence: ML, hedges: list[dict]) -> list[dict]:
 
 def _backtest(evidence: ML, soc: str) -> dict | None:
     try:
-        artefact = evidence._load("backtest")
+        artefact = evidence.backtest_artefact()
     except (FileNotFoundError, ValueError):
         return None
     windows = []
@@ -308,7 +308,7 @@ ESCO_SKILL_COUNT = 8
 def esco_skills(evidence: ML, soc: str, count: int = ESCO_SKILL_COUNT) -> list[str]:
     """The role's first ESCO skills from `career_texts`, or [] when the file or the role is missing."""
     try:
-        entry = evidence._load("career_texts").get(soc)
+        entry = evidence.career_text(soc)
     except (FileNotFoundError, ValueError):
         return []
     skills = entry.get("skills", []) if isinstance(entry, dict) else []

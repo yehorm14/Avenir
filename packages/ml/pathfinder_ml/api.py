@@ -180,6 +180,29 @@ class ML:
         """The whole tag -> {soc2020: affinity} table from fit.json (a missing entry means 0)."""
         return copy.deepcopy(self._load("fit")["affinity"])
 
+    # Whole-artefact and metadata accessors (copies; raise FileNotFoundError when absent) -------
+    def fit(self) -> dict:
+        """The whole fit artefact (status, method, evaluation, tags, affinity)."""
+        return copy.deepcopy(self._load("fit"))
+
+    def backtest_artefact(self) -> dict:
+        """The whole backtest artefact (status, caveats, windows)."""
+        return copy.deepcopy(self._load("backtest"))
+
+    def hedges_status(self) -> str:
+        """Status declared by the hedges artefact."""
+        return copy.deepcopy(self._load("hedges")["status"])
+
+    def occupations_meta(self) -> dict:
+        """File-level metadata of the occupations artefact: schema_version and price_base ("" when absent)."""
+        data = self._load("occupations")
+        return {"schema_version": data.get("schema_version", ""), "price_base": data.get("price_base", "")}
+
+    def career_text(self, soc2020: str) -> dict | None:
+        """The career_texts entry for one occupation, or None when the role has no entry. This
+        optional artefact is not in ARTEFACTS; raises FileNotFoundError when the file is absent."""
+        return copy.deepcopy(self._load("career_texts").get(soc2020))
+
     # Track record, crises, provenance -------------------------------------
     def backtest_years(self) -> list[int]:
         """Base years that have a backtest window, oldest first."""
