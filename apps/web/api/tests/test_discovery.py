@@ -41,7 +41,7 @@ def test_explore_answers_create_three_distinct_grounded_options(client):
     for career in data["results"]:
         assert career["metrics"] == ML().occupation(career["soc"])["metrics"]
         assert career["history"] == ML().history(career["soc"])
-        assert career["fit_status"] == ML()._load("fit")["status"]
+        assert career["fit_status"] == ML().fit()["status"]
 
 
 def test_known_career_is_kept_as_an_explicit_reference(client):

@@ -27,8 +27,8 @@ def test_bootstrap_passes_through_actual_arsenii_metrics_and_history(client):
     assert software["metrics"] == ML().occupation("2134")["metrics"]
     assert software["history"] == ML().history("2134")
     assert software["metrics"]["pay_median"]["value"] == 56914
-    assert data["data_status"]["fit"] == ML()._load("fit")["status"]
-    assert data["data_status"]["fit_method"] == ML()._load("fit")["method"]
+    assert data["data_status"]["fit"] == ML().fit()["status"]
+    assert data["data_status"]["fit_method"] == ML().fit()["method"]
     assert data["data_status"]["mode"] == ML().status()["mode"]
     assert set(data["sources"]) == set(ML().sources())
 
@@ -67,7 +67,7 @@ def test_match_endpoint_validates_profile_and_returns_every_career(client):
     assert result["results"][0]["soc"] == "2134"
     from pathfinder_ml import ML
 
-    fit = ML()._load("fit")
+    fit = ML().fit()
     assert result["results"][0]["fit"] == 100 * fit["affinity"]["computers_coding"]["2134"]
     assert result["fit_status"] == fit["status"]
     assert all(career["fit_status"] == fit["status"] for career in result["results"])
