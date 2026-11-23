@@ -13,7 +13,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Annotated, Literal
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi import Path as ApiPath
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ConfigDict, Field, field_validator
@@ -26,7 +26,7 @@ from app.data import get_store  # noqa: E402
 from app.path import build_plan  # noqa: E402
 from pathfinder_ml import ML  # noqa: E402
 
-from . import guide_cache  # noqa: E402
+from . import guide_cache, rate_limit  # noqa: E402
 from .catalogue import detail as catalogue_detail  # noqa: E402
 from .catalogue import summaries as catalogue_summaries  # noqa: E402
 from .discovery import DiscoveryRequest, discover  # noqa: E402
@@ -586,11 +586,13 @@ def _tool_context() -> ToolContext:
 
 
 @app.post("/api/guide")
-def guide(request: GuideRequest) -> dict:
+def guide(request: GuideRequest, http_request: Request) -> dict:
     """Model-written from the role's evidence pack when a model is configured and the reply passes the hard
     checks; otherwise the prepared template. Opinions are tied to the quiz profile when one is sent; links and
     the career path are always built by the API, never by the model. A model reply is cached only under a key
-    covering every input (message, history, profile, evidence, model); the prepared fallback is never cached."""
+    covering every input (message, history, profile, evidence, model); the prepared fallback is never cached.
+    Per-IP rate limited (see rate_limit.py): 429 past the limit."""
+    rate_limit.check("guide", http_request)
     career = _career(request.soc)
     pack = evidence_pack(request.soc)
     compared = _compared_packs(request.profile, request.soc)

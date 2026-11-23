@@ -1064,7 +1064,8 @@
           "VALIDATION_ERROR",
           "NOT_FOUND",
           "UPSTREAM_UNAVAILABLE",
-          "INTERNAL"
+          "INTERNAL",
+          "RATE_LIMITED"
         ],
         "title": "ErrorCode",
         "type": "string"

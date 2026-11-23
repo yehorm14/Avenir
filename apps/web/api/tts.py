@@ -32,10 +32,12 @@ from pathlib import Path
 from typing import Literal
 
 import requests
-from fastapi import HTTPException
+from fastapi import HTTPException, Request
 from pydantic import BaseModel, Field
 
 from avenir_adapters._deadline import DeadlineExceeded, call_with_deadline
+
+from . import rate_limit
 
 log = logging.getLogger(__name__)
 
@@ -250,8 +252,9 @@ def _block(name: str, scope: str, seconds: float) -> None:
         _blocked[(name, scope)] = time.monotonic() + seconds
 
 
-def synthesise(text: str, voice: str = "Kore") -> tuple[bytes, str, bool]:
-    """(wav bytes, model, cached). Raises Unavailable with a short reason."""
+def synthesise(text: str, voice: str = "Kore", before_synthesis=None) -> tuple[bytes, str, bool]:
+    """(wav bytes, model, cached). Raises Unavailable with a short reason. `before_synthesis` runs only when
+    no cached audio exists, just before a speech model would be called (the rate limit hooks in here)."""
     spoken = clean_text(text)
     if not spoken:
         raise HTTPException(422, "Nothing to read aloud after removing links and formatting")
@@ -263,6 +266,8 @@ def synthesise(text: str, voice: str = "Kore") -> tuple[bytes, str, bool]:
     keys = _keys()
     if not keys:
         raise Unavailable("no_key_configured")
+    if before_synthesis is not None:
+        before_synthesis()
     payload = {
         "contents": [{"parts": [{"text": spoken}]}],
         "generationConfig": {
@@ -315,10 +320,10 @@ def synthesise(text: str, voice: str = "Kore") -> tuple[bytes, str, bool]:
     raise Unavailable(reason)
 
 
-def text_to_speech(request: TtsRequest) -> dict:
+def text_to_speech(request: TtsRequest, http_request: Request) -> dict:
     """`POST /api/tts` (registered in main.py): base64 WAV for one guide answer; 503 means use speechSynthesis."""
     try:
-        audio, model, cached = synthesise(request.text, request.voice)
+        audio, model, cached = synthesise(request.text, request.voice, lambda: rate_limit.check("tts", http_request))
     except Unavailable as error:
         raise HTTPException(503, {"code": "TTS_UNAVAILABLE", "message": error.reason}) from None
     return {
