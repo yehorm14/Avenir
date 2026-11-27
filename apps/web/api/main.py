@@ -270,13 +270,13 @@ def health() -> dict:
 @app.get("/api/bootstrap")
 def bootstrap() -> dict:
     status = ml().status()
-    fit = ml()._load("fit")
+    fit = ml().fit()
     return {
         "careers": _careers(),
         "evidence_metadata": evidence_metadata(ml()),
         "tags": ml().tags(),
         "sources": ml().sources(),
-        "backtest": ml()._load("backtest"),
+        "backtest": ml().backtest_artefact(),
         "crises": ml().crises(),
         "data_status": {
             "mode": status["mode"],
@@ -285,7 +285,7 @@ def bootstrap() -> dict:
             "fit": fit["status"],
             "fit_method": fit.get("method"),
             "fit_evaluation": fit.get("evaluation"),
-            "hedges": ml()._load("hedges")["status"],
+            "hedges": ml().hedges_status(),
             "pathways": "curated_demo",
             "guide": guide_mode(),
             "guide_accepts_profile": True,
@@ -301,7 +301,7 @@ def bootstrap() -> dict:
 
 @app.post("/api/matches")
 def matches(request: MatchRequest) -> dict:
-    fit = ml()._load("fit")
+    fit = ml().fit()
     try:
         results = rank_careers(
             _match_careers(), request.tags, request.weights.model_dump(), fit["affinity"], fit_status=fit["status"]
@@ -323,7 +323,7 @@ def matches(request: MatchRequest) -> dict:
 def discovery(request: DiscoveryRequest) -> dict:
     try:
         matches = ml().match_tags(request.answers.positive_activity_text(), top_k=16)
-        return discover(request, _match_careers(), matches, ml()._load("fit"))
+        return discover(request, _match_careers(), matches, ml().fit())
     except ValueError as error:
         raise HTTPException(422, str(error)) from error
 

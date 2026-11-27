@@ -109,14 +109,13 @@ def load_data(ml_dir: str | Path | None = None, snapshot_dir: str | Path | None 
 
     try:
         d.tags = [Tag.model_validate(t) for t in ml.tags()]
-        d.affinity = ml._load("fit")["affinity"]  # TODO(arsenii): public accessor
+        d.affinity = ml.affinity()
     except FileNotFoundError:
         pass
     try:
-        bt = ml._load("backtest")  # TODO(arsenii): public backtest_years(); backtest(y) gives one window
-        d.backtest = {w["base_year"]: BacktestWindow.model_validate(w) for w in bt["windows"]}
+        d.backtest = {y: BacktestWindow.model_validate(ml.backtest(y)) for y in ml.backtest_years()}
         d.backtest_caveats = ml.backtest_caveats()
-        d.backtest_status = bt.get("status", "unknown")
+        d.backtest_status = ml.backtest_status()
     except FileNotFoundError:
         pass
     for loader, target in ((ml.crises, "crises"), (ml.sources, "sources")):

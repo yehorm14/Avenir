@@ -279,3 +279,40 @@ def test_public_accessors(ml):
     aff["maths"].clear()  # a copy: the loader's table is unchanged
     assert ml.affinity()["maths"]
 
+
+
+def test_backtest_status_accessor(ml):
+    expected = json.loads((MOCK / "backtest.json").read_text(encoding="utf-8")).get("status", "unknown")
+    assert ml.backtest_status() == expected
+
+
+def test_whole_artefact_accessors_return_copies(ml):
+    fit = ml.fit()
+    assert fit == _load(MOCK, "fit")
+    fit["affinity"].clear()
+    assert ml.fit()["affinity"]
+    backtest = ml.backtest_artefact()
+    assert backtest == _load(MOCK, "backtest")
+    backtest["windows"].clear()
+    assert ml.backtest_artefact()["windows"]
+    assert ml.hedges_status() == _load(MOCK, "hedges")["status"]
+
+
+def test_occupations_meta_accessor(ml):
+    raw = _load(MOCK, "occupations")
+    assert ml.occupations_meta() == {"schema_version": raw.get("schema_version", ""), "price_base": raw.get("price_base", "")}
+
+
+def test_career_text_accessor(tmp_path):
+    (tmp_path / "career_texts.json").write_text(json.dumps({"1111": {"skills": ["a", "b"]}}), encoding="utf-8")
+    reader = ML(data_dir=tmp_path, mock_dir=MOCK)
+    entry = reader.career_text("1111")
+    assert entry == {"skills": ["a", "b"]}
+    entry["skills"].clear()  # a copy
+    assert reader.career_text("1111") == {"skills": ["a", "b"]}
+    assert reader.career_text("9999") is None
+
+
+def test_career_text_missing_file_raises(tmp_path):
+    with pytest.raises(FileNotFoundError):
+        ML(data_dir=tmp_path, mock_dir=tmp_path).career_text("1111")
