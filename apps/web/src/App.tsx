@@ -106,10 +106,10 @@ export default function App() {
   const [amiraError, setAmiraError] = useState("");
   const [inspect, setInspect] = useState<Career | null>(null);
   const mainRef = useRef<HTMLElement>(null);
-  const go = (p: Page, soc?: string) => {
+  const go = (p: Page, detail?: string) => {
     setPage(p);
-    setGuideSoc(p === "guides" ? (soc ?? null) : null);
-    window.location.hash = `/${p}${p === "guides" && soc ? `/${soc}` : ""}`;
+    setGuideSoc(p === "guides" ? (detail ?? null) : null);
+    window.location.hash = `/${p}${detail ? `/${detail}` : ""}`;
     window.scrollTo(0, 0);
     setTimeout(() => mainRef.current?.focus({ preventScroll: true }), 0);
   };
@@ -447,8 +447,8 @@ export default function App() {
                 location={prefs.location}
                 onNation={(nation) => update({ nation })}
                 onLocation={(location) => update({ location })}
-                onDashboard={(area) =>
-                  go(area === "cs" ? "computer-science" : "finance")
+                onDashboard={(area, view) =>
+                  go(area === "cs" ? "computer-science" : "finance", view)
                 }
                 resume={
                   primary

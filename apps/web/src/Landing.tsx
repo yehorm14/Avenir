@@ -235,7 +235,7 @@ export default function Landing({
 }: {
   careers: Career[];
   onChoose: (mode: "known" | "explore") => void;
-  onDashboard: (area: "cs" | "finance") => void;
+  onDashboard: (area: "cs" | "finance", view?: "compare") => void;
   onAmira?: () => void;
   amiraBusy?: boolean;
   amiraError?: string;
@@ -247,6 +247,7 @@ export default function Landing({
   onLocation: (location: string) => void;
   resume?: { title: string; onResume: () => void };
 }) {
+  const amiraCard = useRef<HTMLElement>(null);
   const sample = useMemo(() => heroSample(careers, metricLabel), [careers]);
   return (
     <div className="avenir-landing">
@@ -311,7 +312,7 @@ export default function Landing({
                 <div>
                   <strong>Compare</strong>
                   <p>Weigh pay, jobs and automation exposure.</p>
-                  <button onClick={() => onDashboard("cs")}>
+                  <button onClick={() => onDashboard("cs", "compare")}>
                     Try a sample comparison <i>→</i>
                   </button>
                 </div>
@@ -332,15 +333,10 @@ export default function Landing({
             <p className="ed-secondary">
               <button onClick={onJobs}>Analyse the job market</button>
               <span aria-hidden="true"> · </span>
-              <button onClick={onAmira} disabled={!onAmira || amiraBusy}>
-                {amiraBusy ? "Comparing…" : "Use Amira’s example profile"}
+              <button onClick={() => amiraCard.current?.focus()}>
+                Read about Amira’s example profile
               </button>
             </p>
-            {amiraError && (
-              <p className="amira-error" role="alert">
-                {amiraError}
-              </p>
-            )}
           </div>
           <section
             className="hero-sample"
@@ -406,7 +402,12 @@ export default function Landing({
         <header className="subjects-heading">
           <h2 id="subjects-heading">Start with a subject</h2>
         </header>
-        <article className="amira-journey" aria-labelledby="amira-heading">
+        <article
+          className="amira-journey"
+          aria-labelledby="amira-heading"
+          ref={amiraCard}
+          tabIndex={-1}
+        >
           <span className="amira-kicker">Example profile</span>
           <h2 id="amira-heading">Amira, 17, S6 in Glasgow</h2>
           <p>
@@ -419,7 +420,7 @@ export default function Landing({
           <button
             className="mission-cta mission-cta-primary"
             onClick={onAmira}
-            disabled={amiraBusy}
+            disabled={!onAmira || amiraBusy}
           >
             {amiraBusy ? "Comparing…" : "Use Amira’s example profile"}
           </button>

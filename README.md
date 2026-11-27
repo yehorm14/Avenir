@@ -68,7 +68,12 @@ Needs Python 3.12+ and Node 20+. No keys required; optional settings are in `.en
 
 ## Tests
 
-686 Python tests (3 more skipped) and 55 Node tests: `make check` (also runs lint, build and a secret scan; CI runs the same).
+Run `make check` for Python and Node tests, lint, the production build and the secret scan. CI also runs the signed-out career journey in Chromium. After local setup and a production build, run it with:
+
+```sh
+npm --prefix apps/web exec -- playwright install --only-shell chromium
+npm --prefix apps/web run test:browser
+```
 
 ## Team and my role
 

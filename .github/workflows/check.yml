@@ -26,6 +26,12 @@ jobs:
       - run: python -m pip install -e ".[dev]"
       - run: npm --prefix apps/web ci
       - run: make check
+      - name: Install Chromium for browser tests
+        run: npm --prefix apps/web exec -- playwright install --with-deps --only-shell chromium
+      - name: Test the offline career journey in Chromium
+        run: npm --prefix apps/web run test:browser
+        env:
+          AVENIR_PYTHON: python
 
   production-smoke:
     runs-on: ubuntu-latest

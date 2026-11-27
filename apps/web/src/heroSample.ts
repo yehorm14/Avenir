@@ -1,6 +1,6 @@
-import type { Career } from "./types";
-import type { Metric } from "./types";
+import type { Career, Metric } from "./types";
 import type { MetricLabel } from "./metricLabel";
+import { demandTrendLabel } from "./planDocument";
 
 /** The two example roles compared in the Home hero (Computer Science and Finance). */
 export const sampleSocs = ["2134", "2422"] as const;
@@ -52,21 +52,44 @@ export function heroSample(
   careers: Career[],
   describe: (metric?: Metric) => MetricLabel,
 ): SampleRow[] {
-  const pair = sampleSocs.map((soc) => careers.find((c) => c.soc === soc));
-  if (pair.some((c) => !c)) return [];
-  return rows.map((row) => ({
-    key: row.key,
-    label: row.label,
-    cells: (pair as Career[]).map((career) => {
-      const metric = career.metrics[row.key];
-      const label = describe(metric);
-      const available = label.available;
-      return {
-        career: career.title,
-        value: available ? row.show(metric.value as number) : "Not available",
-        available,
-        source: available ? label.text : label.unavailableReason,
-      };
-    }),
-  }));
+  const pair = sampleSocs.flatMap((soc) => {
+    const career = careers.find((candidate) => candidate.soc === soc);
+    return career ? [career] : [];
+  });
+  if (pair.length !== sampleSocs.length) return [];
+  return rows.map((row) => {
+    const metrics = pair.map((career) => career.metrics[row.key]);
+    const labels = metrics.map(describe);
+    const trendLabels =
+      row.key === "demand_trend"
+        ? metrics.flatMap((metric, index) =>
+            labels[index].available ? [demandTrendLabel(metric)] : [],
+          )
+        : [];
+    const separateTrendLabels = new Set(trendLabels).size > 1;
+    return {
+      key: row.key,
+      label:
+        trendLabels.length && !separateTrendLabels
+          ? `${trendLabels[0]}, per year`
+          : row.label,
+      cells: pair.map((career, index) => {
+        const metric = metrics[index];
+        const label = labels[index];
+        const trendDescription = separateTrendLabels
+          ? `${demandTrendLabel(metric)} · `
+          : "";
+        return {
+          career: career.title,
+          value: label.available
+            ? row.show(metric.value as number)
+            : "Not available",
+          available: label.available,
+          source: label.available
+            ? `${trendDescription}${label.text}`
+            : label.unavailableReason,
+        };
+      }),
+    };
+  });
 }

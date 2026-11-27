@@ -1,7 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { build } from 'esbuild';
+import { fileURLToPath } from 'node:url';
 import { loadSource } from './load-source.mjs';
-const { heroSample, sampleSocs } = await loadSource('heroSample');
+const { outputFiles } = await build({
+  entryPoints: [fileURLToPath(new URL('../src/heroSample.ts', import.meta.url))],
+  bundle: true,
+  write: false,
+  format: 'esm',
+});
+const { heroSample, sampleSocs } = await import(
+  `data:text/javascript;base64,${Buffer.from(outputFiles[0].text).toString('base64')}`
+);
 const { metricLabel: describe } = await loadSource('metricLabel');
 
 const metric = (value, extra = {}) => ({
@@ -47,4 +57,18 @@ test('returns no rows when an example role is missing, so the page shows its emp
   assert.deepEqual(heroSample([], describe), []);
   assert.deepEqual(heroSample([careers[0]], describe), []);
   assert.deepEqual([...sampleSocs], ['2134', '2422']);
+});
+
+test('the sample distinguishes relative trends from absolute figures', () => {
+  const relative = metric(0.021, { extra: { typical_occupation_trend: 0.04 } });
+  const pair = [career('2134', 'Programmers', { demand_trend: relative }), careers[1]];
+  const mixed = heroSample(pair, describe)[1];
+  assert.equal(mixed.label, 'Employment trend, per year');
+  assert.match(mixed.cells[0].source, /^Employment trend vs typical · /);
+  assert.match(mixed.cells[1].source, /^Employment trend · /);
+
+  pair[1] = career('2422', 'Finance managers', { demand_trend: relative });
+  const bothRelative = heroSample(pair, describe)[1];
+  assert.equal(bothRelative.label, 'Employment trend vs typical, per year');
+  assert.match(bothRelative.cells[0].source, /^ONS ASHE/);
 });
