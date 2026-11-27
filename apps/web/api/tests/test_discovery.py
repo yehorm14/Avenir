@@ -41,7 +41,7 @@ def test_explore_answers_create_three_distinct_grounded_options(client):
     for career in data["results"]:
         assert career["metrics"] == ML().occupation(career["soc"])["metrics"]
         assert career["history"] == ML().history(career["soc"])
-        assert career["fit_status"] == ML()._load("fit")["status"]
+        assert career["fit_status"] == ML().fit()["status"]
 
 
 def test_known_career_is_kept_as_an_explicit_reference(client):
@@ -232,3 +232,30 @@ def test_example_profile_answers_work_without_keys_or_network(client):
     data = response.json()
     assert data["target_soc"] and len(data["results"]) >= 3
     assert all(result["metrics"]["pay_median"]["as_of"] for result in data["results"])
+
+
+@pytest.mark.parametrize(
+    ("values", "expected"),
+    [
+        ("I do not care about salary", {"pay": 15, "interest": 70, "need": 15}),
+        ("Pay doesn't matter to me", {"pay": 15, "interest": 70, "need": 15}),
+        ("Job security is not important", {"pay": 15, "interest": 70, "need": 15}),
+        ("Salary is irrelevant, stability is not a priority", {"pay": 15, "interest": 70, "need": 15}),
+        ("I want a high salary", {"pay": 30, "interest": 55, "need": 15}),
+        ("I don't care about salary but I want job security", {"pay": 15, "interest": 55, "need": 30}),
+        ("I don't mind a low salary, but I want a stable job", {"pay": 15, "interest": 55, "need": 30}),
+        ("I don't care about salary and want job security", {"pay": 15, "interest": 55, "need": 30}),
+        ("I want a high salary and don't care about hours", {"pay": 30, "interest": 55, "need": 15}),
+        ("I couldn't care less about money", {"pay": 15, "interest": 70, "need": 15}),
+        ("Salary does not really matter", {"pay": 15, "interest": 70, "need": 15}),
+    ],
+)
+def test_negated_value_preferences_do_not_raise_weights(client, values, expected):
+    data = client.post(
+        "/api/discovery",
+        json={"mode": "explore", "answers": {"subjects": "maths", "values": values}},
+    ).json()
+    assert data["weights"] == expected
+    # Inferred weights are disclosed so the user can inspect them.
+    stated = any("comparison weights" in notice for notice in data["notices"])
+    assert stated == (expected != {"pay": 15, "interest": 70, "need": 15})

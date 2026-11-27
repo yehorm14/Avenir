@@ -6,7 +6,7 @@ from pathfinder_ml import ML
 
 
 def evidence_metadata(evidence: ML) -> dict[str, str]:
-    occupations = evidence._load("occupations")
+    occupations = evidence.occupations_meta()
     price_base = occupations.get("price_base", "")
     tax_year = re.search(r"tax year (\d{4}/\d{2})", price_base, re.IGNORECASE)
     return {
