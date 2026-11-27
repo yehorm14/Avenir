@@ -29,9 +29,7 @@ jobs:
       - name: Install Chromium for browser tests
         run: npm --prefix apps/web exec -- playwright install --with-deps --only-shell chromium
       - name: Test the offline career journey in Chromium
-        run: npm --prefix apps/web run test:browser
-        env:
-          AVENIR_PYTHON: python
+        run: AVENIR_PYTHON="$(command -v python)" npm --prefix apps/web run test:browser
 
   production-smoke:
     runs-on: ubuntu-latest
