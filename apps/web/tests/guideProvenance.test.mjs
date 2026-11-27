@@ -39,7 +39,7 @@ test('a fallback check shows the neutral note and keeps the prepared badge', () 
   const view = guideProvenance({ mode: 'prepared_demo', checks: 'fallback: number 48,000 not in evidence', based_on: 'not-a-list', model: null });
   assert.equal(view.badge, PREPARED_BADGE);
   assert.equal(view.fallbackNote, FALLBACK_NOTE);
-  assert.equal(view.fallbackNote, 'Model reply did not pass the number checks; prepared answer shown.');
+  assert.equal(view.fallbackNote, 'Model reply did not pass the figure checks; prepared answer shown.');
   assert.deepEqual(view.basedOn, []);
   assert.equal(guideProvenance({ checks: 'passed' }).fallbackNote, null);
 });
@@ -48,4 +48,19 @@ test('no configured model is not described as a failed model reply', () => {
   const view = guideProvenance({ mode: 'prepared_demo', checks: 'fallback: no model configured' });
   assert.equal(view.badge, PREPARED_BADGE);
   assert.equal(view.fallbackNote, null);
+});
+
+test('the guide displays only checked structured evidence figures with their validation note', () => {
+  const example = {
+    mode: 'llm_grounded',
+    checks: 'passed',
+    claims: [null, {}, { text: ' Software developer, median pay: £56,914 (2025) ' },
+      { text: 'Software developer, median pay: £56,914 (2025)' }],
+    note: 'The wording around the figures is not verified.',
+  };
+  const view = guideProvenance(example);
+  assert.deepEqual(view.checkedFigures, ['Software developer, median pay: £56,914 (2025)']);
+  assert.equal(view.validationNote, example.note);
+  assert.deepEqual(guideProvenance({ ...example, checks: 'fallback' }).checkedFigures, []);
+  assert.deepEqual(guideProvenance({ ...example, mode: 'prepared_demo' }).checkedFigures, []);
 });

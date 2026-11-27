@@ -10,6 +10,8 @@ export type GuideProvenance = {
   model: string | null;
   basedOn: string[];
   checks: string | null;
+  checkedFigures: string[];
+  validationNote: string | null;
   fallbackNote: string | null;
 };
 
@@ -17,7 +19,7 @@ export const MODEL_BADGE = "Written by the model from this role's evidence";
 export const PREPARED_BADGE = "Prepared guide (no model connected)";
 export const AI_LABEL = "AI-written, check the source";
 export const FALLBACK_NOTE =
-  "Model reply did not pass the number checks; prepared answer shown.";
+  "Model reply did not pass the figure checks; prepared answer shown.";
 
 export function guideProvenance(reply: unknown): GuideProvenance {
   const fields: GuideProvenanceFields =
@@ -43,6 +45,24 @@ export function guideProvenance(reply: unknown): GuideProvenance {
         )
       : [],
     checks,
+    checkedFigures:
+      mode === "llm_grounded" &&
+      checks === "passed" &&
+      Array.isArray(fields.claims)
+        ? [
+            ...new Set(
+              fields.claims.flatMap((claim) =>
+                typeof claim?.text === "string" && claim.text.trim()
+                  ? [claim.text.trim()]
+                  : [],
+              ),
+            ),
+          ]
+        : [],
+    validationNote:
+      mode === "llm_grounded" && typeof fields.note === "string"
+        ? fields.note.trim() || null
+        : null,
     fallbackNote:
       checks?.toLowerCase().startsWith("fallback") &&
       checks.toLowerCase() !== "fallback: no model configured"

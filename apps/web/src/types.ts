@@ -105,6 +105,16 @@ export type GuideProvenanceFields = {
   model?: string | null;
   based_on?: string[];
   checks?: string;
+  /** Figures in a model reply, each matched to one occupation, measure, period and unit in the evidence. */
+  claims?: {
+    soc: string | null;
+    occupation: string;
+    metric: string | null;
+    period: string | null;
+    unit: string;
+    value: string;
+    text: string;
+  }[];
   note?: string;
 };
 /** A link the API built for a guide reply: an in-app `#/...` route or a source URL. */

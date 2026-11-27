@@ -152,7 +152,7 @@ def _hedges(evidence: ML, hedges: list[dict]) -> list[dict]:
                 },
                 "trend": {
                     "value": trend.get("value"),
-                    "display": _pct(trend.get("value")),
+                    "display": None if trend.get("value") is None else f"{_pct(trend['value'])}{demand_comparison(trend)}",
                     "as_of": trend.get("as_of"),
                     "source": trend.get("source"),
                 },

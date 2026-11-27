@@ -5,7 +5,7 @@ profile, the model name, a digest of the evidence handed to the model (role pack
 path, link labels, preference wording) and CACHE_VERSION. A follow-up with different history, a changed
 profile, changed evidence data or another model therefore never replays a stale reply; an identical
 repeat request does. Only replies that passed the hard checks are stored (text, model, tools used,
-checks); links and the path are rebuilt by the API on every request. The directory is git-ignored
+checks, typed claims); links and the path are rebuilt by the API on every request. The directory is git-ignored
 (`apps/web/api/.cache/`); set `GUIDE_CACHE_DIR` to move it or `GUIDE_CACHE=0` to turn it off. Writes go to
 a uniquely named temporary file and are swapped in atomically, so concurrent saves never interleave.
 Read or write failures (including a missing or unwritable directory) are ignored: the cache never breaks
@@ -22,8 +22,8 @@ from pathlib import Path
 from typing import Any
 
 DEFAULT_DIR = Path(__file__).resolve().parent / ".cache" / "guide"
-FIELDS = ("text", "model", "tools_used", "checks")
-CACHE_VERSION = 2  # bump when the prompt, checks or reply shape change
+FIELDS = ("text", "model", "tools_used", "checks", "claims")
+CACHE_VERSION = 4  # bump when the prompt, checks or reply shape change
 
 
 def _dir() -> Path | None:

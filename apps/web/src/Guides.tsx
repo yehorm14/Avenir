@@ -419,6 +419,21 @@ export function CareerGuide({
                     )}
                   </div>
                 )}
+                {!!provenance?.checkedFigures.length && (
+                  <div className="evidence-guide-sources">
+                    <h4>Figures matched to evidence</h4>
+                    <ul>
+                      {provenance.checkedFigures.map((figure) => (
+                        <li key={figure}>{figure}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {provenance?.validationNote && (
+                  <p className="evidence-guide-note">
+                    {provenance.validationNote}
+                  </p>
+                )}
                 {provenance?.fallbackNote && (
                   <p className="evidence-guide-note">
                     {provenance.fallbackNote}
