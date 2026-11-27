@@ -16,14 +16,20 @@ from typing import Any
 from avenir_adapters.llm.writer import _canon
 
 # Any number: optional sign (not glued to a word), £, digits with commas, decimals, % (same shape as the writer's).
-_TOKEN = re.compile(r"(?<![\w.,])(?P<sign>[-+])?(?P<cur>£)?(?P<int>\d{1,3}(?:,\d{3})+|\d+)(?P<frac>\.\d+)?(?P<pct>%)?")
+_TOKEN = re.compile(r"(?<![\w.,])(?P<sign>[-+−])?(?P<cur>£)?(?P<int>\d{1,3}(?:,\d{3})+|\d+)(?P<frac>\.\d+)?(?P<pct>%)?")
 _YEAR = re.compile(r"\b(?:19|20)\d{2}\b")
 _PCT_WORD = re.compile(r"^\s*(?:per ?cent|percent)\b", re.IGNORECASE)
 _RELATIVE_TREND = re.compile(r"\b(?:relative to|vs\.?|compared (?:with|to)) (?:the )?typical occupation\b", re.IGNORECASE)
 _GBP_WORD = re.compile(r"^\s*(?:pounds?|GBP|quid)\b", re.IGNORECASE)
+_JOB_COUNT_WORD = re.compile(r"^\s*(?:full[- ]time\s+)?(?:employee\s+)?(?:jobs|workers)\b", re.IGNORECASE)
+_DATE_PREFIX = r"(?:in|for|since|during|from|to|through|until|by|over|as of|as at|ending)"
+_DATE_BEFORE_NUMBER = re.compile(r"\b" + _DATE_PREFIX + r"\s*$", re.IGNORECASE)
 _THOUSANDS_WORD = re.compile(r"^\s*(?:thousand|k)\b", re.IGNORECASE)
 _SCALE = re.compile(r"^(?:\s*[–-]\s*£?\d[\d.,]*)?\s*(?:scale|point)", re.IGNORECASE)
-_CLAUSE_BREAK = re.compile(r";|:|(?<!\d)\s[–—-]\s|,\s(?=\D)|\b(?:and|but|while|whereas)\b|[.!?](?=\s)", re.IGNORECASE)
+_CLAUSE_BREAK = re.compile(r";|:|(?<!\d)\s[–—-]\s|,(?!\s*" + _DATE_PREFIX + r"\s+(?:19|20)\d{2}\b)\s(?=\D)"
+    r"|\b(?:and|but|while|whereas)\b|[.!?](?=\s)",
+    re.IGNORECASE,
+)
 
 # Which words say what a figure measures. The nearest one to the figure wins.
 _METRIC_WORDS: tuple[tuple[str, re.Pattern[str]], ...] = (
@@ -155,11 +161,12 @@ def claim_dict(claim: Claim) -> dict[str, Any]:
 
 
 def _years_in(text: str) -> set[int]:
-    years: set[int] = set()
+    years = {int(match["int"]) for match in _TOKEN.finditer(text) if _is_year(match, text)}
     for start, end in re.findall(r"\b((?:19|20)\d{2})\s*(?:[–—-]|\bto\b|\bthrough\b)\s*((?:19|20)\d{2})\b", text):
-        if int(start) <= int(end) <= int(start) + 40:
-            years |= set(range(int(start), int(end) + 1))
-    return years | {int(y) for y in _YEAR.findall(text)}
+        first, last = int(start), int(end)
+        if first in years and last in years and 0 <= last - first <= 40:
+            years.update(range(first, last + 1))
+    return years
 
 
 def _period(value: Any) -> frozenset[int]:
@@ -170,10 +177,10 @@ def _period(value: Any) -> frozenset[int]:
     return frozenset()
 
 
-def _is_year(match: re.Match[str]) -> bool:
-    return not (match["sign"] or match["cur"] or match["pct"] or match["frac"]) and bool(
-        re.fullmatch(r"(?:19|20)\d{2}", match["int"])
-    )
+def _is_year(match: re.Match[str], text: str) -> bool:
+    if match["sign"] or match["frac"] or not _YEAR.fullmatch(match["int"]) or _unit(match, text) != "num":
+        return False
+    return not _JOB_COUNT_WORD.match(text[match.end() :]) or bool(_DATE_BEFORE_NUMBER.search(text[:match.start()]))
 
 
 def _unit(match: re.Match[str], text: str) -> str:
@@ -187,8 +194,9 @@ def _unit(match: re.Match[str], text: str) -> str:
     return "num"
 
 
-def _canon_token(match: re.Match[str]) -> str:
-    return _canon(match["int"] + (match["frac"] or ""), negative=match["sign"] == "-")
+def _canon_token(match: re.Match[str], text: str) -> str:
+    negative = match["sign"] in ("-", "−") or bool(re.search(r"\bnegative\s*$", text[:match.start()], re.IGNORECASE))
+    return _canon(match["int"] + (match["frac"] or ""), negative=negative)
 
 
 def _forms(value: float | int, metric: str) -> tuple[str, set[str]]:
@@ -235,6 +243,10 @@ class FactBook:
             for bound in ("low", "high"):
                 self.facts.append(Fact(subject, "employer_pay", "gbp", _canon(str(row[bound])), frozenset()))
 
+    def add_occupation_names(self, occupations: list[dict]) -> None:
+        for occupation in occupations:
+            self._name(occupation["soc"], occupation["title"])
+
     def _name(self, soc: str, title: str) -> None:
         self.titles.setdefault(soc, title)
         base = re.sub(r"\s*\([^)]*\)", "", title).strip()
@@ -268,8 +280,8 @@ class FactBook:
                     self._walk(pay_band, soc, "pay_band", years or _period(shown))
                 found = years or _period(shown.split(";", 1)[0])
                 for match in _TOKEN.finditer(shown):
-                    if not _is_year(match):
-                        self.facts.append(Fact(soc, metric, _unit(match, shown), _canon_token(match), found))
+                    if not _is_year(match, shown):
+                        self.facts.append(Fact(soc, metric, _unit(match, shown), _canon_token(match, shown), found))
             elif type(node) in (int, float):
                 unit, forms = _forms(node, metric)
                 self.facts.extend(Fact(soc, metric, unit, form, years) for form in forms)
@@ -290,10 +302,10 @@ class FactBook:
         mentions = self._mentions(text)
         out: list[Claim] = []
         for match in _TOKEN.finditer(text):
-            if _is_year(match):
+            if _is_year(match, text):
                 continue
             unit = _unit(match, text)
-            value = _canon_token(match)
+            value = _canon_token(match, text)
             if unit == "num" and _SCALE.match(text[match.end() :]):
                 continue
             lo, hi = self._clause(text, match.start())
@@ -351,7 +363,6 @@ class FactBook:
             return None
         subjects = set(matches)
         return subjects.pop() if len(subjects) == 1 else "unverified employer role"
-
 
     def supported(self, claim: Claim) -> bool:
         for fact in self.facts:

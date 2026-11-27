@@ -226,7 +226,7 @@ def check_reply(text: str, allowed: set[str], facts: FactBook | None = None) -> 
         return "empty reply", []
     if len(text) > MAX_CHARS:
         return f"reply over {MAX_CHARS:,} characters", []
-    stray = stray_numbers(text, allowed)
+    stray = stray_numbers(text.replace("−", "-"), allowed)
     if stray:
         return "number not in the evidence pack: " + ", ".join(stray[:5]), []
     claims: list[Claim] = []
@@ -409,6 +409,7 @@ def tool_reply(
     )
     used: list[dict] = []
     facts = _fact_book(pack, compared, path)
+    facts.add_occupation_names(ctx.occupations())
     deadline = time.monotonic() + TOOL_DEADLINE_S
     text = ""
     for round_no in range(MAX_TOOL_ROUNDS + 1):
