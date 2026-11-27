@@ -17,6 +17,8 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
+from .evidence_metadata import demand_comparison
+
 WEB_DIR = Path(__file__).resolve().parents[1]
 DEMAND_FILE = WEB_DIR / "src" / "occupationDemand.ts"
 EMPLOYER_FILES = {"blackrock": WEB_DIR / "public" / "employers" / "blackrock.json"}
@@ -208,7 +210,7 @@ def search_jobs(ctx: ToolContext, args: dict) -> tuple[dict, str]:
                 "title": title,
                 "median_pay": None if pay.get("value") is None else f"£{pay['value']:,.0f}",
                 "pay_as_of": pay.get("as_of"),
-                "trend": None if trend.get("value") is None else f"{100 * trend['value']:+.2f}% a year",
+                "trend": None if trend.get("value") is None else f"{100 * trend['value']:+.2f}% a year{demand_comparison(trend)}",
                 "trend_as_of": trend.get("as_of"),
                 "demand": level,
                 "_pay": pay.get("value"),

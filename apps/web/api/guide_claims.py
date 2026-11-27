@@ -1,17 +1,9 @@
-"""Typed numeric claims for the guide: occupation, metric, period, unit and value.
+"""Match numeric claims to the guide's typed occupation, measure, unit and period data.
 
-The first guide check only asked "is this number somewhere in the evidence?", so a salary written as an
-unemployment rate (`50000%`), another role's pay or a median offered as starting pay all passed. This module
-reads every figure in a reply as a claim (occupation, metric, period, unit, value) and accepts it only when the
-evidence holds a fact with the same occupation, metric, unit and value, and a period that overlaps any year the
-reply names. Facts come only from the evidence pack, the compared packs, the path and tool results, never from
-the reply. Accepted claims are rendered by `render_claim` from the evidence's own typed values, so the app
-can show the figures deterministically, apart from the model's prose.
-
-What this does NOT prove: the classification of a figure reads the words around it (pay, jobs, trend,
-exposure, starting pay), so it catches mismatches between a figure and what the sentence says it measures,
-but it cannot check the rest of the prose. Small whole numbers with no unit (counts, ages, "top 3") and years
-still fall back to the plain "number appears in the evidence" check.
+Facts come from evidence packs, paths and read-only tool results. Named measures require
+the same subject, metric, unit, value and any stated period. The API returns deterministic
+evidence lines for validated figures. The separate prose check still handles bare numbers
+and standalone years that carry no recognised measure.
 """
 
 from __future__ import annotations
@@ -27,9 +19,11 @@ from avenir_adapters.llm.writer import _canon
 _TOKEN = re.compile(r"(?<![\w.,])(?P<sign>[-+])?(?P<cur>£)?(?P<int>\d{1,3}(?:,\d{3})+|\d+)(?P<frac>\.\d+)?(?P<pct>%)?")
 _YEAR = re.compile(r"\b(?:19|20)\d{2}\b")
 _PCT_WORD = re.compile(r"^\s*(?:per ?cent|percent)\b", re.IGNORECASE)
+_RELATIVE_TREND = re.compile(r"\b(?:relative to|vs\.?|compared (?:with|to)) (?:the )?typical occupation\b", re.IGNORECASE)
 _GBP_WORD = re.compile(r"^\s*(?:pounds?|GBP|quid)\b", re.IGNORECASE)
+_THOUSANDS_WORD = re.compile(r"^\s*(?:thousand|k)\b", re.IGNORECASE)
 _SCALE = re.compile(r"^(?:\s*[–-]\s*£?\d[\d.,]*)?\s*(?:scale|point)", re.IGNORECASE)
-_CLAUSE_BREAK = re.compile(r";|:|\s[–—-]\s|,\s(?=\D)|\b(?:and|but|while|whereas)\b|[.!?](?=\s)", re.IGNORECASE)
+_CLAUSE_BREAK = re.compile(r";|:|(?<!\d)\s[–—-]\s|,\s(?=\D)|\b(?:and|but|while|whereas)\b|[.!?](?=\s)", re.IGNORECASE)
 
 # Which words say what a figure measures. The nearest one to the figure wins.
 _METRIC_WORDS: tuple[tuple[str, re.Pattern[str]], ...] = (
@@ -83,29 +77,32 @@ _KEY_METRIC = {
 }
 METRIC_LABEL = {
     "pay": "median pay",
+    "pay_band": "middle-half pay range endpoint",
     "starting_pay": "starting pay",
-    "jobs": "employee jobs (thousand)",
+    "employer_pay": "self-reported UK base pay range endpoint",
+    "jobs": "employee jobs",
     "trend": "employment trend (a year)",
+    "relative_trend": "employment trend (a year relative to the typical occupation)",
     "exposure": "automation exposure (0-1 research index)",
     "similarity": "skills similarity",
 }
-_PCT_KEY = re.compile(r"pct|percent|share|rate|gap", re.IGNORECASE)
 _NO_PERIOD_KEYS = {"label", "source", "unit", "status", "flags", "caveats", "why", "evidence"}
-MIN_UNITLESS = Decimal(100)  # unitless figures below this (and with no decimals) are counts or ages, not metrics
+_METRIC_PERIOD_FIELDS = {"median_pay": "pay_as_of", "trend": "trend_as_of"}
+_PERIOD_FIELDS = {"as_of", "year", "period", *_METRIC_PERIOD_FIELDS.values()}
 
 
 @dataclass(frozen=True)
 class Fact:
-    soc: str | None  # None: not tied to one occupation (employer files, preferences)
+    subject: str  # SOC or a specific employer and role
     metric: str  # pay, starting_pay, jobs, trend, exposure, similarity or other
-    unit: str  # gbp, pct or num
+    unit: str  # gbp, pct, thousand or num
     value: str  # canonical form, as a reply may write it
     years: frozenset[int]
 
 
 @dataclass(frozen=True)
 class Claim:
-    soc: str
+    subject: str
     occupation: str
     metric: str | None  # None when the words around the figure name no known measure
     unit: str
@@ -133,6 +130,8 @@ def format_value(value: str, unit: str) -> str:
         return f"{sign}£{grouped}"
     if unit == "pct":
         return f"{sign}{grouped}%"
+    if unit == "thousand":
+        return f"{sign}{grouped} thousand"
     return f"{sign}{grouped}"
 
 
@@ -145,7 +144,7 @@ def render_claim(claim: Claim) -> str:
 
 def claim_dict(claim: Claim) -> dict[str, Any]:
     return {
-        "soc": claim.soc,
+        "soc": claim.subject if claim.subject.isdigit() else None,
         "occupation": claim.occupation,
         "metric": claim.metric,
         "period": claim.period or None,
@@ -157,10 +156,18 @@ def claim_dict(claim: Claim) -> dict[str, Any]:
 
 def _years_in(text: str) -> set[int]:
     years: set[int] = set()
-    for start, end in re.findall(r"\b((?:19|20)\d{2})\s*[–-]\s*((?:19|20)\d{2})\b", text):
+    for start, end in re.findall(r"\b((?:19|20)\d{2})\s*(?:[–—-]|\bto\b|\bthrough\b)\s*((?:19|20)\d{2})\b", text):
         if int(start) <= int(end) <= int(start) + 40:
             years |= set(range(int(start), int(end) + 1))
     return years | {int(y) for y in _YEAR.findall(text)}
+
+
+def _period(value: Any) -> frozenset[int]:
+    if isinstance(value, str):
+        return frozenset(_years_in(value))
+    if type(value) is int and 1900 <= value <= 2099:
+        return frozenset({value})
+    return frozenset()
 
 
 def _is_year(match: re.Match[str]) -> bool:
@@ -170,10 +177,13 @@ def _is_year(match: re.Match[str]) -> bool:
 
 
 def _unit(match: re.Match[str], text: str) -> str:
-    if match["pct"] or _PCT_WORD.match(text[match.end() :]):
+    suffix = text[match.end() :]
+    if match["pct"] or _PCT_WORD.match(suffix):
         return "pct"
-    if match["cur"] or _GBP_WORD.match(text[match.end() :]):
+    if match["cur"] or _GBP_WORD.match(suffix):
         return "gbp"
+    if _THOUSANDS_WORD.match(suffix):
+        return "thousand"
     return "num"
 
 
@@ -184,9 +194,9 @@ def _canon_token(match: re.Match[str]) -> str:
 def _forms(value: float | int, metric: str) -> tuple[str, set[str]]:
     """(unit, canonical forms a reply may write) for a numeric leaf of the evidence."""
     forms: set[str] = set()
-    unit = "gbp" if metric in ("pay", "starting_pay") else "pct" if metric == "trend" else "num"
+    unit = {"pay": "gbp", "starting_pay": "gbp", "trend": "pct", "relative_trend": "pct", "jobs": "thousand"}.get(metric, "num")
     scaled = Decimal(str(value))
-    if unit == "pct" and abs(value) <= 1:
+    if unit == "pct":
         scaled = scaled * 100
     for places in (None, 0, 1, 2, 4):
         try:
@@ -205,49 +215,64 @@ class FactBook:
     facts: list[Fact] = field(default_factory=list)
     names: dict[str, set[str]] = field(default_factory=dict)
     titles: dict[str, str] = field(default_factory=dict)
+    employer_roles: dict[str, tuple[str, str]] = field(default_factory=dict)
 
     def add(self, evidence: Any) -> FactBook:
-        self._walk(evidence, None, "other", frozenset(), "")
+        if isinstance(evidence, dict) and isinstance(evidence.get("employer"), str):
+            self._add_employer_ranges(evidence)
+        else:
+            self._walk(evidence, None, "other", frozenset())
         return self
+
+    def _add_employer_ranges(self, evidence: dict) -> None:
+        employer = evidence["employer"]
+        for row in (evidence.get("career_ladder_uk") or {}).get("levels", []):
+            role = row["level"]
+            subject = f"{employer} / {role}"
+            self.employer_roles[subject] = (employer, role)
+            self.titles[subject] = f"{employer} {role}"
+            # The file's as-of date describes collection, not a salary period.
+            for bound in ("low", "high"):
+                self.facts.append(Fact(subject, "employer_pay", "gbp", _canon(str(row[bound])), frozenset()))
 
     def _name(self, soc: str, title: str) -> None:
         self.titles.setdefault(soc, title)
         base = re.sub(r"\s*\([^)]*\)", "", title).strip()
         self.names.setdefault(soc, set()).update(n for n in {title, base} if len(n) > 2)
 
-    def _walk(self, node: Any, soc: str | None, metric: str, years: frozenset[int], key: str) -> None:
+    def _walk(self, node: Any, soc: str | None, metric: str, years: frozenset[int]) -> None:
         if isinstance(node, dict):
+            if metric == "trend" and _RELATIVE_TREND.search(str(node.get("display", ""))):
+                metric = "relative_trend"
             code = node.get("soc")
             if isinstance(code, str) and re.fullmatch(r"\d{4}", code.strip()):
                 soc = code.strip()
                 if isinstance(node.get("title"), str):
                     self._name(soc, node["title"])
-            local = set(years)
-            for key in ("as_of", "year", "period"):
-                value = node.get(key)
-                if isinstance(value, str):
-                    local |= _years_in(value)
-                elif isinstance(value, int) and not isinstance(value, bool):
-                    local.add(value)
+            local = frozenset().union(*(_period(node.get(field)) for field in ("as_of", "year", "period")))
             for key, value in node.items():
-                if key in _NO_PERIOD_KEYS or key in ("soc", "title", "as_of", "year", "period"):
+                if key in _NO_PERIOD_KEYS or key in _PERIOD_FIELDS or key in ("soc", "title"):
                     continue
-                self._walk(value, soc, _KEY_METRIC.get(key, metric), frozenset(local), key)
+                metric_period = _period(node.get(_METRIC_PERIOD_FIELDS.get(key, "")))
+                self._walk(value, soc, _KEY_METRIC.get(key, metric), metric_period or local or years)
         elif isinstance(node, (list, tuple)):
             for item in node:
-                self._walk(item, soc, metric, years, key)
-        elif isinstance(node, str):
-            found = years | _years_in(node)
-            for match in _TOKEN.finditer(node):
-                if _is_year(match):
-                    continue
-                self.facts.append(Fact(soc, metric, _unit(match, node), _canon_token(match), frozenset(found)))
-        elif isinstance(node, (int, float)) and not isinstance(node, bool):
-            unit, forms = _forms(node, metric)
-            units = [unit]
-            if metric not in _KEY_METRIC.values():  # an unnamed measure (an employer's pay band, a count): money or plain
-                units = ["num", "gbp"] + (["pct"] if _PCT_KEY.search(key) else [])
-            self.facts.extend(Fact(soc, metric, u, form, years) for u in units for form in forms)
+                self._walk(item, soc, metric, years)
+        elif soc is not None and metric != "other":
+            if isinstance(node, str):
+                if metric == "trend" and _RELATIVE_TREND.search(node):
+                    metric = "relative_trend"
+                shown = node.split(" (typical occupation", 1)[0]
+                if metric == "pay" and "; the middle half earn " in shown:
+                    shown, pay_band = shown.split("; the middle half earn ", 1)
+                    self._walk(pay_band, soc, "pay_band", years or _period(shown))
+                found = years or _period(shown.split(";", 1)[0])
+                for match in _TOKEN.finditer(shown):
+                    if not _is_year(match):
+                        self.facts.append(Fact(soc, metric, _unit(match, shown), _canon_token(match), found))
+            elif type(node) in (int, float):
+                unit, forms = _forms(node, metric)
+                self.facts.extend(Fact(soc, metric, unit, form, years) for form in forms)
 
     def _mentions(self, text: str) -> list[tuple[int, int, str]]:
         found: list[tuple[int, int, str]] = []
@@ -271,15 +296,24 @@ class FactBook:
             value = _canon_token(match)
             if unit == "num" and _SCALE.match(text[match.end() :]):
                 continue
-            if unit == "num" and "." not in value and abs(Decimal(value)) < MIN_UNITLESS:
-                continue
             lo, hi = self._clause(text, match.start())
             metric = _metric_near(text, match.start(), match.end(), lo, hi)
+            if metric == "trend" and _RELATIVE_TREND.search(text[lo:hi]):
+                metric = "relative_trend"
+            if metric == "pay" and re.search(r"\bmiddle half\b", text[lo:hi], re.IGNORECASE):
+                metric = "pay_band"
             if metric is None and unit == "num":
                 continue  # a bare number that names no measure: the plain "appears in the evidence" check covers it
-            soc = self._subject(mentions, match.start(), lo, hi)
+            subject = self._subject(mentions, match.start(), lo, hi)
+            sentence_start, sentence_end = _sentence(text, match.start())
+            sentence = text[sentence_start:sentence_end]
+            employer_subject = self._employer_subject(sentence)
+            if employer_subject is not None:
+                subject = employer_subject
+                if metric == "pay" and re.search(r"\bbase pay\b", sentence, re.IGNORECASE):
+                    metric = "employer_pay"
             years = tuple(sorted(_years_in(text[lo:hi])))
-            out.append(Claim(soc, self.titles.get(soc, soc), metric, unit, value, years, match.group(0)))
+            out.append(Claim(subject, self.titles.get(subject, subject), metric, unit, value, years, match.group(0)))
         return out
 
     @staticmethod
@@ -300,13 +334,30 @@ class FactBook:
         earlier = [soc for s, _e, soc in mentions if s < lo]
         return earlier[-1] if earlier else self.primary_soc
 
+    def _employer_subject(self, sentence: str) -> str | None:
+        matches = []
+        occupied: list[tuple[int, int]] = []
+        employer_named = False
+        for subject, (employer, role) in sorted(self.employer_roles.items(), key=lambda entry: -len(entry[1][1])):
+            if not re.search(r"\b" + re.escape(employer) + r"\b", sentence, re.IGNORECASE):
+                continue
+            employer_named = True
+            for match in re.finditer(r"\b" + re.escape(role) + r"(?:s|es)?\b", sentence, re.IGNORECASE):
+                if any(start <= match.start() and match.end() <= end for start, end in occupied):
+                    continue
+                occupied.append(match.span())
+                matches.append(subject)
+        if not employer_named:
+            return None
+        subjects = set(matches)
+        return subjects.pop() if len(subjects) == 1 else "unverified employer role"
+
+
     def supported(self, claim: Claim) -> bool:
         for fact in self.facts:
-            if fact.soc not in (claim.soc, None) or fact.unit != claim.unit:
+            if claim.metric is None or (fact.subject, fact.metric, fact.unit) != (claim.subject, claim.metric, claim.unit):
                 continue
-            if claim.metric is not None and fact.soc is not None and fact.metric != claim.metric:
-                continue
-            if claim.years and fact.years and not fact.years & set(claim.years):
+            if claim.years and fact.years != frozenset(claim.years):
                 continue
             if _same(claim.value, fact.value):
                 return True

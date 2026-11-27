@@ -145,6 +145,66 @@ def test_tool_results_extend_the_facts_for_their_own_occupation():
     assert guide_llm.failed_check("Software developers earn £38,100.", allowed, facts) is not None
 
 
+@pytest.mark.parametrize("period", ["2022–2025", "2022 – 2025", "2022 to 2025", "2024"])
+def test_single_year_pay_cannot_support_a_different_period(book, period):
+    assert book.check(f"Median pay was £56,914 in {period}.")[0] is not None
+
+
+def test_tool_metrics_keep_separate_periods_and_require_evidence_for_dated_claims():
+    facts = FactBook("2134").add({
+        "soc": "2134",
+        "title": "Software developer",
+        "median_pay": "£38,100",
+        "pay_as_of": "2025",
+        "trend": "+3% a year",
+        "trend_as_of": "2022–2025",
+        "starting_pay": "£30,000",
+    })
+    assert facts.check("Median pay was £38,100 in 2025.")[0] is None
+    assert facts.check("Jobs grew 3% over 2022–2025.")[0] is None
+    assert facts.check("Median pay was £38,100 over 2022–2025.")[0] is not None
+    assert facts.check("Jobs grew 3% in 2025.")[0] is not None
+    assert facts.check("Starting pay was £30,000 in 2025.")[0] is not None
+
+
+@pytest.mark.parametrize("jobs", [73, 343])
+def test_jobs_counts_keep_thousands_and_are_checked_even_when_small(jobs):
+    facts = FactBook("2134").add(_pack("2134", "Software developer", 56914, 0.0262, 0.5444, jobs=jobs))
+    failure, claims = facts.check(f"There were {jobs} thousand employee jobs in 2025.")
+    assert failure is None
+    assert claims[0].unit == "thousand"
+    assert render_claim(claims[0]) == f"Software developer, employee jobs: {jobs} thousand (2025)"
+    assert facts.check(f"There were {jobs} jobs in 2025.")[0] is not None
+
+
+def test_absolute_and_relative_trends_match_different_measures(book):
+    pack = _pack("2134", "Software developer", 56914, 0.0262, 0.5444)
+    pack["metrics"]["trend"]["display"] = "2.62% a year relative to the typical occupation over 2022–2025"
+    relative = "Employment grew 2.62% relative to the typical occupation over 2022–2025."
+    facts = FactBook("2134").add(pack)
+    failure, claims = facts.check(relative)
+    assert failure is None and claims[0].metric == "relative_trend"
+    assert "relative to the typical occupation" in render_claim(claims[0])
+    assert facts.check("Employment grew 2.62% over 2022–2025.")[0] is not None
+    assert book.check(relative)[0] is not None
+
+
+def test_employer_pay_ranges_do_not_validate_occupational_medians_or_other_levels(book):
+    book.add({
+        "employer": "BlackRock",
+        "career_ladder_uk": {"levels": [
+            {"level": "Analyst", "low": 43000, "high": 66000},
+            {"level": "Associate", "low": 62000, "high": 96000},
+        ]},
+    })
+    failure, claims = book.check("At BlackRock, base pay for an Analyst ranges from £43,000 to £66,000.")
+    assert failure is None and len(claims) == 2
+    assert claims[0].occupation == "BlackRock Analyst"
+    assert book.check("At BlackRock, base pay for an Associate is £43,000.")[0] is not None
+    assert book.check("Software developer median pay is £43,000.")[0] is not None
+    assert book.check("At BlackRock, median pay for an Analyst is £43,000.")[0] is not None
+
+
 def test_small_unitless_counts_are_left_to_the_plain_check(book):
     assert book.check("It is a 3 step plan for 16-18 year olds.")[0] is None
 

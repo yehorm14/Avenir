@@ -49,3 +49,18 @@ test('no configured model is not described as a failed model reply', () => {
   assert.equal(view.badge, PREPARED_BADGE);
   assert.equal(view.fallbackNote, null);
 });
+
+test('the guide displays only checked structured evidence figures with their validation note', () => {
+  const example = {
+    mode: 'llm_grounded',
+    checks: 'passed',
+    claims: [null, {}, { text: ' Software developer, median pay: £56,914 (2025) ' },
+      { text: 'Software developer, median pay: £56,914 (2025)' }],
+    note: 'The wording around the figures is not verified.',
+  };
+  const view = guideProvenance(example);
+  assert.deepEqual(view.checkedFigures, ['Software developer, median pay: £56,914 (2025)']);
+  assert.equal(view.validationNote, example.note);
+  assert.deepEqual(guideProvenance({ ...example, checks: 'fallback' }).checkedFigures, []);
+  assert.deepEqual(guideProvenance({ ...example, mode: 'prepared_demo' }).checkedFigures, []);
+});

@@ -643,18 +643,11 @@ def guide(request: GuideRequest, http_request: Request) -> dict:
                     {"text": text, "model": config.model, "tools_used": tools_used, "checks": checks, "claims": claims},
                 )
         if text is not None:
+            evidence_description = "the role’s evidence and the data tools listed below" if tools_used else "the role’s evidence"
             note = (
-                "AI-written from this role's evidence pack. Each £ and % figure and each decimal or large number was "
-                "matched to the same occupation, measure, unit and period in the evidence; the wording around the "
-                "figures is not verified. Check the source."
+                f"AI-written from {evidence_description}. Displayed evidence figures were matched to a subject, "
+                "measure, unit and any stated period. The wording around the figures is not verified. Check the source."
             )
-            if tools_used:
-                note = (
-                    "AI-written from this role's evidence pack and the app's data tools listed below. Each £ and % "
-                    "figure and each decimal or large number was matched to the same occupation, measure, unit and "
-                    "period in the evidence and tool results; the wording around the figures is not verified. "
-                    "Check the source."
-                )
             return {
                 "text": text,
                 "mode": "llm_grounded",

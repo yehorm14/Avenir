@@ -23,7 +23,7 @@ from typing import Any
 
 DEFAULT_DIR = Path(__file__).resolve().parent / ".cache" / "guide"
 FIELDS = ("text", "model", "tools_used", "checks", "claims")
-CACHE_VERSION = 3  # bump when the prompt, checks or reply shape change
+CACHE_VERSION = 4  # bump when the prompt, checks or reply shape change
 
 
 def _dir() -> Path | None:

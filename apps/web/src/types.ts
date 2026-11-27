@@ -107,7 +107,7 @@ export type GuideProvenanceFields = {
   checks?: string;
   /** Figures in a model reply, each matched to one occupation, measure, period and unit in the evidence. */
   claims?: {
-    soc: string;
+    soc: string | null;
     occupation: string;
     metric: string | null;
     period: string | null;
