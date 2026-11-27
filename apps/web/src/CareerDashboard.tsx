@@ -163,15 +163,20 @@ export default function CareerDashboard({ area, careers, ...actions }: Props) {
     return career ? [career] : [];
   });
   const evidenceButton = useRef<HTMLButtonElement>(null);
-  const [view, setView] = useState<"evidence" | "compare">("evidence");
+  const [view, setView] = useState<"evidence" | "compare">(() =>
+    window.location.hash.endsWith("/compare") ? "compare" : "evidence",
+  );
   const [selection, setSelection] = useState<Record<Area, string>>({
     cs: "2134",
     finance: "2422",
   });
   useEffect(() => {
-    const syncRole = () => {
-      const [route, soc] = window.location.hash.replace(/^#\//, "").split("/");
+    const syncDashboard = () => {
+      const [route, soc, tab] = window.location.hash
+        .replace(/^#\//, "")
+        .split("/");
       if (route !== configuration.route) return;
+      setView(soc === "compare" || tab === "compare" ? "compare" : "evidence");
       const selected =
         roles.find((role) => role.soc === soc)?.soc ?? roles[0]?.soc;
       if (!selected) return;
@@ -179,9 +184,9 @@ export default function CareerDashboard({ area, careers, ...actions }: Props) {
         current[area] === selected ? current : { ...current, [area]: selected },
       );
     };
-    syncRole();
-    window.addEventListener("hashchange", syncRole);
-    return () => window.removeEventListener("hashchange", syncRole);
+    syncDashboard();
+    window.addEventListener("hashchange", syncDashboard);
+    return () => window.removeEventListener("hashchange", syncDashboard);
   }, [area, careers]);
   const career = roles.find((item) => item.soc === selection[area]) ?? roles[0];
 
@@ -192,6 +197,15 @@ export default function CareerDashboard({ area, careers, ...actions }: Props) {
         <p>The occupation evidence is unavailable. Reload to try again.</p>
       </section>
     );
+
+  const showView = (next: typeof view) => {
+    setView(next);
+    window.history.replaceState(
+      window.history.state,
+      "",
+      `#/${configuration.route}/${career.soc}${next === "compare" ? "/compare" : ""}`,
+    );
+  };
 
   const evidence = careerEvidence[career.soc];
   const pay = career.metrics.pay_median;
@@ -259,7 +273,7 @@ export default function CareerDashboard({ area, careers, ...actions }: Props) {
             aria-pressed={career.soc === role.soc}
             onClick={() => {
               setSelection((current) => ({ ...current, [area]: role.soc }));
-              window.location.hash = `/${configuration.route}/${role.soc}`;
+              window.location.hash = `/${configuration.route}/${role.soc}${view === "compare" ? "/compare" : ""}`;
             }}
           >
             {role.title}
@@ -271,13 +285,13 @@ export default function CareerDashboard({ area, careers, ...actions }: Props) {
         <button
           ref={evidenceButton}
           aria-pressed={view === "evidence"}
-          onClick={() => setView("evidence")}
+          onClick={() => showView("evidence")}
         >
           Evidence
         </button>
         <button
           aria-pressed={view === "compare"}
-          onClick={() => setView("compare")}
+          onClick={() => showView("compare")}
         >
           Compare careers
         </button>

@@ -28,6 +28,7 @@ packages/ml/runs/
 node_modules/
 dist/
 .vite/
+test-results/
 
 # editors and os
 .vscode/
