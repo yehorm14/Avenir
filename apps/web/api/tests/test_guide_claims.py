@@ -215,6 +215,8 @@ def test_year_shaped_counts_still_need_matching_units_and_values(book):
     assert book.check("In 2025 employee jobs totalled 343 thousand.")[0] is None
     assert book.check("There were 2025 thousand employee jobs.")[0] is not None
     assert book.check("There were 2025 employee jobs.")[0] is not None
+    assert book.check("There were 2025 employed.")[0] is not None
+    assert book.check("2025 people work as software developers.")[0] is not None
     facts = FactBook("2134").add(_pack("2134", "Software developer", 56914, 0.0262, 0.5444, jobs=2025))
     failure, claims = facts.check("There were 2025 thousand employee jobs in 2025.")
     assert failure is None and claims[0].period == "2025" and claims[0].unit == "thousand"
@@ -227,6 +229,8 @@ def test_opposite_signed_trend_is_rejected(book, figure):
 
 def test_catalogue_names_without_loaded_facts_cannot_use_primary_role_pay():
     facts = FactBook("2134").add(DEV)
+    assert facts.check("Nurses earn £56,914 in 2025.")[0] is not None
+    assert facts.check("Nurses’ median pay was £56,914 in 2025.")[0] is not None
     facts.add_occupation_names([{"soc": "3211", "title": "Nurse"}])
     assert facts.check("Nurses earn £56,914 in 2025.")[0] is not None
     assert facts.check("Software developers earn £56,914 in 2025.")[0] is None

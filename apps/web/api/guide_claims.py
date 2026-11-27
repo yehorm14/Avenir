@@ -21,7 +21,7 @@ _YEAR = re.compile(r"\b(?:19|20)\d{2}\b")
 _PCT_WORD = re.compile(r"^\s*(?:per ?cent|percent)\b", re.IGNORECASE)
 _RELATIVE_TREND = re.compile(r"\b(?:relative to|vs\.?|compared (?:with|to)) (?:the )?typical occupation\b", re.IGNORECASE)
 _GBP_WORD = re.compile(r"^\s*(?:pounds?|GBP|quid)\b", re.IGNORECASE)
-_JOB_COUNT_WORD = re.compile(r"^\s*(?:full[- ]time\s+)?(?:employee\s+)?(?:jobs|workers)\b", re.IGNORECASE)
+_JOB_COUNT_WORD = re.compile(r"^\s*(?:full[- ]time\s+)?(?:employee\s+)?(?:jobs|workers|employed|people\s+work)\b", re.IGNORECASE)
 _DATE_PREFIX = r"(?:in|for|since|during|from|to|through|until|by|over|as of|as at|ending)"
 _DATE_BEFORE_NUMBER = re.compile(r"\b" + _DATE_PREFIX + r"\s*$", re.IGNORECASE)
 _THOUSANDS_WORD = re.compile(r"^\s*(?:thousand|k)\b", re.IGNORECASE)
@@ -30,6 +30,13 @@ _CLAUSE_BREAK = re.compile(r";|:|(?<!\d)\s[–—-]\s|,(?!\s*" + _DATE_PREFIX + 
     r"|\b(?:and|but|while|whereas)\b|[.!?](?=\s)",
     re.IGNORECASE,
 )
+
+_NAMED_PAY_SUBJECT = re.compile(
+    r"^\s*(?P<subject>[a-z][a-z\s-]{0,80}?)\s+(?:earn(?:s|ed)?|(?:are|is|were|was) paid)\b"
+    r"|^\s*(?P<possessive>[a-z][a-z\s-]{0,80}?)['’]s?\s+(?:(?:median|starting)\s+)?pay\b",
+    re.IGNORECASE,
+)
+_CONTEXTUAL_PAY_SUBJECTS = {"they", "these workers", "these employees", "the middle half", "this role", "this occupation"}
 
 # Which words say what a figure measures. The nearest one to the figure wins.
 _METRIC_WORDS: tuple[tuple[str, re.Pattern[str]], ...] = (
@@ -317,6 +324,12 @@ class FactBook:
             if metric is None and unit == "num":
                 continue  # a bare number that names no measure: the plain "appears in the evidence" check covers it
             subject = self._subject(mentions, match.start(), lo, hi)
+            if metric == "pay" and not any(lo <= start < hi for start, _, _ in mentions):
+                explicit = _NAMED_PAY_SUBJECT.search(text[lo:match.start()])
+                if explicit:
+                    named_role = explicit["subject"] or explicit["possessive"]
+                    if named_role.strip().lower() not in _CONTEXTUAL_PAY_SUBJECTS:
+                        subject = "unverified occupation"
             sentence_start, sentence_end = _sentence(text, match.start())
             sentence = text[sentence_start:sentence_end]
             employer_subject = self._employer_subject(sentence)
