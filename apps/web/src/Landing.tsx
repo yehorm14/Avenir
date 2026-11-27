@@ -2,6 +2,8 @@ import { useMemo, useRef, useState } from "react";
 import type { Career } from "./types";
 import { SalaryChart, money, percent } from "./Charts";
 import EmployerPulse from "./EmployerPulse";
+import { heroSample } from "./heroSample";
+import { metricLabel } from "./metricLabel";
 import "./landing.css";
 
 const subjects = [
@@ -233,7 +235,7 @@ export default function Landing({
 }: {
   careers: Career[];
   onChoose: (mode: "known" | "explore") => void;
-  onDashboard: (area: "cs" | "finance") => void;
+  onDashboard: (area: "cs" | "finance", view?: "compare") => void;
   onAmira?: () => void;
   amiraBusy?: boolean;
   amiraError?: string;
@@ -245,6 +247,8 @@ export default function Landing({
   onLocation: (location: string) => void;
   resume?: { title: string; onResume: () => void };
 }) {
+  const amiraCard = useRef<HTMLElement>(null);
+  const sample = useMemo(() => heroSample(careers, metricLabel), [careers]);
   return (
     <div className="avenir-landing">
       <section className="hero editorial" aria-labelledby="mission-heading">
@@ -278,31 +282,108 @@ export default function Landing({
           </select>
         </div>
         <p className="ed-label">( AVENIR )</p>
-        <h1 id="mission-heading" className="ed-title">
-          <span className="serif">Explore your</span> <b>career choices,</b>{" "}
-          <span className="serif">see clear</span> <b>path</b>{" "}
-          <span className="serif">and</span> <b>opportunities</b>
+        <h1 id="mission-heading" className="ed-title ed-title-short">
+          Compare careers on the evidence
         </h1>
         <div className="ed-row">
-          <p className="ed-lede">
-            Avenir puts real UK pay, jobs and automation research for each
-            career in one place, shows you the trade-offs, and turns your choice
-            into a plan you can start this month.
-          </p>
-          <nav className="ed-options" aria-label="Where to start">
-            <button onClick={onJobs}>
-              Analyse the job market <i>→</i>
-            </button>
-            <button onClick={onPlan}>
-              Review my decisions <i>→</i>
-            </button>
-            <button onClick={() => onChoose("explore")}>
-              I'm not sure what to do <i>→</i>
-            </button>
-            <button onClick={() => onDashboard("cs")}>
-              Try a sample comparison <i>→</i>
-            </button>
-          </nav>
+          <div>
+            <p className="ed-lede">
+              Real UK pay, jobs and automation research for each career in one
+              place, with the trade-offs shown, so you can turn a choice into a
+              plan you can start this month.
+            </p>
+            <ol className="ed-journey" aria-label="Your journey">
+              <li>
+                <span className="ed-step-no" aria-hidden="true">
+                  1
+                </span>
+                <div>
+                  <strong>Discover</strong>
+                  <p>Take the quiz or browse careers.</p>
+                  <button onClick={() => onChoose("explore")}>
+                    Find careers <i>→</i>
+                  </button>
+                </div>
+              </li>
+              <li>
+                <span className="ed-step-no" aria-hidden="true">
+                  2
+                </span>
+                <div>
+                  <strong>Compare</strong>
+                  <p>Weigh pay, jobs and automation exposure.</p>
+                  <button onClick={() => onDashboard("cs", "compare")}>
+                    Try a sample comparison <i>→</i>
+                  </button>
+                </div>
+              </li>
+              <li>
+                <span className="ed-step-no" aria-hidden="true">
+                  3
+                </span>
+                <div>
+                  <strong>Save and export</strong>
+                  <p>Keep a plan in this browser and download it.</p>
+                  <button onClick={onPlan}>
+                    Review my plan <i>→</i>
+                  </button>
+                </div>
+              </li>
+            </ol>
+            <p className="ed-secondary">
+              <button onClick={onJobs}>Analyse the job market</button>
+              <span aria-hidden="true"> · </span>
+              <button onClick={() => amiraCard.current?.focus()}>
+                Read about Amira’s example profile
+              </button>
+            </p>
+          </div>
+          <section
+            className="hero-sample"
+            aria-labelledby="hero-sample-heading"
+          >
+            <h2 id="hero-sample-heading">Sample evidence comparison</h2>
+            {sample.length ? (
+              <table>
+                <caption className="sr-only">
+                  Computer Science and Finance example roles, with the source
+                  and year of each figure
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Measure</th>
+                    {sample[0].cells.map((cell) => (
+                      <th scope="col" key={cell.career}>
+                        {cell.career}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {sample.map((row) => (
+                    <tr key={row.key}>
+                      <th scope="row">{row.label}</th>
+                      {row.cells.map((cell) => (
+                        <td key={cell.career}>
+                          <b>{cell.value}</b>
+                          <small>{cell.source}</small>
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p className="hero-sample-empty" role="status">
+                The sample figures are not available right now. You can still
+                browse careers in{" "}
+                <button onClick={onJobs}>Analyse the job market</button>.
+              </p>
+            )}
+            <p className="hero-sample-note">
+              Public UK sources. History, not a forecast.
+            </p>
+          </section>
         </div>
         <DemandTicker careers={careers} />
         <p className="ed-note">
@@ -321,7 +402,12 @@ export default function Landing({
         <header className="subjects-heading">
           <h2 id="subjects-heading">Start with a subject</h2>
         </header>
-        <article className="amira-journey" aria-labelledby="amira-heading">
+        <article
+          className="amira-journey"
+          aria-labelledby="amira-heading"
+          ref={amiraCard}
+          tabIndex={-1}
+        >
           <span className="amira-kicker">Example profile</span>
           <h2 id="amira-heading">Amira, 17, S6 in Glasgow</h2>
           <p>
@@ -334,7 +420,7 @@ export default function Landing({
           <button
             className="mission-cta mission-cta-primary"
             onClick={onAmira}
-            disabled={amiraBusy}
+            disabled={!onAmira || amiraBusy}
           >
             {amiraBusy ? "Comparing…" : "Use Amira’s example profile"}
           </button>
